@@ -58,7 +58,7 @@
                 </a>
                 <span class="hidden sm:block px-0">/</span>
                 <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
-                <a href="#" class="text-gray-900 hidden sm:block">
+                <a href="/checkout" class="text-gray-900 hidden sm:block">
                     <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
                 </a>
                 <!-- Mobile Icons only -->
@@ -157,7 +157,6 @@
 
     <!-- Footer Section -->
 
-
     <footer class="bg-white py-6">
         <div class="bg-[#7eb6c6] w-full py-12 px-4 lg:px-16">
             <div class="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 md:space-x-8">
@@ -169,10 +168,13 @@
                         promotional offers and newsletters from Independence Australia. You can unsubscribe at any time.
                     </p>
                 </div>
-                <!-- Subscription Form -->
-                <div class="flex flex-col sm:flex-row items-center w-full md:w-auto">
+
+                <div class="flex w-full sm:w-auto">
+                    <!-- Wider Input Field -->
                     <input type="email" placeholder="Enter your email"
-                        class="flex-grow sm:flex-grow-0 px-36 py-3 rounded-l-full border border-gray-300 focus:outline-none w-full sm:w-auto">
+                        class="px-6 py-3 rounded-l-full border border-gray-300 focus:outline-none w-full sm:w-[400px]">
+        
+                    <!-- Subscribe Button -->
                     <button
                         class="bg-[#0f6178] font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-[#0f6178] border-2 border-[#0f6178] transition">
                         SUBSCRIBE
@@ -180,6 +182,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="container mx-auto px-6 py-6 space-y-6">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between text-gray-700 text-sm">
                 <p class="text-center lg:text-left">
