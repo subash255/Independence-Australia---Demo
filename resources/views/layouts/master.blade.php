@@ -58,7 +58,7 @@
                     <i class="fa fa-user text-[#00718f]"></i> <span>Sign In</span>
                 </a>
                 <span class="hidden sm:block">/</span>
-                <a href="/create" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
+                <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
                 <a href="#" class="text-gray-900 hidden sm:block">
                     <i class="fa fa-shopping-cart text-[#00718f]"></i> <span>Basket</span>
                 </a>

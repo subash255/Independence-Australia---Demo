@@ -11,10 +11,6 @@ Route::get('/signin', function () {
     return view('signin');
 });
 
-Route::get('/create', function () {
-    return view('create');
-});
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
