@@ -11,6 +11,10 @@ Route::get('/signin', function () {
     return view('signin');
 });
 
+Route::get('/checkout', function () {
+    return view('checkout');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

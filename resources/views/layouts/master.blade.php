@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In - Independence Australia</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
@@ -55,19 +54,19 @@
             </div>
             <div class="flex items-center font-semibold space-x-3">
                 <a href="/signin" class="text-gray-900 hover:underline hidden sm:block">
-                    <i class="fa fa-user text-[#00718f]"></i> <span>Sign In</span>
+                    <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
                 </a>
-                <span class="hidden sm:block">/</span>
+                <span class="hidden sm:block px-0">/</span>
                 <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
                 <a href="#" class="text-gray-900 hidden sm:block">
-                    <i class="fa fa-shopping-cart text-[#00718f]"></i> <span>Basket</span>
+                    <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
                 </a>
                 <!-- Mobile Icons only -->
                 <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="fa fa-user text-[#00718f]"></i>
+                    <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
                 </a>
                 <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="fa fa-shopping-cart text-[#00718f]"></i>
+                    <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
                 </a>
             </div>
         </div>
@@ -158,7 +157,7 @@
 
     <!-- Footer Section -->
 
-    
+
     <footer class="bg-white py-6">
         <div class="bg-[#7eb6c6] w-full py-12 px-4 lg:px-16">
             <div class="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 md:space-x-8">
@@ -166,13 +165,16 @@
                 <div class="text-center md:text-left max-w-xl">
                     <h1 class="text-[#0f6178] text-4xl font-bold mb-4">Newsletter Sign Up</h1>
                     <p class="text-black text-lg leading-relaxed">
-                        By providing your email address, you are consenting to receive marketing communications such as promotional offers and newsletters from Independence Australia. You can unsubscribe at any time.
+                        By providing your email address, you are consenting to receive marketing communications such as
+                        promotional offers and newsletters from Independence Australia. You can unsubscribe at any time.
                     </p>
                 </div>
                 <!-- Subscription Form -->
                 <div class="flex flex-col sm:flex-row items-center w-full md:w-auto">
-                    <input type="email" placeholder="Enter your email" class="flex-grow sm:flex-grow-0 px-40 py-3 rounded-l-full border border-gray-300 focus:outline-none w-full sm:w-auto">
-                    <button class="bg-[#0f6178] font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-[#0f6178] border-2 border-[#0f6178] transition">
+                    <input type="email" placeholder="Enter your email"
+                        class="flex-grow sm:flex-grow-0 px-36 py-3 rounded-l-full border border-gray-300 focus:outline-none w-full sm:w-auto">
+                    <button
+                        class="bg-[#0f6178] font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-[#0f6178] border-2 border-[#0f6178] transition">
                         SUBSCRIBE
                     </button>
                 </div>
@@ -197,22 +199,22 @@
                 <!-- Social Media Icons -->
                 <div class="flex justify-center lg:justify-start space-x-4">
                     <a href="#" class="text-[#00718f] hover:opacity-75">
-                        <i class="fab fa-facebook-f text-xl"></i>
+                        <i class="ri-facebook-fill text-[25px] "></i>
                     </a>
                     <a href="#" class="text-[#00718f] hover:opacity-75">
-                        <i class="fab fa-twitter text-xl"></i>
+                        <i class="ri-twitter-fill text-[25px]"></i>
                     </a>
                     <a href="#" class="text-[#00718f] hover:opacity-75">
-                        <i class="fab fa-linkedin-in text-xl"></i>
+                        <i class="ri-linkedin-box-fill text-[25px]"></i>
                     </a>
                 </div>
 
                 <!-- Payment Methods -->
-                <div class="flex items-center justify-center lg:justify-end space-x-4 mt-4 lg:mt-0">
+                <div class="flex items-center justify-center lg:justify-end space-x-4 mt-4 lg:mt-0 h-8">
                     <span class="text-gray-700 font-semibold">We accept</span>
-                    <img src="images/visa.png" alt="Visa" class="h-6">
-                    <img src="images/mastercard.png" alt="MasterCard" class="h-6">
-                    <img src="images/paypal.png" alt="PayPal" class="h-6">
+                    <i class="ri-visa-fill text-[#00718f]"></i>
+                    <i class="ri-mastercard-line text-[#00718f]"></i>
+                    <i class="ri-paypal-fill text-[#00718f]"></i>
                 </div>
             </div>
         </div>
@@ -233,6 +235,33 @@
                 mobileMenu.classList.add('hidden');
             }
         });
+
+        let currentIndex = 0;
+        const slides = document.querySelectorAll("#slider .flex-shrink-0");
+        const totalSlides = slides.length;
+        const slider = document.getElementById("slider");
+
+        const showSlide = (index) => {
+            const offset = -index * 100;
+            slider.style.transform = `translateX(${offset}%)`;
+        };
+
+        document.getElementById("next").addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        });
+
+        document.getElementById("prev").addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            showSlide(currentIndex);
+        });
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        }, 3000);
+
+        showSlide(currentIndex);
     </script>
 
 </body>

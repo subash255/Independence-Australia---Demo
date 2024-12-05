@@ -7,7 +7,10 @@
     <div class="absolute inset-0 bg-center bg-cover opacity-40" style="background-image: url('images/hand.jpg');">
     </div>
     <div class="absolute inset-0 flex flex-col justify-center items-center text-center">
-        <p class="text-gray-600">Home | Sign In</p>
+        <p class="text-gray-800 font-semibold mb-4">
+            <a class="hover:underline text-[#00718f]" href="/">Home</a> | Sign In
+          </p>
+          
         <h1 class="text-4xl font-bold text-[#00718f]">Sign In</h1>
     </div>
 </section>
