@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
 
-            $table->string('last_name');
-            $table->string('address');
-            $table->string('phone_number');
+            $table->string('last_name')->nullable(); 
+            $table->string('address')->nullable();  
+            $table->string('phone_number')->default('N/A');
             $table->boolean('is_business_account')->default(false);
             $table->boolean('subscribed_to_newsletter')->default(false);
 
