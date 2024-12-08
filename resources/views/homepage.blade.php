@@ -1,32 +1,5 @@
-@extends('layouts.user')
+@extends('layouts.master')
 @section('content')
-<div class="relative w-full overflow-hidden">
-    <!-- Slider Wrapper -->
-    <div id="slider" class="flex transition-transform duration-700 ease-in-out">
-        <!-- First Image -->
-        <div class="w-full flex-shrink-0">
-            <img src="images/greet.jpg" alt="Image 1" class="w-full h-64 object-cover">
-        </div>
-        <!-- Second Image -->
-        <div class="w-full flex-shrink-0">
-            <img src="images/team.jpg" alt="Image 2" class="w-full h-64 object-cover">
-        </div>
-        <!-- Third Image -->
-        <div class="w-full flex-shrink-0">
-            <img src="images/resources.jpg" alt="Image 3" class="w-full h-64 object-cover">
-        </div>
-    </div>
-
-    <!-- Navigation Buttons -->
-    <button id="prev"
-        class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 md:p-3 md:left-2">
-        &#10094;
-    </button>
-    <button id="next"
-        class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 md:p-3 md:right-2">
-        &#10095;
-    </button>
-</div>
 
     <div class="bg-[#00718f] text-white text-center py-4">
         <p class="text-lg font-medium">

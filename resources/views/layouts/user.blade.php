@@ -53,11 +53,19 @@
                 <i class="fa fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 sm:block"></i>
             </div>
             <div class="flex items-center font-semibold space-x-3">
-                <a href="/signin" class="text-gray-900 hover:underline hidden sm:block">
-                    <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
-                </a>
-                <span class="hidden sm:block px-0">/</span>
-                <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
+                <!-- Check if the user is logged in -->
+                @auth
+                    <!-- If user is logged in, show their name -->
+                    <span class="text-gray-900">Hi, {{ Auth::user()->name }}</span>
+                    <a href="/logout" class="text-gray-900 hover:underline">Logout</a>
+                @else
+                    <!-- If user is not logged in, show Sign In and Register buttons -->
+                    <a href="/signin" class="text-gray-900 hover:underline hidden sm:block">
+                        <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
+                    </a>
+                    <span class="hidden sm:block px-0">/</span>
+                    <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
+                @endauth
                 <a href="/checkout" class="text-gray-900 hidden sm:block">
                     <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
                 </a>
@@ -70,7 +78,7 @@
                 </a>
             </div>
         </div>
-    </header>
+    </header>    
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-50">
