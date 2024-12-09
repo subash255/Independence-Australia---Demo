@@ -11,7 +11,7 @@ class ProductController extends Controller
     {
         
         $products = Product::orderBy('id')->get();
-        return view('admin.product',compact('products'));
+        return view('admin.product.product',compact('products'));
 
     }
     public function create()

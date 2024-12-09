@@ -13,7 +13,12 @@ class DashboardController extends Controller
     }
     public function product()
     {
-        return view('admin.product');
+        return view('admin.product.product');
+    }
+
+    public function category()
+    {
+        return view('admin.category.category');
     }
 
     public function store(Request $request)

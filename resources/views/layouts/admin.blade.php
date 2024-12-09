@@ -18,16 +18,16 @@
     <div class="flex flex-col w-60 bg-white text-gray-900 shadow-lg h-full">
       <!-- Logo and title -->
       <div class="p-4 flex items-center justify-center bg-white">
-        <img src="images/logoo.png" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain">
+        <img src="images/logo.svg" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain">
       </div>
 
       <!-- Navigation Links -->
       <nav class="flex flex-col mt-6">
-        <a href="{{route('admin.dashboard')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{route('admin.dash')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-layout-masonry-fill"></i>
           <span class="ml-4 font-normal">Dashboard</span>
         </a>
-        <a href="{{route('admin.category')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{route('admin.category.category')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-grid-line"></i>
           <span class="ml-4 font-normal">Category</span>
         </a>
@@ -43,7 +43,7 @@
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4 font-normal">Orders</span>
         </a> 
-        <a href="{{route('admin.products')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{route('admin.product.product')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-bank-card-2-fill"></i>
           <span class="ml-4 font-normal">Products</span>
         </a>  
