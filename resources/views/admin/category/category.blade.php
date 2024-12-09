@@ -54,7 +54,7 @@
       <tbody>
         <tr>
           <td class="border border-gray-300 px-4 py-2">1</td>
-          <td class="border border-gray-300 px-4 py-2">🥩</td> <!-- Changed Icon for Meat&Seafood -->
+          <td class="border border-gray-300 px-4 py-2">🥩</td> 
           <td class="border border-gray-300 px-4 py-2">Meat&seafood</td>
           <td class="border border-gray-300 px-4 py-2">meat-&-seafood</td>
           <td class="border border-gray-300 px-4 py-2">
@@ -75,7 +75,7 @@
         </tr>
         <tr>
           <td class="border border-gray-300 px-4 py-2">2</td>
-          <td class="border border-gray-300 px-4 py-2">🍰</td> <!-- Cake Icon for Bakery -->
+          <td class="border border-gray-300 px-4 py-2">🍰</td>
           <td class="border border-gray-300 px-4 py-2">Bakery</td>
           <td class="border border-gray-300 px-4 py-2">bakery</td>
           <td class="border border-gray-300 px-4 py-2">
@@ -96,7 +96,7 @@
         </tr>
         <tr>
           <td class="border border-gray-300 px-4 py-2">3</td>
-          <td class="border border-gray-300 px-4 py-2">🥤</td> <!-- Changed Icon for Beverages -->
+          <td class="border border-gray-300 px-4 py-2">🥤</td>
           <td class="border border-gray-300 px-4 py-2">Beverages</td>
           <td class="border border-gray-300 px-4 py-2">beverages</td>
           <td class="border border-gray-300 px-4 py-2">
@@ -117,7 +117,7 @@
         </tr>
         <tr>
           <td class="border border-gray-300 px-4 py-2">4</td>
-          <td class="border border-gray-300 px-4 py-2">🧀</td> <!-- Cheese Icon for Dairy & Eggs -->
+          <td class="border border-gray-300 px-4 py-2">🧀</td> 
           <td class="border border-gray-300 px-4 py-2">Dairy&eggs</td>
           <td class="border border-gray-300 px-4 py-2">dairy-&-eggs</td>
           <td class="border border-gray-300 px-4 py-2">
@@ -138,7 +138,7 @@
         </tr>
         <tr>
           <td class="border border-gray-300 px-4 py-2">5</td>
-          <td class="border border-gray-300 px-4 py-2">❄️</td> <!-- Snowflake Icon for Frozen -->
+          <td class="border border-gray-300 px-4 py-2">❄️</td> 
           <td class="border border-gray-300 px-4 py-2">Frozen</td>
           <td class="border border-gray-300 px-4 py-2">frozen</td>
           <td class="border border-gray-300 px-4 py-2">
