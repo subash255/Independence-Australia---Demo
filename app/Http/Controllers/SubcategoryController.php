@@ -20,7 +20,7 @@ class SubcategoryController extends Controller
     {
         // Validate the incoming data
        $data= $request->validate([
-            'category_id' => 'required|exists:categories,id',
+            'categories_id' => 'required|exists:categories,id',
             'subcategory_name' => 'required|string|max:255',
             'paragraph' => 'nullable|string',
         ]);
@@ -29,7 +29,7 @@ class SubcategoryController extends Controller
         Subcategory::create($data);
 
         // Redirect to a success page or back to the form
-        return redirect()->route('admin.subcategory.create')->with('success', 'Subcategory created successfully!');
+        return redirect()->route('admin.category.addsub')->with('success', 'Subcategory created successfully!');
     }
 }
 
