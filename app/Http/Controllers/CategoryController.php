@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-abstract class Controller
+use Illuminate\Http\Request;
+
+class CategoryController extends Controller
 {
-    public function category()
+    public function index()
     {
         return view('admin.category.category');
+
     }
 }

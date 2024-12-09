@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -31,7 +32,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin.dash');
 Route::get('admin/product', [ProductController::class, 'create'])->name('admin.product');
-Route::get('admin/product', [ProductController::class, 'index'])->name('admin.product');
+Route::get('admin/product', [ProductController::class, 'index'])->name('admin.product.product');
+
+Route::get('admin/category', [CategoryController::class, 'index'])->name('admin.category.category');
 
 
 Route::get('/products/add', [ProductController::class, 'create'])->name('product.create');
