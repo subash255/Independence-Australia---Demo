@@ -10,14 +10,20 @@
 
   <!-- Container -->
   <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
-    <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Add Category</h1>
+    <button  class="text-2xl font-bold text-center text-gray-800 mb-6">Add Category</button>
+
+    <!-- Back Button -->
+    <div class="mb-6 flex justify-between">
+      <a href="{{route('admin.category.category')}}" class="text-indigo-600 hover:text-indigo-700">← Back</a>
+      <a href="{{route('admin.category.addsub')}}" type="button" class="text-indigo-600 hover:text-indigo-700">Add Sub-Category</a>
+    </div>
 
     <!-- Form -->
-    <form action="#" method="POST" enctype="multipart/form-data">
-      <!-- Category Input -->
+    <form action="{{route('admin.category.addcategory')}}" method="POST" enctype="multipart/form-data">
+      @csrf
       <div class="mb-6">
         <label for="category" class="block text-sm font-medium text-gray-700">Category Name</label>
-        <input type="text" id="category" name="category" placeholder="Enter category name"
+        <input type="text" id="category" name="category_name" placeholder="Enter category name"
                class="mt-2 px-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
       </div>
 
