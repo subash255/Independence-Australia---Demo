@@ -1,47 +1,56 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+@extends('layouts.master')
+@section('content')
+    <div class="flex h-screen flex-col md:flex-row">
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+        <!-- Left Section (Image and Social Links) -->
+        <div class="flex-1 md:flex hidden flex-col justify-between bg-gray-100 p-6">
+            <div class="text-center mt-6">
+                <img src="images/login.svg" alt="signin Image" class="w-[400px] mx-auto h-auto rounded-lg shadow-none">
+            </div>
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <!--Login Form -->
+        <div class="flex-1 text-black p-8 flex flex-col justify-center items-center bg-gray-200">
+            <h2 class="text-3xl font-bold mb-4">Login</h2>
+            <small class="text-black text-2xl">Welcome to Independence Australia</small>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <form method="POST" action="" class="w-full max-w-md mt-8 space-y-6">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <!-- Email -->
+                <input id="email" type="email" name="email" required autocomplete="email" placeholder="Email"
+                    class="w-full p-4 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 shadow-md">
+
+                <!-- Password -->
+                <input id="password" type="password" name="password" required autocomplete="current-password"
+                    placeholder="Password"
+                    class="w-full p-4 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 shadow-md">
+
+                <!-- Forgot Password -->
+                <div class="flex justify-end mt-2">
+                    <a href="#" class="text-red-600 text-sm font-medium hover:underline">Forgot Password?</a>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit"
+                    class="w-full py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors shadow-md focus:ring-2 focus:ring-red-500">
+                    Login
+                </button>
+            </form>
+
+            <!-- Or Divider -->
+            <div class="flex items-center my-4 w-full">
+                <hr class="w-full border-t-2 border-gray-300">
+                <span class="px-4 text-gray-700">OR</span>
+                <hr class="w-full border-t-2 border-gray-300">
+            </div>
+
+            <!-- Sign Up Text -->
+            <div class="mt-4 text-sm text-black">
+                <p>Don't have an account? <a href="/register" class="text-red-600 hover:underline font-bold">Sign Up</a>
+                </p>
+            </div>
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+@endsection

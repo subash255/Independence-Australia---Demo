@@ -10,23 +10,6 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 
-    <style>
-        @layer utilities {
-            @keyframes slideText {
-                0% {
-                    transform: translateX(100%);
-                }
-
-                100% {
-                    transform: translateX(-100%);
-                }
-            }
-
-            .animate-slide-text {
-                animation: slideText 15s linear infinite;
-            }
-        }
-    </style>
 </head>
 
 <body class="font-sans bg-white">
@@ -53,7 +36,7 @@
                 <i class="fa fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 sm:block"></i>
             </div>
             <div class="flex items-center font-semibold space-x-3">
-                <a href="/signin" class="text-gray-900 hover:underline hidden sm:block">
+                <a href="/login" class="text-gray-900 hover:underline hidden sm:block">
                     <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
                 </a>
                 <span class="hidden sm:block px-0">/</span>
@@ -74,14 +57,26 @@
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-50">
-        <div class="bg-[#7eb6c6] py-2 text-black overflow-hidden">
-            <div class="animate-slide-text container mx-auto flex whitespace-nowrap">
-                <span class="text-lg mr-10">Welcome to Independence Australia! Explore our wide range of
-                    products.</span>
-                <span class="text-lg mr-10">Check out our latest arrivals and exclusive offers.</span>
-                <span class="text-lg mr-10">Join our community and enjoy benefits like faster checkout and
-                    tracking.</span>
-            </div>
+        <div class="bg-[#7eb6c6] py-2 text-black">
+            <section>
+                <div class="container mx-auto text-center overflow-hidden relative">
+                    <div class="slider-container relative h-8">
+                        <!-- Slider Text -->
+                        <div
+                            class="slider-text absolute inset-0 flex items-center justify-center text-sm  transition-all duration-1000 transform translate-x-full opacity-0">
+                            Empowering independence through choice.
+                        </div>
+                        <div
+                            class="slider-text absolute inset-0 flex items-center justify-center text-sm  transition-all duration-1000 transform translate-x-full opacity-0">
+                            Supporting living with dignity and care.
+                        </div>
+                        <div
+                            class="slider-text absolute inset-0 flex items-center justify-center text-sm  transition-all duration-1000 transform translate-x-full opacity-0">
+                            Innovative solutions for everyday living.
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
         <div class="bg-white container mx-auto flex justify-center space-x-10 py-2 font-bold text-lg relative">
             <!-- Desktop Navigation Links -->
@@ -172,7 +167,7 @@
                 <div class="flex w-full sm:w-auto">
                     <input type="email" placeholder="Enter your email"
                         class="px-6 py-3 rounded-l-full border border-gray-300 focus:outline-none w-full sm:w-[400px]">
-        
+
                     <!-- Subscribe Button -->
                     <button
                         class="bg-[#0f6178] font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-[#0f6178] border-2 border-[#0f6178] transition">
@@ -181,7 +176,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="container mx-auto px-6 py-6 space-y-6">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between text-gray-700 text-sm">
                 <p class="text-center lg:text-left">
@@ -264,6 +259,33 @@
         }, 3000);
 
         showSlide(currentIndex);
+
+        const sliderTexts = document.querySelectorAll('.slider-text');
+        let currentIndexs = 0;
+
+        function showSliderText() {
+            sliderTexts.forEach((text, index) => {
+                text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full', 'opacity-100',
+                    'opacity-0');
+
+                if (index === currentIndexs) {
+                    // Show the current text
+                    text.classList.add('translate-x-0', 'opacity-100');
+                } else if (index === (currentIndexs - 1 + sliderTexts.length) % sliderTexts.length) {
+                    // Exit the previous text to the left
+                    text.classList.add('-translate-x-full', 'opacity-0');
+                } else {
+                    // Reset for all other texts
+                    text.classList.add('translate-x-full', 'opacity-0');
+                }
+            });
+
+            currentIndexs = (currentIndexs + 1) % sliderTexts.length;
+        }
+
+        // Initial display and rotation
+        showSliderText();
+        setInterval(showSliderText, 3000);
     </script>
 
 </body>

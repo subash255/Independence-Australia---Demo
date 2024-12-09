@@ -14,10 +14,6 @@ Route::get('/homepage', function () {
 });
 
 
-Route::get('/signin', function () {
-    return view('signin');
-});
-
 Route::get('/checkout', function () {
     return view('checkout');
 });

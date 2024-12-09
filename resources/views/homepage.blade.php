@@ -1,41 +1,39 @@
 @extends('layouts.master')
 @section('content')
-    <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-6 md:gap-12">
-        <!-- Background Image Section -->
-        <div class="absolute inset-0 bg-cover bg-center rounded-md"
-            style="background-image: url('{{ asset('images/budi.jpg') }}'); height: 350px;">
-            <!-- Optional Gradient Overlay to enhance text visibility -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent rounded-md"></div>
+    <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-10 md:gap-18 ">
+        <div class="absolute inset-0 bg-cover bg-center"
+            style="background-image: url('{{ asset('images/suddo.jpg') }}'); height: 400px;">
+            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent "></div>
         </div>
 
-        <!-- Text Section overlaid on the background image -->
         <div
-            class="relative z-10 text-center md:text-left w-full md:w-1/2 text-white px-6 bg-white bg-opacity-40 rounded-md">
+            class="relative z-10 text-center md:text-left w-full md:w-1/2 text-white px-6">
             <h1 class="text-teal-700 text-3xl md:text-4xl font-bold mb-4 text-shadow-md">
                 Welcome to Independence Australia
             </h1>
-            <p class="text-sm md:text-base leading-relaxed text-gray-200 mb-6">
+            <p class="text-sm md:text-base leading-relaxed text-gray-900 mb-6">
                 Independence Australia is a social enterprise that provides choices for people living with a disability or
                 other personal need, enabling them to regain and retain their independence within an inclusive community.
             </p>
-            <!-- Buttons -->
-            <div class="space-y-4 md:space-y-0 md:flex md:items-center md:gap-4">
+
+            <div class="space-y-4 md:space-y-0 md:flex md:flex-col md:gap-4">
                 <button
-                    class="bg-teal-700 text-white py-2 px-6 rounded-md shadow-md hover:bg-teal-800 focus:ring-2 focus:ring-teal-400">
-                    Sign in
-                </button>
+                class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+                Sign in
+            </button>
+            
+                
                 <p class="text-sm text-gray-300">
-                    Don't have an account yet? <a href="#" class="text-teal-700 font-medium hover:underline">Register
-                        now</a>
+                    Don't have an account yet? 
+                    <a href="#" class="text-teal-700 font-medium hover:underline">Register now</a>
                 </p>
             </div>
+            
         </div>
     </div>
 
-
-
     <!--Banner images-->
-    <div class="w-full px-4 py-12 banner">
+    <div class="w-full px-4 py-12 banner mt-4">
         <img src="images/homepage.jpg" alt="Banner"
             class="w-full h-auto transform transition-all duration-300 ease-in-out shadow-lg">
     </div>
@@ -49,61 +47,55 @@
         Shop by Category
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6 bg-gray-100">
-        <!-- Continence Aids (takes two rows in height) -->
-        <div class="relative row-span-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
+        <!-- Continence Aids-->
+        <div class="relative row-span-2 overflow-hidden">
             <img src="{{ asset('images/category/1.jpg') }}" alt="Continence Aids"
-                class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105">
-
+                class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
 
         <!-- Nutrition -->
-        <div class="relative">
+        <div class="relative overflow-hidden">
             <img src="{{ asset('images/category/4.jpg') }}" alt="Nutrition"
-                class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105">
-
+                class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
 
         <!-- Wound Care -->
-        <div class="relative">
+        <div class="relative overflow-hidden">
             <img src="{{ asset('images/category/8.jpg') }}" alt="Wound Care"
-                class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105">
-
+                class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
 
         <!-- Skin Care -->
-        <div class="relative">
+        <div class="relative overflow-hidden">
             <img src="{{ asset('images/category/6.jpg') }}" alt="Skin Care"
-                class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105">
-
+                class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
 
         <!-- Medical Aids -->
-        <div class="relative">
+        <div class="relative overflow-hidden">
             <img src="{{ asset('images/category/3.jpg') }}" alt="Medical Aids"
-                class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105">
+                class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
 
         <!-- Daily Living & Mobility Aids -->
-        <div class="relative">
+        <div class="relative overflow-hidden">
             <img src="{{ asset('images/category/2.jpg') }}" alt="Daily Living & Mobility Aids"
-                class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105">
+                class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
 
         <!-- Urology -->
-        <div class="relative">
+        <div class="relative overflow-hidden">
             <img src="{{ asset('images/category/7.jpg') }}" alt="Urology"
-                class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105">
+                class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
 
         <!-- Other -->
-        <div class="relative">
+        <div class="relative overflow-hidden">
             <img src="{{ asset('images/category/5.jpg') }}" alt="Other"
-                class="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105">
+                class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
     </div>
-
-
 
     <!--Arko Banner image-->
     <div class="w-full px-4 py-10">
@@ -346,13 +338,43 @@
     </div>
 
     <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
-        Explore our pulications
+        Explore our publications
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-10"></div>
+    
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        <!-- Book 1 -->
+        <div class="relative overflow-hidden">
+            <img src="{{ asset('images/p1.jpg') }}" alt="Book 1"
+                class="w-full h-64 object-contain transform transition-transform duration-300 hover:scale-105">
+        </div>
+    
+        <!-- Book 2 -->
+        <div class="relative overflow-hidden">
+            <img src="{{ asset('images/p2.jpg') }}" alt="Book 2"
+                class="w-full h-64 object-contain transform transition-transform duration-300 hover:scale-105">
+        </div>
+    
+        <!-- Book 3 -->
+        <div class="relative overflow-hidden">
+            <img src="{{ asset('images/p3.jpg') }}" alt="Book 3"
+                class="w-full h-64 object-contain transform transition-transform duration-300 hover:scale-105">
+        </div>
+    </div>
+    
+    <!-- View More Button -->
+    <div class="flex justify-center mt-8 pb-4">
+        <a href="#"
+            class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+            View more publications
+        </a>
+    </div>
+    
+
 
     <hr class="border-gray-300">
     <div class="w-full bg-white">
-        <div class="max-w-3xl mx-auto px-6"> <!-- Added mx-auto for centering and px-6 for equal padding -->
+        <div class="max-w-3xl mx-auto px-6"> 
             <p id="text" class="text-black text-lg py-10">
                 Independence Australia supplies healthcare and medical supplies to thousands of customers across Australia.
                 We stock all major and specialist brands. Key categories include continence, wound care, daily living &
@@ -384,17 +406,42 @@
         const text = document.getElementById('text');
 
         toggleBtn.addEventListener('click', (event) => {
-            // Prevent page from scrolling to the button
             event.preventDefault();
 
-            // Toggle the visibility of the additional text
+        
             if (moreText.classList.contains('hidden')) {
                 moreText.classList.remove('hidden');
-                toggleBtn.textContent = 'Less'; // Change button text to "Less"
+                toggleBtn.textContent = 'Less'; 
             } else {
                 moreText.classList.add('hidden');
-                toggleBtn.textContent = 'More'; // Change button text back to "More"
+                toggleBtn.textContent = 'More'; 
             }
         });
+
+        const sliderTexts = document.querySelectorAll('.slider-text');
+  let currentIndexs = 0;
+
+  function showSliderText() {
+    sliderTexts.forEach((text, index) => {
+      text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full', 'opacity-100', 'opacity-0');
+
+      if (index === currentIndexs) {
+        // Show the current text
+        text.classList.add('translate-x-0', 'opacity-100');
+      } else if (index === (currentIndexs - 1 + sliderTexts.length) % sliderTexts.length) {
+        // Exit the previous text to the left
+        text.classList.add('-translate-x-full', 'opacity-0');
+      } else {
+        // Reset for all other texts
+        text.classList.add('translate-x-full', 'opacity-0');
+      }
+    });
+
+    currentIndexs = (currentIndexs + 1) % sliderTexts.length;
+  }
+
+  // Initial display and rotation
+  showSliderText();
+  setInterval(showSliderText, 3000);
     </script>
 @endsection
