@@ -28,7 +28,10 @@ Route::get('admin/product', [ProductController::class, 'index'])->name('admin.pr
 Route::get('admin/category', [CategoryController::class, 'index'])->name('admin.category.category');
 Route::get('admin/category/addcategory', [CategoryController::class, 'create'])->name('admin.category.addcategory');
 Route::post('admin/category/addcategory', [CategoryController::class, 'store'])->name('admin.category.addcategory');
-Route::get('admin/category/addcategory', [CategoryController::class, 'create'])->name('admin.category.addcategory');
+Route::get('admin/category/{id}/editcategory', [CategoryController::class, 'edit'])->name('admin.category.editcategory');
+Route::get('admin/category/{id}/editcategory', [CategoryController::class, 'edit'])->name('admin.category.editcategory');
+Route::patch('admin/category/{id}/updatecategory', [CategoryController::class, 'update'])->name('admin.category.updatecategory');
+Route::delete('admin/category/{id}/deletecategory', [CategoryController::class, 'destroy'])->name('admin.category.deletecategory');
 
 
 Route::get('admin/category/addsub', [SubcategoryController::class, 'create'])->name('admin.category.addsub');
