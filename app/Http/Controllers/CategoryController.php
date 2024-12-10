@@ -10,11 +10,8 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
-        return view('admin.category.category',compact('categories')
-        , [
-            'title' => 'Category' 
-        ]);
+        $categories = Category::paginate(5);
+        return view('admin.category.category',compact('categories'));
 
     }
     public function create()
@@ -46,9 +43,9 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail($id);
-        return view('categories.edit', compact('category'));
+        return view('admin.category.editcategory', compact('category'));
     }
-
+                                     
     // Update Category
     public function update(Request $request, $id)
     {
@@ -56,27 +53,27 @@ class CategoryController extends Controller
 
         $request->validate([
             'category_name' => 'required|string|max:255',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image',
         ]);
 
         $category->category_name = $request->category_name;
 
         if ($request->hasFile('image')) {
             // Delete old image
-            if (Storage::exists(public_path('images/'.$category->image))) {
-                unlink(public_path('images/'.$category->image));
+            if (Storage::exists(public_path('images/brand'.$category->image))) {
+                unlink(public_path('images/brand'.$category->image));
             }
 
             // Upload new image
             $image = $request->file('image');
             $imageName = time().'.'.$image->extension();
-            $image->move(public_path('images'), $imageName);
+            $image->move(public_path('images/brand'), $imageName);
             $category->image = $imageName;
         }
 
-        $category->save();
+        $category->update();
 
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully');
+        return redirect()->route('admin.category.category')->with('success', 'Category updated successfully');
     }
 
     // Delete Category
@@ -85,13 +82,13 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         // Delete the image
-        if (Storage::exists(public_path('images/'.$category->image))) {
-            unlink(public_path('images/'.$category->image));
+        if (Storage::exists(public_path('images/brand'.$category->image))) {
+            unlink(public_path('images/brand'.$category->image));
         }
 
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully');
+        return redirect()->route('admin.category.category')->with('success', 'Category deleted successfully');
     }
 
 }
