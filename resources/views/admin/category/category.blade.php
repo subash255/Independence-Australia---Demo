@@ -1,12 +1,17 @@
 @extends('layouts.admin')
 @section('content')
 
+
 {{-- Flash Message --}}
 @if(session('success'))
-    <div class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+    <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
         {{ session('success') }}
     </div>
 @endif
+
+<script>
+  if (document.getElementById('flash-message')) setTimeout(() => { const msg = document.getElementById('flash-message'); msg.style.opacity = 0; msg.style.transition = "opacity 0.5s ease-out"; setTimeout(() => msg.remove(), 500); }, 3000);
+</script>
 
 <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
 

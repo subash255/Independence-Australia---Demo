@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Subcategory;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -17,7 +19,14 @@ class ProductController extends Controller
     }
     public function create()
     {
-        return view('admin.addproduct');
+        $categories = Category::with('subcategories')->get();  // Fetch all categories
+        
+        return view('admin.addproduct',compact('categories'));
+    }
+    public function getSubCategories($categoryId)
+    {
+        $subCategories = Subcategory::where('category_id', $categoryId)->get(); // Correct foreign key
+        return response()->json($subCategories);
     }
 
     

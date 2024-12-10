@@ -1,69 +1,56 @@
-@extends('layouts.admin')
+<form action="" method="POST" enctype="multipart/form-data" class="space-y-4">
+    @csrf
 
-@section('content')
-
-<div class="min-h-screen flex items-center justify-center py-8 px-4">
-
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-2xl font-bold mb-4 text-gray-700 text-center">Add Product</h2>
-
-        <!-- Display Success Message -->
-        @if(session('success'))
-            <div class="p-4 mb-4 bg-green-100 text-green-800 border border-green-300 rounded-lg">
-                <p>{{ session('success') }}</p>
-            </div>
-        @endif
-
-        <!-- Form -->
-        <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
-            @csrf
-
-            <!-- Product Name -->
-            <div>
-                <label for="name" class="block text-gray-600 font-medium">Product Name</label>
-                <input type="text" name="name" id="name" 
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter product name" required>
-            </div>
-
-            <!-- Price -->
-            <div>
-                <label for="price" class="block text-gray-600 font-medium">Price</label>
-                <input type="number" name="price" id="price" step="0.01"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter product price" required>
-            </div>
-
-            <!-- Quantity -->
-            <div>
-                <label for="quantity" class="block text-gray-600 font-medium">Quantity</label>
-                <input type="number" name="quantity" id="quantity" min="1"
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter product quantity" required>
-            </div>
-
-            <!-- Brand -->
-            <div>
-                <label for="brand" class="block text-gray-600 font-medium">Brand</label>
-                <input type="text" name="brand" id="brand" 
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    placeholder="Enter brand name" required>
-            </div>
-
-            <!-- Product Image Upload -->
-            <div>
-                <label for="image" class="block text-gray-600 font-medium">Product Image</label>
-                <input type="file" name="photopath" id="image" 
-                    class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit"
-                class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition">
-                Add Product
-            </button>
-        </form>
+    <!-- Category Dropdown -->
+    <div>
+        <label for="category_id" class="block text-gray-600 font-medium">Category</label>
+        <select name="category_id" id="category_id"
+            class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="" disabled selected>Select a category</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}" 
+                        data-subcategories="{{ json_encode($category->subcategories) }}">
+                    {{ $category->category_name }}
+                </option>
+            @endforeach
+        </select>
     </div>
-</div>
 
-@endsection
+    <!-- Subcategory Dropdown -->
+    <div>
+        <label for="sub_category_id" class="block text-gray-600 font-medium">Sub-Category</label>
+        <select name="sub_category_id" id="sub_category_id"
+            class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="" disabled selected>Select a sub-category</option>
+        </select>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit"
+        class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-lg transition">
+        Add Product
+    </button>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const categorySelect = document.getElementById('category_id');
+        const subCategorySelect = document.getElementById('sub_category_id');
+        
+        categorySelect.addEventListener('change', function() {
+            const selectedCategory = categorySelect.options[categorySelect.selectedIndex];
+            const subcategories = JSON.parse(selectedCategory.getAttribute('data-subcategories'));
+
+            // Clear current subcategory options
+            subCategorySelect.innerHTML = '<option value="" disabled selected>Select a sub-category</option>';
+
+            // Add new subcategory options
+            subcategories.forEach(function(subcategory) {
+                const option = document.createElement('option');
+                option.value = subcategory.id;
+                option.textContent = subcategory.subcategory_name;
+                subCategorySelect.appendChild(option);
+            });
+        });
+    });
+</script>

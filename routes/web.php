@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
+use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,8 +27,12 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin.dash');
-Route::get('admin/product', [ProductController::class, 'create'])->name('admin.product');
+Route::get('admin/product/addproduct', [ProductController::class, 'create'])->name('admin.product.addproduct');
 Route::get('admin/product', [ProductController::class, 'index'])->name('admin.product.product');
+Route::get('/sub-categories/{categoryId}', [ProductController::class, 'getSubCategories']);
+
+
+
 
 Route::get('admin/category', [CategoryController::class, 'index'])->name('admin.category.category');
 Route::get('admin/category/addcategory', [CategoryController::class, 'create'])->name('admin.category.addcategory');
@@ -40,6 +45,10 @@ Route::delete('admin/category/{id}/deletecategory', [CategoryController::class, 
 
 Route::get('admin/category/addsub', [SubcategoryController::class, 'create'])->name('admin.category.addsub');
 Route::post('admin/category/addsub', [SubcategoryController::class, 'store'])->name('admin.category.addsub');
+
+
+
+
 
 
 
