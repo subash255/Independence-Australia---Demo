@@ -1,22 +1,8 @@
 @extends('layouts.admin')
-
 @section('content')
 
-<div class="bg-red-600 text-white flex items-center justify-between px-8 pb-12 pt-8 absolute top-0 left-0 right-0 -z-30 shadow-lg mb-6">
-  <h1 class="text-3xl font-bold ml-60 py-0">Category</h1>
-  <div class="flex items-center space-x-6">
-    <button class="p-3 rounded-full hover:bg-red-500 transition ease-in-out duration-200">
-      <i class="fas fa-moon text-lg"></i>
-    </button>
-    <span class="text-lg font-medium">Developer</span>
-  </div>
-</div>
-
-<body class="p-6">
-
-  <!-- Main container-->
-  <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-10 rounded-lg">
-
+  <!-- Main container -->
+  <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end space-x-4">
       <button class="bg-white border-2 border-blue-700 text-gray-900 px-4 py-2 rounded-md hover:bg-blue-700 hover:text-white">Pending</button>
       <button class="bg-white border-2 border-green-600 text-gray-900 px-4 py-2 rounded-md hover:bg-green-600 hover:text-white">Approved</button>
@@ -65,7 +51,6 @@
             <td class="border border-gray-300 px-4 py-2">Meat & Seafood</td>
             <td class="border border-gray-300 px-4 py-2">Shrimp</td>
             <td class="border border-gray-300 px-4 py-2">All Natural Italian-style meat</td>
-
             <td class="border border-gray-300 px-4 py-2">
               <!-- Toggle Button for Active/Inactive Status -->
               <label for="status1" class="inline-flex items-center cursor-pointer">
@@ -86,23 +71,20 @@
             </td>
             <td class="border border-gray-300 px-4 py-2">pending</td>
             <td class="border border-gray-300 px-4 py-2"></td>
-            
             <td class="border border-gray-300 px-2 py-1 flex justify-center space-x-2">
-                <!-- Action buttons with square background -->
-                <button class="text-white bg-blue-500 hover:bg-blue-700 w-8 h-8 flex items-center justify-center rounded-md">
-                  <i class="ri-alarm-line text-sm"></i>
-                </button>
-                <button class="text-white bg-red-500 hover:bg-red-700 w-8 h-8 flex items-center justify-center rounded-md">
-                  <i class="ri-close-line text-sm"></i>
-                </button>
-                <button class="text-white bg-green-500 hover:bg-green-700 w-8 h-8 flex items-center justify-center rounded-md">
-                  <i class="ri-check-line text-sm"></i>
-                </button>
-                <button class="text-white bg-green-500 hover:bg-green-700 w-8 h-8 flex items-center justify-center rounded-md">
-                  <i class="ri-eye-line text-sm"></i>
-                </button>
-              </td>
-              
+              <button class="text-white bg-blue-500 hover:bg-blue-700 w-8 h-8 flex items-center justify-center rounded-md">
+                <i class="ri-alarm-line text-sm"></i>
+              </button>
+              <button class="text-white bg-red-500 hover:bg-red-700 w-8 h-8 flex items-center justify-center rounded-md">
+                <i class="ri-close-line text-sm"></i>
+              </button>
+              <button class="text-white bg-green-500 hover:bg-green-700 w-8 h-8 flex items-center justify-center rounded-md">
+                <i class="ri-check-line text-sm"></i>
+              </button>
+              <button class="text-white bg-green-500 hover:bg-green-700 w-8 h-8 flex items-center justify-center rounded-md">
+                <i class="ri-eye-line text-sm"></i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -110,25 +92,16 @@
 
     <!-- Pagination and Show Entries Section at the Bottom -->
     <div class="flex justify-between items-center mt-4">
-      <!-- Left: Show entries -->
       <div class="flex items-center space-x-2">
         <span class="ml-4 text-gray-700">Showing 1 to 5 of 5 entries</span>
       </div>
-
-      <!-- Right: Pagination -->
       <div class="flex items-center space-x-2">
         <button class="border border-gray-300 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md">Previous</button>
-        
-        <!-- Page number display -->
         <span class="px-4 py-2 text-gray-700">Page 1 of 3</span>
-        
         <button class="border border-gray-300 px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-md">Next</button>
       </div>
     </div>
-
   </div>
-
-</body>
 
 <script>
 document.querySelectorAll('.toggle-switch').forEach(toggle => {

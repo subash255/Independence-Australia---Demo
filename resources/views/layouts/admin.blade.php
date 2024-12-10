@@ -49,6 +49,30 @@
       </nav>
     </aside>
 
+        <!-- Header Section -->
+        <div class="bg-red-600 text-white flex items-center justify-between px-8 py-[5rem] fixed top-0 left-[16rem] right-0 shadow-lg z-10">
+            <h1 class="text-3xl font-semibold mt-[-2rem]">{{ $title ?? 'Default Title' }}</h1>
+            <div class="flex items-center space-x-4">
+                <div class="relative group">
+                    <div class="flex items-center mt-[-2rem] text-lg font-medium hover:text-white focus:outline-none cursor-pointer px-2 py-3">
+                        <span>Developer</span>
+                        <i class="ri-arrow-down-s-line text-white"></i>
+                    </div>
+        
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 mt-[-2rem] w-40 bg-white text-gray-800 rounded-md shadow-lg hidden group-hover:block z-[50]">
+                        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Log Out</a>
+                    </div>
+                </div>
+        
+                <button class="hover:bg-red-500 mt-[-2rem] transition ease-in-out duration-200">
+                    <i class="ri-moon-fill"></i>
+                </button>
+            </div>
+        </div>
+        
+
     <!-- Main Content -->
     <main class="flex-1 p-8">
       @yield('content')

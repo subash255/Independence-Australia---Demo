@@ -61,20 +61,28 @@
             <section>
                 <div class="container mx-auto text-center overflow-hidden relative">
                     <div class="slider-container relative h-8">
-                        <!-- Slider Text -->
+                        <!-- Slider Text 1 -->
                         <div
-                            class="slider-text absolute inset-0 flex items-center justify-center text-sm  transition-all duration-1000 transform translate-x-full opacity-0">
+                            class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                            <i class="ri-hand-heart-line text-[#00718f] mr-2"></i>
                             Empowering independence through choice.
                         </div>
+                        
+                        <!-- Slider Text 2 -->
                         <div
-                            class="slider-text absolute inset-0 flex items-center justify-center text-sm  transition-all duration-1000 transform translate-x-full opacity-0">
+                            class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                            <i class="ri-user-heart-line text-[#00718f] mr-2"></i>
                             Supporting living with dignity and care.
                         </div>
+                        
+                        <!-- Slider Text 3 -->
                         <div
-                            class="slider-text absolute inset-0 flex items-center justify-center text-sm  transition-all duration-1000 transform translate-x-full opacity-0">
+                            class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                            <i class="ri-lightbulb-line text-[#00718f] mr-2"></i>
                             Innovative solutions for everyday living.
                         </div>
                     </div>
+                    
                 </div>
             </section>
         </div>
@@ -285,7 +293,7 @@
 
         // Initial display and rotation
         showSliderText();
-        setInterval(showSliderText, 3000);
+        setInterval(showSliderText, 4000);
     </script>
 
 </body>

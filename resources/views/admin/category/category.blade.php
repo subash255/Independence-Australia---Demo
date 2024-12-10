@@ -2,15 +2,6 @@
 
 @section('content')
 
-<div class="bg-red-600 text-white flex items-center justify-between px-8 pb-12 pt-8 absolute top-0 left-0 right-0 -z-30 shadow-lg mb-6">
-  <h1 class="text-3xl font-bold ml-60 py-0">Category</h1>
-  <div class="flex items-center space-x-6">
-    <button class="p-3 rounded-full hover:bg-red-500 transition ease-in-out duration-200">
-      <i class="fas fa-moon text-lg"></i>
-    </button>
-    <span class="text-lg font-medium">Developer</span>
-  </div>
-</div>
 
 <body class="p-6">
 
