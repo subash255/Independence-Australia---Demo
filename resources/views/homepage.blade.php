@@ -18,15 +18,15 @@
             </p>
 
             <div class="space-y-4 md:space-y-0 md:flex md:flex-col md:gap-4">
-                <button
+                <a href="/login"><button
                 class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
                 Sign in
-            </button>
+            </button></a>
             
                 
                 <p class="text-sm text-gray-300">
                     Don't have an account yet? 
-                    <a href="#" class="text-teal-700 font-medium hover:underline">Register now</a>
+                    <a href="/register" class="text-teal-700 font-medium hover:underline">Register now</a>
                 </p>
             </div>
             

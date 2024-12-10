@@ -30,7 +30,7 @@
 
     <div class="bg-[#00718f] text-white text-center py-4">
         <p class="text-lg font-medium">
-            Already have an account? <a href="#" class="underline hover:text-gray-200">Sign in here</a>
+            Already have an account? <a href="/login" class="underline hover:text-gray-200">Sign in here</a>
         </p>
     </div>
 
