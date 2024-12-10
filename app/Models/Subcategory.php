@@ -8,9 +8,9 @@ class Subcategory extends Model
 {
     protected $fillable = ['subcategory_name', 'paragraph', 'categories_id'];
     
-    public function categories()
+    public function category()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
 }

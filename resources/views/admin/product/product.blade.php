@@ -11,8 +11,11 @@
     </div>
 
     <div class="flex justify-between mb-4">
-      <!-- Left: Show entries -->
+      <!-- Left: Show entries with tag above -->
       <div>
+        <div class="mb-2">
+          <a href="{{route('admin.product.addproduct')}}" class="bg-blue-500 text-white px-3 py-1 text-sm rounded-full">Add product</a>
+        </div>
         <label for="entries" class="mr-2">Show entries:</label>
         <select id="entries" class="border border-gray-300 px-2 py-1">
           <option value="5">5</option>
