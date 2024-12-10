@@ -1,8 +1,9 @@
 @extends('layouts.admin')
+
 @section('content')
 
   <!-- Main container -->
-  <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+  <div class="max-w-full mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end space-x-4">
       <button class="bg-white border-2 border-blue-700 text-gray-900 px-4 py-2 rounded-md hover:bg-blue-700 hover:text-white">Pending</button>
       <button class="bg-white border-2 border-green-600 text-gray-900 px-4 py-2 rounded-md hover:bg-green-600 hover:text-white">Approved</button>
@@ -71,7 +72,7 @@
             </td>
             <td class="border border-gray-300 px-4 py-2">pending</td>
             <td class="border border-gray-300 px-4 py-2"></td>
-            <td class="border border-gray-300 px-2 py-1 flex justify-center space-x-2">
+            <td class=" px-2 py-2 mt-4 flex justify-center space-x-2">
               <button class="text-white bg-blue-500 hover:bg-blue-700 w-8 h-8 flex items-center justify-center rounded-md">
                 <i class="ri-alarm-line text-sm"></i>
               </button>

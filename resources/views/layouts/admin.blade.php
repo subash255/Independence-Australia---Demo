@@ -8,21 +8,69 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+  <script>
+    let isCollapsed = false; 
+    // Function to toggle the sidebar
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const sidebarLinks = document.querySelectorAll('.sidebar-link span');
+      const logo = document.getElementById('logo');
+      const toggleIcon = document.getElementById('toggle-icon');
+      const header = document.getElementById('header');  
+
+      // Toggle the state of the sidebar
+      if (isCollapsed) {
+        sidebar.classList.remove('w-20');
+        sidebar.classList.add('w-64');
+        // Show the logo and hide the toggle icon
+        logo.classList.remove('hidden');
+        toggleIcon.classList.add('hidden');
+        
+        // Show sidebar text
+        sidebarLinks.forEach(link => {
+          link.classList.remove('hidden');
+        });
+
+        // Move the header accordingly
+        header.classList.remove('left-[5rem]');
+        header.classList.add('left-[16rem]'); 
+      } else {
+        sidebar.classList.remove('w-64');
+        sidebar.classList.add('w-20');
+        // Hide the logo and show the toggle icon
+        logo.classList.add('hidden');
+        toggleIcon.classList.remove('hidden');
+        
+        // Hide sidebar text
+        sidebarLinks.forEach(link => {
+          link.classList.add('hidden');
+        });
+
+        // Move the header accordingly
+        header.classList.remove('left-[16rem]');
+        header.classList.add('left-[5rem]'); 
+      }
+
+      // Toggle the sidebar state
+      isCollapsed = !isCollapsed;
+    }
+  </script>
 </head>
 
 <body class="bg-gray-100 text-gray-900 h-screen flex flex-col font-sans">
 
   <div class="flex flex-1 h-full">
     <!-- Sidebar -->
-    <aside id="sidebar" class="w-64 bg-white text-gray-900 shadow-lg flex flex-col transition-all duration-300 ease-in-out">
-      <!-- Hamburger Menu Button (for mobile) -->
-      <button id="hamburger" class="lg:hidden text-white rounded-md hover:bg-red-500 transition duration-200 p-4 absolute top-4 left-4 z-20">
-        <i id="hamburger-icon" class="ri-menu-3-line"></i>
-      </button>
-
-      <!-- Logo and title -->
-      <div class="p-4 flex items-center justify-center bg-white">
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain">
+    <aside id="sidebar" class="w-64 bg-white text-gray-900 shadow-lg flex flex-col transition-all duration-300">
+      <!-- Logo and toggle button -->
+      <div class="p-4 flex items-center justify-center bg-white cursor-pointer" onclick="toggleSidebar()">
+        <!-- The actual logo -->
+        <img id="logo" src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain">
+        
+        <!-- The button (icon) to toggle the sidebar, initially hidden -->
+        <button id="toggle-icon" onclick="toggleSidebar()" class="hidden px-4 py-2 bg-red-600 text-white rounded-full">
+          <i class="ri-menu-3-fill"></i>
+        </button>
       </div>
 
       <!-- Navigation Links -->
@@ -54,11 +102,9 @@
       </nav>
     </aside>
 
-    <!-- Header Section (unchanged as per your request) -->
-    <div class="bg-red-600 text-white flex items-center justify-between px-8 py-[5rem] fixed top-0 left-[16rem] right-0 shadow-lg z-10">
+    <!-- Header Section -->
+    <div id="header" class="bg-red-600 text-white flex items-center justify-between px-8 py-[5rem] fixed top-0 left-[16rem] right-0 shadow-lg z-10">
       <h1 class="text-3xl font-semibold mt-[-2rem]">{{ $title ?? 'Default Title' }}</h1>
-
-      <!-- User Profile and Theme Toggle -->
       <div class="flex items-center space-x-4">
         <div class="relative group">
           <div class="flex items-center mt-[-2rem] text-lg font-medium hover:text-white focus:outline-none cursor-pointer px-2 py-3">
@@ -80,40 +126,11 @@
     </div>
 
     <!-- Main Content -->
-    <main id="main-content" class="flex-1 p-8 ml-64 lg:ml-0 transition-all duration-300 ease-in-out">
+    <main class="flex-1 p-8">
       @yield('content')
     </main>
   </div>
 
-  <script>
-    // JavaScript to toggle sidebar visibility on mobile
-    const hamburger = document.getElementById('hamburger');
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('main-content');
-    const hamburgerIcon = document.getElementById('hamburger-icon');
-
-    hamburger.addEventListener('click', () => {
-      sidebar.classList.toggle('w-16');  // Toggle width of sidebar
-      sidebar.classList.toggle('w-64');  // Toggle width of sidebar
-
-      mainContent.classList.toggle('ml-0');  // Adjust main content when sidebar is hidden
-
-      // Toggle hamburger and close icon
-      if (sidebar.classList.contains('w-16')) {
-        hamburgerIcon.classList.remove('ri-close-line');
-        hamburgerIcon.classList.add('ri-menu-3-line');
-      } else {
-        hamburgerIcon.classList.remove('ri-menu-3-line');
-        hamburgerIcon.classList.add('ri-close-line');
-      }
-
-      // Toggle visibility of text in sidebar (show text when expanded, hide when collapsed)
-      const sidebarLinks = sidebar.querySelectorAll('nav a span');
-      sidebarLinks.forEach(link => {
-        link.classList.toggle('hidden'); // Hide text when collapsed
-      });
-    });
-  </script>
 </body>
 
 </html>

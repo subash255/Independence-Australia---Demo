@@ -4,7 +4,8 @@
 
     <!-- Cards Section -->
     <div class="relative z-[10] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-[10rem] px-6">
-        <div class="bg-white p-6 text-left hover:shadow-2xl flex flex-row items-center justify-between w-full h-20 rounded-lg transform -translate-y-12 shadow-lg z-[5]">
+        <!-- Pending Orders Card -->
+        <div class="bg-white p-6 text-left hover:shadow-2xl flex flex-row items-center justify-between w-full h-20 rounded-lg transform sm:-translate-y-8 lg:-translate-y-12 shadow-lg z-[5]">
             <div>
                 <h2 class="text-gray-700 font-medium">Pending Orders</h2>
                 <p class="text-gray-700 font-medium">1</p>
@@ -14,9 +15,8 @@
             </div>
         </div>
 
-
         <!-- Processing Orders Card -->
-        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform -translate-y-12 shadow-lg">
+        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-8 lg:-translate-y-12 shadow-lg">
             <div>
                 <h2 class="text-gray-700 font-medium mb-2">Processing Orders</h2>
                 <p class="text-gray-700 font-medium">1</p>
@@ -27,7 +27,7 @@
         </div>
 
         <!-- Income Card -->
-        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform -translate-y-12 shadow-lg">
+        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-8 lg:-translate-y-12 shadow-lg">
             <div>
                 <h2 class="text-gray-700 font-medium mb-2">Income</h2>
                 <p class="text-gray-700 font-medium">$400</p>
@@ -36,11 +36,9 @@
                 <i class="ri-money-dollar-circle-fill text-2xl"></i>
             </div>
         </div>
-    </div>
 
-    <div class="relative z-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6 mt-0">
-        <!-- Visitors Card -->
-        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform -translate-y-4 shadow-lg">
+        <!-- Orders Card -->
+        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-4 lg:-translate-y-8 shadow-lg">
             <div>
                 <h2 class="text-gray-700 font-medium mb-2">Orders</h2>
                 <p class="text-gray-700 font-medium">142</p>
@@ -50,8 +48,8 @@
             </div>
         </div>
 
-        <!-- Revenue -->
-        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform -translate-y-4 shadow-lg">
+        <!-- Revenue Card -->
+        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-4 lg:-translate-y-8 shadow-lg">
             <div>
                 <h2 class="text-gray-700 font-medium mb-2">Revenue</h2>
                 <p class="text-gray-700 font-medium">100</p>
@@ -61,8 +59,8 @@
             </div>
         </div>
 
-        <!-- Visitors-->
-        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform -translate-y-4 shadow-lg">
+        <!-- Visitors Card -->
+        <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-4 lg:-translate-y-8 shadow-lg">
             <div>
                 <h2 class="text-gray-700 font-medium mb-2">Visitors</h2>
                 <p class="text-gray-700 font-medium">200</p>
