@@ -19,7 +19,7 @@
 
     <!-- Add Category Button placed to the right -->
     <div class="mb-4 flex justify-end">
-      <button class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-white hover:text-red-500">Add Category</button>
+      <a  href="{{route('admin.category.addcategory')}}" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-white hover:text-red-500">Add Category</a>
     </div>
 
     <div class="flex justify-between mb-4">

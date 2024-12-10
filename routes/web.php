@@ -4,21 +4,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SubcategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('/homepage', function () {
-    return view('homepage');
-});
-
-
-Route::get('/checkout', function () {
-    return view('checkout');
-});
-
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,6 +26,17 @@ Route::get('admin/product', [ProductController::class, 'create'])->name('admin.p
 Route::get('admin/product', [ProductController::class, 'index'])->name('admin.product.product');
 
 Route::get('admin/category', [CategoryController::class, 'index'])->name('admin.category.category');
+Route::get('admin/category/addcategory', [CategoryController::class, 'create'])->name('admin.category.addcategory');
+Route::post('admin/category/addcategory', [CategoryController::class, 'store'])->name('admin.category.addcategory');
+Route::get('admin/category/addcategory', [CategoryController::class, 'create'])->name('admin.category.addcategory');
+
+
+Route::get('admin/category/addsub', [SubcategoryController::class, 'create'])->name('admin.category.addsub');
+Route::post('admin/category/addsub', [SubcategoryController::class, 'store'])->name('admin.category.addsub');
+
+
+
+
 
 
 Route::get('/products/add', [ProductController::class, 'create'])->name('product.create');
