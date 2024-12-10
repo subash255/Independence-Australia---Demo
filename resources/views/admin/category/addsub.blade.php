@@ -10,7 +10,7 @@
       @csrf
       <div class="mb-6">
         <label for="category" class="block text-gray-700 text-lg font-semibold mb-2">Category</label>
-        <select name="category_id" id="category" class="border border-gray-300 px-4 py-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500" required>
+        <select name="categories_id" id="category" class="border border-gray-300 px-4 py-3 w-full rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500" required>
           <option value="">Select a category</option>
           @foreach ($categories as $category)
             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
