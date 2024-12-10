@@ -1,27 +1,14 @@
 @extends('layouts.admin')
-
 @section('content')
 
 {{-- Flash Message --}}
 @if(session('success'))
-    <div class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg">
+    <div class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
         {{ session('success') }}
     </div>
 @endif
 
-<div class="bg-red-600 text-white flex items-center justify-between px-8 pb-12 pt-8 absolute top-0 left-0 right-0 -z-30 shadow-lg mb-6">
-  <h1 class="text-3xl font-bold ml-60 py-0">Category</h1>
-  <div class="flex items-center space-x-6">
-    <button class="p-3 rounded-full hover:bg-red-500 transition ease-in-out duration-200">
-      <i class="fas fa-moon text-lg"></i>
-    </button>
-    <span class="text-lg font-medium">Developer</span>
-  </div>
-</div>
-
-<body class="p-6">
-
-  <div class="max-w-7xl mx-auto p-6 bg-white shadow-lg mt-10">
+<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
 
     <div class="mb-4 flex justify-end">
       <a href="{{ route('admin.category.addcategory') }}" class="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-white hover:text-red-500">Add Category</a>

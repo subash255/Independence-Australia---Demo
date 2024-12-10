@@ -11,7 +11,7 @@ class DashboardController extends Controller
     {
         return view('admin.dash', [
             'title' => 'Dashboard' 
-        ]);;
+        ]);
     }
     public function product()
     {

@@ -11,7 +11,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate(5);
-        return view('admin.category.category',compact('categories'));
+        return view('admin.category.category',compact('categories'),[
+            'title' => 'Category' 
+        ]);
 
     }
     public function create()
@@ -32,8 +34,6 @@ class CategoryController extends Controller
         $data['image'] = $image;
 
         Category::create($data);
-       
-        
 
         return redirect()->route('admin.category.category')->with('success', 'Category created successfully');
     }
