@@ -3,10 +3,8 @@
 @section('content')
 
 
-<body class="p-6">
-
   <!-- Main container with shadow -->
-  <div class="max-w-7xl mx-auto p-6 bg-white shadow-lg mt-10">
+  <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
 
     <!-- Add Category Button placed to the right -->
     <div class="mb-4 flex justify-end">
@@ -171,5 +169,4 @@
 
   </div>
 
-</body>
 @endsection
