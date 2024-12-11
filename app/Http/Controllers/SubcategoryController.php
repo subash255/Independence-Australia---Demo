@@ -64,25 +64,28 @@ public function getSubcategoriesByCategory($categoryId)
 
 public function update(Request $request, $id)
 {
-    dd($request->all());
-
     // Validate the incoming data
     $data = $request->validate([
         'category_id' => 'required|exists:categories,id', // Ensure category exists
         'subcategory_name' => 'required|string|max:255',
-        'subcategory_id' => 'nullable|exists:subcategories,id', // Add this line if you're updating subcategory_id
         'paragraph' => 'nullable|string',
     ]);
 
     // Find the subcategory by ID or fail
     $subcategory = Subcategory::findOrFail($id);
 
-    // Update the subcategory with the new data
-    $subcategory->update($data);
+    // Update the subcategory with the validated data
+    $subcategory->category_id = $data['category_id'];
+    $subcategory->subcategory_name = $data['subcategory_name'];
+    $subcategory->paragraph = $data['paragraph'];
 
-    // Redirect to the addsub page with a success message
+    // Save the updated subcategory to the database
+    $subcategory->save();
+
+    // Redirect back with a success message
     return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory updated successfully!');
 }
+
 
 
 public function destroy($id)
