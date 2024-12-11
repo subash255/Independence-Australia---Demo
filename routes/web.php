@@ -35,6 +35,8 @@ Route::get('admin/product/addproduct', [ProductController::class, 'create'])->na
 Route::get('admin/product', [ProductController::class, 'index'])->name('admin.product.product');
 Route::get('/sub-categories/{categoryId}', [ProductController::class, 'getSubCategories']);
 Route::post('admin/addproduct/', [ProductController::class, 'store'])->name('admin.addproduct');
+Route::post('/admin/product/update-toggle/{product}', [ProductController::class, 'updateToggle'])->name('admin.product.updateToggle');
+
 
 
 
@@ -53,6 +55,8 @@ Route::get('admin/subcategory/{id}/edit', [SubcategoryController::class, 'edit']
 Route::post('admin/subcategory/store', [SubcategoryController::class, 'store'])->name('admin.subcategory.store');
 Route::patch('admin/subcategory/{id}/update', [SubcategoryController::class, 'update'])->name('admin.subcategory.update');
 Route::get('/admin/subcategories/{categoryId}', [SubcategoryController::class, 'getSubcategoriesByCategory']);
+Route::post('/admin/category/update-toggle/{category}', [CategoryController::class, 'updateToggle'])->name('admin.category.updateToggle');
+
 
 
 

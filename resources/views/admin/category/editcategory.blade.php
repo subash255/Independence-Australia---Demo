@@ -32,7 +32,14 @@
       <div class="mb-8">
         <label for="category" class="block text-lg font-medium text-gray-700">Category Name</label>
         <input type="text" id="category" name="category_name" value="{{ old('category_name', $category->category_name) }}" placeholder="Enter category name"
-               class="mt-3 px-6 py-4 w-full border border-gray-300 rounded-lg shadow-md focus:ring-2 focus:ring-indigo-500 focus:outline-none transition-all duration-300">
+               class="mt-2 px-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" oninput="generateSlug()">
+      </div>
+
+      <div class="mb-6">
+        <label for="slug" class="block text-sm font-medium text-gray-700">Category Name</label>
+        <!-- Pre-populate the category name field -->
+        <input type="text" id="slug" name="slug" value="{{ old('slug', $category->slug) }}" placeholder=""
+               class="mt-2 px-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" readonly>
       </div>
 
       <!-- Current Image Display -->
@@ -64,3 +71,11 @@
 
 </body>
 </html>
+<script>
+        function generateSlug() {
+            let input1 = document.getElementById('category').value;
+            // Convert multiple spaces to single spaces and replace spaces with hyphens
+            let slug = input1.trim().replace(/\s+/g, '-').toLowerCase();
+            document.getElementById('slug').value = slug;
+        }
+    </script>

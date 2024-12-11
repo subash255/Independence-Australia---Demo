@@ -100,4 +100,5 @@ class SubcategoryController extends Controller
         // Redirect to the addsub page with a success message
         return redirect()->route('admin.subcategory.addsub')->with('success', 'Subcategory deleted successfully!');
     }
+    
 }
