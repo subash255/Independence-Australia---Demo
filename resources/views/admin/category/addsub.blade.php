@@ -17,9 +17,27 @@
       <p class="text-base sm:text-lg text-gray-500">Add a new subcategory to an existing category and provide a description.</p>
     </div>
 
+    <!-- Success Message -->
+    @if (session('success'))
+      <div class="mb-4 text-green-600">
+        {{ session('success') }}
+      </div>
+    @endif
+
+    <!-- Validation Errors -->
+    @if ($errors->any())
+      <div class="mb-4">
+        <ul class="text-red-500 text-sm">
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
     <!-- Back Button -->
     <div class="mb-8 flex justify-start">
-      <a href="{{route('admin.category.addcategory')}}" class="flex items-center text-sm text-indigo-600 font-medium bg-white border-2 border-indigo-600 rounded-lg py-2 px-4 hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <a href="{{ route('admin.category.addcategory') }}" class="flex items-center text-sm text-indigo-600 font-medium bg-white border-2 border-indigo-600 rounded-lg py-2 px-4 hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5"></path>
         </svg>
@@ -28,13 +46,13 @@
     </div>
 
     <!-- Form -->
-    <form action="{{ route('admin.category.addsub') }}" method="POST">
+    <form action="{{ route('admin.category.store') }}" method="POST">
       @csrf
 
       <!-- Category Selection -->
       <div class="mb-6">
         <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-        <select name="categories_id" id="category" class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" required>
+        <select name="category_id" id="category" class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" required>
           <option value="">Select a category</option>
           @foreach ($categories as $category)
             <option value="{{ $category->id }}">{{ $category->category_name }}</option>
@@ -56,8 +74,7 @@
 
       <!-- Submit Button -->
       <div class="flex justify-center">
-        <button type="submit"
-                class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
           Save Subcategory
         </button>
       </div>

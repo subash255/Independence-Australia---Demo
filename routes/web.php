@@ -43,9 +43,10 @@ Route::patch('admin/category/{id}/updatecategory', [CategoryController::class, '
 Route::delete('admin/category/{id}/deletecategory', [CategoryController::class, 'destroy'])->name('admin.category.deletecategory');
 
 
-Route::get('admin/category/addsub', [SubcategoryController::class, 'create'])->name('admin.category.addsub');
-Route::post('admin/category/addsub', [SubcategoryController::class, 'store'])->name('admin.category.addsub');
+Route::get('/admin/category/addsub', [SubcategoryController::class, 'create'])->name('admin.category.addsub');
+Route::post('/admin/category/addsub', [SubcategoryController::class, 'store'])->name('admin.category.store');
 
+Route::post('admin/category/store', [SubcategoryController::class, 'store'])->name('admin.category.store');
 
 
 

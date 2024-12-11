@@ -5,6 +5,9 @@
   <!-- Main container -->
   <div class="max-w-full mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end space-x-4">
+      <div class="mr-[28rem] mt-2">
+        <a href="{{route('admin.product.addproduct')}}" class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">Add product</a>
+      </div>
       <button class="bg-white border-2 border-blue-700 text-gray-900 px-4 py-2 rounded-md hover:bg-blue-700 hover:text-white">Pending</button>
       <button class="bg-white border-2 border-green-600 text-gray-900 px-4 py-2 rounded-md hover:bg-green-600 hover:text-white">Approved</button>
       <button class="bg-white border-2 border-red-600 text-gray-900 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white">Rejected</button>
@@ -13,9 +16,6 @@
     <div class="flex justify-between mb-4">
       <!-- Left: Show entries with tag above -->
       <div>
-        <div class="mb-2">
-          <a href="{{route('admin.product.addproduct')}}" class="bg-blue-500 text-white px-3 py-1 text-sm rounded-full">Add product</a>
-        </div>
         <label for="entries" class="mr-2">Show entries:</label>
         <select id="entries" class="border border-gray-300 px-2 py-1">
           <option value="5">5</option>

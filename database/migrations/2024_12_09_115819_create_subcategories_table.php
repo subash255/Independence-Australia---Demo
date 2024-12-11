@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('subcategory_name'); // Name of the subcategory
             $table->text('paragraph')->nullable(); // Paragraph for the subcategory description
-            $table->foreignId('categories_id')->constrained('categories')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade'); // Foreign key to categories
             $table->timestamps();
         });
     }
