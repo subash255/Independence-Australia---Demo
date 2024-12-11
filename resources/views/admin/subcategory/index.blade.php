@@ -72,7 +72,7 @@
                     </td>
                     <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                         <!-- Edit Icon -->
-                        <a href="{{ route('admin.category.editcategory', ['id' => $category->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                        <a href="{{ route('admin.subcategory.edit', ['id' => $category->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                             <i class="ri-edit-box-line text-white"></i>
                         </a>
                         <!-- Delete Icon -->
