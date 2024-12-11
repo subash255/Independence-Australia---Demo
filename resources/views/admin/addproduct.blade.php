@@ -23,7 +23,7 @@
     <h2 class="text-3xl font-semibold text-center text-gray-800 mb-6">Add New Product</h2>
     
     <!-- Form -->
-    <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <form action="{{ route('admin.addproduct') }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
       @csrf
 
@@ -31,8 +31,8 @@
 
       <!-- Category Dropdown -->
       <div class="col-span-1">
-        <label for="category_id" class="block text-gray-700 text-sm font-medium">Category</label>
-        <select name="category_id" id="category_id"
+        <label for="categories_id" class="block text-gray-700 text-sm font-medium">Category</label>
+        <select name="categories_id" id="categories_id"
                 class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm">
             <option value="" disabled selected>Select a category</option>
             @foreach($categories as $category)
@@ -46,8 +46,8 @@
 
       <!-- Subcategory Dropdown -->
       <div class="col-span-1">
-        <label for="sub_category_id" class="block text-gray-700 text-sm font-medium">Sub-Category</label>
-        <select name="sub_category_id" id="sub_category_id"
+        <label for="subcategories_id" class="block text-gray-700 text-sm font-medium">Sub-Category</label>
+        <select name="subcategories_id" id="subcategories_id"
                 class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm">
             <option value="" disabled selected>Select a sub-category</option>
         </select>
@@ -100,7 +100,7 @@
       <!-- Product Image -->
       <div class="col-span-3">
         <label for="image" class="block text-gray-700 text-sm font-medium">Product Image</label>
-        <input type="file" name="image" id="image" 
+        <input type="file" name="photopath" id="image" 
                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm" 
                accept="image/*" required>
       </div>
@@ -119,8 +119,8 @@
   <!-- Script for Dynamic Subcategories -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const categorySelect = document.getElementById('category_id');
-      const subCategorySelect = document.getElementById('sub_category_id');
+      const categorySelect = document.getElementById('categories_id');
+      const subCategorySelect = document.getElementById('subcategories_id');
       
       categorySelect.addEventListener('change', function() {
           const selectedCategory = categorySelect.options[categorySelect.selectedIndex];

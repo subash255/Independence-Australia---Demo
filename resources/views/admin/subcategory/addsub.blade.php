@@ -17,12 +17,7 @@
       <p class="text-base sm:text-lg text-gray-500">Add a new subcategory to an existing category and provide a description.</p>
     </div>
 
-    <!-- Success Message -->
-    @if (session('success'))
-      <div class="mb-4 text-green-600">
-        {{ session('success') }}
-      </div>
-    @endif
+  
 
     <!-- Validation Errors -->
     @if ($errors->any())
@@ -37,7 +32,7 @@
 
     <!-- Back Button -->
     <div class="mb-8 flex justify-start">
-      <a href="{{ route('admin.category.addcategory') }}" class="flex items-center text-sm text-indigo-600 font-medium bg-white border-2 border-indigo-600 rounded-lg py-2 px-4 hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      <a href="{{ route('admin.subcategory.addsub') }}" class="flex items-center text-sm text-indigo-600 font-medium bg-white border-2 border-indigo-600 rounded-lg py-2 px-4 hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5"></path>
         </svg>
@@ -46,7 +41,7 @@
     </div>
 
     <!-- Form -->
-    <form action="{{ route('admin.category.store') }}" method="POST">
+    <form action="{{ route('admin.subcategory.store') }}" method="POST">
       @csrf
 
       <!-- Category Selection -->

@@ -17,7 +17,7 @@
 <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
 
     <div class="mb-4 flex justify-end">
-        <a href="{{ route('admin.category.addcategory') }}" class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">Add Category</a>
+        <a href="{{ route('admin.subcategory.addsub') }}" class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">Add Subcategory</a>
     </div>
 
     <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
@@ -44,22 +44,24 @@
                     <th class="border border-gray-300 px-4 py-2">Order</th>
                     <th class="border border-gray-300 px-4 py-2">Image</th>
                     <th class="border border-gray-300 px-4 py-2">Category Name</th>
+                    <th class="border border-gray-300 px-4 py-2">Category Name</th>
                     <th class="border border-gray-300 px-4 py-2">Slug</th>
                     <th class="border border-gray-300 px-4 py-2">Status</th>
                     <th class="border border-gray-300 px-4 py-2">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($categories as $category)
+                @foreach ($subcategories as $category)
                 <tr class="border border-gray-300">
                     <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
 
                     <!-- Displaying the Image -->
                     <td class="border border-gray-300 px-4 py-2">
-                        <img src="{{ asset('images/brand/' . $category->image) }}" alt="{{ $category->category_name }}" class="w-12 h-12 object-cover rounded-full">
+                        <img src="{{ asset('images/brand/' . $category->category->image) }}" alt="{{ $category->category_name }}" class="w-12 h-12 object-cover rounded-full">
                     </td>
 
-                    <td class="border border-gray-300 px-4 py-2">{{ $category->category_name }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $category->category->category_name }}</td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $category->subcategory_name }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ $category->slug }}</td>
                     <td class="border border-gray-300 px-4 py-2">
                         <label for="status{{ $category->id }}" class="inline-flex items-center cursor-pointer">
@@ -83,10 +85,7 @@
                             </button>
                         </form>
                         
-                        <!-- Settings Icon -->
-                        <a  href="{{route('admin.subcategory.index')}}" class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
-                            <i class="ri-settings-5-line text-white"></i>
-</a>
+                        
                     </td>
                     
                 </tr>
@@ -99,12 +98,12 @@
     <div class="flex justify-between items-center mt-4">
         <div class="flex items-center space-x-2">
             <span class="ml-4 text-gray-700">
-                Showing {{ $categories->firstItem() }} to {{ $categories->lastItem() }} of {{ $categories->total() }} entries
+                Showing {{ $subcategories->firstItem() }} to {{ $subcategories->lastItem() }} of {{ $subcategories->total() }} entries
             </span>
         </div>
 
         <div class="flex items-center space-x-2">
-            {{ $categories->links() }}
+            {{ $subcategories->links() }}
         </div>
     </div>
 
