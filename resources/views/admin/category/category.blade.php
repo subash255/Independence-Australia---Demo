@@ -51,7 +51,7 @@
             </thead>
             <tbody>
                 @foreach ($categories as $category)
-                <tr>
+                <tr class="border border-gray-300">
                     <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
 
                     <!-- Displaying the Image -->
@@ -74,7 +74,6 @@
                         <a href="{{ route('admin.category.editcategory', ['id' => $category->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                             <i class="ri-edit-box-line text-white"></i>
                         </a>
-                        
                         <!-- Delete Icon -->
                         <form action="{{ route('admin.category.deletecategory', ['id' => $category->id]) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this category?');">
                             @csrf
@@ -83,12 +82,13 @@
                                 <i class="ri-delete-bin-line text-white"></i>
                             </button>
                         </form>
-                    
+                        
                         <!-- Settings Icon -->
                         <button class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                             <i class="ri-settings-5-line text-white"></i>
                         </button>
                     </td>
+                    
                 </tr>
                 @endforeach
             </tbody>
