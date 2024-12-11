@@ -39,6 +39,8 @@
         </select>
     </div>
 
+    
+
     <!-- Subcategory Name Input -->
     <div class="form-group">
         <label for="subcategory_name" class="block text-lg font-medium text-gray-700">Subcategory Name</label>

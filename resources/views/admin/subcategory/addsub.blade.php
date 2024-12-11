@@ -16,6 +16,7 @@
       <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Add Subcategory</h1>
       <p class="text-base sm:text-lg text-gray-500">Add a new subcategory to an existing category and provide a description.</p>
     </div>
+    
 
     <!-- Validation Errors -->
     @if ($errors->any())
