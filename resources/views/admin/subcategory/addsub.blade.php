@@ -17,8 +17,6 @@
       <p class="text-base sm:text-lg text-gray-500">Add a new subcategory to an existing category and provide a description.</p>
     </div>
 
-  
-
     <!-- Validation Errors -->
     @if ($errors->any())
       <div class="mb-4">

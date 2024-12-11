@@ -20,6 +20,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/admin/dash', function () {
+    return view('index');
+})->middleware(['auth', 'verified'])->name('admin.dash');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -31,10 +35,6 @@ Route::get('admin/product/addproduct', [ProductController::class, 'create'])->na
 Route::get('admin/product', [ProductController::class, 'index'])->name('admin.product.product');
 Route::get('/sub-categories/{categoryId}', [ProductController::class, 'getSubCategories']);
 Route::post('admin/addproduct/', [ProductController::class, 'store'])->name('admin.addproduct');
-
-
-
-
 
 
 
@@ -51,8 +51,9 @@ Route::get('/admin/subcategory/index', [SubcategoryController::class, 'index'])-
 Route::get('/admin/subcategory/addsub', [SubcategoryController::class, 'create'])->name('admin.subcategory.addsub');
 Route::get('admin/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('admin.subcategory.edit');
 Route::post('admin/subcategory/store', [SubcategoryController::class, 'store'])->name('admin.subcategory.store');
-Route::patch('admin/subcategory/{id}/update', [SubCategoryController::class, 'update'])->name('admin.subcategory.update');
+Route::patch('admin/subcategory/{id}/update', [SubcategoryController::class, 'update'])->name('admin.subcategory.update');
 Route::get('/admin/subcategories/{categoryId}', [SubcategoryController::class, 'getSubcategoriesByCategory']);
+
 
 
 

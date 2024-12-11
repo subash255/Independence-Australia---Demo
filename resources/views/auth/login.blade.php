@@ -15,8 +15,8 @@
             <h2 class="text-3xl font-bold mb-4">Login</h2>
             <small class="text-black text-2xl">Welcome to Independence Australia</small>
 
-            <form method="POST" action="" class="w-full max-w-md mt-8 space-y-6">
-
+            <form method="POST" action="{{route('login')}}" class="w-full max-w-md mt-8 space-y-6">
+                @csrf
                 <!-- Email -->
                 <input id="email" type="email" name="email" required autocomplete="email" placeholder="Email"
                     class="w-full p-4 rounded-lg bg-white text-black focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-300 shadow-md">
