@@ -13,4 +13,8 @@ class Subcategory extends Model
     {
         return $this->belongsTo(Category::class, 'category_id'); // Foreign key relation
     }
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

@@ -8,12 +8,17 @@ use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
 {
+    public function index(){
+        $subcategories=Subcategory::paginate(5);
+        return view('admin.subcategory.index',compact('subcategories'));
+
+    }
     // Show the form for creating a subcategory
     public function create()
     {
         // Eager load categories with their subcategories
         $categories = Category::all();
-        return view('admin.category.addsub', compact('categories'));
+        return view('admin.subcategory.addsub', compact('categories'));
     }
 
     // Store the new subcategory
@@ -34,6 +39,6 @@ class SubcategoryController extends Controller
         ]);
 
         // Redirect to the addsub page with a success message
-        return redirect()->route('admin.category.addsub')->with('success', 'Subcategory created successfully!');
+        return redirect()->route('admin.subcategory.addsub')->with('success', 'Subcategory created successfully!');
     }
 }

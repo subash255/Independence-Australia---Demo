@@ -34,6 +34,10 @@ Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin.das
 Route::get('admin/product/addproduct', [ProductController::class, 'create'])->name('admin.product.addproduct');
 Route::get('admin/product', [ProductController::class, 'index'])->name('admin.product.product');
 Route::get('/sub-categories/{categoryId}', [ProductController::class, 'getSubCategories']);
+Route::post('admin/addproduct/', [ProductController::class, 'store'])->name('admin.addproduct');
+
+
+
 
 
 
@@ -47,10 +51,11 @@ Route::patch('admin/category/{id}/updatecategory', [CategoryController::class, '
 Route::delete('admin/category/{id}/deletecategory', [CategoryController::class, 'destroy'])->name('admin.category.deletecategory');
 
 
-Route::get('/admin/category/addsub', [SubcategoryController::class, 'create'])->name('admin.category.addsub');
-Route::post('/admin/category/addsub', [SubcategoryController::class, 'store'])->name('admin.category.store');
+Route::get('/admin/subcategory/index', [SubcategoryController::class, 'index'])->name('admin.subcategory.index');
+Route::get('/admin/subcategory/addsub', [SubcategoryController::class, 'create'])->name('admin.subcategory.addsub');
+Route::post('/admin/subcategory/addsub', [SubcategoryController::class, 'store'])->name('admin.subcategory.store');
 
-Route::post('admin/category/store', [SubcategoryController::class, 'store'])->name('admin.category.store');
+Route::post('admin/subcategory/store', [SubcategoryController::class, 'store'])->name('admin.subcategory.store');
 
 
 
