@@ -51,7 +51,8 @@ Route::get('/admin/subcategory/index', [SubcategoryController::class, 'index'])-
 Route::get('/admin/subcategory/addsub', [SubcategoryController::class, 'create'])->name('admin.subcategory.addsub');
 Route::get('admin/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('admin.subcategory.edit');
 Route::post('admin/subcategory/store', [SubcategoryController::class, 'store'])->name('admin.subcategory.store');
-Route::patch('admin/subcategory/{id}/update', [CategoryController::class, 'update'])->name('admin.subcategory.update');
+Route::patch('admin/subcategory/{id}/update', [SubCategoryController::class, 'update'])->name('admin.subcategory.update');
+Route::get('/admin/subcategories/{categoryId}', [SubcategoryController::class, 'getSubcategoriesByCategory']);
 
 
 

@@ -63,13 +63,11 @@ public function getSubcategoriesByCategory($categoryId)
 
 public function update(Request $request, $id)
 {
-    dd($request->all());
+    
 
     // Validate the incoming data
-    $data = $request->validate([
-        'category_id' => 'required|exists:categories,id', // Ensure category exists
+    $data = $request->validate([     
         'subcategory_name' => 'required|string|max:255',
-        'subcategory_id' => 'nullable|exists:subcategories,id', // Add this line if you're updating subcategory_id
         'paragraph' => 'nullable|string',
     ]);
 

@@ -1,32 +1,13 @@
-
 <script src="https://cdn.tailwindcss.com"></script>
+
 <form action="{{ route('admin.subcategory.update', $subcategory->id) }}" method="POST" class="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg space-y-6">
     @csrf
     @method('PATCH')
 
-    <!-- Category Dropdown -->
+    <!-- Category Display (Non-editable) -->
     <div class="form-group">
-        <label for="category_id" class="block text-lg font-medium text-gray-700">Category</label>
-        <select name="category_id" id="category_id" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            @foreach ($categories as $category)
-                <option value="{{ $category->id }}" {{ $subcategory->category_id == $category->id ? 'selected' : '' }}>
-                    {{ $category->category_name }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    <!-- Subcategory Dropdown -->
-    <div class="form-group">
-        <label for="subcategory_id" class="block text-lg font-medium text-gray-700">Subcategory</label>
-        <select name="subcategory_id" id="subcategory_id" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-            <option value="">Select Subcategory</option>
-            @foreach ($subcategories as $sub)
-                <option value="{{ $sub->id }}" {{ $subcategory->id == $sub->id ? 'selected' : '' }}>
-                    {{ $sub->subcategory_name }}
-                </option>
-            @endforeach
-        </select>
+        <label for="category_name" class="block text-lg font-medium text-gray-700">Category</label>
+        <input type="text" id="category_name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" value="{{ $subcategory->category->category_name }}" readonly>
     </div>
 
     <!-- Subcategory Name Input -->
@@ -46,40 +27,3 @@
         Update Subcategory
     </button>
 </form>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Initial load of subcategories for the selected category
-    let categoryId = document.getElementById('category_id').value;
-    loadSubcategories(categoryId);
-
-    // Event listener for category change
-    document.getElementById('category_id').addEventListener('change', function () {
-        let selectedCategoryId = this.value;
-        loadSubcategories(selectedCategoryId);
-    });
-
-    // Function to load subcategories based on the selected category
-    function loadSubcategories(categoryId) {
-        if (categoryId) {
-            fetch(`/admin/subcategories/${categoryId}`)
-                .then(response => response.json())
-                .then(data => {
-                    let subcategorySelect = document.getElementById('subcategory_id');
-                    subcategorySelect.innerHTML = '<option value="">Select Subcategory</option>';
-                    
-                    data.forEach(subcategory => {
-                        let option = document.createElement('option');
-                        option.value = subcategory.id;
-                        option.textContent = subcategory.subcategory_name;
-                        subcategorySelect.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error fetching subcategories:', error));
-        } else {
-            // If no category selected, clear subcategories
-            document.getElementById('subcategory_id').innerHTML = '<option value="">Select Subcategory</option>';
-        }
-    }
-});
-</script>
