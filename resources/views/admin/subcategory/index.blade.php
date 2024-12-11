@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-
 @section('content')
 
 
@@ -44,7 +43,7 @@
                     <th class="border border-gray-300 px-4 py-2">Order</th>
                     <th class="border border-gray-300 px-4 py-2">Image</th>
                     <th class="border border-gray-300 px-4 py-2">Category Name</th>
-                    <th class="border border-gray-300 px-4 py-2">Category Name</th>
+                    <th class="border border-gray-300 px-4 py-2">Subcategory Name</th>
                     <th class="border border-gray-300 px-4 py-2">Slug</th>
                     <th class="border border-gray-300 px-4 py-2">Status</th>
                     <th class="border border-gray-300 px-4 py-2">Action</th>

@@ -10,8 +10,9 @@ class SubcategoryController extends Controller
 {
     public function index(){
         $subcategories=Subcategory::paginate(5);
-        return view('admin.subcategory.index',compact('subcategories'));
-
+        return view('admin.subcategory.index',compact('subcategories'),[
+            'title' => 'Sub Category' 
+        ]);
     }
     // Show the form for creating a subcategory
     public function create()

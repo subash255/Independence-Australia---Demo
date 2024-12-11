@@ -86,127 +86,110 @@
                 </div>
             </section>
         </div>
-        <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-full">
-            <div class="h-[65px] relative 1300:h-[60px] flex items-center justify-between text-[#00718f]">
-                
-                <!-- Continence Aids Dropdown -->
-                <div class="relative group">
-                    <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                        <a href="#">Continence Aids</a>
-                    </button>
-                    <!-- Main Dropdown -->
-                    <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-50 top-full w-full max-w-full">
-                        <div class="flex flex-col px-4 py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bedding, Chair & Floor Protection</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bowel Care</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Children's Nappies & Accessories</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Disposable Pads, Pants & Liners</a>
-                        </div>
-                    </div>
-                </div>
+<div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px]">
+    <div class="h-[65px] relative 1300:h-[60px] flex items-center justify-between text-[#00718f]">
         
-                <!-- Daily Living & Mobility Aids Dropdown -->
-                <div class="relative group">
-                    <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                        <a href="#">Daily Living & Mobility Aids</a>
-                    </button>
-                    <!-- Main Dropdown -->
-                    <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-50 top-full w-full max-w-full">
-                        <div class="flex flex-col px-4 py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Walking Aids</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Wheelchairs</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Dressing Aids</a>
-                        </div>
-                    </div>
-                </div>
-        
-                <!-- Medical Aids Dropdown -->
-                <div class="relative group">
-                    <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                        <a href="#">Medical Aids</a>
-                    </button>
-                    <!-- Main Dropdown -->
-                    <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-50 top-full w-full max-w-full">
-                        <div class="flex flex-col px-4 py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Orthopedic Supports</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">First Aid Supplies</a>
-                        </div>
-                    </div>
-                </div>
-        
-                <!-- Nutrition Dropdown -->
-                <div class="relative group">
-                    <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                        <a href="#">Nutrition</a>
-                    </button>
-                    <!-- Main Dropdown -->
-                    <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-50 top-full w-full max-w-full">
-                        <div class="flex flex-col px-4 py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Nutrition Supplements</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Vitamins & Minerals</a>
-                        </div>
-                    </div>
-                </div>
-        
-                <!-- Skin Care Dropdown -->
-                <div class="relative group">
-                    <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                        <a href="#">Skin Care</a>
-                    </button>
-                    <!-- Main Dropdown -->
-                    <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-50 top-full w-full max-w-full">
-                        <div class="flex flex-col px-4 py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Moisturizers</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Cleansers</a>
-                        </div>
-                    </div>
-                </div>
-        
-                <!-- Urology Dropdown -->
-                <div class="relative group">
-                    <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                        <a href="#">Urology</a>
-                    </button>
-                    <!-- Main Dropdown -->
-                    <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-50 top-full w-full max-w-full">
-                        <div class="flex flex-col px-4 py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Catheters</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Incontinence Care</a>
-                        </div>
-                    </div>
-                </div>
-        
-                <!-- Wound Care Dropdown -->
-                <div class="relative group">
-                    <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                        <a href="#">Wound Care</a>
-                    </button>
-                    <!-- Main Dropdown -->
-                    <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-50 top-full w-full max-w-full">
-                        <div class="flex flex-col px-4 py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bandages</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Dressings</a>
-                        </div>
-                    </div>
-                </div>
-        
-                <!-- Others Dropdown -->
-                <div class="relative group">
-                    <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                        <a href="#">Others</a>
-                    </button>
-                    <!-- Main Dropdown -->
-                    <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-50 top-full w-full max-w-full">
-                        <div class="flex flex-col px-4 py-2">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Accessories</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Miscellaneous</a>
-                        </div>
-                    </div>
-                </div>
-        
+        <!-- Continence Aids Dropdown -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
+                <a href="#">Continence Aids</a>
+            </button>
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bedding, Chair & Floor Protection</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bowel Care</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Children's Nappies & Accessories</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Disposable Pads, Pants & Liners</a>
             </div>
         </div>
-        
+
+        <!-- Daily Living & Mobility Aids Dropdown -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
+                <a href="#">Daily Living & Mobility Aids</a>
+            </button>
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Walking Aids</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Wheelchairs</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Dressing Aids</a>
+            </div>
+        </div>
+
+        <!-- Medical Aids Dropdown -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
+                <a href="#">Medical Aids</a>
+            </button>
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Orthopedic Supports</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">First Aid Supplies</a>
+            </div>
+        </div>
+
+        <!-- Nutrition Dropdown -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
+                <a href="#">Nutrition</a>
+            </button>
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Nutrition Supplements</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Vitamins & Minerals</a>
+            </div>
+        </div>
+
+        <!-- Skin Care Dropdown -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
+                <a href="#">Skin Care</a>
+            </button>
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Moisturizers</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Wound Care</a>
+            </div>
+        </div>
+
+        <!-- Urology Dropdown -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
+                <a href="#">Urology</a>
+            </button>
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Catheters</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Incontinence Care</a>
+            </div>
+        </div>
+
+        <!-- Wound Care Dropdown -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
+                <a href="#">Wound Care</a>
+            </button>
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bandages</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Dressings</a>
+            </div>
+        </div>
+
+        <!-- Others Dropdown -->
+        <div class="relative group">
+            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
+                <a href="#">Others</a>
+            </button>
+            <!-- Dropdown -->
+            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Accessories</a>
+                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Miscellaneous</a>
+            </div>
+        </div>
+    </div>
+</div>
+
     </nav>
 
     <!-- Main Content -->
