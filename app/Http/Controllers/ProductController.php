@@ -109,6 +109,26 @@ public function update(Request $request, $id)
         $product->delete();
         return redirect()->route('admin.product')->with('success', 'Product deleted successfully.');
     }
+    public function updateToggle(Request $request, $productId)
+{
+    $product = Product::find($productId);
+
+    if (!$product) {
+        return response()->json(['success' => false, 'message' => 'Product not found.']);
+    }
+
+    // Update the visibility or is_flash field based on the type
+    if ($request->type === 'visibility') {
+        $product->visibility = $request->state;
+    } elseif ($request->type === 'is_flash') {
+        $product->is_flash = $request->state;
+    }
+
+    $product->save();
+
+    return response()->json(['success' => true]);
+}
+
 
 
 }

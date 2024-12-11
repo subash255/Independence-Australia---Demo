@@ -37,7 +37,13 @@
       <div class="mb-6">
         <label for="category" class="block text-sm font-medium text-gray-700">Category Name</label>
         <input type="text" id="category" name="category_name" placeholder="Enter category name"
-               class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+               class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" oninput="generateSlug()">
+      </div>
+
+      <div class="mb-6">
+        <label for="slug" class="block text-sm font-medium text-gray-700">slug</label>
+        <input type="text" id="slug" name="slug" placeholder="do you entered"
+               class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg " readonly>
       </div>
 
       <!-- Image Upload Input -->
@@ -59,3 +65,11 @@
 
 </body>
 </html>
+<script>
+        function generateSlug() {
+            let input1 = document.getElementById('category').value;
+            // Convert multiple spaces to single spaces and replace spaces with hyphens
+            let slug = input1.trim().replace(/\s+/g, '-').toLowerCase();
+            document.getElementById('slug').value = slug;
+        }
+    </script>

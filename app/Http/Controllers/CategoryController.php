@@ -25,6 +25,7 @@ class CategoryController extends Controller
         // dd($request->all());
         $data = $request->validate([
             'category_name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
             'image' => 'required|image',
         ]);
 
@@ -53,10 +54,12 @@ class CategoryController extends Controller
 
         $request->validate([
             'category_name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:categories,slug,' . $category->id,
             'image' => 'nullable|image',
         ]);
 
         $category->category_name = $request->category_name;
+        $category->slug = $request->slug;
 
         if ($request->hasFile('image')) {
             // Delete old image
@@ -89,6 +92,23 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('admin.category.category')->with('success', 'Category deleted successfully');
+    }
+    public function updateToggle(Request $request, $productId)
+    {
+        $category = Category::find($productId);
+    
+        if (!$category) {
+            return response()->json(['success' => false, 'message' => 'Product not found.']);
+        }
+    
+        // Update the visibility or is_flash field based on the type
+        if ($request->type === 'status') {
+            $category->status = $request->state;
+        } 
+    
+        $category->save();
+    
+        return response()->json(['success' => true]);
     }
 
 }
