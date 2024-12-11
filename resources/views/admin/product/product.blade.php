@@ -2,6 +2,14 @@
 
 @section('content')
 
+{{-- Flash Message --}}
+@if(session('success'))
+    <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+        {{ session('success') }}
+    </div>
+@endif
+
+
   <!-- Main container -->
   <div class="max-w-full mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end space-x-4">
@@ -50,11 +58,11 @@
         </thead>
         <tbody>
         @foreach ($products as $product)
-    <tr>
+    <tr class="border border-gray-300">
         <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
         <td class="border border-gray-300 px-4 py-2">
-            <img src="{{ asset('products/' . $product->image) }}" alt="{{ $product->product_name }}" class="w-16 h-16 object-cover rounded-full" />
-        </td>
+          <img src="{{ asset('products/' . $product->image) }}" alt="{{ $product->product_name }}" class="w-16 h-16 object-cover rounded-full" />
+      </td>      
         <td class="border border-gray-300 px-4 py-2">
             {{ $product->category ? $product->category->category_name : 'No Category' }}
         </td>

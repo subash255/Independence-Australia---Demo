@@ -16,7 +16,7 @@
       <h1 class="text-3xl sm:text-4xl font-bold text-gray-900 mb-3">Add Subcategory</h1>
       <p class="text-base sm:text-lg text-gray-500">Add a new subcategory to an existing category and provide a description.</p>
     </div>
-    
+
 
     <!-- Validation Errors -->
     @if ($errors->any())
@@ -30,14 +30,12 @@
     @endif
 
     <!-- Back Button -->
-    <div class="mb-8 flex justify-start">
-      <a href="{{ route('admin.subcategory.addsub') }}" class="flex items-center text-sm text-indigo-600 font-medium bg-white border-2 border-indigo-600 rounded-lg py-2 px-4 hover:bg-indigo-700 hover:text-white transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 12H5"></path>
-        </svg>
-        Back
-      </a>
-    </div>
+    <a href="{{ route('admin.subcategory.index') }}" class="text-gray-700 hover:text-indigo-600 text-sm font-medium flex items-center space-x-2 mb-4">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      <span>Back</span>
+    </a>
 
     <!-- Form -->
     <form action="{{ route('admin.subcategory.store') }}" method="POST">

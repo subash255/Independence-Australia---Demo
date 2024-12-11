@@ -109,6 +109,6 @@ public function update(Request $request, $id)
         $product->delete();
         return redirect()->route('admin.product')->with('success', 'Product deleted successfully.');
     }
-
+    
 
 }
