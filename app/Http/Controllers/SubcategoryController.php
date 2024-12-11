@@ -41,4 +41,60 @@ class SubcategoryController extends Controller
         // Redirect to the addsub page with a success message
         return redirect()->route('admin.subcategory.addsub')->with('success', 'Subcategory created successfully!');
     }
+    public function edit($id)
+{
+    // Find the subcategory by ID or show an error if not found
+    $subcategory = Subcategory::findOrFail($id);
+
+    // Fetch categories for the category dropdown list (assuming you need this for the edit form)
+    $categories = Category::all();
+    $subcategories = Subcategory::where('category_id', $subcategory->category_id)->get(); 
+
+    // Return the view with the subcategory data and categories
+    return view('admin.subcategory.edit', compact('subcategory', 'categories','subcategories'));
+}
+
+public function getSubcategoriesByCategory($categoryId)
+{
+    $subcategories = Subcategory::where('category_id', $categoryId)->get();
+    return response()->json($subcategories);
+}
+
+
+public function update(Request $request, $id)
+{
+    dd($request->all());
+
+    // Validate the incoming data
+    $data = $request->validate([
+        'category_id' => 'required|exists:categories,id', // Ensure category exists
+        'subcategory_name' => 'required|string|max:255',
+        'subcategory_id' => 'nullable|exists:subcategories,id', // Add this line if you're updating subcategory_id
+        'paragraph' => 'nullable|string',
+    ]);
+
+    // Find the subcategory by ID or fail
+    $subcategory = Subcategory::findOrFail($id);
+
+    // Update the subcategory with the new data
+    $subcategory->update($data);
+
+    // Redirect to the addsub page with a success message
+    return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory updated successfully!');
+}
+
+
+public function destroy($id)
+{
+    // Find the subcategory by ID or fail
+    $subcategory = Subcategory::findOrFail($id);
+
+    // Delete the subcategory
+    $subcategory->delete();
+
+    // Redirect to the addsub page with a success message
+    return redirect()->route('admin.subcategory.addsub')->with('success', 'Subcategory deleted successfully!');
+}
+
+    
 }

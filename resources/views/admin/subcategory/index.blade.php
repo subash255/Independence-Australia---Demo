@@ -44,7 +44,7 @@
                     <th class="border border-gray-300 px-4 py-2">Order</th>
                     <th class="border border-gray-300 px-4 py-2">Image</th>
                     <th class="border border-gray-300 px-4 py-2">Category Name</th>
-                    <th class="border border-gray-300 px-4 py-2">Category Name</th>
+                    <th class="border border-gray-300 px-4 py-2">Subcategory Name</th>
                     <th class="border border-gray-300 px-4 py-2">Slug</th>
                     <th class="border border-gray-300 px-4 py-2">Status</th>
                     <th class="border border-gray-300 px-4 py-2">Action</th>
@@ -73,7 +73,7 @@
                     </td>
                     <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                         <!-- Edit Icon -->
-                        <a href="{{ route('admin.category.editcategory', ['id' => $category->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                        <a href="{{ route('admin.subcategory.edit', ['id' => $category->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                             <i class="ri-edit-box-line text-white"></i>
                         </a>
                         <!-- Delete Icon -->
