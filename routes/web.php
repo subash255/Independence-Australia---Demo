@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    
 });
 
 
@@ -44,8 +46,8 @@ Route::middleware([AdminMiddleware::class])->group(function () {
     
     
     Route::get('admin/category', [CategoryController::class, 'index'])->name('admin.category.category');
-    Route::get('admin/category/addcategory', [CategoryController::class, 'create'])->name('admin.category.addcategory');
-    Route::post('admin/category/addcategory', [CategoryController::class, 'store'])->name('admin.category.addcategory');
+    Route::get('admin/category/create', [CategoryController::class, 'create'])->name('admin.category.create');
+    Route::post('admin/category/store', [CategoryController::class, 'store'])->name('admin.category.store');
     Route::get('admin/category/{id}/editcategory', [CategoryController::class, 'edit'])->name('admin.category.editcategory');
     Route::get('admin/category/{id}/editcategory', [CategoryController::class, 'edit'])->name('admin.category.editcategory');
     Route::patch('admin/category/{id}/updatecategory', [CategoryController::class, 'update'])->name('admin.category.updatecategory');

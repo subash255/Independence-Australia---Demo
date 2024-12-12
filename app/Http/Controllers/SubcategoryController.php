@@ -41,7 +41,7 @@ class SubcategoryController extends Controller
         ]);
 
         // Redirect to the addsub page with a success message
-        return redirect()->route('admin.subcategory.addsub')->with('success', 'Subcategory created successfully!');
+        return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory created successfully!');
     }
     public function edit($id)
     {

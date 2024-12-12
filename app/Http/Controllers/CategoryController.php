@@ -5,39 +5,47 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str; // Add this import
 
 class CategoryController extends Controller
 {
     public function index()
     {
         $categories = Category::paginate(5);
-        return view('admin.category.category',compact('categories'),[
-            'title' => 'Category' 
+        return view('admin.category.category', compact('categories'), [
+            'title' => 'Category'
         ]);
-
     }
+
     public function create()
     {
         return view('admin.category.addcategory');
     }
+
     public function store(Request $request)
     {
-        // dd($request->all());
+        // Validate category name and image, but handle slug on client-side
         $data = $request->validate([
             'category_name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:categories,slug',  // Allow slug to be nullable
             'image' => 'required|image',
         ]);
+        
 
         
+        // Handle the image upload
         $image = time() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(public_path('images/brand'), $image);
         $data['image'] = $image;
+        
 
+        
+        // Create the category
         Category::create($data);
-
+        
         return redirect()->route('admin.category.category')->with('success', 'Category created successfully');
     }
+    
 
 
     // Show Edit Form
@@ -46,7 +54,7 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
         return view('admin.category.editcategory', compact('category'));
     }
-                                     
+
     // Update Category
     public function update(Request $request, $id)
     {
@@ -62,19 +70,20 @@ class CategoryController extends Controller
         $category->slug = $request->slug;
 
         if ($request->hasFile('image')) {
-            // Delete old image
-            if (Storage::exists(public_path('images/brand'.$category->image))) {
-                unlink(public_path('images/brand'.$category->image));
+            // Delete old image if exists
+            $oldImagePath = public_path('images/brand/' . $category->image);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
             }
 
             // Upload new image
             $image = $request->file('image');
-            $imageName = time().'.'.$image->extension();
+            $imageName = time() . '.' . $image->extension();
             $image->move(public_path('images/brand'), $imageName);
             $category->image = $imageName;
         }
 
-        $category->update();
+        $category->save();
 
         return redirect()->route('admin.category.category')->with('success', 'Category updated successfully');
     }
@@ -85,30 +94,32 @@ class CategoryController extends Controller
         $category = Category::findOrFail($id);
 
         // Delete the image
-        if (Storage::exists(public_path('images/brand'.$category->image))) {
-            unlink(public_path('images/brand'.$category->image));
+        $imagePath = public_path('images/brand/' . $category->image);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
         }
 
         $category->delete();
 
         return redirect()->route('admin.category.category')->with('success', 'Category deleted successfully');
     }
-    public function updateToggle(Request $request, $productId)
+
+    // Update Category Status (Toggle Visibility)
+    public function updateToggle(Request $request, $categoryId)
     {
-        $category = Category::find($productId);
-    
+        $category = Category::find($categoryId);
+
         if (!$category) {
-            return response()->json(['success' => false, 'message' => 'Product not found.']);
+            return response()->json(['success' => false, 'message' => 'Category not found.']);
         }
-    
-        // Update the visibility or is_flash field based on the type
+
+        // Update status field based on the request type
         if ($request->type === 'status') {
             $category->status = $request->state;
-        } 
-    
+        }
+
         $category->save();
-    
+
         return response()->json(['success' => true]);
     }
-
 }

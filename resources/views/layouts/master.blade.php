@@ -144,8 +144,8 @@
                 </div>
 
                 <!-- Static Dropdown Content -->
-                <div id="dropdown-content" class="absolute left-0 w-full bg-white text-[#00718f] mt-0 hidden px-6 py-4 max-h-[300px] overflow-y-auto">
-                    <div class="flex items-center justify-between">
+                <div id="dropdown-content" class="absolute left-0 w-full bg-white text-[#00718f] mt-[16rem] hidden px-6 py-4 max-h-[300px] overflow-y-auto">
+                    <div class="flex items-center justify-between font-semibold">
                         <!-- Left side items -->
                         <div class="w-1/2">
                             <ul id="dropdown-items">
@@ -310,42 +310,42 @@
                 items: ["Bedding, Chair & Floor Protection", "Bowel Care", "Children's Nappies & Accessories",
                     "Disposable Pads, Pants & Liners"
                 ],
-                paragraph: "This is the paragraph content for Menu 1."
+                paragraph: "This is the paragraph content for Continence Aids"
             },
             {
                 title: "Daily Living & Mobility Aids",
                 items: ["Walking Aids", "Clothing & Dressing Aids", "Household Aids", "Household Products"],
-                paragraph: "This is the paragraph content for Menu 2."
+                paragraph: "This is the paragraph content for Daily Living & Mobility Aids."
             },
             {
                 title: "Medical Aids",
                 items: ["Enteral Feeding", "First Aid", "General", "Needles, Syringes & Solutions"],
-                paragraph: "This is the paragraph content for Menu 3."
+                paragraph: "This is the paragraph content for Medical Aids."
             },
             {
                 title: "Nutrition",
-                items: ["Supplements", "Vitamins"],
-                paragraph: "This is the paragraph content for Menu 4."
+                items: ["Supplements", "Vitamins", "Minerals", "Protein"],
+                paragraph: "This is the paragraph content for Nutrition."
             },
             {
                 title: "Skin Care",
-                items: ["Adhesive & Adhesive Removers", "Creams, Body Lotions & Oils", "Wipes & Wash Cloths"],
-                paragraph: "This is the paragraph content for Menu 5."
+                items: ["Adhesive & Adhesive Removers", "Serums & Treatments", "Creams, Body Lotions & Oils", "Wipes & Wash Cloths"],
+                paragraph: "This is the paragraph content for Skin Care."
             },
             {
                 title: "Urology",
                 items: ["Catheters", "Condom Drainage", "Drain and Leg Bags", "Urinals & Bed Pans"],
-                paragraph: "This is the paragraph content for Menu 5."
+                paragraph: "This is the paragraph content for Urology."
             },
             {
                 title: "Wound Care",
                 items: ["Bandages", "Burn Treatments", "Scar Management", "Tapes"],
-                paragraph: "This is the paragraph content for Menu 5."
+                paragraph: "This is the paragraph content for Wound Care."
             },
             {
                 title: "Others",
-                items: ["Clothing & Eye Protection", "Disinfectants & Cleaners", "Personal Gromming & Hygiene"],
-                paragraph: "This is the paragraph content for Menu 5."
+                items: ["Clothing","Eye Protection", "Disinfectants & Cleaners", "Personal Gromming & Hygiene"],
+                paragraph: "This is the paragraph content for Others."
             }
         ];
 
