@@ -63,13 +63,13 @@
                     <td class="border border-gray-300 px-4 py-2">{{ $category->subcategory_name }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ $category->slug }}</td>
                     <td class="border border-gray-300 px-4 py-2">
-                        <label for="status{{ $category->id }}" class="inline-flex items-center cursor-pointer">
-                            <input id="status{{ $category->id }}" type="checkbox" class="hidden" {{ $category->status ? 'checked' : '' }} />
-                            <div class="w-10 h-6 bg-gray-200 rounded-full relative">
-                                <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition"></div>
-                            </div>
-                        </label>
-                    </td>
+    <label for="status{{ $category->id }}" class="inline-flex items-center cursor-pointer">
+        <input id="status{{ $category->id }}" type="checkbox" class="toggle-switch hidden" data-id="{{ $category->id }}" {{ $category->status ? 'checked' : '' }} />
+        <div class="w-10 h-6 bg-gray-200 rounded-full relative">
+            <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition"></div>
+        </div>
+    </label>
+</td>
                     <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                         <!-- Edit Icon -->
                         <a href="{{ route('admin.subcategory.edit', ['id' => $category->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
@@ -107,5 +107,53 @@
     </div>
 
 </div>
+
+<script>
+document.querySelectorAll('.toggle-switch').forEach(toggle => {
+  toggle.addEventListener('change', function () {
+    const dot = this.parentNode.querySelector('.dot');
+    const subcategoryId = this.getAttribute('data-id');
+    const newState = this.checked ? 1 : 0;
+
+    // Toggle visual effect
+    if (this.checked) {
+      dot.style.transform = 'translateX(100%)';
+      dot.style.backgroundColor = 'green';
+    } else {
+      dot.style.transform = 'translateX(0)';
+      dot.style.backgroundColor = 'white';
+    }
+
+    // Send AJAX request to update the product status in the database
+    fetch(`/admin/category/update-toggle/${subcategoryId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-TOKEN': '{{ csrf_token() }}', // CSRF token for security
+      },
+      body: JSON.stringify({
+        state: newState,
+        type: 'status',
+      }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (!data.success) {
+        // If the update fails, reset the toggle state
+        this.checked = !this.checked;
+        dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
+        dot.style.backgroundColor = this.checked ? 'green' : 'white';
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      // Reset the toggle state in case of an error
+      this.checked = !this.checked;
+      dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
+      dot.style.backgroundColor = this.checked ? 'green' : 'white';
+    });
+  });
+});
+</script>
 
 @endsection

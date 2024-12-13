@@ -55,7 +55,12 @@
       <!-- Subcategory Name Input -->
       <div class="mb-6">
         <label for="subcategory_name" class="block text-sm font-medium text-gray-700">Subcategory Name</label>
-        <input type="text" name="subcategory_name" id="subcategory_name" class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" required />
+        <input type="text" name="subcategory_name" id="subcategory_name" class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" required oninput="generateSlug()"/>
+      </div>
+
+      <div class="mb-6">
+        <label for="slug" class="block text-sm font-medium text-gray-700">slug Name</label>
+        <input type="text" name="slug" id="slug" class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" readonly />
       </div>
 
       <!-- Description -->
@@ -74,4 +79,12 @@
   </div>
 
 </body>
+<script>
+        function generateSlug() {
+            let input1 = document.getElementById('subcategory_name').value;
+            // Convert multiple spaces to single spaces and replace spaces with hyphens
+            let slug = input1.trim().replace(/\s+/g, '-').toLowerCase();
+            document.getElementById('slug').value = slug;
+        }
+    </script>
 </html>

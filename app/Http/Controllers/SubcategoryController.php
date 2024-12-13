@@ -26,10 +26,13 @@ class SubcategoryController extends Controller
     // Store the new subcategory
     public function store(Request $request)
     {
+        
         // Validate the incoming data
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id', // Ensure category exists
             'subcategory_name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255',
+
             'paragraph' => 'nullable|string',
         ]);
 
@@ -37,11 +40,12 @@ class SubcategoryController extends Controller
         Subcategory::create([
             'category_id' => $data['category_id'],
             'subcategory_name' => $data['subcategory_name'],
+            'slug' => $data['slug'],
             'paragraph' => $data['paragraph'],
         ]);
 
         // Redirect to the addsub page with a success message
-        return redirect()->route('admin.subcategory.addsub')->with('success', 'Subcategory created successfully!');
+        return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory created successfully!');
     }
     public function edit($id)
     {
@@ -65,19 +69,22 @@ class SubcategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+        $subcategory = Subcategory::findOrFail($id);
         // Validate the incoming data
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id', // Ensure category exists
             'subcategory_name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:categories,slug,' . $subcategory->id,
             'paragraph' => 'nullable|string',
         ]);
 
         // Find the subcategory by ID or fail
-        $subcategory = Subcategory::findOrFail($id);
+       
 
         // Update the subcategory with the validated data
         $subcategory->category_id = $data['category_id'];
         $subcategory->subcategory_name = $data['subcategory_name'];
+        $subcategory->slug = $data['slug'];
         $subcategory->paragraph = $data['paragraph'];
 
         // Save the updated subcategory to the database
@@ -100,5 +107,23 @@ class SubcategoryController extends Controller
         // Redirect to the addsub page with a success message
         return redirect()->route('admin.subcategory.addsub')->with('success', 'Subcategory deleted successfully!');
     }
+    public function updateToggle(Request $request, $subcategoryId)
+    {
+        $category = Subcategory::find($subcategoryId);
+    
+        if (!$category) {
+            return response()->json(['success' => false, 'message' => 'category not found.']);
+        }
+    
+        // Update the visibility or is_flash field based on the type
+        if ($request->type === 'status') {
+            $category->status = $request->state;
+        } 
+    
+        $category->save();
+    
+        return response()->json(['success' => true]);
+    }
+
     
 }

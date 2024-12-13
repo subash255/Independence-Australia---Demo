@@ -47,6 +47,8 @@ Route::get('admin/category/{id}/editcategory', [CategoryController::class, 'edit
 Route::get('admin/category/{id}/editcategory', [CategoryController::class, 'edit'])->name('admin.category.editcategory');
 Route::patch('admin/category/{id}/updatecategory', [CategoryController::class, 'update'])->name('admin.category.updatecategory');
 Route::delete('admin/category/{id}/deletecategory', [CategoryController::class, 'destroy'])->name('admin.category.deletecategory');
+Route::post('/admin/category/update-toggle/{category}', [CategoryController::class, 'updateToggle'])->name('admin.category.updateToggle');
+
 
 
 Route::get('/admin/subcategory/index', [SubcategoryController::class, 'index'])->name('admin.subcategory.index');
@@ -55,7 +57,7 @@ Route::get('admin/subcategory/{id}/edit', [SubcategoryController::class, 'edit']
 Route::post('admin/subcategory/store', [SubcategoryController::class, 'store'])->name('admin.subcategory.store');
 Route::patch('admin/subcategory/{id}/update', [SubcategoryController::class, 'update'])->name('admin.subcategory.update');
 Route::get('/admin/subcategories/{categoryId}', [SubcategoryController::class, 'getSubcategoriesByCategory']);
-Route::post('/admin/category/update-toggle/{category}', [CategoryController::class, 'updateToggle'])->name('admin.category.updateToggle');
+Route::post('/admin/subcategory/update-toggle/{subcategory}', [SubcategoryController::class, 'updateToggle'])->name('admin.subcategory.updateToggle');
 
 
 
