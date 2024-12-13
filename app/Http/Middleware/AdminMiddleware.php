@@ -10,13 +10,13 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        // Check if the user is authenticated and has the 'admin' role
-        if (Auth::check() && Auth::user()->role !== 'admin') {
-            // If not an admin, redirect to the home page
+        // Check if the user is authenticated and has either 'admin' or 'superadmin' role
+        if (Auth::check() && !in_array(Auth::user()->role, ['admin', 'superadmin'])) {
+            // If not an admin or superadmin, redirect to the welcome page
             return redirect('welcome');
         }
 
-        // Allow request to pass if the user is an admin
+        // Allow request to pass if the user has 'admin' or 'superadmin' role
         return $next($request);
     }
 }

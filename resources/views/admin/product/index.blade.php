@@ -9,6 +9,15 @@
     </div>
 @endif
 
+<script>
+    if (document.getElementById('flash-message')) setTimeout(() => {
+        const msg = document.getElementById('flash-message');
+        msg.style.opacity = 0;
+        msg.style.transition = "opacity 0.5s ease-out";
+        setTimeout(() => msg.remove(), 500);
+    }, 3000);
+</script>
+
 <!-- Main container -->
 <div class="max-w-full mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end space-x-4">

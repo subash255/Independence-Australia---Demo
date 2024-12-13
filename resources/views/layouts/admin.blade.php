@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Dashboard</title>
+  <title>Admin Panel</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -109,10 +109,14 @@
           <i class="ri-grid-line"></i>
           <span class="ml-4">Category</span>
         </a>
-        <a href="#" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+
+        @if(Auth::user()->role == 'superadmin') 
+        <a href="{{route('admin.admin.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-admin-fill"></i>
           <span class="ml-4">Manage Admin</span>
         </a>
+
+        @endif
         <a href="#" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-price-tag-fill"></i>
           <span class="ml-4">Brands</span>
@@ -128,34 +132,34 @@
       </nav>
     </aside>
 
-    <!-- Header Section -->
-    <div id="header" class="bg-red-600 text-white flex items-center justify-between px-8 py-[5rem] fixed top-0 left-[16rem] right-0 shadow-lg z-10">
-      <h1 class="text-3xl font-semibold mt-[-2rem]">{{ $title ?? 'Default Title' }}</h1>
-      <div class="flex items-center space-x-4">
-        <div class="relative group">
-          <div class="flex items-center mt-[-2rem] text-lg font-medium hover:text-white focus:outline-none cursor-pointer px-2 py-3">
-            <span>Developer</span>
-            <i class="ri-arrow-down-s-line text-white"></i>
-          </div>
+   <!-- Header Section -->
+<div id="header" class="bg-red-600 text-white flex items-center justify-between px-8 py-[5rem] fixed top-0 left-[16rem] right-0 shadow-lg z-10">
+  <h1 class="text-3xl font-semibold mt-[-2rem]">{{ $title ?? 'Default Title' }}</h1>
+  <div class="flex items-center space-x-4">
+    <div class="relative group">
+      <div class="flex items-center mt-[-2rem] text-lg font-medium hover:text-white focus:outline-none cursor-pointer px-2 py-3">
+        <!-- Display the logged-in user's name -->
+        <span>{{ Auth::user()->name }}</span>
+        <i class="ri-arrow-down-s-line text-white"></i>
+      </div>
 
-          <!-- Dropdown Menu -->
-          <div class="absolute right-0 mt-[-2rem] w-40 bg-white text-gray-800 rounded-md shadow-lg hidden group-hover:block z-[50]">
-            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
-            <form action="{{ route('logout') }}" method="POST" class="w-full">
-              @csrf
-              <button type="submit" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
-                Log Out
-              </button>
-            </form>
-           
-          </div>
-        </div>
-
-        <button class="hover:bg-red-500 mt-[-2rem] transition ease-in-out duration-200">
-          <i class="ri-moon-fill"></i>
-        </button>
+      <!-- Dropdown Menu -->
+      <div class="absolute right-0 mt-[-2rem] w-40 bg-white text-gray-800 rounded-md shadow-lg hidden group-hover:block z-[50]">
+        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
+        <form action="{{ route('logout') }}" method="POST" class="w-full">
+          @csrf
+          <button type="submit" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+            Log Out
+          </button>
+        </form>
       </div>
     </div>
+
+    <button class="hover:bg-red-500 mt-[-2rem] transition ease-in-out duration-200">
+      <i class="ri-moon-fill"></i>
+    </button>
+  </div>
+</div>
 
     <!-- Main Content -->
     <main id="content-container" class="flex-1 p-8 overflow-y-auto transition-all duration-300">
