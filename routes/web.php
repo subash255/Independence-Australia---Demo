@@ -21,9 +21,7 @@ Route::get('welcome', function () {
     return view('welcome');
 })->middleware(['auth', 'verified'])->name('welcome');
 
-Route::get('/admin/dash', function () {
-    return view('index');
-})->middleware(['auth', 'verified'])->name('admin.dash');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -62,6 +60,13 @@ Route::middleware(['auth','isadmin'])->group(function () {
     Route::delete('admin/subcategory/{id}/destroy', [SubcategoryController::class, 'destroy'])->name('admin.subcategory.destroy');
     Route::get('/admin/subcategories/{categoryId}', [SubcategoryController::class, 'getSubcategoriesByCategory']);
     Route::post('/admin/subcategory/update-toggle/{subcategoryId}', [SubcategoryController::class, 'updateToggle'])->name('admin.subcategory.updateToggle');
+
+
+    Route::get('/products/add', [ProductController::class, 'create'])->name('product.create');
+Route::post('/products/add', [ProductController::class, 'store'])->name('product.store');
+Route::get('/admin/{id}/editproduct', [ProductController::class, 'edit'])->name('product.edit');
+Route::patch('/admin/{id}/editproduct', [ProductController::class, 'update'])->name('product.update');
+Route::delete('/admin/{id}/editproduct', [ProductController::class, 'destroy'])->name('product.delete');
 });
 
 
@@ -77,10 +82,6 @@ Route::middleware(['auth','isadmin'])->group(function () {
 
 
 
-Route::get('/products/add', [ProductController::class, 'create'])->name('product.create');
-Route::post('/products/add', [ProductController::class, 'store'])->name('product.store');
-Route::get('/admin/{id}/editproduct', [ProductController::class, 'edit'])->name('product.edit');
-Route::patch('/admin/{id}/editproduct', [ProductController::class, 'update'])->name('product.update');
-Route::delete('/admin/{id}/editproduct', [ProductController::class, 'destroy'])->name('product.delete');
+
 
 require __DIR__.'/auth.php';
