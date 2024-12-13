@@ -27,24 +27,33 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+        // Validate the incoming request
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'role' => 'required|in:user,vendor', // Ensure role is either user or vendor
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+            'address' => 'required|string',
+            'phone_number' => 'required|string',
         ]);
-
+    
+        // Create the user based on the selected role
         $user = User::create([
             'name' => $request->name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'password' => bcrypt($request->password),
+            'role' => $request->role,  // Ensure the role is passed here
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
         ]);
+    
+        // Redirect or perform further actions
+        return redirect()->route('login')->with('success', 'Account created successfully!');
+    }    
 
-        event(new Registered($user));
 
-        Auth::login($user);
-
-        return redirect(route('/login', absolute: false));
-    }
 }

@@ -36,11 +36,24 @@
                 <i class="fa fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 sm:block"></i>
             </div>
             <div class="flex items-center font-semibold space-x-3">
-                <a href="/login" class="text-gray-900 hover:underline hidden sm:block">
-                    <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
-                </a>
-                <span class="hidden sm:block px-0">/</span>
-                <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
+                <!-- Check if the user is logged in -->
+                @auth
+                    <!-- If user is logged in, show their name -->
+                    <span class="text-gray-900">Hi, {{ Auth::user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" class="w-full">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                            Log Out
+                        </button>
+                    </form>
+                @else
+                    <!-- If user is not logged in, show Sign In and Register buttons -->
+                    <a href="/login" class="text-gray-900 hover:underline hidden sm:block">
+                        <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
+                    </a>
+                    <span class="hidden sm:block px-0">/</span>
+                    <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
+                @endauth
                 <a href="/checkout" class="text-gray-900 hidden sm:block">
                     <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
                 </a>
@@ -67,14 +80,14 @@
                             <i class="ri-hand-heart-line text-[#00718f] mr-2"></i>
                             Empowering independence through choice.
                         </div>
-                        
+
                         <!-- Slider Text 2 -->
                         <div
                             class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
                             <i class="ri-user-heart-line text-[#00718f] mr-2"></i>
                             Supporting living with dignity and care.
                         </div>
-                        
+
                         <!-- Slider Text 3 -->
                         <div
                             class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
@@ -82,113 +95,71 @@
                             Innovative solutions for everyday living.
                         </div>
                     </div>
-                    
+
                 </div>
             </section>
         </div>
-<div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px]">
-    <div class="h-[65px] relative 1300:h-[60px] flex items-center justify-between text-[#00718f]">
-        
-        <!-- Continence Aids Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                <a href="#">Continence Aids</a>
-            </button>
-            <!-- Dropdown -->
-            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bedding, Chair & Floor Protection</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bowel Care</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Children's Nappies & Accessories</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Disposable Pads, Pants & Liners</a>
-            </div>
-        </div>
+        <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px]">
+            <div class="h-[65px] relative 1300:h-[60px] flex items-center justify-between text-[#00718f]">
+                <div class="flex space-x-2 font-bold">
+                    <!-- Dropdown 1 -->
+                    <div class="relative group">
+                        <button class="px-6 py-2">Continence Aids</button>
+                    </div>
 
-        <!-- Daily Living & Mobility Aids Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                <a href="#">Daily Living & Mobility Aids</a>
-            </button>
-            <!-- Dropdown -->
-            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Walking Aids</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Wheelchairs</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Dressing Aids</a>
-            </div>
-        </div>
+                    <!-- Dropdown 2 -->
+                    <div class="relative group">
+                        <button class="px-6 py-2">Daily Living & Mobility Aids</button>
+                    </div>
 
-        <!-- Medical Aids Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                <a href="#">Medical Aids</a>
-            </button>
-            <!-- Dropdown -->
-            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Orthopedic Supports</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">First Aid Supplies</a>
-            </div>
-        </div>
+                    <!-- Dropdown 3 -->
+                    <div class="relative group">
+                        <button class="px-6 py-2">Medical Aids</button>
+                    </div>
 
-        <!-- Nutrition Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                <a href="#">Nutrition</a>
-            </button>
-            <!-- Dropdown -->
-            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Nutrition Supplements</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Vitamins & Minerals</a>
-            </div>
-        </div>
+                    <!-- Dropdown 4 -->
+                    <div class="relative group">
+                        <button class="px-6 py-2">Nutrition</button>
+                    </div>
 
-        <!-- Skin Care Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                <a href="#">Skin Care</a>
-            </button>
-            <!-- Dropdown -->
-            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Moisturizers</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Wound Care</a>
-            </div>
-        </div>
+                    <!-- Dropdown 5 -->
+                    <div class="relative group">
+                        <button class="px-6 py-2">Skin Care</button>
+                    </div>
 
-        <!-- Urology Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                <a href="#">Urology</a>
-            </button>
-            <!-- Dropdown -->
-            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Catheters</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Incontinence Care</a>
-            </div>
-        </div>
+                    <!-- Dropdown 6 -->
+                    <div class="relative group">
+                        <button class="px-6 py-2">Urology</button>
+                    </div>
 
-        <!-- Wound Care Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                <a href="#">Wound Care</a>
-            </button>
-            <!-- Dropdown -->
-            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Bandages</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Dressings</a>
-            </div>
-        </div>
+                    <!-- Dropdown 7 -->
+                    <div class="relative group">
+                        <button class="px-6 py-2">Wound Care</button>
+                    </div>
 
-        <!-- Others Dropdown -->
-        <div class="relative group">
-            <button class="flex items-center gap-2 font-semibold px-[18px] text-base transition duration-500 ease-in-out cursor-pointer hover:bg-dark-red">
-                <a href="#">Others</a>
-            </button>
-            <!-- Dropdown -->
-            <div class="absolute left-0 mt-2 hidden bg-white shadow-lg rounded-md group-hover:block hover:block z-10 top-full w-[50vw] max-w-full">
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Accessories</a>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-teal-100 hover:text-teal-600">Miscellaneous</a>
+                    <!-- Dropdown 8 -->
+                    <div class="relative group">
+                        <button class="px-6 py-2">Others</button>
+                    </div>
+                </div>
+
+                <!-- Static Dropdown Content -->
+                <div id="dropdown-content" class="absolute left-0 w-full bg-white text-[#00718f] mt-[16rem] hidden px-6 py-4 max-h-[300px] overflow-y-auto">
+                    <div class="flex items-center justify-between font-semibold">
+                        <!-- Left side items -->
+                        <div class="w-1/2">
+                            <ul id="dropdown-items">
+                                <!-- Dynamic items will be inserted here -->
+                            </ul>
+                        </div>
+                        <!-- Right side paragraph -->
+                        <div class="w-1/2 pl-4">
+                            <p id="dropdown-paragraph" class="text-lg">Select a menu to see the content here.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
     </nav>
 
@@ -332,6 +303,94 @@
         // Initial display and rotation
         showSliderText();
         setInterval(showSliderText, 4000);
+
+
+        const menus = [{
+                title: "Continence Aids",
+                items: ["Bedding, Chair & Floor Protection", "Bowel Care", "Children's Nappies & Accessories",
+                    "Disposable Pads, Pants & Liners"
+                ],
+                paragraph: "This is the paragraph content for Continence Aids"
+            },
+            {
+                title: "Daily Living & Mobility Aids",
+                items: ["Walking Aids", "Clothing & Dressing Aids", "Household Aids", "Household Products"],
+                paragraph: "This is the paragraph content for Daily Living & Mobility Aids."
+            },
+            {
+                title: "Medical Aids",
+                items: ["Enteral Feeding", "First Aid", "General", "Needles, Syringes & Solutions"],
+                paragraph: "This is the paragraph content for Medical Aids."
+            },
+            {
+                title: "Nutrition",
+                items: ["Supplements", "Vitamins", "Minerals", "Protein"],
+                paragraph: "This is the paragraph content for Nutrition."
+            },
+            {
+                title: "Skin Care",
+                items: ["Adhesive & Adhesive Removers", "Serums & Treatments", "Creams, Body Lotions & Oils", "Wipes & Wash Cloths"],
+                paragraph: "This is the paragraph content for Skin Care."
+            },
+            {
+                title: "Urology",
+                items: ["Catheters", "Condom Drainage", "Drain and Leg Bags", "Urinals & Bed Pans"],
+                paragraph: "This is the paragraph content for Urology."
+            },
+            {
+                title: "Wound Care",
+                items: ["Bandages", "Burn Treatments", "Scar Management", "Tapes"],
+                paragraph: "This is the paragraph content for Wound Care."
+            },
+            {
+                title: "Others",
+                items: ["Clothing","Eye Protection", "Disinfectants & Cleaners", "Personal Gromming & Hygiene"],
+                paragraph: "This is the paragraph content for Others."
+            }
+        ];
+
+        // Get all buttons in the navigation
+        const buttons = document.querySelectorAll('.group button');
+        const dropdownContent = document.getElementById('dropdown-content');
+        const dropdownItems = document.getElementById('dropdown-items');
+        const dropdownParagraph = document.getElementById('dropdown-paragraph');
+
+        // Show dropdown when hovering over any menu
+        buttons.forEach((button, index) => {
+            button.addEventListener('mouseenter', () => {
+                // Show the dropdown content once hovering begins
+                if (dropdownContent.classList.contains('hidden')) {
+                    dropdownContent.classList.remove('hidden');
+                }
+                // Update dropdown content with corresponding menu data
+                updateDropdownContent(menus[index]);
+            });
+        });
+
+        // Function to update the dropdown content based on the menu selected
+        function updateDropdownContent(menu) {
+            // Clear previous content
+            dropdownItems.innerHTML = '';
+            dropdownParagraph.textContent = menu.paragraph;
+
+            // Add new items
+            menu.items.forEach(item => {
+                const listItem = document.createElement('li');
+                listItem.classList.add('py-2');
+                listItem.textContent = item;
+                dropdownItems.appendChild(listItem);
+            });
+        }
+
+        // Hide the dropdown when the mouse leaves the navigation or dropdown area
+        dropdownContent.addEventListener('mouseleave', () => {
+            dropdownContent.classList.add('hidden');
+        });
+
+        // Make sure the dropdown stays visible while hovering over it
+        dropdownContent.addEventListener('mouseenter', () => {
+            dropdownContent.classList.remove('hidden');
+        });
     </script>
 
 </body>

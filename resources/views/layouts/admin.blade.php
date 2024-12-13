@@ -9,15 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
   <script>
-    let isCollapsed = false; 
+    let isCollapsed = false;
+    
     // Function to toggle the sidebar
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       const sidebarLinks = document.querySelectorAll('.sidebar-link span');
       const logo = document.getElementById('logo');
       const toggleIcon = document.getElementById('toggle-icon');
-      const header = document.getElementById('header');  
-
+      const header = document.getElementById('header');
+      const content = document.getElementById('content-container'); // Content container
+  
       // Toggle the state of the sidebar
       if (isCollapsed) {
         sidebar.classList.remove('w-20');
@@ -30,10 +32,14 @@
         sidebarLinks.forEach(link => {
           link.classList.remove('hidden');
         });
-
+  
         // Move the header accordingly
         header.classList.remove('left-[5rem]');
         header.classList.add('left-[16rem]'); 
+  
+        // Adjust content position
+        content.classList.remove('ml-[5rem]');
+        content.classList.add('ml-[16rem]');
       } else {
         sidebar.classList.remove('w-64');
         sidebar.classList.add('w-20');
@@ -45,23 +51,43 @@
         sidebarLinks.forEach(link => {
           link.classList.add('hidden');
         });
-
+  
         // Move the header accordingly
         header.classList.remove('left-[16rem]');
         header.classList.add('left-[5rem]'); 
+  
+        // Adjust content position
+        content.classList.remove('ml-[16rem]');
+        content.classList.add('ml-[5rem]');
       }
-
+  
       // Toggle the sidebar state
       isCollapsed = !isCollapsed;
     }
+  
+    // Initial setup when the page loads
+    window.onload = function () {
+      const sidebar = document.getElementById('sidebar');
+      const content = document.getElementById('content-container');
+  
+      // If sidebar is collapsed, apply the correct margin to the content
+      if (sidebar.classList.contains('w-20')) {
+        content.classList.add('ml-[5rem]');
+      } else {
+        content.classList.add('ml-[16rem]');
+      }
+    };
   </script>
+  
+  
+
 </head>
 
 <body class="bg-gray-100 text-gray-900 h-screen flex flex-col font-sans">
 
   <div class="flex flex-1 h-full">
     <!-- Sidebar -->
-    <aside id="sidebar" class="w-64 bg-white text-gray-900 shadow-lg flex flex-col transition-all duration-300">
+    <aside id="sidebar" class="w-64 bg-white text-gray-900 shadow-lg flex flex-col fixed top-0 bottom-0 left-0 transition-all duration-300 overflow-hidden">
       <!-- Logo and toggle button -->
       <div class="p-4 flex items-center justify-center bg-white cursor-pointer" onclick="toggleSidebar()">
         <!-- The actual logo -->
@@ -79,7 +105,7 @@
           <i class="ri-layout-masonry-fill"></i>
           <span class="ml-4">Dashboard</span>
         </a>
-        <a href="{{ route('admin.category.category') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.category.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-grid-line"></i>
           <span class="ml-4">Category</span>
         </a>
@@ -95,7 +121,7 @@
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4">Orders</span>
         </a>
-        <a href="{{ route('admin.product.product') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-bank-card-2-fill"></i>
           <span class="ml-4">Products</span>
         </a>
@@ -132,9 +158,10 @@
     </div>
 
     <!-- Main Content -->
-    <main class="flex-1 p-8">
+    <main id="content-container" class="flex-1 p-8 overflow-y-auto transition-all duration-300">
       @yield('content')
     </main>
+    
   </div>
 
 </body>

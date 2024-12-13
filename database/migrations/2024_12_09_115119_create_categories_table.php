@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('category_name');
             $table->string('image');
+            $table->string('slug')->nullable()->unique();  // Make slug nullable
+            $table->boolean('status')->default(true); // Default to true for visibility
             $table->timestamps();
         });
     }
+    
 
     /**
      * Reverse the migrations.

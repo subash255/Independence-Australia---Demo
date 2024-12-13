@@ -57,7 +57,12 @@
                 @auth
                     <!-- If user is logged in, show their name -->
                     <span class="text-gray-900">Hi, {{ Auth::user()->name }}</span>
-                    <a href="/logout" class="text-gray-900 hover:underline">Logout</a>
+                    <form action="{{ route('logout') }}" method="POST" class="w-full">
+                        @csrf
+                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
+                          Log Out
+                        </button>
+                      </form>
                 @else
                     <!-- If user is not logged in, show Sign In and Register buttons -->
                     <a href="/signin" class="text-gray-900 hover:underline hidden sm:block">

@@ -16,7 +16,7 @@
     </div>
 
         <!-- Back Button -->
-        <a href="{{route('admin.category.category')}}" class="text-gray-700 hover:text-indigo-600 text-sm font-medium flex items-center space-x-2 mb-4">
+        <a href="{{route('admin.category.index')}}" class="text-gray-700 hover:text-indigo-600 text-sm font-medium flex items-center space-x-2 mb-4">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
           </svg>
@@ -36,7 +36,7 @@
       </div>
 
       <div class="mb-6">
-        <label for="slug" class="block text-sm font-medium text-gray-700">Category Name</label>
+        <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
         <!-- Pre-populate the category name field -->
         <input type="text" id="slug" name="slug" value="{{ old('slug', $category->slug) }}" placeholder=""
                class="mt-2 px-4 py-2 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none" readonly>
