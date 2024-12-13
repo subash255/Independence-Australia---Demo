@@ -6,16 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Independence Australia</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
-
 </head>
 
 <body class="font-sans bg-white">
     <!-- Header Section -->
     <header class="bg-white shadow-sm fixed w-full top-0 z-50 sm:relative">
-        <div class="bg-gray-100 container mx-auto flex justify-end py-2 px-6 text-sm space-x-8">
+        <div class="bg-gray-100 container mx-auto flex justify-between sm:justify-end py-2 px-6 text-sm space-x-8">
             <a href="#" class="text-gray-700 hover:underline">Quick Order</a>
             <a href="#" class="text-gray-700 hover:underline">Our Story</a>
             <a href="#" class="text-gray-700 hover:underline">Contact Us</a>
@@ -24,7 +22,7 @@
             <!-- Mobile Menu Toggle -->
             <div class="md:hidden flex items-center justify-between pr-3">
                 <button id="menuToggle" class="text-black">
-                    <i class="fa fa-bars text-2xl"></i>
+                    <i class="ri-menu-3-line text-2xl text-[#00718f]"></i>
                 </button>
             </div>
             <a href="/" class="flex items-center space-x-4">
@@ -32,9 +30,9 @@
             </a>
             <div class="relative flex-1 max-w-md">
                 <input type="text" placeholder="What are you looking for?"
-                    class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none hidden sm:block">
-                <i class="fa fa-search absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 sm:block"></i>
-            </div>
+                    class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
+                    <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
+                </div>
             <div class="flex items-center font-semibold space-x-3">
                 <!-- Check if the user is logged in -->
                 @auth
@@ -68,6 +66,26 @@
         </div>
     </header>
 
+<!-- Mobile Menu (Initially Hidden) -->
+<div id="mobileMenu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
+    <div class="bg-white p-6 space-y-6">
+        <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6">
+            <i class="fa fa-times"></i>
+        </button>
+        <ul class="space-y-4 text-xl">
+            <li><a href="#">Continence Aids</a></li>
+            <li><a href="#">Daily Living & Mobility Aids</a></li>
+            <li><a href="#">Medical Aids</a></li>
+            <li><a href="#">Nutrition</a></li>
+            <li><a href="#">Skin Care</a></li>
+            <li><a href="#">Urology</a></li>
+            <li><a href="#">Wound Care</a></li>
+            <li><a href="#">Others</a></li>
+        </ul>
+    </div>
+</div>
+    
+
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-50">
         <div class="bg-[#7eb6c6] py-2 text-black">
@@ -95,50 +113,49 @@
                             Innovative solutions for everyday living.
                         </div>
                     </div>
-
                 </div>
             </section>
         </div>
-        <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px]">
-            <div class="h-[65px] relative 1300:h-[60px] flex items-center justify-between text-[#00718f]">
+        <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px] hidden md:block">
+            <div class="h-[65px] relative flex items-center justify-between text-[#00718f]">
                 <div class="flex space-x-2 font-bold">
                     <!-- Dropdown 1 -->
-                    <div class="relative group">
+                    <div class="relative group hidden md:block">
                         <button class="px-6 py-2">Continence Aids</button>
                     </div>
 
                     <!-- Dropdown 2 -->
-                    <div class="relative group">
+                    <div class="relative group hidden md:block">
                         <button class="px-6 py-2">Daily Living & Mobility Aids</button>
                     </div>
 
                     <!-- Dropdown 3 -->
-                    <div class="relative group">
+                    <div class="relative group hidden md:block">
                         <button class="px-6 py-2">Medical Aids</button>
                     </div>
 
                     <!-- Dropdown 4 -->
-                    <div class="relative group">
+                    <div class="relative group hidden md:block">
                         <button class="px-6 py-2">Nutrition</button>
                     </div>
 
                     <!-- Dropdown 5 -->
-                    <div class="relative group">
+                    <div class="relative group hidden md:block">
                         <button class="px-6 py-2">Skin Care</button>
                     </div>
 
                     <!-- Dropdown 6 -->
-                    <div class="relative group">
+                    <div class="relative group hidden md:block">
                         <button class="px-6 py-2">Urology</button>
                     </div>
 
                     <!-- Dropdown 7 -->
-                    <div class="relative group">
+                    <div class="relative group hidden md:block">
                         <button class="px-6 py-2">Wound Care</button>
                     </div>
 
                     <!-- Dropdown 8 -->
-                    <div class="relative group">
+                    <div class="relative group hidden md:block">
                         <button class="px-6 py-2">Others</button>
                     </div>
                 </div>
@@ -164,11 +181,9 @@
     </nav>
 
     <!-- Main Content -->
-
     @yield('content')
 
     <!-- Footer Section -->
-
     <footer class="bg-white py-6">
         <div class="bg-[#7eb6c6] w-full py-12 px-4 lg:px-16">
             <div class="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 md:space-x-8">
@@ -235,20 +250,6 @@
     </footer>
 
     <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        const toggleMenu = () => {
-            mobileMenu.classList.toggle('hidden');
-        };
-
-        menuToggle.addEventListener('click', toggleMenu);
-
-        document.addEventListener('click', (event) => {
-            if (!mobileMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                mobileMenu.classList.add('hidden');
-            }
-        });
 
         let currentIndex = 0;
         const slides = document.querySelectorAll("#slider .flex-shrink-0");
@@ -303,7 +304,6 @@
         // Initial display and rotation
         showSliderText();
         setInterval(showSliderText, 4000);
-
 
         const menus = [{
                 title: "Continence Aids",
@@ -391,8 +391,19 @@
         dropdownContent.addEventListener('mouseenter', () => {
             dropdownContent.classList.remove('hidden');
         });
-    </script>
 
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const closeMenu = document.getElementById("closeMenu");
+
+        menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        closeMenu.addEventListener("click", () => {
+            mobileMenu.classList.add("hidden");
+        });
+    </script>
 </body>
 
 </html>
