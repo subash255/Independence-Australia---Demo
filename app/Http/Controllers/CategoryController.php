@@ -12,14 +12,14 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::paginate(5);
-        return view('admin.category.category', compact('categories'), [
+        return view('admin.category.index', compact('categories'), [
             'title' => 'Category'
         ]);
     }
 
     public function create()
     {
-        return view('admin.category.addcategory');
+        return view('admin.category.create');
     }
 
     public function store(Request $request)
@@ -30,20 +30,16 @@ class CategoryController extends Controller
             'slug' => 'nullable|string|max:255|unique:categories,slug',  // Allow slug to be nullable
             'image' => 'required|image',
         ]);
-        
 
-        
         // Handle the image upload
         $image = time() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(public_path('images/brand'), $image);
         $data['image'] = $image;
-        
-
-        
+  
         // Create the category
         Category::create($data);
         
-        return redirect()->route('admin.category.category')->with('success', 'Category created successfully');
+        return redirect()->route('admin.category.index')->with('success', 'Category created successfully');
     }
     
 
@@ -52,7 +48,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::findOrFail($id);
-        return view('admin.category.editcategory', compact('category'));
+        return view('admin.category.edit', compact('category'));
     }
 
     // Update Category
@@ -85,7 +81,7 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return redirect()->route('admin.category.category')->with('success', 'Category updated successfully');
+        return redirect()->route('admin.category.index')->with('success', 'Category updated successfully');
     }
 
     // Delete Category
@@ -101,7 +97,7 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('admin.category.category')->with('success', 'Category deleted successfully');
+        return redirect()->route('admin.category.index')->with('success', 'Category deleted successfully');
     }
 
     // Update Category Status (Toggle Visibility)

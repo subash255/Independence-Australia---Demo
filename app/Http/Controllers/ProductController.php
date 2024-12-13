@@ -12,17 +12,19 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::paginate(5);
-        return view('admin.product.product',compact('products'), [
+        return view('admin.product.index',compact('products'), [
             'title' => 'Product' 
         ]);
 
     }
+
     public function create()
     {
         $categories = Category::with('subcategories')->get();  // Fetch all categories
         
-        return view('admin.addproduct',compact('categories'));
+        return view('admin.product.create',compact('categories'));
     }
+
     public function getSubCategories($categoryId)
     {
         $subCategories = Subcategory::where('category_id', $categoryId)->get(); // Correct foreign key
@@ -33,7 +35,7 @@ class ProductController extends Controller
         public function edit($id)
         {
             $product = Product::find($id);
-            return view('admin.edit', compact('product'));
+            return view('admin.product.edit', compact('product'));
         }
         
     
@@ -64,7 +66,7 @@ class ProductController extends Controller
             Product::create($data);
         
             // Return a success message and redirect
-            return redirect()->route('admin.product.product')->with('success', 'Product added successfully!');
+            return redirect()->route('admin.product.index')->with('success', 'Product added successfully!');
         }
         
 
@@ -83,7 +85,7 @@ public function update(Request $request, $id)
     
         $product = Product::find($id);
         if (!$product) {
-            return redirect()->route('admin.product')->with('error', 'Product not found.');
+            return redirect()->route('admin.product.index')->with('error', 'Product not found.');
         }
     
         $data = $request->all();
@@ -98,16 +100,16 @@ public function update(Request $request, $id)
     
         $product->update($data);
     
-        return redirect()->route('admin.product')->with('success', 'Product updated successfully.');
+        return redirect()->route('admin.product.index')->with('success', 'Product updated successfully.');
     }
     public function destroy($id)
     {
         $product = Product::find($id);
         if (!$product) {
-            return redirect()->route('admin.product')->with('error', 'Product not found.');
+            return redirect()->route('admin.product.index')->with('error', 'Product not found.');
         }
         $product->delete();
-        return redirect()->route('admin.product')->with('success', 'Product deleted successfully.');
+        return redirect()->route('admin.product.index')->with('success', 'Product deleted successfully.');
     }
     public function updateToggle(Request $request, $productId)
 {

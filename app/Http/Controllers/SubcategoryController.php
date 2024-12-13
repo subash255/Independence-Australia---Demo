@@ -15,12 +15,13 @@ class SubcategoryController extends Controller
             'title' => 'Sub Category'
         ]);
     }
+
     // Show the form for creating a subcategory
     public function create()
     {
         // Eager load categories with their subcategories
         $categories = Category::all();
-        return view('admin.subcategory.addsub', compact('categories'));
+        return view('admin.subcategory.create', compact('categories'));
     }
 
     // Store the new subcategory
@@ -30,39 +31,42 @@ class SubcategoryController extends Controller
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id', // Ensure category exists
             'subcategory_name' => 'required|string|max:255',
+            'slug' => 'nullable|string|max:255|unique:subcategories,slug', // Check uniqueness in subcategories table
             'paragraph' => 'nullable|string',
         ]);
 
-        // Create the subcategory
+        // Create the subcategory and save it to the database
         Subcategory::create([
             'category_id' => $data['category_id'],
             'subcategory_name' => $data['subcategory_name'],
+            'slug' => $data['slug'], // Save the generated or provided slug
             'paragraph' => $data['paragraph'],
         ]);
 
-        // Redirect to the addsub page with a success message
+        // Redirect to the index page with a success message
         return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory created successfully!');
     }
+
     public function edit($id)
     {
         // Find the subcategory by ID or show an error if not found
         $subcategory = Subcategory::findOrFail($id);
 
-        // Fetch categories for the category dropdown list (assuming you need this for the edit form)
+        // Fetch categories for the category dropdown list
         $categories = Category::all();
-        $subcategories = Subcategory::where('category_id', $subcategory->category_id)->get();
 
         // Return the view with the subcategory data and categories
-        return view('admin.subcategory.edit', compact('subcategory', 'categories', 'subcategories'));
+        return view('admin.subcategory.edit', compact('subcategory', 'categories'));
     }
 
+    // Get subcategories by category ID for dynamic dropdowns
     public function getSubcategoriesByCategory($categoryId)
     {
         $subcategories = Subcategory::where('category_id', $categoryId)->get();
         return response()->json($subcategories);
     }
 
-
+    // Update an existing subcategory
     public function update(Request $request, $id)
     {
         // Validate the incoming data
@@ -80,15 +84,14 @@ class SubcategoryController extends Controller
         $subcategory->subcategory_name = $data['subcategory_name'];
         $subcategory->paragraph = $data['paragraph'];
 
-        // Save the updated subcategory to the database
+        // Save the updated subcategory
         $subcategory->save();
 
         // Redirect back with a success message
         return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory updated successfully!');
     }
 
-
-
+    // Delete a subcategory
     public function destroy($id)
     {
         // Find the subcategory by ID or fail
@@ -97,8 +100,24 @@ class SubcategoryController extends Controller
         // Delete the subcategory
         $subcategory->delete();
 
-        // Redirect to the addsub page with a success message
-        return redirect()->route('admin.subcategory.addsub')->with('success', 'Subcategory deleted successfully!');
+        // Redirect to the subcategory index with a success message
+        return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory deleted successfully!');
     }
-    
+
+    public function updateToggle(Request $request, $subcategoryId)
+    {
+        // Find the subcategory by ID or return an error if not found
+        $subcategory = Subcategory::find($subcategoryId);
+
+        if (!$subcategory) {
+            return response()->json(['success' => false, 'message' => 'Subcategory not found.']);
+        }
+
+        // Update the status field based on the request state (1 for active, 0 for inactive)
+        $subcategory->status = $request->state;
+        $subcategory->save();
+
+        // Return success response
+        return response()->json(['success' => true, 'status' => $subcategory->status]);
+    }
 }

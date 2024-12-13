@@ -105,7 +105,7 @@
           <i class="ri-layout-masonry-fill"></i>
           <span class="ml-4">Dashboard</span>
         </a>
-        <a href="{{ route('admin.category.category') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.category.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-grid-line"></i>
           <span class="ml-4">Category</span>
         </a>
@@ -121,7 +121,7 @@
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4">Orders</span>
         </a>
-        <a href="{{ route('admin.product.product') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-bank-card-2-fill"></i>
           <span class="ml-4">Products</span>
         </a>
