@@ -119,8 +119,18 @@
 
 <script>
 document.querySelectorAll('.toggle-switch').forEach(toggle => {
+    const dot = toggle.parentNode.querySelector('.dot');
+  
+  // Apply the correct initial state
+  if (toggle.checked) {
+    dot.style.transform = 'translateX(100%)';
+    dot.style.backgroundColor = 'green';
+  } else {
+    dot.style.transform = 'translateX(0)';
+    dot.style.backgroundColor = 'white';
+  }
+    
   toggle.addEventListener('change', function () {
-    const dot = this.parentNode.querySelector('.dot');
     const categoryId = this.getAttribute('data-id');
     const newState = this.checked ? 1 : 0;
 
