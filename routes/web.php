@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
@@ -33,6 +34,15 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'isadmin'])->group(function () {
 
     Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin.dash');
+    Route::resource('admin', AdminController::class)->except(['show']);
+
+    Route::get('admin/admin/index', [AdminController::class, 'index'])->name('admin.admin.index');
+    Route::get('admin/admin/create', [AdminController::class, 'create'])->name('admin.admin.create');
+    Route::post('admin/admin/store', [AdminController::class, 'store'])->name('admin.admin.store');
+    Route::get('admin/admin/{user}/edit', [AdminController::class, 'edit'])->name('admin.admin.edit');
+    Route::patch('admin/admin/{user}/update', [AdminController::class, 'update'])->name('admin.admin.update');
+    Route::delete('admin/admin/{user}/destroy', [AdminController::class, 'destroy'])->name('admin.admin.destroy');
+    
 
     Route::get('admin/product/index', [ProductController::class, 'index'])->name('admin.product.index');
     Route::get('admin/product/create', [ProductController::class, 'create'])->name('admin.product.create');
