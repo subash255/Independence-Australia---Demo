@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('price');
             $table->string('quantity');
             $table->string('brand');
+            $table->string('remark');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->foreignId('categories_id')->constrained()->onDelete('cascade');
             $table->foreignId('subcategories_id')->constrained()->onDelete('cascade');

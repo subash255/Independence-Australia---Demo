@@ -107,6 +107,18 @@
         </tr>
     @endforeach
 </tbody>
+<!-- Modal for inputting remarks -->
+<div id="remarks-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+    <div class="bg-white p-6 rounded-lg max-w-lg w-full">
+        <h3 class="text-xl font-semibold mb-4">Enter Remarks</h3>
+        <textarea id="remarks-input" rows="4" class="border border-gray-300 w-full px-4 py-2" placeholder="Enter remarks..."></textarea>
+        <div class="mt-4 flex justify-end space-x-2">
+            <button id="submit-remarks" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700">Submit</button>
+            <button id="cancel-remarks" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-700">Cancel</button>
+        </div>
+    </div>
+</div>
+
 
         </table>
     </div>
@@ -221,33 +233,66 @@ function updateStatus(status) {
         const statusButtons = row.querySelectorAll('button');
         statusButtons.forEach(button => button.disabled = true); // Disable all buttons
 
-        // Send the AJAX request to update the product's status
-        fetch(`/admin/product/update-status/${productId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': '{{ csrf_token() }}',  // CSRF token for security
-            },
-            body: JSON.stringify({
-                status: status,  // 'pending', 'approved', or 'rejected'
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                // Update the product row status text on success
-                const statusCell = document.querySelector(`#status-cell-${productId}`);
-                if (statusCell) {
-                    statusCell.textContent = status.charAt(0).toUpperCase() + status.slice(1);  // Update status display
-                }
-            } else {
-                alert('Failed to update status for product ID ' + productId);
+        // Show the modal to input remarks before proceeding
+        const remarksModal = document.getElementById('remarks-modal');
+        remarksModal.classList.remove('hidden');  // Show the modal
+
+        const submitButton = document.getElementById('submit-remarks');
+        const cancelButton = document.getElementById('cancel-remarks');
+        const remarksInput = document.getElementById('remarks-input');
+
+        // Submit remarks when the submit button is clicked
+        submitButton.onclick = function() {
+            const remarks = remarksInput.value.trim();
+
+            if (remarks === '') {
+                alert('Please enter remarks.');
+                return;
             }
-        })
-        .catch(error => {
-            console.error('Error updating status:', error);
-            alert('Error updating status for product ID ' + productId);
-        });
+
+            // Send the AJAX request to update the product's status and remarks
+            fetch(`/admin/product/update-status/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',  // CSRF token for security
+                },
+                body: JSON.stringify({
+                    status: status,  // 'approved', 'rejected'
+                    remarks: remarks,  // Include remarks in the request
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update the product row status text and remarks on success
+                    const statusCell = document.querySelector(`#status-cell-${productId}`);
+                    const remarksCell = row.querySelector('td:nth-child(9)');  // Assuming remarks is in the 9th column
+
+                    if (statusCell) {
+                        statusCell.textContent = status.charAt(0).toUpperCase() + status.slice(1);  // Update status display
+                    }
+
+                    if (remarksCell) {
+                        remarksCell.textContent = remarks;  // Update remarks display
+                    }
+
+                    // Close the modal after updating
+                    remarksModal.classList.add('hidden');
+                } else {
+                    alert('Failed to update status for product ID ' + productId);
+                }
+            })
+            .catch(error => {
+                console.error('Error updating status:', error);
+                alert('Error updating status for product ID ' + productId);
+            });
+        };
+
+        // Close the modal if the cancel button is clicked
+        cancelButton.onclick = function() {
+            remarksModal.classList.add('hidden');  // Hide the modal
+        };
     });
 
     // If any product had an invalid status, show one alert and stop processing
@@ -255,6 +300,7 @@ function updateStatus(status) {
         alert('One or more products have already been processed or are not pending.');
     }
 }
+
 
 </script>
 
