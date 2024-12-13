@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('price');
             $table->string('quantity');
             $table->string('brand');
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->foreignId('categories_id')->constrained()->onDelete('cascade');
             $table->foreignId('subcategories_id')->constrained()->onDelete('cascade');
+            
             
             // Add the two toggle button columns
             $table->boolean('visibility')->default(true);  // Visibility toggle (true by default)

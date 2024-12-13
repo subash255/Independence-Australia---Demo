@@ -67,6 +67,11 @@ Route::post('/products/add', [ProductController::class, 'store'])->name('product
 Route::get('/admin/{id}/editproduct', [ProductController::class, 'edit'])->name('product.edit');
 Route::patch('/admin/{id}/editproduct', [ProductController::class, 'update'])->name('product.update');
 Route::delete('/admin/{id}/editproduct', [ProductController::class, 'destroy'])->name('product.delete');
+// web.php
+
+Route::post('/admin/product/update-status/{id}', [ProductController::class, 'updateStatus'])->name('admin.product.update-status');
+
+
 });
 
 
