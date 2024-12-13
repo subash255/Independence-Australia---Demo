@@ -9,9 +9,15 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(5);
+        $status = $request->get('status');  // Get the status from the query parameter
+
+    // Fetch products based on the status if provided, otherwise, fetch all products
+    $products = Product::when($status, function ($query) use ($status) {
+        return $query->where('status', $status);  // Filter by status
+    })
+    ->paginate(5);
         return view('admin.product.index',compact('products'), [
             'title' => 'Product' 
         ]);
@@ -130,6 +136,25 @@ public function update(Request $request, $id)
 
     return response()->json(['success' => true]);
 }
+
+// ProductController.php
+
+public function updateStatus(Request $request, $id)
+{
+    $product = Product::findOrFail($id);
+
+    // Ensure the status is only updated if it's still pending
+    if ($product->status != 'pending') {
+        return response()->json(['success' => false, 'message' => 'Product status cannot be changed']);
+    }
+
+    // Update the status
+    $product->status = $request->status;
+    $product->save();
+
+    return response()->json(['success' => true, 'message' => 'Product status updated']);
+}
+
 
 
 
