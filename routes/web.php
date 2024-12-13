@@ -22,6 +22,7 @@ Route::get('welcome', function () {
 })->middleware(['auth', 'verified'])->name('welcome');
 
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -60,11 +61,25 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
 
 
     Route::get('/products/add', [ProductController::class, 'create'])->name('product.create');
-    Route::post('/products/add', [ProductController::class, 'store'])->name('product.store');
-    Route::get('/admin/{id}/editproduct', [ProductController::class, 'edit'])->name('product.edit');
-    Route::patch('/admin/{id}/editproduct', [ProductController::class, 'update'])->name('product.update');
-    Route::delete('/admin/{id}/editproduct', [ProductController::class, 'destroy'])->name('product.delete');
+Route::post('/products/add', [ProductController::class, 'store'])->name('product.store');
+Route::get('/admin/{id}/editproduct', [ProductController::class, 'edit'])->name('product.edit');
+Route::patch('/admin/{id}/editproduct', [ProductController::class, 'update'])->name('product.update');
+Route::delete('/admin/{id}/editproduct', [ProductController::class, 'destroy'])->name('product.delete');
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 require __DIR__ . '/auth.php';
