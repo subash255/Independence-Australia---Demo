@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+
 <div class="relative w-full overflow-hidden">
     <!-- Slider Wrapper -->
     <div id="slider" class="flex transition-transform duration-700 ease-in-out">
