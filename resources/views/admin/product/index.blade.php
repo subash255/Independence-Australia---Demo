@@ -109,15 +109,15 @@
                 <button class="text-white bg-green-500 hover:bg-green-700 w-8 h-8 flex items-center justify-center rounded-md" onclick="updateStatus('approved')">
                     <i class="ri-check-line text-sm"></i>
                 </button>
-                <button class="text-white bg-green-500 hover:bg-green-700 w-8 h-8 flex items-center justify-center rounded-md">
+                <a href="{{ route('admin.product.show', $product->id) }}"><button class="text-white bg-green-500 hover:bg-green-700 w-8 h-8 flex items-center justify-center rounded-md">
                     <i class="ri-eye-line text-sm"></i>
-                </button>
+                </button></a>
             </td>
         </tr>
     @endforeach
 </tbody>
 <!-- Modal for inputting remarks -->
-<div id="remarks-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+<div id="remarks-modal" class="fixed flex inset-0 z-30 items-center justify-center bg-black bg-opacity-50 hidden">
     <div class="bg-white p-6 rounded-lg max-w-lg w-full">
         <h3 class="text-xl font-semibold mb-4">Enter Remarks</h3>
         <textarea id="remarks-input" rows="4" class="border border-gray-300 w-full px-4 py-2" placeholder="Enter remarks..."></textarea>
@@ -267,7 +267,7 @@ function updateStatus(status) {
                     'X-CSRF-TOKEN': '{{ csrf_token() }}',  // CSRF token for security
                 },
                 body: JSON.stringify({
-                    status: status,  // 'approved', 'rejected'
+                    status: status,  
                     remarks: remarks,  // Include remarks in the request
                 }),
             })
