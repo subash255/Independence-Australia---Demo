@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware([AdminMiddleware::class])->group(function () {
+Route::middleware(['auth','isadmin'])->group(function () {
   
 
     Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin.dash');
