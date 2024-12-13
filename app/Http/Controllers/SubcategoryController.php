@@ -27,7 +27,6 @@ class SubcategoryController extends Controller
     // Store the new subcategory
     public function store(Request $request)
     {
-        
         // Validate the incoming data
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id', // Ensure category exists
@@ -70,22 +69,19 @@ class SubcategoryController extends Controller
     // Update an existing subcategory
     public function update(Request $request, $id)
     {
-        $subcategory = Subcategory::findOrFail($id);
         // Validate the incoming data
         $data = $request->validate([
             'category_id' => 'required|exists:categories,id', // Ensure category exists
             'subcategory_name' => 'required|string|max:255',
-            'slug' => 'required|string|max:255|unique:categories,slug,' . $subcategory->id,
             'paragraph' => 'nullable|string',
         ]);
 
         // Find the subcategory by ID or fail
-       
+        $subcategory = Subcategory::findOrFail($id);
 
         // Update the subcategory with the validated data
         $subcategory->category_id = $data['category_id'];
         $subcategory->subcategory_name = $data['subcategory_name'];
-        $subcategory->slug = $data['slug'];
         $subcategory->paragraph = $data['paragraph'];
 
         // Save the updated subcategory
