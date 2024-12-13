@@ -98,7 +98,7 @@
             <td id="status-cell-{{ $product->id }}" class="border border-gray-300 px-4 py-2">
                 {{ ucfirst($product->status) }}
             </td>
-            <td class="border border-gray-300 px-4 py-2">{{ $product->remarks }}</td>
+            <td class="border border-gray-300 px-4 py-2">{{ $product->remark }}</td>
             <td class="px-2 py-2 mt-4 flex justify-center space-x-2">
                 <button class="text-white bg-blue-500 hover:bg-blue-700 w-8 h-8 flex items-center justify-center rounded-md" onclick="updateStatus('pending')">
                     <i class="ri-alarm-line text-sm"></i>
@@ -117,13 +117,13 @@
     @endforeach
 </tbody>
 <!-- Modal for inputting remarks -->
-<div id="remarks-modal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+<div id="remark-modal" class="fixed flex inset-0 z-30 items-center justify-center bg-black bg-opacity-50 hidden">
     <div class="bg-white p-6 rounded-lg max-w-lg w-full">
         <h3 class="text-xl font-semibold mb-4">Enter Remarks</h3>
-        <textarea id="remarks-input" rows="4" class="border border-gray-300 w-full px-4 py-2" placeholder="Enter remarks..."></textarea>
+        <textarea id="remark-input" rows="4" class="border border-gray-300 w-full px-4 py-2" placeholder="Enter remarks..."></textarea>
         <div class="mt-4 flex justify-end space-x-2">
-            <button id="submit-remarks" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700">Submit</button>
-            <button id="cancel-remarks" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-700">Cancel</button>
+            <button id="submit-remark" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-700">Submit</button>
+            <button id="cancel-remark" class="bg-gray-500 text-white py-2 px-4 rounded-md hover:bg-gray-700">Cancel</button>
         </div>
     </div>
 </div>
@@ -204,7 +204,6 @@ document.querySelectorAll('.toggle-switch').forEach(toggle => {
 
 </script>
 <script>
-
 function updateStatus(status) {
     // Get all the product rows that need to be updated
     const selectedProducts = document.querySelectorAll('.product-row');  // Make sure to use the correct class for product rows
@@ -243,18 +242,18 @@ function updateStatus(status) {
         statusButtons.forEach(button => button.disabled = true); // Disable all buttons
 
         // Show the modal to input remarks before proceeding
-        const remarksModal = document.getElementById('remarks-modal');
-        remarksModal.classList.remove('hidden');  // Show the modal
+        const remarkModal = document.getElementById('remark-modal');
+        remarkModal.classList.remove('hidden');  // Show the modal
 
-        const submitButton = document.getElementById('submit-remarks');
-        const cancelButton = document.getElementById('cancel-remarks');
-        const remarksInput = document.getElementById('remarks-input');
+        const submitButton = document.getElementById('submit-remark');
+        const cancelButton = document.getElementById('cancel-remark');
+        const remarkInput = document.getElementById('remark-input');
 
         // Submit remarks when the submit button is clicked
         submitButton.onclick = function() {
-            const remarks = remarksInput.value.trim();
+            const remark = remarkInput.value.trim();
 
-            if (remarks === '') {
+            if (remark === '') {
                 alert('Please enter remarks.');
                 return;
             }
@@ -268,7 +267,7 @@ function updateStatus(status) {
                 },
                 body: JSON.stringify({
                     status: status,  // 'approved', 'rejected'
-                    remarks: remarks,  // Include remarks in the request
+                    remark: remark,  // Include remarks in the request
                 }),
             })
             .then(response => response.json())
@@ -276,18 +275,18 @@ function updateStatus(status) {
                 if (data.success) {
                     // Update the product row status text and remarks on success
                     const statusCell = document.querySelector(`#status-cell-${productId}`);
-                    const remarksCell = row.querySelector('td:nth-child(9)');  // Assuming remarks is in the 9th column
+                    const remarkCell = row.querySelector('td:nth-child(9)');  // Assuming remarks is in the 9th column
 
                     if (statusCell) {
-                        statusCell.textContent = status.charAt(0).toUpperCase() + status.slice(1);  // Update status display
+                        statusCell.textContent = data.status.charAt(0).toUpperCase() + data.status.slice(1);  // Update status display
                     }
 
-                    if (remarksCell) {
-                        remarksCell.textContent = remarks;  // Update remarks display
+                    if (remarkCell) {
+                        remarkCell.textContent = data.remark;  // Update remarks display
                     }
 
                     // Close the modal after updating
-                    remarksModal.classList.add('hidden');
+                    remarkModal.classList.add('hidden');
                 } else {
                     alert('Failed to update status for product ID ' + productId);
                 }
@@ -300,7 +299,7 @@ function updateStatus(status) {
 
         // Close the modal if the cancel button is clicked
         cancelButton.onclick = function() {
-            remarksModal.classList.add('hidden');  // Hide the modal
+            remarkModal.classList.add('hidden');  // Hide the modal
         };
     });
 
@@ -309,9 +308,13 @@ function updateStatus(status) {
         alert('One or more products have already been processed or are not pending.');
     }
 }
-
-
 </script>
+
+
+
+
+
+
 
 
 
