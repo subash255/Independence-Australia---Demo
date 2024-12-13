@@ -150,18 +150,35 @@ public function update(Request $request, $id)
 
 public function updateStatus(Request $request, $id)
 {
+    // Find the product by ID or fail if not found
     $product = Product::findOrFail($id);
 
-    // Ensure the status is only updated if it's still pending
+    // Ensure the status is only updated if it's still 'pending'
     if ($product->status != 'pending') {
-        return response()->json(['success' => false, 'message' => 'Product status cannot be changed']);
+        return response()->json([
+            'success' => false, 
+            'message' => 'Product status cannot be changed as it is not pending.'
+        ]);
     }
 
-    // Update the status
+    // Validate incoming data (status and remarks)
+    $request->validate([
+        'status' => 'required|in:approved,rejected',
+        'remark' => 'required|string|max:255',
+    ]);
+
+    // Update the product's status and remark
     $product->status = $request->status;
+    $product->remark = $request->remark;
     $product->save();
 
-    return response()->json(['success' => true, 'message' => 'Product status updated']);
+    // Return the updated data
+    return response()->json([
+        'success' => true, 
+        'message' => 'Product status updated successfully.',
+        'status' => $product->status,
+        'remark' => $product->remark
+    ]);
 }
 
 
