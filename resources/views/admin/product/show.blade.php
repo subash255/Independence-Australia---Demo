@@ -20,7 +20,7 @@
                     <p class="text-gray-500"><strong class="font-medium text-gray-800">Subcategory:</strong> {{ $product->subcategory ? $product->subcategory->subcategory_name : 'No Subcategory' }}</p>
                 </div>
                 <div>
-                    <p class="text-gray-500"><strong class="font-medium text-gray-800">Remarks:</strong> {{ $product->remarks ?? 'No remarks available' }}</p>
+                    <p class="text-gray-500"><strong class="font-medium text-gray-800">Remarks:</strong> {{ $product->remark ?? 'No remarks available' }}</p>
                 </div>
                 <div>
                     <p class="text-gray-500"><strong class="font-medium text-gray-800">Visibility:</strong> {{ $product->visibility ? 'Visible' : 'Hidden' }}</p>

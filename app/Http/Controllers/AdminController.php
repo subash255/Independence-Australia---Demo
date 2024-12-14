@@ -12,7 +12,7 @@ class AdminController extends Controller
     public function index()
     {
         // Paginate admins, excluding super_admins
-        $admins = User::where('role', 'admin')->paginate(10); // You can adjust the number (10) as needed
+        $admins = User::where('role', 'admin')->paginate(10); 
     
         return view('admin.admin.index', compact('admins'), [
             'title' => 'Manage Admin'

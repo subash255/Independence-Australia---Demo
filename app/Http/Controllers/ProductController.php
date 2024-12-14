@@ -11,9 +11,9 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $status = $request->get('status');  // Get the status from the query parameter
+        $status = $request->get('status');  
 
-    // Fetch products based on the status if provided, otherwise, fetch all products
+    
     $products = Product::when($status, function ($query) use ($status) {
         return $query->where('status', $status);  // Filter by status
     })
@@ -26,7 +26,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        $categories = Category::with('subcategories')->get();  // Fetch all categories
+        $categories = Category::with('subcategories')->get();  
         
         return view('admin.product.create',compact('categories'));
     }

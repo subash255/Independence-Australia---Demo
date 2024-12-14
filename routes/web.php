@@ -49,7 +49,8 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::post('admin/product/store', [ProductController::class, 'store'])->name('admin.product.store');
     Route::get('/admin/product/{id}', [ProductController::class, 'show'])->name('admin.product.show');
     Route::get('/sub-categories/{categoryId}', [ProductController::class, 'getSubCategories']);
-    Route::post('/admin/product/update-toggle/{product}', [ProductController::class, 'updateToggle'])->name('admin.product.updateToggle');
+Route::post('/admin/product/update-status/{id}', [ProductController::class, 'updateStatus'])->name('admin.product.update-status');
+Route::post('/admin/product/update-toggle/{product}', [ProductController::class, 'updateToggle'])->name('admin.product.updateToggle');
 
 
     Route::get('admin/category/index', [CategoryController::class, 'index'])->name('admin.category.index');
@@ -70,31 +71,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::post('/admin/subcategory/update-toggle/{subcategoryId}', [SubcategoryController::class, 'updateToggle'])->name('admin.subcategory.updateToggle');
 
 
-    Route::get('/products/add', [ProductController::class, 'create'])->name('product.create');
-Route::post('/products/add', [ProductController::class, 'store'])->name('product.store');
-Route::get('/admin/{id}/editproduct', [ProductController::class, 'edit'])->name('product.edit');
-Route::patch('/admin/{id}/editproduct', [ProductController::class, 'update'])->name('product.update');
-Route::delete('/admin/{id}/editproduct', [ProductController::class, 'destroy'])->name('product.delete');
-// web.php
-
-Route::post('/admin/product/update-status/{id}', [ProductController::class, 'updateStatus'])->name('admin.product.update-status');
-
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 require __DIR__ . '/auth.php';
