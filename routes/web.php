@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubcategoryController;
@@ -10,18 +11,9 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/homepage', function () {
-    return view('homepage');
-});
-
-Route::get('welcome', function () {
-    return view('welcome');
-})->middleware(['auth', 'verified'])->name('welcome');
-
+Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');
+Route::get('/homepage', [HomepageController::class, 'homepage'])->name('homepage');
 
 
 Route::middleware('auth')->group(function () {
@@ -32,7 +24,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::middleware(['auth', 'isadmin'])->group(function () {
-    //admin routes
+    //Admin routes
     Route::get('admin/dash', [DashboardController::class, 'index'])->name('admin.dash');
     Route::resource('admin', AdminController::class)->except(['show']);
 
@@ -43,7 +35,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::patch('admin/admin/{user}/update', [AdminController::class, 'update'])->name('admin.admin.update');
     Route::delete('admin/admin/{user}/destroy', [AdminController::class, 'destroy'])->name('admin.admin.destroy');
     
-//product routes
+    //Product routes
     Route::get('admin/product/index', [ProductController::class, 'index'])->name('admin.product.index');
     Route::get('admin/product/create', [ProductController::class, 'create'])->name('admin.product.create');
     Route::post('admin/product/store', [ProductController::class, 'store'])->name('admin.product.store');
@@ -53,7 +45,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::post('/admin/product/update-status/{id}', [ProductController::class, 'updateStatus'])->name('admin.product.update-status');
  
 
-//category routes
+    //Category routes
     Route::get('admin/category/index', [CategoryController::class, 'index'])->name('admin.category.index');
     Route::get('admin/category/create', [CategoryController::class, 'create'])->name('admin.category.create');
     Route::post('admin/category/store', [CategoryController::class, 'store'])->name('admin.category.store');
@@ -61,7 +53,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::patch('admin/category/{id}/updatecategory', [CategoryController::class, 'update'])->name('admin.category.updatecategory');
     Route::delete('admin/category/{id}/deletecategory', [CategoryController::class, 'destroy'])->name('admin.category.deletecategory');
 
-//subcategory routes
+    //Subcategory routes
     Route::get('/admin/subcategory/index', [SubcategoryController::class, 'index'])->name('admin.subcategory.index');
     Route::get('/admin/subcategory/create', [SubcategoryController::class, 'create'])->name('admin.subcategory.create');
     Route::get('admin/subcategory/{id}/edit', [SubcategoryController::class, 'edit'])->name('admin.subcategory.edit');
@@ -70,10 +62,6 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::delete('admin/subcategory/{id}/destroy', [SubcategoryController::class, 'destroy'])->name('admin.subcategory.destroy');
     Route::get('/admin/subcategories/{categoryId}', [SubcategoryController::class, 'getSubcategoriesByCategory']);
     Route::post('/admin/subcategory/update-toggle/{subcategoryId}', [SubcategoryController::class, 'updateToggle'])->name('admin.subcategory.updateToggle');
-
-
-  
-// web.php
 
 
 

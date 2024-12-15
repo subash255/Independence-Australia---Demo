@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Independence Australia</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
 </head>
 
@@ -31,8 +32,9 @@
             <div class="relative flex-1 max-w-md">
                 <input type="text" placeholder="What are you looking for?"
                     class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
-                    <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
-                </div>
+                <i
+                    class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
+            </div>
             <div class="flex items-center font-semibold space-x-3">
                 <!-- Check if the user is logged in -->
                 @auth
@@ -66,25 +68,25 @@
         </div>
     </header>
 
-<!-- Mobile Menu (Initially Hidden) -->
-<div id="mobileMenu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
-    <div class="bg-white p-6 space-y-6">
-        <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6">
-            <i class="fa fa-times"></i>
-        </button>
-        <ul class="space-y-4 text-xl">
-            <li><a href="#">Continence Aids</a></li>
-            <li><a href="#">Daily Living & Mobility Aids</a></li>
-            <li><a href="#">Medical Aids</a></li>
-            <li><a href="#">Nutrition</a></li>
-            <li><a href="#">Skin Care</a></li>
-            <li><a href="#">Urology</a></li>
-            <li><a href="#">Wound Care</a></li>
-            <li><a href="#">Others</a></li>
-        </ul>
+    <!-- Mobile Menu (Initially Hidden) -->
+    <div id="mobileMenu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
+        <div class="bg-white p-6 space-y-6">
+            <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6">
+                <i class="fa fa-times"></i>
+            </button>
+            <ul class="space-y-4 text-xl">
+                <li><a href="#">Continence Aids</a></li>
+                <li><a href="#">Daily Living & Mobility Aids</a></li>
+                <li><a href="#">Medical Aids</a></li>
+                <li><a href="#">Nutrition</a></li>
+                <li><a href="#">Skin Care</a></li>
+                <li><a href="#">Urology</a></li>
+                <li><a href="#">Wound Care</a></li>
+                <li><a href="#">Others</a></li>
+            </ul>
+        </div>
     </div>
-</div>
-    
+
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-50">
@@ -161,7 +163,8 @@
                 </div>
 
                 <!-- Static Dropdown Content -->
-                <div id="dropdown-content" class="absolute left-0 w-full bg-white text-[#00718f] mt-[16rem] hidden px-6 py-4 max-h-[300px] overflow-y-auto">
+                <div id="dropdown-content"
+                    class="absolute left-0 w-full bg-white text-[#00718f] mt-[16rem] hidden px-6 py-4 max-h-[300px] overflow-y-auto">
                     <div class="flex items-center justify-between font-semibold">
                         <!-- Left side items -->
                         <div class="w-1/2">
@@ -250,34 +253,6 @@
     </footer>
 
     <script>
-
-        let currentIndex = 0;
-        const slides = document.querySelectorAll("#slider .flex-shrink-0");
-        const totalSlides = slides.length;
-        const slider = document.getElementById("slider");
-
-        const showSlide = (index) => {
-            const offset = -index * 100;
-            slider.style.transform = `translateX(${offset}%)`;
-        };
-
-        document.getElementById("next").addEventListener("click", () => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            showSlide(currentIndex);
-        });
-
-        document.getElementById("prev").addEventListener("click", () => {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            showSlide(currentIndex);
-        });
-
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            showSlide(currentIndex);
-        }, 3000);
-
-        showSlide(currentIndex);
-
         const sliderTexts = document.querySelectorAll('.slider-text');
         let currentIndexs = 0;
 
@@ -304,7 +279,39 @@
         // Initial display and rotation
         showSliderText();
         setInterval(showSliderText, 4000);
+    </script>
 
+    <script>
+        let currentIndex = 0;
+        const slides = document.querySelectorAll("#slider .flex-shrink-0");
+        const totalSlides = slides.length;
+        const slider = document.getElementById("slider");
+
+        const showSlide = (index) => {
+            const offset = -index * 100;
+            slider.style.transform = `translateX(${offset}%)`;
+        };
+
+        document.getElementById("next").addEventListener("click", () => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        });
+
+        document.getElementById("prev").addEventListener("click", () => {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            showSlide(currentIndex);
+        });
+
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            showSlide(currentIndex);
+        }, 3000);
+
+        showSlide(currentIndex);
+    </script>
+
+
+    <script>
         const menus = [{
                 title: "Continence Aids",
                 items: ["Bedding, Chair & Floor Protection", "Bowel Care", "Children's Nappies & Accessories",
@@ -329,7 +336,9 @@
             },
             {
                 title: "Skin Care",
-                items: ["Adhesive & Adhesive Removers", "Serums & Treatments", "Creams, Body Lotions & Oils", "Wipes & Wash Cloths"],
+                items: ["Adhesive & Adhesive Removers", "Serums & Treatments", "Creams, Body Lotions & Oils",
+                    "Wipes & Wash Cloths"
+                ],
                 paragraph: "This is the paragraph content for Skin Care."
             },
             {
@@ -344,7 +353,7 @@
             },
             {
                 title: "Others",
-                items: ["Clothing","Eye Protection", "Disinfectants & Cleaners", "Personal Gromming & Hygiene"],
+                items: ["Clothing", "Eye Protection", "Disinfectants & Cleaners", "Personal Gromming & Hygiene"],
                 paragraph: "This is the paragraph content for Others."
             }
         ];
@@ -391,7 +400,9 @@
         dropdownContent.addEventListener('mouseenter', () => {
             dropdownContent.classList.remove('hidden');
         });
+    </script>
 
+    <script>
         const menuToggle = document.getElementById("menuToggle");
         const mobileMenu = document.getElementById("mobileMenu");
         const closeMenu = document.getElementById("closeMenu");

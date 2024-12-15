@@ -63,33 +63,4 @@
     </div>
 </div>
 
-<script>
-    const sliderTexts = document.querySelectorAll('.slider-text');
-    let currentIndexs = 0;
-
-    function showSliderText() {
-        sliderTexts.forEach((text, index) => {
-            text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full', 'opacity-100',
-                'opacity-0');
-
-            if (index === currentIndexs) {
-                // Show the current text
-                text.classList.add('translate-x-0', 'opacity-100');
-            } else if (index === (currentIndexs - 1 + sliderTexts.length) % sliderTexts.length) {
-                // Exit the previous text to the left
-                text.classList.add('-translate-x-full', 'opacity-0');
-            } else {
-                // Reset for all other texts
-                text.classList.add('translate-x-full', 'opacity-0');
-            }
-        });
-
-        currentIndexs = (currentIndexs + 1) % sliderTexts.length;
-    }
-
-    // Initial display and rotation
-    showSliderText();
-    setInterval(showSliderText, 4000);
-</script>
-
 @endsection
