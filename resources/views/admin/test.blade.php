@@ -1,6 +1,9 @@
 @extends('layouts.master')
 @section('content')
 
+@extends('layouts.master')
+@section('content')
+
     <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-10 md:gap-18 ">
         <div class="absolute inset-0 bg-cover bg-center"
             style="background-image: url('{{ asset('images/suddo.jpg') }}'); height: 400px;">
@@ -107,45 +110,46 @@
         Shop our featured products selection
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
+    
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        @foreach($products as $product)
-        <a href="{{ route(''}}" class="block">
-            <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between">
-                @if($product->is_flash)
-                    <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
-                @endif
+        @foreach ($tests as $test)
+        <a href="#" class="block">
+            <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition transform hover:scale-105 flex flex-col justify-between">
+                
+                <!-- Product Image -->
                 <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-4 overflow-hidden">
-                    <img src="{{ asset('products/' . $product->image) }}" alt="Product Image" class="object-cover w-full h-full">
+                    <img src="{{ $test->image ?? 'https://via.placeholder.com/150' }}" alt="{{ $test->title }}" class="object-cover w-full h-full">
                 </div>
+                
+                <!-- Product Info -->
                 <div class="flex flex-col justify-center items-center text-center">
-                 <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ $product->product_name }}</h3>
-                    <p class="text-sm text-gray-900">
-                        <span class="font-bold">Box</span> {{ $product->quantity }} Units
-                    </p>
-                    <div class="flex items-center mb-5 gap-1 text-yellow-500 text-sm my-2 justify-center">
-                        <span class="text-pink-500 text-lg">★★★★★</span>
-                        <span class="text-gray-600">(5 Reviews)</span>
+                    <h2 class="text-lg font-semibold text-gray-800 mb-4">{{ $test->title }}</h2>
+                    <p class="text-sm text-gray-600 mt-2 mb-3">{{ $test->description }}</p>
+                    
+                    <!-- Product Price and Category -->
+                    <div class="mt-4">
+                        <p class="text-orange-500 font-bold text-lg">${{ $test->price }}</p>
+                        <p class="text-gray-500 text-sm"><strong>Category:</strong> {{ $test->category }}</p>
                     </div>
-                    <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>
-                    <button
-                        class="inline-block bg-white border-2 border-[#00718f] text-[#00718f] font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-[#00718f] hover:text-white transition-colors mt-4">
+                    
+                    <!-- Add to Basket Button -->
+                    <button class="inline-block bg-white border-2 border-[#00718f] text-[#00718f] font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-[#00718f] hover:text-white transition-colors mt-4">
                         Add to Basket
                     </button>
-                    <span class="text-[#00718f] text-lg pt-4">
-                        <i class="ri-heart-line"></i> Add Favourites
-                    </span>
-                    <span class="text-green-700 text-lg">
-                        <i class="ri-arrow-left-right-fill"></i> Add to Compare
-                    </span>
+                    
+                    <!-- Favourites and Compare Icons -->
+                    <div class="flex justify-center gap-6 mt-4">
+                        <span class="text-[#00718f] text-lg cursor-pointer">
+                            <i class="ri-heart-line"></i> Add Favourites
+                        </span>
+                        <span class="text-green-700 text-lg cursor-pointer">
+                            <i class="ri-arrow-left-right-fill"></i> Add to Compare
+                        </span>
+                    </div>
                 </div>
             </div>
         </a>
         @endforeach
-    </div>
-    
-    <!-- Pagination -->
-    <div class="mt-4">
-        {{ $products->links() }}
     </div>
     
 
@@ -335,4 +339,5 @@
         });
 
     </script>
+
 @endsection
