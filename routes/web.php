@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
@@ -62,6 +63,19 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::delete('admin/subcategory/{id}/destroy', [SubcategoryController::class, 'destroy'])->name('admin.subcategory.destroy');
     Route::get('/admin/subcategories/{categoryId}', [SubcategoryController::class, 'getSubcategoriesByCategory']);
     Route::post('/admin/subcategory/update-toggle/{subcategoryId}', [SubcategoryController::class, 'updateToggle'])->name('admin.subcategory.updateToggle');
+
+
+
+    //brand routes
+    Route::get('admin/brand/index', [BrandController::class, 'index'])->name('admin.brand.index');
+    Route::get('/brand/create', [BrandController::class, 'create'])->name('admin.brand.create');
+    Route::get('/brand/{id}/edit', [BrandController::class, 'edit'])->name('admin.brand.edit');
+    Route::patch('/brand/{id}/update', [BrandController::class, 'update'])->name('admin.brand.update');
+    Route::post('/brand', [BrandController::class, 'store'])->name('brand.store'); 
+    Route::delete('/brand/{id}/destroy', [BrandController::class, 'destroy'])->name('admin.brand.destroy');
+
+  
+// web.php
 
 
 
