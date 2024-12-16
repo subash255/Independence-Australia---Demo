@@ -7,6 +7,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PunchOutController;
+use App\Http\Controllers\ScraperController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\AdminMiddleware;
@@ -21,7 +23,9 @@ Route::get('/homepage', [HomepageController::class, 'homepage'])->name('homepage
 Route::get('/fetch-test', [TestController::class, 'fetchAndStore']);
 Route::get('/test', [TestController::class, 'showTests']);
 
+Route::get('/scrape-products', [ScraperController::class, 'scrapeProducts']);
 
+Route::get('/punchout', [PunchOutController::class, 'fetchCatalog']);
 //Fetch products from eBay 
 // Route::get('/fetch-ebay-products', [ProductController::class, 'fetchEbayProducts']);
 // Route::get('/test', [TestController::class, 'showTests']);
@@ -30,7 +34,6 @@ Route::get('/test', [TestController::class, 'showTests']);
 //Fetch products from Shopify
 // Route::get('/fetch-shopify-products', [ProductController::class, 'fetchShopifyProducts']);
 // Route::get('/test', [TestController::class, 'showTests']);
-
 
 
 Route::middleware('auth')->group(function () {

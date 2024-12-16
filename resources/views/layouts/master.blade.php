@@ -165,18 +165,23 @@
                 <!-- Static Dropdown Content -->
                 <div id="dropdown-content"
                     class="absolute left-0 w-full bg-white text-[#00718f] mt-[16rem] hidden px-6 py-4 max-h-[300px] overflow-y-auto">
-                    <div class="flex items-center justify-between font-semibold">
+                   <div class="flex items-center justify-between">
+                    <div class="flex gap-x-8 font-semibold">
                         <!-- Left side items -->
-                        <div class="w-1/2">
+                        <div class="">
                             <ul id="dropdown-items">
                                 <!-- Dynamic items will be inserted here -->
                             </ul>
                         </div>
                         <!-- Right side paragraph -->
-                        <div class="w-1/2 pl-4">
+                        <div class="">
                             <p id="dropdown-paragraph" class="text-lg">Select a menu to see the content here.</p>
                         </div>
+                    </div> 
+                    <div>
+                        <img class="w-20 h-20 object-contain" src="{{asset('images/banner.jpg')}}" alt="">
                     </div>
+                   </div>
                 </div>
             </div>
         </div>

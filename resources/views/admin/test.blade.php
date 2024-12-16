@@ -1,9 +1,6 @@
 @extends('layouts.master')
 @section('content')
 
-@extends('layouts.master')
-@section('content')
-
     <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-10 md:gap-18 ">
         <div class="absolute inset-0 bg-cover bg-center"
             style="background-image: url('{{ asset('images/suddo.jpg') }}'); height: 400px;">

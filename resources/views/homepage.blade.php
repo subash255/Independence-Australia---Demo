@@ -109,7 +109,7 @@
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($products as $product)
-        <a href="{{ route(''}}" class="block">
+        <a href="#" class="block">
             <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between">
                 @if($product->is_flash)
                     <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
