@@ -25,20 +25,14 @@
         </div>
       </div>
 
-    <!-- Account Role Selection -->
-
-  <label class="block text-gray-700 font-medium mb-2">Account Role</label>
-  <div class="space-y-2">
-      <label class="flex items-center space-x-2">
-          <input type="radio" name="role" value="user" class="text-blue-600" {{ old('role') == 'user' ? 'checked' : '' }}>
-          <span>User (Regular Account)</span>
-      </label>
-      <label class="flex items-center space-x-2">
-          <input type="radio" name="role" value="vendor" class="text-blue-600" {{ old('role') == 'vendor' ? 'checked' : '' }}>
-          <span>Vendor (Business Account)</span>
-      </label>
-  </div>
-
+      <!-- Account Role Selection -->
+      <label class="block text-gray-700 font-medium mb-2">Account Role</label>
+      <div class="space-y-2">
+          <label class="flex items-center space-x-2">
+              <input type="radio" name="role" value="vendor" class="text-blue-600" >
+              <span>Vendor</span>
+          </label>
+      </div>
 
       <!-- Email -->
       <div>
@@ -82,7 +76,5 @@
     </form>
   </div>
 </div>
-
-
 
 @endsection

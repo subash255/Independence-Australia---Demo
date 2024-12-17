@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('last_name')->nullable();
-            $table->string('role')->nullable(false); // Ensure role is required (nullable(false) means it can't be null)
+            $table->string('role')->default('user'); // Ensure role is required and has a default value of 'user'
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->timestamps();
         });
+        
 
         // Create the password_reset_tokens table
         Schema::create('password_reset_tokens', function (Blueprint $table) {
