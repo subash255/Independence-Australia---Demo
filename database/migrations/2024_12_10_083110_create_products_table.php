@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->foreignId('categories_id')->constrained()->onDelete('cascade');
             $table->foreignId('subcategories_id')->constrained()->onDelete('cascade');
+            $table->foreignId('brands_id')->constrained()->onDelete('cascade');
             
             
             // Add the two toggle button columns
