@@ -188,6 +188,29 @@
 
     </nav>
 
+    <div class="p-6 items-center justify-between bg-[url('images/dr.jpg')] bg-cover bg-center">
+       <div class="my-8 ml-8">
+        <div class="text-sm text-gray-500">
+            <a href="#" class="hover:text-[#00718f]">Home</a> |
+            <span>Dashboard</span>
+        </div>
+        <!-- Welcome Heading -->
+        <h1 class="text-5xl font-bold text-[#00718f] mt-2">Welcome Sohan!</h1>
+        
+        <hr class="border-b border-gray-400 mt-2 mb-2 w-2/4"> 
+        <p class="text-gray-600 mt-1">
+            You are currently managing <br>
+            <span class="font-semibold text-[#00718f]">Sohan Kafle B2B Customer</span>
+        </p>
+        <!-- Switch Account Button -->
+        <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]">
+            <i class="ri-refresh-line pr-2"></i>
+            Switch Account
+        </button>
+    </div>
+</div>
+    
+
     <!-- Main Content -->
     @yield('content')
 
