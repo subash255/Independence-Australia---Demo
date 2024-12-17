@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'role' => 'required|in:user,vendor', // Ensure role is either user or vendor
+            'role' => 'nullable|string|in:user,vendor',// Ensure role is either user or vendor
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
             'address' => 'required|string',
@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => $request->role,  // Ensure the role is passed here
+            'role' => $request->role?: 'user',  // Ensure the role is passed here
             'address' => $request->address,
             'phone_number' => $request->phone_number,
         ]);
