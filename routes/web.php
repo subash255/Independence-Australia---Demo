@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
@@ -102,7 +103,12 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
 
 
 });
+Route::middleware('auth')->group(function() {
+Route::get('user/contact/index', [ContactController::class, 'index'])->name('user.contact.index');
+Route::post('user/contact/store', [ContactController::class, 'store'])->name('user.contact.store'); 
 
+
+});
 
 
 
