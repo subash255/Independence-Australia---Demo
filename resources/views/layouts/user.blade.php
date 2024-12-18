@@ -26,7 +26,7 @@
                     <i class="ri-menu-3-line text-2xl text-[#00718f]"></i>
                 </button>
             </div>
-            <a href="{{route('user.index')}}" class="flex items-center space-x-4">
+            <a href="{{route('user.welcome')}}" class="flex items-center space-x-4">
                 <img src="{{ asset('images/logo.png') }}" alt="Independence Australia Logo" class="h-10">
 
             </a>
@@ -192,8 +192,33 @@
         </div>
 
     </nav>
-
-   
+    <div class="p-6 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
+        <div class="my-8 ml-8 max-w-7xl mx-auto">
+            <!-- Breadcrumbs -->
+            <div class="text-sm text-gray-500">
+                <a href="#" class="hover:text-[#00718f]">Home</a> |
+                <span>Dashboard</span>
+            </div>
+            
+            <!-- Welcome Heading -->
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#00718f] mt-2">Welcome {{ Auth::user()->name }}!</h1>
+    
+            <hr class="border-b border-gray-300 mt-2 mb-2 w-3/4 sm:w-2/4 md:w-1/4">
+    
+            <p class="text-gray-600 mt-1 text-base sm:text-lg md:text-xl">
+                You are currently managing <br>
+                <span class="font-semibold text-[#00718f]">{{ Auth::user()->name }} {{ Auth::user()->last_name }} B2B
+                    Customer</span>
+            </p>
+    
+            <!-- Switch Account Button -->
+            <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]">
+                <i class="ri-refresh-line pr-2"></i>
+                Switch Account
+            </button>
+        </div>
+    </div>
+    
 
     <!-- Main Content -->
     @yield('content')

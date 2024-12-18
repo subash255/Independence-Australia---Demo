@@ -17,7 +17,8 @@ use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('user/welcome', [HomepageController::class, 'index'])->name('user.index');
+Route::get('user/welcome', [HomepageController::class, 'index'])->name('user.welcome');
+// Route::get('user/acc', [HomepageController::class, 'dash'])->name('user.acc');
 
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');
@@ -103,6 +104,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
 
 
 });
+
 Route::middleware('auth')->group(function() {
 Route::get('user/contact/index', [ContactController::class, 'index'])->name('user.contact.index');
 Route::post('user/contact/store', [ContactController::class, 'store'])->name('user.contact.store'); 
