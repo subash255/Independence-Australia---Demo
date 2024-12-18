@@ -44,7 +44,7 @@
            {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">Company Profile</span>
         </a>
-        <a href="#" 
+        <a href="{{ route('user.manageuser.index') }}" 
            class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
            hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] 
            {{ request()->routeIs('user.management') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">

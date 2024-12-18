@@ -12,6 +12,7 @@ use App\Http\Controllers\PunchOutController;
 use App\Http\Controllers\ScraperController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ManageuserController;
+use App\Http\Controllers\NayaController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\AdminMiddleware;
 
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('user/welcome', [HomepageController::class, 'index'])->name('user.welcome');
 // Route::get('user/acc', [HomepageController::class, 'dash'])->name('user.acc');
 
+Route::get('/naya', [NayaController::class, 'index']);
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');
 Route::get('/homepage', [HomepageController::class, 'homepage'])->name('homepage');

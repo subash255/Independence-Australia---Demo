@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content')
 
 <div class="container mx-auto px-4 py-8">
@@ -26,8 +26,7 @@
       </div>
 
   
-    
-
+  
       <!-- Email -->
       <div>
         <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>

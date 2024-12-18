@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.user')
 @section('content')
 
 {{-- Flash Message --}}
@@ -17,22 +17,42 @@
     }, 3000);
 </script>
 
-<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+<div class="flex flex-col lg:flex-row"> 
+    <!-- Sidebar/Nav Section -->
+    <nav class="lg:w-[21%] w-full p-6 font-semibold mt-10 bg-white border-r border-gray-300">
+        <a href="{{ route('user.welcome') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+            <span class="ml-4">Account Dashboard</span>
+        </a>
+        <a href="#" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.orders.index') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+            <span class="ml-4">Web Orders</span>
+        </a>
+        <a href="{{ route('user.contact.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.contact.index') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+            <span class="ml-4">My Information</span>
+        </a>
+        <a href="#" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+            <span class="ml-4">Company Profile</span>
+        </a>
+        <a href="{{ route('user.manageuser.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.management') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+            <span class="ml-4">User Management</span>
+        </a>
+    </nav>
+    <div class="lg:w-[79%] w-full p-6 mt-4">
     <div class="mb-4 flex justify-end">
         <a href="{{ route('user.manageuser.create') }}"
-            class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">Add
+            class="text-[#00718f] font-medium bg-white border-2 border-[#00718f] rounded-lg py-2 px-4 hover:bg-[#00718f] hover:text-white transition duration-300">Add
             User</a>
     </div>
 
     <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
         <div class="flex items-center space-x-2">
             <label for="entries" class="mr-2">Show entries:</label>
-            <select id="entries" class="border border-gray-300 px-2 py-1 w-full sm:w-auto">
+            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10">
                 <option value="5">5</option>
                 <option value="10">10</option>
                 <option value="15">15</option>
             </select>
         </div>
+    
 
         <div class="flex items-center space-x-2 w-full sm:w-auto">
             <span class="text-gray-700">Search:</span>
@@ -55,7 +75,7 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr class="border border-gray-300">
-                        <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $user->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $user->email }}</td>
                         
@@ -92,7 +112,7 @@
             {{ $users->links() }}
         </div>
     </div>
-
+    </div>
 </div>
 
 @endsection
