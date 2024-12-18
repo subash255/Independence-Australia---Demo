@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('lastname');
             $table->text('address');
             $table->string('contact_info');
-            $table->enum('is_billing', ['yes', 'no'])->default('no');
-            $table->enum('is_shipping', ['yes', 'no'])->default('no');
+            $table->boolean('is_billing')->default(false);
+            $table->boolean('is_shipping')->default(false);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

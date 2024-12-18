@@ -45,8 +45,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => $request->role?: 'user',  // Ensure the role is passed here
+            'password' => bcrypt($request->password),  // Ensure the role is passed here
             'address' => $request->address,
             'phone_number' => $request->phone_number,
         ]);
