@@ -11,8 +11,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PunchOutController;
 use App\Http\Controllers\ScraperController;
 use App\Http\Controllers\SubcategoryController;
+use App\Http\Controllers\ManageuserController;
 use App\Http\Controllers\TestController;
 use App\Http\Middleware\AdminMiddleware;
+
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 
@@ -106,6 +108,12 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
 Route::middleware('auth')->group(function() {
 Route::get('user/contact/index', [ContactController::class, 'index'])->name('user.contact.index');
 Route::post('user/contact/store', [ContactController::class, 'store'])->name('user.contact.store'); 
+
+
+Route::get('user/manageuser/index', [ManageuserController::class, 'index'])->name('user.manageuser.index');
+Route::get('user/manageuser/create', [ManageuserController::class, 'create'])->name('user.manageuser.create');
+Route::post('user/manageuser/store', [ManageuserController::class, 'store'])->name('user.manageuser.store'); 
+
 
 
 });

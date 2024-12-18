@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('address')->nullable(); // Add address column, nullable if not all users have an address
             $table->string('phone_number')->nullable(); // Add phone_number column, nullable if not all users have a phone number
+            $table->unsignedBigInteger('vendor_id')->nullable(); // Add vendor_id column, nullable by default
+            $table->foreign('vendor_id')->references('id')->on('users')->onDelete('set null'); // Add phone_number column, nullable if not all users have a phone number
             $table->rememberToken();
             $table->timestamps();
         });
