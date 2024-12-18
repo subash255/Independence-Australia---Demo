@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Independence Australia</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans bg-white">
@@ -26,8 +26,9 @@
                     <i class="ri-menu-3-line text-2xl text-[#00718f]"></i>
                 </button>
             </div>
-            <a href="/" class="flex items-center space-x-4">
-                <img src="images/logo.png" alt="Independence Australia Logo" class="h-10">
+            <a href="{{route('user.index')}}" class="flex items-center space-x-4">
+                <img src="{{ asset('images/logo.png') }}" alt="Independence Australia Logo" class="h-10">
+
             </a>
             <div class="relative flex-1 max-w-md">
                 <input type="text" placeholder="What are you looking for?"
@@ -36,24 +37,28 @@
                     class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
             </div>
             <div class="flex items-center font-semibold space-x-3">
-                {{-- <!-- Check if the user is logged in -->
-                @auth
-                    <!-- If user is logged in, show their name -->
-                    <span class="text-gray-900">Hi, {{ Auth::user()->name }}</span>
-                    <form action="{{ route('logout') }}" method="POST" class="w-full">
-                        @csrf
-                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
-                            Log Out
-                        </button>
-                    </form>
-                @else
-                    <!-- If user is not logged in, show Sign In and Register buttons -->
-                    <a href="/login" class="text-gray-900 hover:underline hidden sm:block">
-                        <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
+                <!-- Profile Icon -->
+                <div class="w-8 h-8 flex items-center justify-center">
+                    <i class="ri-user-3-fill text-[#00718f] text-[25px]"></i>
+                </div>
+            
+                <!-- User Information -->
+                <div class="flex flex-col">
+                    @auth <!-- Check if the user is authenticated -->
+                        <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}
+                        </p>
+                        <p class="text-sm text-gray-500">B2B Customer</p>
+                    @endauth 
+                </div>
+            
+                <div class="flex items-center space-x-3 ml-3 border-l-2 pl-3">
+                    <a href="#" class="text-[#00718f] font-medium hover:underline"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                       Switch Account
                     </a>
-                    <span class="hidden sm:block px-0">/</span>
-                    <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
-                @endauth --}}
+                </div>
+            </div>
+            
                 <a href="/checkout" class="text-gray-900 hidden sm:block">
                     <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
                 </a>
@@ -188,28 +193,7 @@
 
     </nav>
 
-    <div class="p-6 items-center justify-between bg-[url('images/dr.jpg')] bg-cover bg-center">
-       <div class="my-8 ml-8">
-        <div class="text-sm text-gray-500">
-            <a href="#" class="hover:text-[#00718f]">Home</a> |
-            <span>Dashboard</span>
-        </div>
-        <!-- Welcome Heading -->
-        <h1 class="text-5xl font-bold text-[#00718f] mt-2">Welcome Sohan!</h1>
-        
-        <hr class="border-b border-gray-400 mt-2 mb-2 w-2/4"> 
-        <p class="text-gray-600 mt-1">
-            You are currently managing <br>
-            <span class="font-semibold text-[#00718f]">Sohan Kafle B2B Customer</span>
-        </p>
-        <!-- Switch Account Button -->
-        <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]">
-            <i class="ri-refresh-line pr-2"></i>
-            Switch Account
-        </button>
-    </div>
-</div>
-    
+   
 
     <!-- Main Content -->
     @yield('content')

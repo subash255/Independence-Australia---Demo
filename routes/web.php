@@ -16,7 +16,7 @@ use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 
 
-Route::get('/index', [HomepageController::class, 'index'])->name('user.welcome');
+Route::get('user/welcome', [HomepageController::class, 'index'])->name('user.index');
 
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');

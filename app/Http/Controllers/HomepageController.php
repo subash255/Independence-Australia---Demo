@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomepageController extends Controller
 {
     public function index(){
-        return view('user.welcome');
+        $user = Auth::user();  
+        return view('user.welcome',compact('user'));
     }
 
         private function getProducts()
