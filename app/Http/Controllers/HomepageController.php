@@ -11,18 +11,17 @@ class HomepageController extends Controller
 {
     public function index(){
         $user = Auth::user(); 
-        //get user whose role is user and  associat with current auth user
-        $users = User::where('role', 'user')->where('vendor_id', $user->id)->first();
-
+        //get user whose role is user and  associate with current auth user
+        $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
+        
         return view('user.welcome',compact('user','users'));
     }
-    private function getProducts()
-    {
-        return Product::orderBy('created_at', 'desc')
-            ->limit(9)  // Limit the number of records to 9
-            ->get();
-    }
-    
+
+        private function getProducts()
+        {
+            // Get all products with pagination
+            $products = Product::paginate(10);
+        }
     
         // Display the welcome page
         public function welcome()
