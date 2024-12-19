@@ -13,22 +13,16 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('product_name');
-            $table->string('image');
-            $table->string('description');
-            $table->string('price');
-            $table->string('quantity');
-            $table->string('brand');
-            $table->string('remark')->nullable();
-            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
-            $table->foreignId('categories_id')->constrained()->onDelete('cascade');
-            $table->foreignId('subcategories_id')->constrained()->onDelete('cascade');
-            $table->foreignId('brands_id')->constrained()->onDelete('cascade');
             
+            $table->string('SKU')->nullable();
+            $table->string('Name')->nullable();
+            $table->string('Short_Description')->nullable();
+           
+            $table->string('Price', 8, 2)->nullable();
+            $table->string('Brand')->nullable();
+            $table->string('Image')->nullable();
+            $table->string('Category')->nullable();
             
-            // Add the two toggle button columns
-            $table->boolean('visibility')->default(true);  
-            $table->boolean('is_flash')->default(false);  
             $table->timestamps();
         });
     }

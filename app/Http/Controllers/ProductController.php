@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ProductImport;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -57,28 +59,19 @@ class ProductController extends Controller
         public function store(Request $request)
         {    
             // Validate the input data
-            $data = $request->validate([
-                'product_name' => 'required|string|max:255',
-                'price' => 'required|numeric|min:0',
-                'quantity' => 'required|integer|min:1',
-                'description' => 'required|string', // Corrected here
-                'brand' => 'required|string|max:255',
-                'photopath' => 'nullable|image|max:2048', // Validate image file
-                'categories_id' => 'required|exists:categories,id',
-                'subcategories_id' => 'required|exists:subcategories,id',
+            $request->validate([
+                'csv_file' => 'required|mimes:xlsx,csv,txt'
             ]);
+            
+            
+            // Import the CSV file
+            Excel::import(new ProductImport, $request->file('csv_file'));
+    
+    
+            // Redirect back with a success message
+    
+           
         
-            // Handle image upload if a file is provided
-            if ($request->hasFile('photopath')) {
-                // Generate a unique image name and store it in the 'products' folder
-                $image = time() . '.' . $request->file('photopath')->getClientOriginalExtension();
-                $request->file('photopath')->move(public_path('products'), $image);
-                $data['image'] = $image;
-                unset($data['photopath']);
-            }
-        
-            // Create the product in the database
-            Product::create($data);
         
             // Return a success message and redirect
             return redirect()->route('admin.product.index')->with('success', 'Product added successfully!');
