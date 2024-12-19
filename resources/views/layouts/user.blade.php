@@ -52,11 +52,15 @@
                 </div>
 
                 <div class="flex items-center space-x-3 ml-3 border-l-2 pl-3">
-                    <a href="#" class="text-[#00718f] font-medium hover:underline"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Switch Account
-                    </a>
+                    <!-- Logout Button -->
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="text-red-500 font-medium hover:underline">
+                            Logout
+                        </button>
+                    </form>
                 </div>
+                
             </div>
 
             <a href="/checkout" class="text-gray-900 hidden sm:block">

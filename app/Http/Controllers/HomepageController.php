@@ -12,8 +12,8 @@ class HomepageController extends Controller
     public function index(){
         $user = Auth::user(); 
         //get user whose role is user and  associat with current auth user
-        $users = User::where('role', 'user')->where('vendor_id', $user->id)->first();
-
+        $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
+        
         return view('user.welcome',compact('user','users'));
     }
 
