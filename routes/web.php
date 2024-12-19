@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CsvController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
@@ -125,6 +126,8 @@ Route::get('/impersonate/{id}', [HomepageController::class, 'impersonate'])->nam
 
 });
 
+Route::get('/upload-products', [CsvController::class, 'showForm']);
+Route::post('/upload-products', [CsvController::class, 'uploadCSV'])->name('products.upload');
 
 
 
