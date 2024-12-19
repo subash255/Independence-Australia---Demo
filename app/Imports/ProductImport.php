@@ -16,8 +16,8 @@ class ProductImport implements ToModel, WithHeadingRow
     * @param Collection $collection
     */
     public function model(array $row)
-    {        $category = Category::findOrFail($row['categories_id']);
-        $subcategory = Subcategory::findOrFail($row['subcategories_id']);
+    {        $category = Category::find($row['categories_id']);
+        $subcategory = Subcategory::find($row['subcategories_id']);
         return new Product([
             'product_name' => $row['product_name'],
             'image' => $row['image'],
@@ -26,12 +26,12 @@ class ProductImport implements ToModel, WithHeadingRow
             'quantity' => $row['quantity'],
             'brand' => $row['brand'],
             'remark' => $row['remark'],
+            'status' => $row['status'],
+            'categories_id' => $category ? $category->id : null, // If category found, set its ID, otherwise null
+            'subcategories_id' => $subcategory ? $subcategory->id : null,
+            'brands_id' => $row['brands_id'],
             'visibility' => $row['visibility'],
             'is_flash' => $row['is_flash'],
-            'status' => $row['status'],
-            'catagories_id' => $row['catagories_id'],
-            'subcategories_id' => $row['subcategories_id'],
-            'brands_id' => $row['brands_id'],
 
         ]);
     }
