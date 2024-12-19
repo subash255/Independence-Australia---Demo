@@ -71,9 +71,9 @@
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($products as $product)
             <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between">
-                @if($product->is_flash)
+               
                     <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
-                @endif
+                
                 <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-4 overflow-hidden">
                     <img src="{{ asset('products/' . $product->image) }}" alt="Product Image" class="object-cover w-full h-full">
                 </div>
@@ -102,10 +102,8 @@
         @endforeach
     </div>
     
-    <!-- Pagination -->
-    <div class="mt-4">
-        {{ $products->links() }}
-    </div>
+   >
+    
 
 
     <!--Arko Banner image-->

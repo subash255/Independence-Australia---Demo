@@ -17,14 +17,14 @@ class ProductImport implements ToModel, WithHeadingRow
     {     
        
         return new Product([
-            'SKU' => $row['SKU'],  // Check if SKU is set, otherwise st
-            'Name' => $row['Name'],  // Check if Name is set, otherwise st
-            'Short_Description' => $row['Short_Description'],  // Check if Short_Description is set, otherwise st
+            'sku' => $row['SKU'],  // Check if SKU is set, otherwise st
+            'name' => $row['Name'],  // Check if Name is set, otherwise st
+            'short_description' => $row['Short_Description'],  // Check if Short_Description is set, otherwise st
   // Check if Description is set, otherwise st
-            'Price' => $row['Price'],  // Check if Price is set, otherwise st
-            'Brand' => $row['Brand'],  // Check if Brand is set, otherwise st
-            'Image' => $row['Image'],  // Check if Image is set, otherwise st
-            'Category' => $row['Category'] 
+            'price' => $row['Price'],  // Check if Price is set, otherwise st
+            'brand' => $row['Brand'],  // Check if Brand is set, otherwise st
+            'image' => $row['Image'],  // Check if Image is set, otherwise st
+            'category' => $row['Category'] 
             
 
         ]);

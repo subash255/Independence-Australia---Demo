@@ -16,18 +16,18 @@ class HomepageController extends Controller
 
         return view('user.welcome',compact('user','users'));
     }
-
-        private function getProducts()
-        {
-            return Product::where('visibility', 1) 
-                ->orderBy('created_at', 'desc')
-                ->paginate(12); 
-        }
+    private function getProducts()
+    {
+        return Product::orderBy('created_at', 'desc')
+            ->limit(9)  // Limit the number of records to 9
+            ->get();
+    }
+    
     
         // Display the welcome page
         public function welcome()
         {
-            $products = $this->getProducts(); // Get products for the welcome page
+            $products = Product::limit(9)->get(); // Get products for the welcome page
             return view('welcome', compact('products'));
         }
     
