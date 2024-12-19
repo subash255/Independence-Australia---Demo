@@ -22,13 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('user/welcome', [HomepageController::class, 'index'])->name('user.welcome');
-// Route::get('user/acc', [HomepageController::class, 'dash'])->name('user.acc');
 
 Route::get('/naya', [NayaController::class, 'index']);
-
-Route::get('/csvform', [CsvController::class, 'showForm'])->name('csv');
-Route::post('upload-csv', [CsvController::class, 'uploadCSV']);
-
 
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');
@@ -41,14 +36,7 @@ Route::get('/test', [TestController::class, 'showTests']);
 Route::get('/scrape-products', [ScraperController::class, 'scrapeProducts']);
 
 Route::get('/punchout', [PunchOutController::class, 'fetchCatalog']);
-//Fetch products from eBay 
-// Route::get('/fetch-ebay-products', [ProductController::class, 'fetchEbayProducts']);
-// Route::get('/test', [TestController::class, 'showTests']);
 
-
-//Fetch products from Shopify
-// Route::get('/fetch-shopify-products', [ProductController::class, 'fetchShopifyProducts']);
-// Route::get('/test', [TestController::class, 'showTests']);
 
 
 Route::middleware('auth')->group(function () {
