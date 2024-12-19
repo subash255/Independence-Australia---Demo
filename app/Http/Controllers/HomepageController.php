@@ -16,24 +16,18 @@ class HomepageController extends Controller
         
         return view('user.welcome',compact('user','users'));
     }
-
-        private function getProducts()
-        {
-            // Get all products with pagination
-            $products = Product::paginate(10);
-        }
     
         // Display the welcome page
         public function welcome()
         {
-            $products = $this->getProducts(); // Get products for the welcome page
+            $products = Product::limit('12')->get();
             return view('welcome', compact('products'));
         }
     
         // Display the homepage
         public function homepage()
         {
-            $products = $this->getProducts(); // Get products for the homepage
+            $products = Product::limit('12')->get();
             return view('homepage', compact('products'));
         }
 

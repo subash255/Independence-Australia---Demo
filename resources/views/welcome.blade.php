@@ -103,12 +103,6 @@
         </a>
         @endforeach
     </div>
-    
-    <!-- Pagination -->
-    <div class="mt-4">
-        {{ $products->links() }}
-    </div>
-
 
     <!--Arko Banner image-->
     <div class="w-full px-4 py-14">

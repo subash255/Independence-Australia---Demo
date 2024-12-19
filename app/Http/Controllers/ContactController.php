@@ -18,7 +18,6 @@ class ContactController extends Controller
                  ->where('vendor_id', $userId)
                  ->get();
 
-
         return view('user.contact.index', compact('userId' , 'users'));
     }
 

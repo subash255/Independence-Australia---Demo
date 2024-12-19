@@ -142,12 +142,7 @@
         </a>
         @endforeach
     </div>
-    
-    <!-- Pagination -->
-    <div class="mt-4">
-        {{ $products->links() }}
-    </div>
-    
+
 
     <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
         Shop by Brand

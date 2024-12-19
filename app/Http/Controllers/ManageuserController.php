@@ -10,7 +10,7 @@ class ManageuserController extends Controller
 {
 public function index()
 {
-    // Check if the currently authenticated user is a vendor and pagination
+   
     $authenticatedUser = Auth::user();
 
     // Check if the authenticated user is a vendor
@@ -28,7 +28,10 @@ public function index()
 }
 public function create()
 {
-    return view('user.manageuser.create');
+    $users = User::where('role', 'user')
+    ->where('vendor_id', Auth::user()->id)
+    ->get();
+    return view('user.manageuser.create', compact('users'));
 
 }
     public function store(Request $request)
