@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,9 +14,12 @@ class ContactController extends Controller
         // Assuming user is authenticated
         $user = Auth::user();  // Get the entire user object
         $userId = $user->id;
+        $users = User::where('role', 'user')
+                 ->where('vendor_id', $userId)
+                 ->get();
 
 
-        return view('user.contact.index', compact('userId'));
+        return view('user.contact.index', compact('userId' , 'users'));
     }
 
     public function store(Request $request)
