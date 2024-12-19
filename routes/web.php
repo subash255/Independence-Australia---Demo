@@ -118,6 +118,9 @@ Route::get('user/manageuser/index', [ManageuserController::class, 'index'])->nam
 Route::get('user/manageuser/create', [ManageuserController::class, 'create'])->name('user.manageuser.create');
 Route::post('user/manageuser/store', [ManageuserController::class, 'store'])->name('user.manageuser.store'); 
 
+Route::get('/impersonate/{id}', [HomepageController::class, 'impersonate'])->name('impersonate');
+
+
 
 
 });

@@ -41,35 +41,35 @@
                 <div class="w-8 h-8 flex items-center justify-center">
                     <i class="ri-user-3-fill text-[#00718f] text-[25px]"></i>
                 </div>
-            
+
                 <!-- User Information -->
                 <div class="flex flex-col">
                     @auth <!-- Check if the user is authenticated -->
-                        <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}
-                        </p>
-                        <p class="text-sm text-gray-500">B2B Customer</p>
-                    @endauth 
+                    <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}
+                    </p>
+                    <p class="text-sm text-gray-500">B2B Customer</p>
+                    @endauth
                 </div>
-            
+
                 <div class="flex items-center space-x-3 ml-3 border-l-2 pl-3">
                     <a href="#" class="text-[#00718f] font-medium hover:underline"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                       Switch Account
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Switch Account
                     </a>
                 </div>
             </div>
-            
-                <a href="/checkout" class="text-gray-900 hidden sm:block">
-                    <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
-                </a>
-                <!-- Mobile Icons only -->
-                <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
-                </a>
-                <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
-                </a>
-            </div>
+
+            <a href="/checkout" class="text-gray-900 hidden sm:block">
+                <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
+            </a>
+            <!-- Mobile Icons only -->
+            <a href="#" class="text-gray-900 sm:hidden">
+                <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
+            </a>
+            <a href="#" class="text-gray-900 sm:hidden">
+                <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
+            </a>
+        </div>
         </div>
     </header>
 
@@ -170,23 +170,23 @@
                 <!-- Static Dropdown Content -->
                 <div id="dropdown-content"
                     class="absolute left-0 w-full bg-white text-[#00718f] mt-[16rem] hidden px-6 py-4 max-h-[300px] overflow-y-auto">
-                   <div class="flex items-center justify-between">
-                    <div class="flex gap-x-8 font-semibold">
-                        <!-- Left side items -->
-                        <div class="">
-                            <ul id="dropdown-items">
-                                <!-- Dynamic items will be inserted here -->
-                            </ul>
+                    <div class="flex items-center justify-between">
+                        <div class="flex gap-x-8 font-semibold">
+                            <!-- Left side items -->
+                            <div class="">
+                                <ul id="dropdown-items">
+                                    <!-- Dynamic items will be inserted here -->
+                                </ul>
+                            </div>
+                            <!-- Right side paragraph -->
+                            <div class="">
+                                <p id="dropdown-paragraph" class="text-lg">Select a menu to see the content here.</p>
+                            </div>
                         </div>
-                        <!-- Right side paragraph -->
-                        <div class="">
-                            <p id="dropdown-paragraph" class="text-lg">Select a menu to see the content here.</p>
+                        <div>
+                            <img class="w-20 h-20 object-contain" src="{{asset('images/banner.jpg')}}" alt="">
                         </div>
-                    </div> 
-                    <div>
-                        <img class="w-20 h-20 object-contain" src="{{asset('images/banner.jpg')}}" alt="">
                     </div>
-                   </div>
                 </div>
             </div>
         </div>
@@ -199,26 +199,41 @@
                 <a href="#" class="hover:text-[#00718f]">Home</a> |
                 <span>Dashboard</span>
             </div>
-            
+
             <!-- Welcome Heading -->
             <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#00718f] mt-2">Welcome {{ Auth::user()->name }}!</h1>
-    
+
             <hr class="border-b border-gray-300 mt-2 mb-2 w-3/4 sm:w-2/4 md:w-1/4">
-    
+
             <p class="text-gray-600 mt-1 text-base sm:text-lg md:text-xl">
                 You are currently managing <br>
                 <span class="font-semibold text-[#00718f]">{{ Auth::user()->name }} {{ Auth::user()->last_name }} B2B
                     Customer</span>
             </p>
-    
+
             <!-- Switch Account Button -->
-            <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]">
+            <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggleDropdown()">
                 <i class="ri-refresh-line pr-2"></i>
                 Switch Account
             </button>
+            <div id="user-dropdown" class="hidden bg-white shadow-lg rounded-lg mt-2 absolute z-30 w-80 sm:w-1/4 max-h-60 overflow-y-auto">
+                <ul class="py-2">
+                    @foreach ($users as $user)
+                    <!-- Loop through users and display them -->
+                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <a href="{{ route('impersonate', $user->id) }}" class="block">
+                            {{ $user->name }} {{ $user->last_name }}
+                        </a>
+                    </li>
+                    @endforeach
+
+
+                </ul>
+            </div>
         </div>
+
     </div>
-    
+
 
     <!-- Main Content -->
     @yield('content')
@@ -451,6 +466,21 @@
         closeMenu.addEventListener("click", () => {
             mobileMenu.classList.add("hidden");
         });
+    </script>
+
+    <script>
+        if (document.getElementById('flash-message')) setTimeout(() => {
+            const msg = document.getElementById('flash-message');
+            msg.style.opacity = 0;
+            msg.style.transition = "opacity 0.5s ease-out";
+            setTimeout(() => msg.remove(), 500);
+        }, 3000);
+
+        // Function to toggle the visibility of the dropdown
+        function toggleDropdown() {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.classList.toggle('hidden'); // Toggle the 'hidden' class to show/hide the dropdown
+        }
     </script>
 </body>
 
