@@ -19,7 +19,7 @@ class ProductImport implements ToModel, WithHeadingRow
     {     
        
         return new Product([
-            'sKU' => $row['sku'],  // Check if SKU is set, otherwise st
+            'sku' => $row['sku'],  // Check if SKU is set, otherwise st
             'name' => $row['name'],  // Check if Name is set, otherwise st
             'short_description' => $row['short_description'],  // Check if Short_Description is set, otherwise st
   // Check if Description is set, otherwise st
