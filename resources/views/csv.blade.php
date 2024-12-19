@@ -15,7 +15,7 @@
         <div>{{ session('success') }}</div>
     @endif
 
-    <form action="{{ route('products.upload') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ url('/upload-csv') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="csv_file">Choose CSV File:</label>
         <input type="file" name="csv_file" accept=".csv, .xlsx" required>

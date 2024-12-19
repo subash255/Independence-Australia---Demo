@@ -26,8 +26,8 @@ Route::get('user/welcome', [HomepageController::class, 'index'])->name('user.wel
 
 Route::get('/naya', [NayaController::class, 'index']);
 
-Route::get('/upload-products', [CsvController::class, 'showForm']);
-Route::post('/upload-products', [CsvController::class, 'uploadCSV'])->name('products.upload');
+Route::get('/csvform', [CsvController::class, 'showForm'])->name('csv');
+Route::post('upload-csv', [CsvController::class, 'uploadCSV']);
 
 
 
@@ -127,13 +127,7 @@ Route::post('user/manageuser/store', [ManageuserController::class, 'store'])->na
 Route::get('/impersonate/{id}', [HomepageController::class, 'impersonate'])->name('impersonate');
 
 
-
-
 });
-
-Route::get('/upload-products', [CsvController::class, 'showForm']);
-Route::post('/upload-products', [CsvController::class, 'uploadCSV'])->name('products.upload');
-
 
 
 

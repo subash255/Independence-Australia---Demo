@@ -16,4 +16,8 @@ class Product extends Model
     {
         return $this->belongsTo(subcategory::class, 'subcategories_id'); // Foreign key relation
     }
+    public function brand()
+{
+    return $this->belongsTo(Brand::class, 'brands_id');
+}
 }

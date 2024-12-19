@@ -19,14 +19,14 @@ class CsvController extends Controller
         $request->validate([
             'csv_file' => 'required|mimes:xlsx,csv,txt'
         ]);
-        
-
-        // Import the CSV file
-        Excel::import(new ProductImport, $request->file('csv_file'));
-
-
-        // Redirect back with a success message
-
-        return back()->with('success', 'CSV file successfully uploaded and products imported!');
+    
+        try {
+            // Import the CSV file
+            Excel::import(new ProductImport, $request->file('csv_file'));
+            return back()->with('success', 'CSV file successfully uploaded and products imported!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error importing file: ' . $e->getMessage());
+        }
     }
+    
 }
