@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CsvController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
@@ -24,6 +25,11 @@ Route::get('user/welcome', [HomepageController::class, 'index'])->name('user.wel
 // Route::get('user/acc', [HomepageController::class, 'dash'])->name('user.acc');
 
 Route::get('/naya', [NayaController::class, 'index']);
+
+Route::get('/upload-products', [CsvController::class, 'showForm']);
+Route::post('/upload-products', [CsvController::class, 'uploadCSV'])->name('products.upload');
+
+
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');
 Route::get('/homepage', [HomepageController::class, 'homepage'])->name('homepage');
