@@ -11,7 +11,7 @@ class HomepageController extends Controller
 {
     public function index(){
         $user = Auth::user(); 
-        //get user whose role is user and  associat with current auth user
+        //get user whose role is user and  associate with current auth user
         $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
         
         return view('user.welcome',compact('user','users'));
@@ -19,9 +19,8 @@ class HomepageController extends Controller
 
         private function getProducts()
         {
-            return Product::where('visibility', 1) 
-                ->orderBy('created_at', 'desc')
-                ->paginate(12); 
+            // Get all products with pagination
+            $products = Product::paginate(10);
         }
     
         // Display the welcome page

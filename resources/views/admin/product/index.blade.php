@@ -59,7 +59,6 @@
                     <th class="border border-gray-300 px-2 py-2 font-medium">Category</th>
                     <th class="border border-gray-300 px-2 py-2 font-medium">Short Description</th>
                     <th class="border border-gray-300 px-7 py-2 font-medium">Name</th>
-                   
                     <th class="border border-gray-300 px-7 py-2 font-medium">Brand</th>
                     <th class="border border-gray-300 px-7 py-2 font-medium">Price</th>
                     <th class="border border-gray-300 px-2 py-2 font-medium">Action</th>
