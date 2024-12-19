@@ -27,83 +27,19 @@
 
       @csrf
 
-      <!-- First Row - 3 Columns -->
 
-      <!-- Category Dropdown -->
-      <div class="col-span-1">
-        <label for="categories_id" class="block text-gray-700 text-sm font-medium">Category</label>
-        <select name="categories_id" id="categories_id"
-                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm">
-            <option value="" disabled selected>Select a category</option>
-            @foreach($categories as $category)
-                <option value="{{ $category->id }}" 
-                        data-subcategories="{{ json_encode($category->subcategories) }}">
-                    {{ $category->category_name }}
-                </option>
-            @endforeach
-        </select>
-      </div>
+      
 
-      <!-- Subcategory Dropdown -->
-      <div class="col-span-1">
-        <label for="subcategories_id" class="block text-gray-700 text-sm font-medium">Sub-Category</label>
-        <select name="subcategories_id" id="subcategories_id"
-                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm">
-            <option value="" disabled selected>Select a sub-category</option>
-        </select>
-      </div>
-
+     
       <!-- Product Name -->
       <div class="col-span-1">
-        <label for="product_name" class="block text-gray-700 text-sm font-medium">Product Name</label>
-        <input type="text" name="product_name" id="product_name" 
+        <label for="csv_file" class="block text-gray-700 text-sm font-medium">CSV File</label>
+        <input type="file" name="csv_file" id="csv_file" 
                class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm" 
-               required>
+               accept=".csv, .xlsx" required>
       </div>
 
-      <!-- Second Row - 3 Columns -->
-
-      <!-- Brand -->
-      <div class="col-span-1">
-        <label for="brand" class="block text-gray-700 text-sm font-medium">Brand</label>
-        <input type="text" name="brand" id="brand" 
-               class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm" 
-               required>
-      </div>
-
-      <!-- Price -->
-      <div class="col-span-1">
-        <label for="price" class="block text-gray-700 text-sm font-medium">Price</label>
-        <input type="number" name="price" id="price" 
-               class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm" 
-               step="0.01" min="0" required>
-      </div>
-
-      <!-- Quantity -->
-      <div class="col-span-1">
-        <label for="quantity" class="block text-gray-700 text-sm font-medium">Quantity</label>
-        <input type="number" name="quantity" id="quantity" 
-               class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm" 
-               min="1" required>
-      </div>
-
-      <!-- Third Row - Full-width (2 Columns) -->
-
-      <!-- Description -->
-      <div class="col-span-3">
-        <label for="description" class="block text-gray-700 text-sm font-medium">Description</label>
-        <textarea name="description" id="description" rows="4" 
-                  class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm" 
-                  required></textarea>
-      </div>
-
-      <!-- Product Image -->
-      <div class="col-span-3">
-        <label for="image" class="block text-gray-700 text-sm font-medium">Product Image</label>
-        <input type="file" name="photopath" id="image" 
-               class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm" 
-               accept="image/*" required>
-      </div>
+      
 
       <!-- Submit Button -->
       <div class="col-span-3 mt-6">
@@ -116,37 +52,8 @@
     </form>
   </div>
 
-  <!-- Script for Dynamic Subcategories -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const categorySelect = document.getElementById('categories_id');
-      const subCategorySelect = document.getElementById('subcategories_id');
-      
-      categorySelect.addEventListener('change', function() {
-          const selectedCategory = categorySelect.options[categorySelect.selectedIndex];
-          const subcategories = JSON.parse(selectedCategory.getAttribute('data-subcategories'));
-
-          // Clear current subcategory options
-          subCategorySelect.innerHTML = '<option value="" disabled selected>Select a sub-category</option>';
-
-          // If no subcategories exist, show a message
-          if (subcategories.length === 0) {
-              const noSubcategoryOption = document.createElement('option');
-              noSubcategoryOption.value = '';
-              noSubcategoryOption.textContent = 'No sub-categories available';
-              subCategorySelect.appendChild(noSubcategoryOption);
-          } else {
-              // Add new subcategory options
-              subcategories.forEach(function(subcategory) {
-                  const option = document.createElement('option');
-                  option.value = subcategory.id;
-                  option.textContent = subcategory.subcategory_name;
-                  subCategorySelect.appendChild(option);
-              });
-          }
-      });
-    });
-  </script>
+  
+  
 
 </body>
 </html>

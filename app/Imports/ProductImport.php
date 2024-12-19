@@ -2,9 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Category;
 use App\Models\Product;
-use App\Models\Subcategory;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -16,22 +14,18 @@ class ProductImport implements ToModel, WithHeadingRow
     * @param Collection $collection
     */
     public function model(array $row)
-    {        $category = Category::find($row['categories_id']);
-        $subcategory = Subcategory::find($row['subcategories_id']);
+    {     
+       
         return new Product([
-            'product_name' => $row['product_name'],
-            'image' => $row['image'],
-            'description' => $row['description'],
-            'price' => $row['price'],
-            'quantity' => $row['quantity'],
-            'brand' => $row['brand'],
-            'remark' => $row['remark'],
-            'status' => $row['status'],
-            'categories_id' => $category ? $category->id : null, // If category found, set its ID, otherwise null
-            'subcategories_id' => $subcategory ? $subcategory->id : null,
-            'brands_id' => $row['brands_id'],
-            'visibility' => $row['visibility'],
-            'is_flash' => $row['is_flash'],
+            'SKU' => $row['SKU'],  // Check if SKU is set, otherwise st
+            'Name' => $row['Name'],  // Check if Name is set, otherwise st
+            'Short_Description' => $row['Short_Description'],  // Check if Short_Description is set, otherwise st
+  // Check if Description is set, otherwise st
+            'Price' => $row['Price'],  // Check if Price is set, otherwise st
+            'Brand' => $row['Brand'],  // Check if Brand is set, otherwise st
+            'Image' => $row['Image'],  // Check if Image is set, otherwise st
+            'Category' => $row['Category'] 
+            
 
         ]);
     }
