@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             
-            $table->string('SKU')->nullable();
-            $table->string('Name')->nullable();
-            $table->string('Short_Description')->nullable();
+            $table->string('sku')->nullable();
+            $table->string('name')->nullable();
+            $table->string('short_description')->nullable();
            
-            $table->string('Price', 8, 2)->nullable();
-            $table->string('Brand')->nullable();
-            $table->string('Image')->nullable();
-            $table->string('Category')->nullable();
+            $table->string('price', 8, 2)->nullable();
+            $table->string('brand')->nullable();
+            $table->string('image')->nullable();
+            $table->string('category')->nullable();
             
             $table->timestamps();
         });

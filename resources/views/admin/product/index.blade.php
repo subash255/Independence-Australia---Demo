@@ -70,24 +70,24 @@
         <tr class="border border-gray-300 product-row" data-product-id="{{ $product->id }}">
             <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
             <td class="border border-gray-300 px-4 py-2">
-                {{ $product->SKU }}
+                {{ $product->sku }}
             </td>
             <td class="border border-gray-300 px-4 py-2">
-                <img src="{{ asset('products/' . $product->Image) }}" alt="{{ $product->Name }}" class="w-16 h-16 object-cover rounded-full" />
+                <img src="{{ asset( $product->image) }}" alt="{{ $product->name }}" class="w-16 h-16 object-cover rounded-full" />
             </td>
           
-            <td class="border border-gray-300 px-4 py-2">{{$product->Category}}</td>
+            <td class="border border-gray-300 px-4 py-2">{{$product->category}}</td>
                 
             <td class="border border-gray-300 px-4 py-2">
-               {{$product->Short_Description}}
+               {{$product->short_description}}
             </td>
-            <td class="border border-gray-300 px-7 py-2">{{ $product->Name }}</td>
+            <td class="border border-gray-300 px-7 py-2">{{ $product->name }}</td>
            
             <td class="border border-gray-300 px-4 py-2">
-                {{$product->Brand}}
+                {{$product->brand}}
             </td>
             <td  class="border border-gray-300 px-4 py-2">
-                {{$product->Price}}
+                {{$product->price}}
             </td>
             <td class="px-2 py-2 mt-4 flex justify-center space-x-2">
                 <button class="text-white bg-blue-500 hover:bg-blue-700 w-8 h-8 flex items-center justify-center rounded-md" onclick="updateStatus('pending')">
