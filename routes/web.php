@@ -131,6 +131,8 @@ Route::get('/impersonate/{id}', [HomepageController::class, 'impersonate'])->nam
 
 });
 
+Route::get('/upload-products', [CsvController::class, 'showForm']);
+Route::post('/upload-products', [CsvController::class, 'uploadCSV'])->name('products.upload');
 
 
 
