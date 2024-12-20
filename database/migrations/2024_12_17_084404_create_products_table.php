@@ -17,11 +17,12 @@ return new class extends Migration
             $table->string('sku')->nullable();
             $table->string('name')->nullable();
             $table->string('short_description')->nullable();
-           
             $table->string('price', 8, 2)->nullable();
-            $table->string('brand')->nullable();
             $table->string('image')->nullable();
-            $table->string('category')->nullable();
+        
+            // Make category_id nullable, and brand_id nullable
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade'); 
+            $table->foreignId('brand_id')->nullable()->constrained()->onDelete('cascade'); 
             
             $table->timestamps();
         });
