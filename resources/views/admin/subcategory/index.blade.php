@@ -22,7 +22,73 @@
 
 <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end">
-        <a href="{{ route('admin.subcategory.create') }}" class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">Add Subcategory</a>
+        <button id="openModalButton" 
+                class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">
+            Add Subcategory
+        </button>
+    </div>
+    
+    <!-- Modal Structure -->
+    <div id="subcategoryModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-[1px]">
+        <div class="bg-white rounded-lg p-6 w-full max-w-lg relative shadow-xl overflow-auto max-h-[90vh]">
+            <h2 class="text-2xl font-semibold text-center text-gray-900 mb-8">Add Subcategory</h2>
+    
+            <form action="{{ route('admin.subcategory.store') }}" method="POST">
+                @csrf
+    
+                <!-- Category Selection -->
+                <div class="mb-6">
+                    <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                    <select name="category_id" id="category" 
+                            class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
+                            required>
+                        <option value="">Select a category</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+    
+                <!-- Subcategory Name Input -->
+                <div class="mb-6">
+                    <label for="subcategory_name" class="block text-sm font-medium text-gray-700">Subcategory Name</label>
+                    <input type="text" name="subcategory_name" id="subcategory_name" 
+                           class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
+                           required oninput="generateSlug()" />
+                </div>
+    
+                <!-- Slug Input (auto-generated) -->
+                <div class="mb-6">
+                    <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
+                    <input type="text" name="slug" id="slug" placeholder="Generated slug" 
+                           class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
+                           readonly required>
+                </div>
+    
+                <!-- Description -->
+                <div class="mb-6">
+                    <label for="paragraph" class="block text-sm font-medium text-gray-700">Description (Optional)</label>
+                    <textarea name="paragraph" id="paragraph" 
+                              class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
+                              rows="4"></textarea>
+                </div>
+    
+                <!-- Button Container -->
+                <div class="flex justify-between gap-4 mt-8">
+                    <!-- Close Button -->
+                    <button type="button" id="closeModalButton" 
+                            class="w-full md:w-auto bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-300 focus:outline-none">
+                        Close
+                    </button>
+    
+                    <!-- Submit Button -->
+                    <button type="submit" 
+                            class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+                        Save Subcategory
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="overflow-x-auto">
@@ -146,4 +212,24 @@
     });
 </script>
 
+<script>
+    // Function to generate slug from subcategory name
+    function generateSlug() {
+        let input1 = document.getElementById('subcategory_name').value;
+        let slug = input1.trim().replace(/\s+/g, '-').toLowerCase();
+        document.getElementById('slug').value = slug;
+    }
+
+    // Open the modal
+    document.getElementById('openModalButton').addEventListener('click', function () {
+        document.getElementById('subcategoryModal').classList.remove('hidden');
+        document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+    });
+
+    // Close the modal
+    document.getElementById('closeModalButton').addEventListener('click', function () {
+        document.getElementById('subcategoryModal').classList.add('hidden');
+        document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
+    });
+</script>
 @endsection

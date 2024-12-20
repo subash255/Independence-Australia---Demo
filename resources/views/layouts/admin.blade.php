@@ -79,7 +79,15 @@
     };
   </script>
   
-  
+  <script>
+    // Function to update entries based on user selection
+    function updateEntries() {
+        const entries = document.getElementById('entries').value; // Get selected value
+        const url = new URL(window.location.href);
+        url.searchParams.set('entries', entries); // Update the URL with the new entries value
+        window.location.href = url; // Reload the page with updated query parameter
+    }
+</script>
 
 </head>
 

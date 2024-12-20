@@ -20,18 +20,68 @@
 
 <div class="max-w-8xl mx-auto p-6 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end">
-        <a href="{{ route('admin.admin.create') }}"
-        class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">Add
-            Admin</a>
+        <button id="openModalButton" 
+                class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">
+            Add Admin
+        </button>
+    </div>
+    
+    <!-- Modal Structure -->
+    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-sm">
+        <div class="bg-white rounded-lg p-8 w-full max-w-lg relative shadow-xl">
+            <h2 class="text-2xl font-semibold text-center text-gray-900 mb-8">Add Admin</h2>
+    
+            <form method="POST" action="{{ route('admin.store') }}" class="space-y-6">
+                @csrf
+    
+                <!-- Name Field -->
+                <div class="flex flex-col">
+                    <label for="name" class="text-lg text-gray-700">Name</label>
+                    <input type="text" name="name" id="name" class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+    
+                <!-- Email Field -->
+                <div class="flex flex-col">
+                    <label for="email" class="text-lg text-gray-700">Email</label>
+                    <input type="email" name="email" id="email" class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+    
+                <!-- Password Field -->
+                <div class="flex flex-col">
+                    <label for="password" class="text-lg text-gray-700">Password</label>
+                    <input type="password" name="password" id="password" class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+    
+                <!-- Confirm Password Field -->
+                <div class="flex flex-col">
+                    <label for="password_confirmation" class="text-lg text-gray-700">Confirm Password</label>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required>
+                </div>
+    
+                <!-- Button Container -->
+                <div class="flex justify-between gap-4 mt-8">
+                    <!-- Close Button -->
+                    <button type="button" id="closeModalButton" 
+                            class="w-full md:w-auto bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-300 focus:outline-none">
+                        Close
+                    </button>
+    
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full md:w-auto bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 transition duration-300">
+                        Create Admin
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
         <div class="flex items-center space-x-2">
-            <label for="entries" class="mr-2 text-gray-700">Show entries:</label>
-            <select id="entries" class="border border-gray-300 px-2 py-1 w-full sm:w-auto">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
+            <label for="entries" class="mr-2">Show entries:</label>
+            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10" onchange="updateEntries()">
+                <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
+                <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
+                <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
             </select>
         </div>
 
@@ -100,4 +150,46 @@
 </div>
 
 
+<script>
+    // Get the dropdown and table
+    const entriesDropdown = document.getElementById('entries');
+    const dataTable = document.getElementById('dataTable');
+    const rows = dataTable.getElementsByTagName('tr'); // Get all rows in the table
+
+    // Function to filter the table rows based on selected number of entries
+    function filterTable() {
+        const entriesToShow = parseInt(entriesDropdown.value); // Get the selected number of entries
+        let rowCount = 0;
+
+        // Loop through all rows (starting from index 1 to skip the header row)
+        for (let i = 1; i < rows.length; i++) {
+            if (rowCount < entriesToShow) {
+                rows[i].style.display = ''; // Show the row
+                rowCount++;
+            } else {
+                rows[i].style.display = 'none'; // Hide the row
+            }
+        }
+    }
+
+    // Add event listener to the dropdown to trigger filterTable on change
+    entriesDropdown.addEventListener('change', filterTable);
+
+    // Call filterTable initially to set the default view (5 entries)
+    filterTable();
+</script>
+
+<script>
+    // Open the modal
+    document.getElementById('openModalButton').addEventListener('click', function () {
+        document.getElementById('adminModal').classList.remove('hidden');
+        document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+    });
+
+    // Close the modal using the close button inside the form
+    document.getElementById('closeModalButton').addEventListener('click', function () {
+        document.getElementById('adminModal').classList.add('hidden');
+        document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
+    });
+</script>
 @endsection

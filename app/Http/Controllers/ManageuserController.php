@@ -65,6 +65,6 @@ public function create()
             'phone_number' => $request->phone_number,
     ]);
 
-    return redirect()->route('user.manageuser.index')->with('success', 'Account created successfully!');
+    return redirect()->route('user.manageuser.index')->with('success', 'User added successfully!');
 }
 }

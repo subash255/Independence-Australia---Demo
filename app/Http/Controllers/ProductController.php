@@ -13,13 +13,17 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $status = $request->get('status');  
+        // $status = $request->get('status');  
 
     
-    $products = Product::when($status, function ($query) use ($status) {
-        return $query->where('status', $status);  // Filter by status
-    })
-    ->paginate(5);
+    // $products = Product::when($status, function ($query) use ($status) {
+    //     return $query->where('status', $status);  // Filter by status
+    // })
+    // ->paginate(5);
+
+    $entries = $request->get('entries', 5); 
+
+    $products = Product::paginate($entries);
         return view('admin.product.index',compact('products'), [
             'title' => 'Product' 
         ]);

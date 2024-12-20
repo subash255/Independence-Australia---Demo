@@ -37,18 +37,16 @@ class HomepageController extends Controller
     // Get the currently authenticated user
     $authUser = Auth::user();
     
-    // Check if the authenticated user can impersonate the target user
-    // You can modify this condition as per your business logic (e.g., checking vendor_id)
     $userToImpersonate = User::findOrFail($id);
 
     if ( $authUser->id === $userToImpersonate->vendor_id) {
-        // Log the authenticated user out first
+        
         Auth::login($userToImpersonate);
 
         // Optionally, you could store the original user id in the session, so you can switch back later
         session(['impersonating' => $authUser->id]);
 
-        return redirect()->route('user/welcome');  // Redirect to any page you want after switching
+        return redirect()->route('user.welcome');  
     }
 
     return redirect()->back()->with('error', 'You are not authorized to impersonate this user.');

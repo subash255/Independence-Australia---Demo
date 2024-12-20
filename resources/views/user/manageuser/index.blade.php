@@ -46,10 +46,10 @@
     <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
         <div class="flex items-center space-x-2">
             <label for="entries" class="mr-2">Show entries:</label>
-            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
+            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10" onchange="updateEntries()">
+                <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
+                <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
+                <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
             </select>
         </div>
     
@@ -114,5 +114,16 @@
     </div>
     </div>
 </div>
+
+
+<script>
+    
+    function updateEntries() {
+        const entries = document.getElementById('entries').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('entries', entries); 
+        window.location.href = url; 
+    }
+</script>
 
 @endsection

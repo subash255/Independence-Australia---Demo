@@ -20,18 +20,65 @@
 
 <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end">
-        <a href="{{ route('admin.category.create') }}"
-            class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">Add
-            Category</a>
+        <button id="openModalButton"
+            class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">
+            Add Category
+        </button>
+    </div>
+    
+    <!-- Modal Structure -->
+    <div id="categoryModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-[1px]">
+        <div class="bg-white rounded-lg p-6 w-full max-w-lg relative">
+            <h2 class="text-xl font-semibold text-center">Create New Category</h2>
+            <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+    
+                <!-- Category Name Input -->
+                <div class="mb-6">
+                    <label for="category" class="block text-sm font-medium text-gray-700">Category Name</label>
+                    <input type="text" id="category" name="category_name" placeholder="Enter category name"
+                        class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" oninput="generateSlug()">
+                </div>
+    
+                <!-- Slug Input (auto-generated) -->
+                <div class="mb-6">
+                    <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
+                    <input type="text" id="slug" name="slug" placeholder="Generated slug"
+                        class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+                </div>
+    
+                <!-- Image Upload Input -->
+                <div class="mb-6">
+                    <label for="image" class="block text-sm font-medium text-gray-700">Upload Image</label>
+                    <input type="file" id="image" name="image" accept="image/*" required
+                        class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+                </div>
+    
+                <!-- Button Container -->
+                <div class="flex justify-between gap-4 mt-8">
+                    <!-- Close Button -->
+                    <button type="button" id="closeModalButton"
+                        class="w-full md:w-auto bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-300 focus:outline-none">
+                        Close
+                    </button>
+    
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+                        Submit
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
         <div class="flex items-center space-x-2">
             <label for="entries" class="mr-2">Show entries:</label>
-            <select id="entries" class="border border-gray-300 px-2 py-1 w-full sm:w-auto">
-                <option value="5">5</option>
-                <option value="10">10</option>
-                <option value="15">15</option>
+            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10" onchange="updateEntries()">
+                <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
+                <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
+                <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
             </select>
         </div>
 
@@ -175,4 +222,24 @@ document.querySelectorAll('.toggle-switch').forEach(toggle => {
 });
 </script>
 
+<script>
+    // Function to generate slug from category name
+    function generateSlug() {
+        let input1 = document.getElementById('category').value;
+        let slug = input1.trim().replace(/\s+/g, '-').toLowerCase();
+        document.getElementById('slug').value = slug;
+    }
+
+    // Open the modal
+    document.getElementById('openModalButton').addEventListener('click', function () {
+        document.getElementById('categoryModal').classList.remove('hidden');
+        document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+    });
+
+    // Close the modal
+    document.getElementById('closeModalButton').addEventListener('click', function () {
+        document.getElementById('categoryModal').classList.add('hidden');
+        document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
+    });
+</script>
 @endsection

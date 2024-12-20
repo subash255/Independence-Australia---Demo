@@ -10,11 +10,16 @@ class SubcategoryController extends Controller
 {
     public function index()
     {
+        // Fetch the subcategories and categories
         $subcategories = Subcategory::paginate(5);
-        return view('admin.subcategory.index', compact('subcategories'), [
+        $categories = Category::all(); // Fetch all categories
+    
+        // Pass both variables to the view
+        return view('admin.subcategory.index', compact('subcategories', 'categories'), [
             'title' => 'Sub Category'
         ]);
     }
+    
 
     // Show the form for creating a subcategory
     public function create()
