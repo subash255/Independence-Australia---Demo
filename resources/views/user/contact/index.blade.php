@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.master')
 @section('content')
 
     {{-- Flash Message --}}
@@ -44,12 +44,12 @@
            {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">Company Profile</span>
         </a>
-        <a href="{{ route('user.manageuser.index') }}" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] 
-           {{ request()->routeIs('user.management') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+        <!-- Conditionally show User Management link only if the user is a vendor -->
+        @if(Auth::user()->role == 'vendor') <!-- Adjust this based on your role check -->
+        <a href="{{ route('user.manageuser.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.management') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">User Management</span>
         </a>
+        @endif
     </nav>
     
     <!-- Container -->

@@ -113,7 +113,7 @@
                                 alt="{{ $category->category_name }}" class="w-12 h-12 object-cover rounded-full">
                         </td>
 
-                        <td class="border border-gray-300 px-4 py-2">{{ $category->category_name }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $category->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $category->slug }}</td>
                         <td class="border border-gray-300 px-4 py-2">
                             <label for="status{{ $category->id }}" class="inline-flex items-center cursor-pointer">
@@ -161,6 +161,7 @@
             {{ $categories->links() }}
         </div>
     </div>
+
 
 </div>
 

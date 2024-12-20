@@ -71,39 +71,39 @@
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($products as $product)
         <a href="#" class="block">
-            <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between">
-                
-                    <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
-               
+            <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
+                <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
+                <!-- Image container with fixed aspect ratio and no cropping -->
                 <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-4 overflow-hidden">
-                    <img src="{{ asset($product->image) }}" alt="Product Image" class="object-cover w-full h-full">
+                    <img src="{{ asset($product->image) }}" alt="Product Image" class="object-contain w-full h-full">
                 </div>
-                <div class="flex flex-col justify-center items-center text-center">
-                 <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ $product->name }}</h3>
+                <div class="flex flex-col justify-between items-center text-center h-full">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ $product->name }}</h3>
                     <p class="text-sm text-gray-900">
-                        <span class="font-bold">{{ $product->Brand }}</span> 
+                        <span class="font-bold">{{ $product->brand->name }}</span> 
                     </p>
                     <div class="flex items-center mb-5 gap-1 text-yellow-500 text-sm my-2 justify-center">
                         <span class="text-pink-500 text-lg">★★★★★</span>
                         <span class="text-gray-600">(5 Reviews)</span>
                     </div>
                     <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>
-                    <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
-                       @csrf
-            
-                    <button type="submit" class="bg-blue-500 text-white p-2 rounded mt-2">Add to Cart</button>
-                    </form>
-                    <span class="text-[#00718f] text-lg pt-4">
-                        <i class="ri-heart-line"></i> Add Favourites
-                    </span>
-                    <span class="text-green-700 text-lg">
-                        <i class="ri-arrow-left-right-fill"></i> Add to Compare
-                    </span>
+                    <button class="inline-block bg-white border-2 border-[#00718f] text-[#00718f] font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-[#00718f] hover:text-white transition-colors mt-4">
+                        Add to Basket
+                    </button>
+                    <div class="flex gap-4 mt-4">
+                        <span class="text-[#00718f] text-lg">
+                            <i class="ri-heart-line"></i> Add Favourites
+                        </span>
+                        <span class="text-green-700 text-lg">
+                            <i class="ri-arrow-left-right-fill"></i> Add to Compare
+                        </span>
+                    </div>
                 </div>
             </div>
         </a>
         @endforeach
     </div>
+    
     
 
     <!--Arko Banner image-->

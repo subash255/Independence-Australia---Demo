@@ -1,4 +1,4 @@
-@extends('layouts.user')
+@extends('layouts.master')
 @section('content')
 
 {{-- Flash Message --}}
@@ -19,7 +19,7 @@
 
 <div class="flex flex-col lg:flex-row"> 
     <!-- Sidebar/Nav Section -->
-    <nav class="lg:w-[21%] w-full p-6 font-semibold mt-10 bg-white border-r border-gray-300">
+    <nav class="lg:w-[21%] w-full p-6 font-semibold mt-10 bg-white ">
         <a href="{{ route('user.welcome') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">Account Dashboard</span>
         </a>
@@ -32,10 +32,15 @@
         <a href="#" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">Company Profile</span>
         </a>
+    
+        <!-- Conditionally show User Management link only if the user is a vendor -->
+        @if(Auth::user()->role == 'vendor') <!-- Adjust this based on your role check -->
         <a href="{{ route('user.manageuser.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.management') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">User Management</span>
         </a>
+        @endif
     </nav>
+    
     <div class="lg:w-[79%] w-full p-6 mt-4">
     <div class="mb-4 flex justify-end">
         <a href="{{ route('user.manageuser.create') }}"

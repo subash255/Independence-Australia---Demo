@@ -1,14 +1,62 @@
 @extends('layouts.master')
 @section('content')
 
-    <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-10 md:gap-18 ">
+
+@auth
+    <!-- This section is shown when the user is logged in -->
+    <div class="p-6 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
+        <div class="my-8 ml-8 max-w-7xl mx-auto">
+            <!-- Breadcrumbs -->
+            <div class="text-sm text-gray-500">
+                <a href="/" class="hover:text-[#00718f]">Home</a> |
+                <a href="{{route('user.welcome')}}"><span>Dashboard</span></a>
+            </div>
+
+            <!-- Welcome Heading -->
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#00718f] mt-2">Welcome {{ Auth::user()->name }}!</h1>
+
+            <hr class="border-b border-gray-300 mt-2 mb-2 w-3/4 sm:w-2/4 md:w-1/4">
+
+            <p class="text-gray-600 mt-1 text-base sm:text-lg md:text-xl">
+                You are currently managing <br>
+                <span class="font-semibold text-[#00718f]">{{ Auth::user()->name }} {{ Auth::user()->last_name }}  @if(Auth::user()->role == 'vendor')  B2B
+                    Customer</span> @endif
+            </p>
+
+       <!-- Check if the current user is a vendor, then show the Switch Account Button -->
+       @if(Auth::user()->role == 'vendor') <!-- Adjust this condition based on how you define a vendor -->
+       <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggleDropdown()">
+           <i class="ri-refresh-line pr-2"></i>
+           Switch Account
+       </button>
+
+            <div id="user-dropdown" class="hidden bg-white shadow-lg rounded-lg mt-2 absolute z-30 w-80 sm:w-1/4 max-h-60 overflow-y-auto">
+                <ul class="py-2">
+                    @foreach ($users as $user)
+                    <!-- Loop through users and display them -->
+                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <a href="{{ route('impersonate', $user->id) }}" class="block">
+                            {{ $user->name }} {{ $user->last_name }}
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+        </div>
+    </div>
+@endauth
+
+{{-- Check if the user is not logged in --}}
+@guest
+    <!-- This section is shown when the user is not logged in -->
+    <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-10 md:gap-18">
         <div class="absolute inset-0 bg-cover bg-center"
             style="background-image: url('{{ asset('images/suddo.jpg') }}'); height: 400px;">
-            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent "></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
         </div>
 
-        <div
-            class="relative z-10 text-center md:text-left w-full md:w-1/2 text-white px-6">
+        <div class="relative z-10 text-center md:text-left w-full md:w-1/2 text-white px-6">
             <h1 class="text-teal-700 text-3xl md:text-4xl font-bold mb-4 text-shadow-md">
                 Welcome to Alwayson Medical
             </h1>
@@ -19,19 +67,19 @@
 
             <div class="space-y-4 md:space-y-0 md:flex md:flex-col md:gap-4">
                 <a href="/login"><button
-                class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
-                Sign in
-            </button></a>
-            
+                    class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+                    Sign in
+                </button></a>
                 
                 <p class="text-sm text-gray-300">
                     Don't have an account yet? 
                     <a href="/register" class="text-teal-700 font-medium hover:underline">Register now</a>
                 </p>
             </div>
-            
         </div>
     </div>
+@endguest
+
 
     <!--Banner images-->
     <div class="w-full px-4 py-12 banner mt-4">
@@ -110,38 +158,39 @@
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($products as $product)
         <a href="#" class="block">
-            <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between">
-                
-                    <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
-               
-                <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-4 overflow-hidden">
-                    <img src="{{ asset($product->image) }}" alt="Product Image" class="object-cover w-full h-full">
+            <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
+                <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
+                <!-- Image container with fixed aspect ratio and no cropping -->
+                <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-2 overflow-hidden">
+                    <img src="{{ asset($product->image) }}" alt="Product Image" class="object-contain w-full h-full">
                 </div>
-                <div class="flex flex-col justify-center items-center text-center">
-                 <h3 class="text-lg font-semibold text-gray-800 mb-4">{{ $product->name }}</h3>
+                <div class="flex flex-col justify-between items-center text-center h-full">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->name }}</h3>
                     <p class="text-sm text-gray-900">
-                        <span class="font-bold">{{ $product->Brand }}</span> 
+                        <span class="font-bold">{{ $product->brand->name }}</span> 
                     </p>
-                    <div class="flex items-center mb-5 gap-1 text-yellow-500 text-sm my-2 justify-center">
+                    <div class="flex items-center mb-3 gap-1 text-yellow-500 text-sm justify-center">
                         <span class="text-pink-500 text-lg">★★★★★</span>
                         <span class="text-gray-600">(5 Reviews)</span>
                     </div>
                     <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>
-                    <button
-                        class="inline-block bg-white border-2 border-[#00718f] text-[#00718f] font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-[#00718f] hover:text-white transition-colors mt-4">
+                    <button class="inline-block bg-white border-2 border-[#00718f] text-[#00718f] font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-[#00718f] hover:text-white transition-colors mt-2">
                         Add to Basket
                     </button>
-                    <span class="text-[#00718f] text-lg pt-4">
-                        <i class="ri-heart-line"></i> Add Favourites
-                    </span>
-                    <span class="text-green-700 text-lg">
-                        <i class="ri-arrow-left-right-fill"></i> Add to Compare
-                    </span>
+                    <div class="flex gap-4 mt-4">
+                        <span class="text-[#00718f] text-lg">
+                            <i class="ri-heart-line"></i> Add Favourites
+                        </span>
+                        <span class="text-green-700 text-lg">
+                            <i class="ri-arrow-left-right-fill"></i> Add to Compare
+                        </span>
+                    </div>
                 </div>
             </div>
         </a>
         @endforeach
     </div>
+    
 
 
     <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">

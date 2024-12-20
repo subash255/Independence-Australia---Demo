@@ -16,11 +16,12 @@
 
         <p class="text-gray-600 mt-1 text-base sm:text-lg md:text-xl">
             You are currently managing <br>
-            <span class="font-semibold text-[#00718f]">{{ Auth::user()->name }} {{ Auth::user()->last_name }} B2B
-                Customer</span>
+            <span class="font-semibold text-[#00718f]">{{ Auth::user()->name }} {{ Auth::user()->last_name }}  @if(Auth::user()->role == 'vendor')  B2B
+                Customer</span> @endif
         </p>
 
-        <!-- Switch Account Button -->
+        <!-- Check if the current user is a vendor, then show the Switch Account Button -->
+        @if(Auth::user()->role == 'vendor') <!-- Adjust this condition based on how you define a vendor -->
         <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggleDropdown()">
             <i class="ri-refresh-line pr-2"></i>
             Switch Account
@@ -37,12 +38,13 @@
                 @endforeach
             </ul>
         </div>
+        @endif
     </div>
-
 </div>
+
 <div class="flex flex-col lg:flex-row"> 
     <!-- Sidebar/Nav Section -->
-    <nav class="lg:w-[21%] w-full p-6 font-semibold mt-10 bg-white border-r border-gray-300">
+    <nav class="lg:w-[21%] w-full p-6 font-semibold mt-10 bg-white ">
         <a href="{{ route('user.welcome') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">Account Dashboard</span>
         </a>
@@ -55,9 +57,12 @@
         <a href="#" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">Company Profile</span>
         </a>
+        <!-- Conditionally show User Management link only if the user is a vendor -->
+        @if(Auth::user()->role == 'vendor') <!-- Adjust this based on your role check -->
         <a href="{{ route('user.manageuser.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.management') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
             <span class="ml-4">User Management</span>
         </a>
+        @endif
     </nav>
 
     <!-- Main Content Section -->

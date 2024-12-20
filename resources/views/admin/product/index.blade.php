@@ -99,10 +99,10 @@
                                 <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
                                     class="w-16 h-16 object-cover rounded-full" />
                             </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $product->category }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $product->category->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->short_description }}</td>
                             <td class="border border-gray-300 px-7 py-2">{{ $product->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $product->brand }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $product->brand->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->price }}</td>
                             <td class="px-2 py-2 mt-4 flex justify-center space-x-2">
                                 <button
@@ -130,16 +130,20 @@
             </table>
         </div>
 
-        <!-- Pagination and Show Entries Section at the Bottom -->
-        <div class="flex justify-between items-center mt-4 ">
-            <div class="flex items-center space-x-5 bg-white p-2 rounded-lg shadow-sm w-full">
-                <!-- Pagination Links -->
-                <div class="flex space-x-1 ml-[8rem]">
-                    <!-- Apply custom Tailwind classes for pagination -->
-                    {{ $products->appends(['status' => request('status')])->links() }}
-                </div>
-            </div>
+    <!-- Pagination and Show Entries Section at the Bottom -->
+    <div class="flex justify-between items-center mt-4">
+        <div class="flex items-center space-x-2">
+            <span class="ml-4 text-gray-700">
+                Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }}
+                entries
+            </span>
         </div>
+
+        <div class="flex items-center space-x-2">
+            {{ $products->links() }}
+        </div>
+    </div>
+
 
     </div>
 
