@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\CsvController;
@@ -116,6 +117,13 @@ Route::get('user/manageuser/create', [ManageuserController::class, 'create'])->n
 Route::post('user/manageuser/store', [ManageuserController::class, 'store'])->name('user.manageuser.store'); 
 
 Route::get('/impersonate/{id}', [HomepageController::class, 'impersonate'])->name('impersonate');
+
+
+
+Route::post('/cart/{productId}', [CartController::class, 'addToCart'])->name('user.cart.add');
+    Route::get('user/cart/index', [CartController::class, 'viewCart'])->name('user.cart.index');
+    Route::post('/cart/update/{cartId}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
+
 
 
 });

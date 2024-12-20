@@ -41,4 +41,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    use Notifiable;
+    public function cartItems()
+{
+    return $this->hasMany(CartItem::class);
+}
 }

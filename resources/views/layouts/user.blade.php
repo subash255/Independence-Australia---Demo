@@ -63,7 +63,7 @@
                 
             </div>
 
-            <a href="/checkout" class="text-gray-900 hidden sm:block">
+            <a href="{{ route('user.cart.index') }}" class="text-gray-900 hidden sm:block">
                 <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
             </a>
             <!-- Mobile Icons only -->
