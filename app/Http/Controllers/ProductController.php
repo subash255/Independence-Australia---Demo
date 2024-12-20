@@ -71,12 +71,6 @@ class ProductController extends Controller
             // Import the CSV file
             Excel::import(new ProductImport, $request->file('csv_file'));
     
-    
-            // Redirect back with a success message
-    
-           
-        
-        
             // Return a success message and redirect
             return redirect()->route('admin.product.index')->with('success', 'Product added successfully!');
         }

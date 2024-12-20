@@ -32,6 +32,7 @@
             <div class="bg-white rounded-lg p-6 w-full max-w-md relative">
                 <h2 class="text-xl font-semibold text-center">Add Product</h2>
                 <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <label for="csv_file" class="block text-gray-700 text-sm font-medium">CSV File</label>
                     <input type="file" name="csv_file" id="csv_file"
                         class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm"
