@@ -54,9 +54,18 @@
                     <span class="hidden sm:block px-0">/</span>
                     <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
                 @endauth
-                <a href="/checkout" class="text-gray-900 hidden sm:block">
-                    <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
-                </a>
+                <div class="relative">
+                    <!-- Cart Icon -->
+                    <a href="{{ route('user.cart.index') }}" class="text-gray-900 hidden sm:block">
+                        <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
+                    </a>
+                    @if(session('cart_count') > 0)
+                        <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2">
+                            {{ session('cart_count') }}
+                        </span>
+                    @endif
+                
+                </div>
                 <!-- Mobile Icons only -->
                 <a href="#" class="text-gray-900 sm:hidden">
                     <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
