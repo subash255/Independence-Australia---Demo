@@ -1,6 +1,45 @@
-@extends('layouts.user')
-
+@extends('layouts.master')
 @section('content')
+
+<div class="p-6 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
+    <div class="my-8 ml-8 max-w-7xl mx-auto">
+        <!-- Breadcrumbs -->
+        <div class="text-sm text-gray-500">
+            <a href="/" class="hover:text-[#00718f]">Home</a> |
+            <span>Dashboard</span>
+        </div>
+
+        <!-- Welcome Heading -->
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#00718f] mt-2">Welcome {{ Auth::user()->name }}!</h1>
+
+        <hr class="border-b border-gray-300 mt-2 mb-2 w-3/4 sm:w-2/4 md:w-1/4">
+
+        <p class="text-gray-600 mt-1 text-base sm:text-lg md:text-xl">
+            You are currently managing <br>
+            <span class="font-semibold text-[#00718f]">{{ Auth::user()->name }} {{ Auth::user()->last_name }} B2B
+                Customer</span>
+        </p>
+
+        <!-- Switch Account Button -->
+        <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggleDropdown()">
+            <i class="ri-refresh-line pr-2"></i>
+            Switch Account
+        </button>
+        <div id="user-dropdown" class="hidden bg-white shadow-lg rounded-lg mt-2 absolute z-30 w-80 sm:w-1/4 max-h-60 overflow-y-auto">
+            <ul class="py-2">
+                @foreach ($users as $user)
+                <!-- Loop through users and display them -->
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    <a href="{{ route('impersonate', $user->id) }}" class="block">
+                        {{ $user->name }} {{ $user->last_name }}
+                    </a>
+                </li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+</div>
 <div class="flex flex-col lg:flex-row"> 
     <!-- Sidebar/Nav Section -->
     <nav class="lg:w-[21%] w-full p-6 font-semibold mt-10 bg-white border-r border-gray-300">

@@ -5,7 +5,6 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\CsvController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
@@ -99,8 +98,6 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::patch('/brand/{id}/update', [BrandController::class, 'update'])->name('admin.brand.update');
     Route::post('/brand', [BrandController::class, 'store'])->name('brand.store'); 
     Route::delete('/brand/{id}/destroy', [BrandController::class, 'destroy'])->name('admin.brand.destroy');
-
-
 
 });
 

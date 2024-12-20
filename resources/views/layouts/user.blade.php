@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Independence Australia</title>
+    <title>Alwayson Medical</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
@@ -27,7 +27,7 @@
                 </button>
             </div>
             <a href="{{route('user.welcome')}}" class="flex items-center space-x-4">
-                <img src="{{ asset('images/logo.png') }}" alt="Independence Australia Logo" class="h-10">
+                <img src="{{ asset('images/logo.png') }}" alt="Alwayson Medical Logo" class="h-10">
 
             </a>
             <div class="relative flex-1 max-w-md">
@@ -251,7 +251,7 @@
                     <h1 class="text-[#0f6178] text-4xl font-bold mb-4">Newsletter Sign Up</h1>
                     <p class="text-black text-lg leading-relaxed">
                         By providing your email address, you are consenting to receive marketing communications such as
-                        promotional offers and newsletters from Independence Australia. You can unsubscribe at any time.
+                        promotional offers and newsletters from Alwayson Medical. You can unsubscribe at any time.
                     </p>
                 </div>
 
@@ -271,7 +271,7 @@
         <div class="container mx-auto px-6 py-6 space-y-6">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between text-gray-700 text-sm">
                 <p class="text-center lg:text-left">
-                    &copy; 2024 Hamro Pyaro Australia &nbsp; | &nbsp; All rights reserved.
+                    &copy; 2024 Alwayson Medical &nbsp; | &nbsp; All rights reserved.
                 </p>
                 <div
                     class="flex justify-center lg:justify-end space-x-8 text-[#00718f] text-sm font-extrabold mt-4 lg:mt-0">

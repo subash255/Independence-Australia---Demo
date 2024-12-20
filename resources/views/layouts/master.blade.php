@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Independence Australia</title>
+    <title>Alwayson Medical</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
@@ -26,46 +26,52 @@
                     <i class="ri-menu-3-line text-2xl text-[#00718f]"></i>
                 </button>
             </div>
-            <a href="/" class="flex items-center space-x-4">
-                <img src="images/logo.png" alt="Independence Australia Logo" class="h-10">
+            <a href="{{ route('user.welcome') }}" class="flex items-center space-x-4">
+                <img src="{{ asset('images/logo.png') }}" alt="Alwayson Medical Logo" class="h-10">
             </a>
             <div class="relative flex-1 max-w-md">
                 <input type="text" placeholder="What are you looking for?"
                     class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
-                <i
-                    class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
+                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
             </div>
-            <div class="flex items-center font-semibold space-x-3">
-                <!-- Check if the user is logged in -->
-                @auth
-                    <!-- If user is logged in, show their name -->
-                    <span class="text-gray-900">Hi, {{ Auth::user()->name }}</span>
-                    <form action="{{ route('logout') }}" method="POST" class="w-full">
-                        @csrf
-                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">
-                            Log Out
-                        </button>
-                    </form>
-                @else
-                    <!-- If user is not logged in, show Sign In and Register buttons -->
+            <div class="flex items-center font-semibold space-x-2">
+                <!-- Profile Icon or Login/Signup -->
+                @auth <!-- If the user is authenticated -->
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="ri-user-3-fill text-[#00718f] text-[25px]"></i>
+                    </div>
+    
+                    <!-- User Information -->
+                    <a href="{{ route('user.welcome') }}">
+                        <div class="flex flex-col">
+                            <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
+                            <p class="text-sm text-gray-500">B2B Customer</p>
+                        </div>
+                    </a>
+    
+                    <!-- Logout Button -->
+                    <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="text-red-500 font-medium hover:underline">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                @else <!-- If the user is not authenticated -->
                     <a href="/login" class="text-gray-900 hover:underline hidden sm:block">
                         <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
                     </a>
                     <span class="hidden sm:block px-0">/</span>
-                    <a href="/register" class="text-gray-900 hover:underline hidden sm:block pr-12">Register</a>
+                    <a href="/register" class="text-gray-900 hover:underline hidden sm:block">Register</a>
                 @endauth
-                <div class="relative">
-                    <!-- Cart Icon -->
-                    <a href="{{ route('user.cart.index') }}" class="text-gray-900 hidden sm:block">
-                        <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i> <span>Basket</span>
-                    </a>
-                    @if(session('cart_count') > 0)
-                        <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2">
-                            {{ session('cart_count') }}
-                        </span>
-                    @endif
-                
-                </div>
+            </div>
+    
+            <div class="flex items-center space-x-2 mr-10">
+                <a href="{{ route('user.cart.index') }}" class="text-gray-900 hidden sm:block">
+                    <i class="ri-shopping-basket-fill text-[#00718f] text-[25px]"></i> <span class="text-gray-900 font-medium">Basket</span>
+                </a>
+    
                 <!-- Mobile Icons only -->
                 <a href="#" class="text-gray-900 sm:hidden">
                     <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
@@ -76,6 +82,8 @@
             </div>
         </div>
     </header>
+      
+    
 
     <!-- Mobile Menu (Initially Hidden) -->
     <div id="mobileMenu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
@@ -209,7 +217,7 @@
                     <h1 class="text-[#0f6178] text-4xl font-bold mb-4">Newsletter Sign Up</h1>
                     <p class="text-black text-lg leading-relaxed">
                         By providing your email address, you are consenting to receive marketing communications such as
-                        promotional offers and newsletters from Independence Australia. You can unsubscribe at any time.
+                        promotional offers and newsletters from Alwayson Medical. You can unsubscribe at any time.
                     </p>
                 </div>
 
@@ -229,7 +237,7 @@
         <div class="container mx-auto px-6 py-6 space-y-6">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between text-gray-700 text-sm">
                 <p class="text-center lg:text-left">
-                    &copy; 2024 Hamro Pyaro Australia &nbsp; | &nbsp; All rights reserved.
+                    &copy; 2024 Alwayson Medical &nbsp; | &nbsp; All rights reserved.
                 </p>
                 <div
                     class="flex justify-center lg:justify-end space-x-8 text-[#00718f] text-sm font-extrabold mt-4 lg:mt-0">

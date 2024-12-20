@@ -27,7 +27,7 @@
     </div>
     
     <!-- Modal Structure -->
-    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-sm">
+    <div id="adminModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-[1px]">
         <div class="bg-white rounded-lg p-8 w-full max-w-lg relative shadow-xl">
             <h2 class="text-2xl font-semibold text-center text-gray-900 mb-8">Add Admin</h2>
     
@@ -97,10 +97,10 @@
         <table class="min-w-full bg-white border-collapse border border-gray-300 shadow-md rounded-lg">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600">S.N</th>
-                    <th class="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600">Name</th>
-                    <th class="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600">Email</th>
-                    <th class="border border-gray-300 px-4 py-2 text-sm font-medium text-gray-600">Actions</th>
+                    <th class="border border-gray-300 px-4 py-2  ">S.N</th>
+                    <th class="border border-gray-300 px-4 py-2  ">Name</th>
+                    <th class="border border-gray-300 px-4 py-2  ">Email</th>
+                    <th class="border border-gray-300 px-4 py-2  ">Actions</th>
                 </tr>
             </thead>
             <tbody>
