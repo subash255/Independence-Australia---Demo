@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
@@ -21,7 +22,8 @@ use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 
 
-
+Route::get('checkout', [CheckoutController::class, 'showCheckoutPage'])->name('checkout');
+Route::post('checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
 
 Route::get('/naya', [NayaController::class, 'index']);
 
