@@ -20,8 +20,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        $categories = Category::with('subcategories')->get();
-        return view('auth.register', compact('categories'));
+        $categories=Category::with('subcategories')->get();
+        return view('auth.register',compact('categories'));
     }
 
     /**

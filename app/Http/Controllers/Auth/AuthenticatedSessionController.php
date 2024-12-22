@@ -16,9 +16,9 @@ class AuthenticatedSessionController extends Controller
      * Display the login view.
      */
     public function create(): View
-    {
-        $categories = Category::with('subcategories')->get();
-        return view('auth.login', compact('categories'));
+    {  
+        $categories=Category::with('subcategories')->get();
+        return view('auth.login',compact('categories'));
     }
 
     /**

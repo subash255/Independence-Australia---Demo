@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class HomepageController extends Controller
 {
     public function index(){
-        $user = Auth::user(); 
-        $categories = Category::with('subcategories')->get();
+        $user = Auth::user();
+        $categories=Category::with('subcategories')->get(); 
         //get user whose role is user and  associate with current auth user
         $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
         
