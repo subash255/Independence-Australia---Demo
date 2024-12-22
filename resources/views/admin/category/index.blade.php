@@ -95,7 +95,6 @@
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">Order</th>
-                    <th class="border border-gray-300 px-4 py-2">Image</th>
                     <th class="border border-gray-300 px-4 py-2">Category Name</th>
                     <th class="border border-gray-300 px-4 py-2">Slug</th>
                     <th class="border border-gray-300 px-4 py-2">Status</th>
@@ -106,12 +105,6 @@
                 @foreach ($categories as $category)
                     <tr class="border border-gray-300">
                         <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
-
-                        <!-- Displaying the Image -->
-                        <td class="border border-gray-300 px-4 py-2">
-                            <img src="{{ asset('images/brand/' . $category->image) }}"
-                                alt="{{ $category->category_name }}" class="w-12 h-12 object-cover rounded-full">
-                        </td>
 
                         <td class="border border-gray-300 px-4 py-2">{{ $category->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $category->slug }}</td>

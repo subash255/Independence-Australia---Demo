@@ -147,72 +147,69 @@
             </section>
         </div>
         <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px] hidden md:block">
-            <div class="h-[65px] relative flex items-center justify-between text-[#00718f]">
-                <div class="flex space-x-2 font-bold">
-                    <!-- Dropdown 1 -->
-                    <div class="relative group hidden md:block">
-                        <button class="px-6 py-2">Continence Aids</button>
-                    </div>
+    <div class="h-[65px] relative flex items-center justify-between text-[#00718f]">
+        <div class="flex space-x-2 font-bold">
+            @foreach($categories as $category)
+                <div class="relative">
+                    <!-- Category Button -->
+                    <button class="px-6 py-2" onclick="toggleDropdown(event, 'dropdown-{{ $category->id }}')">
+                        {{ $category->name }}
+                    </button>
 
-                    <!-- Dropdown 2 -->
-                    <div class="relative group hidden md:block">
-                        <button class="px-6 py-2">Daily Living & Mobility Aids</button>
-                    </div>
-
-                    <!-- Dropdown 3 -->
-                    <div class="relative group hidden md:block">
-                        <button class="px-6 py-2">Medical Aids</button>
-                    </div>
-
-                    <!-- Dropdown 4 -->
-                    <div class="relative group hidden md:block">
-                        <button class="px-6 py-2">Nutrition</button>
-                    </div>
-
-                    <!-- Dropdown 5 -->
-                    <div class="relative group hidden md:block">
-                        <button class="px-6 py-2">Skin Care</button>
-                    </div>
-
-                    <!-- Dropdown 6 -->
-                    <div class="relative group hidden md:block">
-                        <button class="px-6 py-2">Urology</button>
-                    </div>
-
-                    <!-- Dropdown 7 -->
-                    <div class="relative group hidden md:block">
-                        <button class="px-6 py-2">Wound Care</button>
-                    </div>
-
-                    <!-- Dropdown 8 -->
-                    <div class="relative group hidden md:block">
-                        <button class="px-6 py-2">Others</button>
+                    <!-- Full Width Dropdown -->
+                    <div id="dropdown-{{ $category->id }}" class="absolute left-0 w-full bg-white text-[#00718f] mt-2 hidden px-6 py-4 max-h-[300px] overflow-y-auto">
+                        <!-- Dropdown content that changes based on hovered category -->
+                        <div class="flex items-center justify-between">
+                            <div class="w-1/2">
+                                <ul>
+                                    @foreach($category->subcategories as $subcategory)
+                                        <li class="py-2">
+                                            <a href="" class="text-blue-600 hover:text-blue-800">
+                                                {{ $subcategory->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                            <div class="w-1/2">
+                                <p class="text-lg">Explore the {{ $category->name }} section</p>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <img class="w-20 h-20 object-contain" src="{{ asset('images/banner.jpg') }}" alt="Category Banner">
+                        </div>
                     </div>
                 </div>
-
-                <!-- Static Dropdown Content -->
-                <div id="dropdown-content"
-                    class="absolute left-0 w-full bg-white text-[#00718f] mt-[16rem] hidden px-6 py-4 max-h-[300px] overflow-y-auto">
-                   <div class="flex items-center justify-between">
-                    <div class="flex gap-x-8 font-semibold">
-                        <!-- Left side items -->
-                        <div class="">
-                            <ul id="dropdown-items">
-                                <!-- Dynamic items will be inserted here -->
-                            </ul>
-                        </div>
-                        <!-- Right side paragraph -->
-                        <div class="">
-                            <p id="dropdown-paragraph" class="text-lg">Select a menu to see the content here.</p>
-                        </div>
-                    </div> 
-                    <div>
-                        <img class="w-20 h-20 object-contain" src="{{asset('images/banner.jpg')}}" alt="">
-                    </div>
-                   </div>
-                </div>
-            </div>
+            @endforeach
         </div>
+    </div>
+</div>
+
+<script>
+    // Function to toggle the dropdown visibility on click
+    function toggleDropdown(event, dropdownId) {
+        // Prevent the page from scrolling when clicking the button
+        event.preventDefault();
+
+        // Get the dropdown element by its ID
+        const dropdown = document.getElementById(dropdownId);
+        
+        // Toggle the dropdown visibility
+        dropdown.classList.toggle('hidden');
+    }
+
+    // Close all dropdowns if the user clicks outside any dropdown
+    document.addEventListener('click', function (e) {
+        const dropdowns = document.querySelectorAll('.absolute');
+        dropdowns.forEach(dropdown => {
+            if (!dropdown.contains(e.target) && !e.target.closest('button')) {
+                dropdown.classList.add('hidden');
+            }
+        });
+    });
+</script>
+
+
 
     </nav>
 
@@ -344,96 +341,24 @@
     </script>
 
 
-    <script>
-        const menus = [{
-                title: "Continence Aids",
-                items: ["Bedding, Chair & Floor Protection", "Bowel Care", "Children's Nappies & Accessories",
-                    "Disposable Pads, Pants & Liners"
-                ],
-                paragraph: "This is the paragraph content for Continence Aids"
-            },
-            {
-                title: "Daily Living & Mobility Aids",
-                items: ["Walking Aids", "Clothing & Dressing Aids", "Household Aids", "Household Products"],
-                paragraph: "This is the paragraph content for Daily Living & Mobility Aids."
-            },
-            {
-                title: "Medical Aids",
-                items: ["Enteral Feeding", "First Aid", "General", "Needles, Syringes & Solutions"],
-                paragraph: "This is the paragraph content for Medical Aids."
-            },
-            {
-                title: "Nutrition",
-                items: ["Supplements", "Vitamins", "Minerals", "Protein"],
-                paragraph: "This is the paragraph content for Nutrition."
-            },
-            {
-                title: "Skin Care",
-                items: ["Adhesive & Adhesive Removers", "Serums & Treatments", "Creams, Body Lotions & Oils",
-                    "Wipes & Wash Cloths"
-                ],
-                paragraph: "This is the paragraph content for Skin Care."
-            },
-            {
-                title: "Urology",
-                items: ["Catheters", "Condom Drainage", "Drain and Leg Bags", "Urinals & Bed Pans"],
-                paragraph: "This is the paragraph content for Urology."
-            },
-            {
-                title: "Wound Care",
-                items: ["Bandages", "Burn Treatments", "Scar Management", "Tapes"],
-                paragraph: "This is the paragraph content for Wound Care."
-            },
-            {
-                title: "Others",
-                items: ["Clothing", "Eye Protection", "Disinfectants & Cleaners", "Personal Gromming & Hygiene"],
-                paragraph: "This is the paragraph content for Others."
-            }
-        ];
+<script>
+    // Select all the category buttons and their respective dropdowns
+    const buttons = document.querySelectorAll('.group button');
+    const dropdowns = document.querySelectorAll('.group .absolute');
 
-        // Get all buttons in the navigation
-        const buttons = document.querySelectorAll('.group button');
-        const dropdownContent = document.getElementById('dropdown-content');
-        const dropdownItems = document.getElementById('dropdown-items');
-        const dropdownParagraph = document.getElementById('dropdown-paragraph');
-
-        // Show dropdown when hovering over any menu
-        buttons.forEach((button, index) => {
-            button.addEventListener('mouseenter', () => {
-                // Show the dropdown content once hovering begins
-                if (dropdownContent.classList.contains('hidden')) {
-                    dropdownContent.classList.remove('hidden');
-                }
-                // Update dropdown content with corresponding menu data
-                updateDropdownContent(menus[index]);
-            });
+    buttons.forEach((button, index) => {
+        button.addEventListener('mouseenter', () => {
+            // Show the corresponding dropdown when hovering over a category button
+            dropdowns[index].classList.remove('hidden');
         });
 
-        // Function to update the dropdown content based on the menu selected
-        function updateDropdownContent(menu) {
-            // Clear previous content
-            dropdownItems.innerHTML = '';
-            dropdownParagraph.textContent = menu.paragraph;
-
-            // Add new items
-            menu.items.forEach(item => {
-                const listItem = document.createElement('li');
-                listItem.classList.add('py-2');
-                listItem.textContent = item;
-                dropdownItems.appendChild(listItem);
-            });
-        }
-
-        // Hide the dropdown when the mouse leaves the navigation or dropdown area
-        dropdownContent.addEventListener('mouseleave', () => {
-            dropdownContent.classList.add('hidden');
+        button.addEventListener('mouseleave', () => {
+            // Hide the dropdown when not hovering
+            dropdowns[index].classList.add('hidden');
         });
+    });
+</script>
 
-        // Make sure the dropdown stays visible while hovering over it
-        dropdownContent.addEventListener('mouseenter', () => {
-            dropdownContent.classList.remove('hidden');
-        });
-    </script>
 
     <script>
         const menuToggle = document.getElementById("menuToggle");
