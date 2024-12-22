@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\LogoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PunchOutController;
@@ -98,6 +99,14 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::patch('/brand/{id}/update', [BrandController::class, 'update'])->name('admin.brand.update');
     Route::post('/brand', [BrandController::class, 'store'])->name('brand.store'); 
     Route::delete('/brand/{id}/destroy', [BrandController::class, 'destroy'])->name('admin.brand.destroy');
+
+    Route::get('admin/logos/index', [LogoController::class, 'index'])->name('admin.logos.index');
+    Route::get('admin/logos/create', [LogoController::class, 'create'])->name('admin.logos.create');
+    Route::post('admin/logos/store', [LogoController::class, 'store'])->name('admin.logos.store');
+    Route::get('admin/logos/{id}/edit', [LogoController::class, 'edit'])->name('admin.logos.edit');
+    Route::patch('admin/logos/{id}/update', [LogoController::class, 'update'])->name('admin.logos.update');
+    Route::delete('admin/logos/{id}/destroy', [LogoController::class, 'destroy'])->name('admin.logos.destroy');
+    // Route::resource('logos', LogoController::class);
 
 });
 

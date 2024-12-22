@@ -11,11 +11,12 @@ use Illuminate\Support\Facades\Auth;
 class HomepageController extends Controller
 {
     public function index(){
-        $user = Auth::user(); 
+        $user = Auth::user();
+        $categories=Category::with('subcategories')->get(); 
         //get user whose role is user and  associate with current auth user
         $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
         
-        return view('user.welcome',compact('user','users'));
+        return view('user.welcome',compact('user','users','categories'));
     }
     
         // Display the welcome page
