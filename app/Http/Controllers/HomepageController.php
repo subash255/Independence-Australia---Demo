@@ -21,7 +21,7 @@ class HomepageController extends Controller
     {
         $user = Auth::user();
         $products = Product::limit(12)->get();
-        
+        $categories = Category::with('subcategories')->get();
         // Check if the user is authenticated before accessing its properties
         if ($user && $user->role == 'vendor') {
             $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
@@ -29,7 +29,7 @@ class HomepageController extends Controller
             $users = collect(); // or handle as needed if the user is not a vendor or not authenticated
         }
     
-        return view('welcome', compact('products', 'users'));
+        return view('welcome', compact('products', 'users', 'categories'));
     }
     
         // Display the homepage
