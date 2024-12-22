@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CategoryController;
@@ -114,12 +115,11 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     // Route::resource('logos', LogoController::class);
 
     //Image routes
-    Route::get('admin/images/index', [ImageController::class, 'index'])->name('admin.images.index');
-    Route::get('admin/images/create', [ImageController::class, 'create'])->name('admin.images.create');
-    Route::post('admin/images/store', [ImageController::class, 'store'])->name('admin.images.store');
-    Route::get('admin/images/{id}/edit', [ImageController::class, 'edit'])->name('admin.images.edit');
-    Route::patch('admin/images/{id}/update', [ImageController::class, 'update'])->name('admin.images.update');
-    Route::delete('admin/images/{id}/destroy', [ImageController::class, 'destroy'])->name('admin.images.destroy');
+    Route::get('admin/banner/index', [BannerController::class, 'index'])->name('admin.banner.index');
+    Route::post('admin/banner/store', [BannerController::class, 'store'])->name('admin.banner.store');
+    Route::get('admin/banner/{id}/edit', [BannerController::class, 'edit'])->name('admin.banner.edit');
+    Route::patch('admin/banner/{id}/update', [BannerController::class, 'update'])->name('admin.banner.update');
+    Route::delete('admin/banner/{id}/destroy', [BannerController::class, 'destroy'])->name('admin.banner.destroy');
 
 
 });
