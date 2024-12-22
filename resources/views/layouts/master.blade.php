@@ -26,9 +26,10 @@
                     <i class="ri-menu-3-line text-2xl text-[#00718f]"></i>
                 </button>
             </div>
-            <a href="{{ route('user.welcome') }}" class="flex items-center space-x-4">
+            <a href="{{ auth()->check() ? route('user.welcome') : '/' }}" class="flex items-center space-x-4">
                 <img src="{{ asset('images/logo.png') }}" alt="Alwayson Medical Logo" class="h-10">
             </a>
+            
             <div class="relative flex-1 max-w-md">
                 <input type="text" placeholder="What are you looking for?"
                     class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
