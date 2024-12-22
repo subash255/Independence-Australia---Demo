@@ -29,10 +29,9 @@
         </div>
 
         <div class="mt-6 text-right">
-            <form action="{{ route('checkout.process') }}" method="POST" class="mt-6">
-                @csrf
-                <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded">Proceed to Checkout</button>
-            </form>
+           
+                <a href="{{route('user.cart.show')}}" class="bg-green-500 text-white px-6 py-2 rounded">Proceed to Checkout</a>
+            
         </div>
     @endif
 </div>

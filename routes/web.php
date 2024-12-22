@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('checkout', [CheckoutController::class, 'showCheckoutPage'])->name('checkout');
 Route::post('checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+Route::get('user/cart/show', [CheckoutController::class, 'show'])->name('user.cart.show');
+
 
 Route::get('/naya', [NayaController::class, 'index']);
 

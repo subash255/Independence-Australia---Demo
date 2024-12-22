@@ -12,10 +12,11 @@ class HomepageController extends Controller
 {
     public function index(){
         $user = Auth::user(); 
+        $categories = Category::with('subcategories')->get();
         //get user whose role is user and  associate with current auth user
         $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
         
-        return view('user.welcome',compact('user','users'));
+        return view('user.welcome',compact('user','users','categories'));
     }
     public function welcome()
     {
@@ -35,6 +36,7 @@ class HomepageController extends Controller
         // Display the homepage
         public function homepage()
         {   $categories=Category::all();
+            
             $products = Product::limit('12')->get();
             return view('homepage', compact('products','categories'));
         }

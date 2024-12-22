@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CartItem;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -46,11 +47,12 @@ class CartController extends Controller
     public function viewCart()
     {
         $user = Auth::user();
+        $categories = Category::with('subcategories')->get();
         $cartItems = CartItem::where('user_id', $user->id)
             ->with('product')
             ->get();
 
-        return view('user.cart.index', compact('cartItems'));
+        return view('user.cart.index', compact('cartItems', 'categories'));
     }
 
     // Update the quantity of a cart item

@@ -4,14 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\CartItem;
+use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CheckoutController extends Controller
 {
     // Show the checkout page with cart items
     public function showCheckoutPage()
+    {
+        $categories = Category::with('subcategories')->get();
+        $user = Auth::user();
+        $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
+
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('welcome')->with('error', 'Your cart is empty.');
+        }
+
+        return view('checkout', compact('cartItems', 'categories'));
+    }
+    public function show()
     {
         $user = Auth::user();
         $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
@@ -20,7 +34,7 @@ class CheckoutController extends Controller
             return redirect()->route('welcome')->with('error', 'Your cart is empty.');
         }
 
-        return view('checkout', compact('cartItems'));
+        return view('user.cart.show', compact('cartItems'));
     }
 
     // Process the checkout by redirecting to another website (AeroHealth API)
@@ -29,47 +43,83 @@ class CheckoutController extends Controller
         // Get the user's cart details
         $user = Auth::user();
         $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
-
+    
         // Check if the cart is empty
         if ($cartItems->isEmpty()) {
             return redirect()->route('welcome')->with('error', 'Your cart is empty.');
         }
-
+    
         // Prepare data to send to AeroHealth API
-        $cartData = [
-            'user_id' => $user->id,
-            'user_name' => $user->name,
-            'user_email' => $user->email,
-            'cart_id' => $cartItems->pluck('id')->toArray(),
-            'product_ids' => $cartItems->pluck('product_id')->toArray(),
-            'quantities' => $cartItems->pluck('quantity')->toArray(),
-            'product_details' => $cartItems->map(function ($cartItem) {
+        $validated = $request->validate([
+            'billing.first_name' => 'required|string|max:255',
+            'billing.last_name' => 'required|string|max:255',
+            'billing.address_1' => 'required|string|max:255',
+            'billing.city' => 'required|string|max:255',
+            'billing.state' => 'required|string|max:255',
+            'billing.postcode' => 'required|string|max:255',
+            'billing.country' => 'required|string|max:255',
+            'billing.email' => 'required|email|max:255',
+            'billing.phone' => 'required|string|max:255',
+            'shipping.first_name' => 'required|string|max:255',
+            'shipping.last_name' => 'required|string|max:255',
+            'shipping.address_1' => 'required|string|max:255',
+            'shipping.city' => 'required|string|max:255',
+            'shipping.state' => 'required|string|max:255',
+            'shipping.postcode' => 'required|string|max:255',
+            'shipping.country' => 'required|string|max:255',
+        ]);
+        
+        // Create an array of line items dynamically using the product_id and quantity from the cart
+        $lineItems = $cartItems->map(function ($item) {
+            // Fetch SKU based on product_id
+            $product = $item->product; // We already have the product loaded using 'with('product')'
+    
+            // Check if product exists
+            if ($product) {
                 return [
-                    'product_id' => $cartItem->product_id,
-                    'product_name' => $cartItem->product->name,
-                    'quantity' => $cartItem->quantity,
-                    'price' => $cartItem->product->price,
+                    'sku' => $product->sku, // Get SKU from Product model
+                    'quantity' => $item->quantity, // Get quantity from the cart
                 ];
-            })->toArray(),
+            }
+    
+            return null; // If the product is not found, we return null (you could handle this case differently)
+        })->filter(); // Remove any null values if a product wasn't found
+    
+        // Prepare the data for the API request
+        $data = [
+            'billing' => $validated['billing'],
+            'shipping' => $validated['shipping'],
+            'line_items' => $lineItems->toArray(), // Convert to array
+            'meta_data' => [
+                ['key' => 'submitting_site_order_id', 'value' => '12345'],
+                ['key' => 'submitting_site', 'value' => 'https://example.com'],
+                ['key' => 'po_number', 'value' => 'ABC123'],
+                ['key' => 'order_memo', 'value' => 'Please rush.'],
+                ['key' => 'shipping_notes', 'value' => 'Mind the dog.'],
+            ],
         ];
-
-        // Send data to AeroHealth API
+    
         try {
+            // Send the data to the external API
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . env('AEROHEALTH_API_KEY'),
-            ])->post(env('AEROHEALTH_API_URL'), $cartData);
-
-            // Check the API response status
+            ])->post(env('AEROHEALTH_API_URL'), $data);
+    
+            // Check if the request was successful
             if ($response->successful()) {
-                // Handle success, e.g., redirect the user to a success page
-                return redirect()->route('/')->with('success', 'Your order has been processed successfully.');
+                return redirect()->route('user/welcome')->with('success', 'Your order has been processed successfully.');
             } else {
-                // Handle failure (API error)
-                return redirect()->route('user.welcome')->with('error', 'There was an issue processing your order.');
+                Log::error('API request failed', [
+                    'status' => $response->status(),
+                    'response' => $response->body(),
+                ]);
+                return redirect()->route('user/cart/show')->with('error', 'There was an issue processing your order.');
             }
         } catch (\Exception $e) {
-            // Handle any other errors (e.g., network issues)
-            return redirect()->route('user.cart.index')->with('error', 'An error occurred while communicating with the API.');
+            // Log the exception for debugging
+            Log::error('Error communicating with API', ['exception' => $e->getMessage()]);
+            return redirect()->route('checkout')->with('error', 'An error occurred while communicating with the API.');
         }
     }
+    
 }
