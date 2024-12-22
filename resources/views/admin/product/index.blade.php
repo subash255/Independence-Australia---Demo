@@ -99,10 +99,10 @@
                                 <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
                                     class="w-16 h-16 object-cover rounded-full" />
                             </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $product->category }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $product->category->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->short_description }}</td>
                             <td class="border border-gray-300 px-7 py-2">{{ $product->name }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $product->brand }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $product->brand->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->price }}</td>
                             <td class="px-2 py-2 mt-4 flex justify-center space-x-2">
                                 <button

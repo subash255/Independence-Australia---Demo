@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -20,15 +21,16 @@ class HomepageController extends Controller
         // Display the welcome page
         public function welcome()
         {
+            $categories = Category::with('subcategories')->get();
             $products = Product::limit('12')->get();
-            return view('welcome', compact('products'));
+            return view('welcome', compact('products','categories'));
         }
     
         // Display the homepage
         public function homepage()
-        {
+        {   $categories=Category::all();
             $products = Product::limit('12')->get();
-            return view('homepage', compact('products'));
+            return view('homepage', compact('products','categories'));
         }
 
 
