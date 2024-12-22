@@ -11,8 +11,10 @@ class LogoController extends Controller
     // Display all logos
     public function index()
     {
-        $logos = Logo::all();
-        return view('admin.logos.index', compact('logos'));
+        $logos = Logo::paginate(5);
+        return view('admin.logos.index', compact('logos'), [
+            'title' => 'Manage Images'
+        ]);
     }
 
     // Show the form to create a new logo

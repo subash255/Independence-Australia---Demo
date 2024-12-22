@@ -92,23 +92,36 @@ class CheckoutController extends Controller
             'line_items' => $lineItems->toArray(), // Convert to array
             'meta_data' => [
                 ['key' => 'submitting_site_order_id', 'value' => '12345'],
-                ['key' => 'submitting_site', 'value' => 'https://example.com'],
+                ['key' => 'submitting_site', 'value' => 'http://127.0.0.1:8000'],
                 ['key' => 'po_number', 'value' => 'ABC123'],
                 ['key' => 'order_memo', 'value' => 'Please rush.'],
                 ['key' => 'shipping_notes', 'value' => 'Mind the dog.'],
             ],
         ];
+
+        // convert shipping_notes to JSON
+        $data = json_encode($data);
+        // dd($data);
+
+        // Convert the line_items and meta_data to JSON
+        // $data['line_items'] = json_encode($data['line_items']);
+        // $data['meta_data'] = json_encode($data['meta_data']);
+        // dd($data);
     
+        
         try {
             // Send the data to the external API
             $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . env('AEROHEALTH_API_KEY'),
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Basic ' . base64_encode(env('AEROHEALTH_API_KEY')) . ':' . env('AEROHEALTH_API_SECRET'),
             ])->post(env('AEROHEALTH_API_URL'), $data);
     
             // Check if the request was successful
             if ($response->successful()) {
+                dd('success',$response);
                 return redirect()->route('user/welcome')->with('success', 'Your order has been processed successfully.');
             } else {
+                dd('error',$response->body());
                 Log::error('API request failed', [
                     'status' => $response->status(),
                     'response' => $response->body(),

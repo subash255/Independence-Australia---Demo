@@ -8,6 +8,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -111,6 +112,15 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::patch('admin/logos/{id}/update', [LogoController::class, 'update'])->name('admin.logos.update');
     Route::delete('admin/logos/{id}/destroy', [LogoController::class, 'destroy'])->name('admin.logos.destroy');
     // Route::resource('logos', LogoController::class);
+
+    //Image routes
+    Route::get('admin/images/index', [ImageController::class, 'index'])->name('admin.images.index');
+    Route::get('admin/images/create', [ImageController::class, 'create'])->name('admin.images.create');
+    Route::post('admin/images/store', [ImageController::class, 'store'])->name('admin.images.store');
+    Route::get('admin/images/{id}/edit', [ImageController::class, 'edit'])->name('admin.images.edit');
+    Route::patch('admin/images/{id}/update', [ImageController::class, 'update'])->name('admin.images.update');
+    Route::delete('admin/images/{id}/destroy', [ImageController::class, 'destroy'])->name('admin.images.destroy');
+
 
 });
 

@@ -10,12 +10,15 @@
 @endif
 
 <script>
-    if (document.getElementById('flash-message')) setTimeout(() => {
-        const msg = document.getElementById('flash-message');
-        msg.style.opacity = 0;
-        msg.style.transition = "opacity 0.5s ease-out";
-        setTimeout(() => msg.remove(), 500);
-    }, 3000);
+    // Flash message auto-hide
+    if (document.getElementById('flash-message')) {
+        setTimeout(() => {
+            const msg = document.getElementById('flash-message');
+            msg.style.opacity = 0;
+            msg.style.transition = "opacity 0.5s ease-out";
+            setTimeout(() => msg.remove(), 500);
+        }, 3000);
+    }
 </script>
 
 <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
@@ -23,28 +26,28 @@
     <div class="mb-4 flex justify-end">
         <button id="openModalButton"
             class="text-blue-500 font-medium bg-white border-2 border-blue-500 rounded-lg py-2 px-4 hover:bg-blue-600 hover:text-white transition duration-300">
-            Upload New Logo
+            Add New Image
         </button>
     </div>
 
     <!-- Modal Structure -->
-    <div id="logoModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-[1px]">
+    <div id="imageModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center hidden z-50 backdrop-blur-[1px]">
         <div class="bg-white rounded-lg p-6 w-full max-w-lg relative">
-            <h2 class="text-xl font-semibold text-center">Upload New Logo</h2>
-            <form action="{{ route('admin.logos.store') }}" method="POST" enctype="multipart/form-data">
+            <h2 class="text-xl font-semibold text-center">Upload New Image</h2>
+            <form action="{{ route('admin.images.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
-                <!-- Position Input -->
-                <div class="mb-6">
-                    <label for="position" class="block text-sm font-medium text-gray-700">Logo Position</label>
-                    <input type="text" id="position" name="position" placeholder="Enter logo position"
-                        class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
-                </div>
 
                 <!-- Image Upload Input -->
                 <div class="mb-6">
-                    <label for="logo" class="block text-sm font-medium text-gray-700">Upload Logo Image</label>
-                    <input type="file" id="logo" name="logo" accept="image/*" required
+                    <label for="image_url" class="block text-sm font-medium text-gray-700">Upload Image</label>
+                    <input type="file" id="image_url" name="image_url" accept="image/*" required
+                        class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+                </div>
+
+                <!-- Priority Input -->
+                <div class="mb-6">
+                    <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+                    <input type="number" id="priority" name="priority" min="1" value="1" required
                         class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
                 </div>
 
@@ -78,8 +81,7 @@
 
         <div class="flex items-center space-x-2 w-full sm:w-auto">
             <span class="text-gray-700">Search:</span>
-            <input type="text" id="search" placeholder="Search..."
-                class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
+            <input type="text" id="search" placeholder="Search..." class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
         </div>
     </div>
 
@@ -89,26 +91,26 @@
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">Order</th>
-                    <th class="border border-gray-300 px-4 py-2">Logo Preview</th>
-                    <th class="border border-gray-300 px-4 py-2">Position</th>
+                    <th class="border border-gray-300 px-4 py-2">Image</th>
+                    <th class="border border-gray-300 px-4 py-2">Priority</th>
                     <th class="border border-gray-300 px-4 py-2">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($logos as $logo)
+                @foreach ($images as $image)
                     <tr class="border border-gray-300">
                         <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
                         <td class="border border-gray-300 px-4 py-2">
-                            <img src="{{ asset('logos/' . $logo->filename) }}" alt="{{ $logo->position }}" class="w-24 h-24 object-cover rounded">
+                            <img src="{{ asset('images/' . $image->image_url) }}" alt="Image Preview" class="w-24 h-24 object-cover rounded">
                         </td>
-                        <td class="border border-gray-300 px-4 py-2">{{ ucfirst($logo->position) }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $image->priority }}</td>
                         <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                             <!-- Edit Icon -->
-                            <a href="{{ route('admin.logos.edit', $logo->id) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                            <a href="{{ route('admin.images.edit', $image->id) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                 <i class="ri-edit-box-line text-white"></i>
                             </a>
                             <!-- Delete Icon -->
-                            <form action="{{ route('admin.logos.destroy', $logo->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this logo?');">
+                            <form action="{{ route('admin.images.destroy', $image->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this image?');">
                                 @csrf
                                 @method('DELETE')
                                 <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
@@ -126,12 +128,12 @@
     <div class="flex justify-between items-center mt-4">
         <div class="flex items-center space-x-2">
             <span class="ml-4 text-gray-700">
-                Showing {{ $logos->firstItem() }} to {{ $logos->lastItem() }} of {{ $logos->total() }} entries
+                Showing {{ $images->firstItem() }} to {{ $images->lastItem() }} of {{ $images->total() }} entries
             </span>
         </div>
 
         <div class="flex items-center space-x-2">
-            {{ $logos->links() }}
+            {{ $images->links() }}
         </div>
     </div>
 
@@ -140,13 +142,13 @@
 <script>
     // Open the modal
     document.getElementById('openModalButton').addEventListener('click', function () {
-        document.getElementById('logoModal').classList.remove('hidden');
+        document.getElementById('imageModal').classList.remove('hidden');
         document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
     });
 
     // Close the modal
     document.getElementById('closeModalButton').addEventListener('click', function () {
-        document.getElementById('logoModal').classList.add('hidden');
+        document.getElementById('imageModal').classList.add('hidden');
         document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
     });
 </script>
