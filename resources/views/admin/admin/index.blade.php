@@ -61,15 +61,19 @@
                 <!-- Button Container -->
                 <div class="flex justify-between gap-4 mt-8">
                     <!-- Close Button -->
-                    <button type="button" id="closeModalButton" 
-                            class="w-full md:w-auto bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-300 focus:outline-none">
-                        Close
+                    <div class="flex justify-between gap-4 mt-8">
+                        <!-- Close Button -->
+                        <button type="button" id="closeModalButton"
+                        class="w-full md:w-auto bg-red-500 text-white py-2 px-4 font-semibold rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
+                        Cancel
                     </button>
     
-                    <!-- Submit Button -->
-                    <button type="submit" class="w-full md:w-auto bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 transition duration-300">
-                        Create Admin
-                    </button>
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-4 ml-[13rem] rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+                            Create Admin
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

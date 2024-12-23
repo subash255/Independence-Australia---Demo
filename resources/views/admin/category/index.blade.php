@@ -58,9 +58,9 @@
                 <div class="flex justify-between gap-4 mt-8">
                     <!-- Close Button -->
                     <button type="button" id="closeModalButton"
-                        class="w-full md:w-auto bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-300 focus:outline-none">
-                        Close
-                    </button>
+                    class="w-full md:w-auto font-semibold bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
+                    Cancel
+                </button>
     
                     <!-- Submit Button -->
                     <button type="submit"

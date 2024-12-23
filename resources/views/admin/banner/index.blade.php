@@ -21,8 +21,8 @@
 <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <div class="mb-4 flex justify-end">
         <button id="openModalButton"
-            class="text-blue-500 font-medium bg-white border-2 border-blue-500 rounded-lg py-2 px-4 hover:bg-blue-600 hover:text-white transition duration-300">
-            Create Banner
+        class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">
+        Create Banner
         </button>
     </div>
     
@@ -51,9 +51,9 @@
                 <div class="flex justify-between gap-4 mt-8">
                     <!-- Close Button -->
                     <button type="button" id="closeModalButton"
-                        class="w-full md:w-auto bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-300 focus:outline-none">
-                        Close
-                    </button>
+                    class="w-full md:w-auto bg-red-500 text-white py-2 px-4 font-semibold rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
+                    Cancel
+                </button>
 
                     <!-- Submit Button -->
                     <button type="submit"

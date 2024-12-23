@@ -56,7 +56,9 @@ class BannerController extends Controller
     public function edit($id)
     {
         $banner = Banner::findOrFail($id);
-        return view('admin.banner.edit', compact('banner'));
+        return view('admin.banner.edit', compact('banner'), [
+            'title' => 'Manage Banners'
+        ]);
     }
 
     // Update the specified banner in the database

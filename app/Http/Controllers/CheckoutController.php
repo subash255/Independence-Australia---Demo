@@ -113,8 +113,8 @@ class CheckoutController extends Controller
             // Send the data to the external API
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Basic ' . (env('AEROHEALTH_API_KEY')),
-            ])->post(env('AEROHEALTH_API_URL'), $data);
+                'Authorization' => 'Basic {Y2tfMjV3UDdSU3lKRmpsaHhoaFZURVhxUVB4OVZxVVByZFM6Y3Nfb01Tc3BNSnc4RkF0UWJUMXN6bnROQVg2QmlzUmhYbWg=}',
+            ])->post('https://aerohealthcareonline.com/wp-json/aero-api/v3/orders', $data);
     
             // Check if the request was successful
             if ($response->successful()) {

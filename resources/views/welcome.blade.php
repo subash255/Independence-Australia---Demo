@@ -90,8 +90,14 @@
     </div>
 
     <!-- Navigation buttons -->
-    <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-black text-white p-2">Prev</button>
-    <button id="next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-black text-white p-2">Next</button>
+    <button id="prev"
+    class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 md:p-3 md:left-2">
+    &#10094;
+</button>
+<button id="next"
+    class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 md:p-3 md:right-2">
+    &#10095;
+</button>
 </div>
 @endguest
 

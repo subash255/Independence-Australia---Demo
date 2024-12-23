@@ -13,7 +13,7 @@ class HomepageController extends Controller
 {
     public function index(){
         $user = Auth::user();
-        $images = Banner::orderBy('priority', 'desc')->get();
+        $images = Banner::orderBy('priority', 'asc')->get();
         $categories=Category::with('subcategories')->get(); 
         //get user whose role is user and  associate with current auth user
         $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
@@ -23,14 +23,14 @@ class HomepageController extends Controller
     public function welcome()
     {
         $user = Auth::user();
-        $images = Banner::orderBy('priority', 'desc')->get();
+        $images = Banner::orderBy('priority', 'asc')->get();
         $products = Product::limit(12)->get();
         $categories = Category::with('subcategories')->get();
         // Check if the user is authenticated before accessing its properties
         if ($user && $user->role == 'vendor') {
             $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
         } else {
-            $users = collect(); // or handle as needed if the user is not a vendor or not authenticated
+            $users = collect();
         }
     
         return view('welcome', compact('products', 'users', 'categories', 'images'));

@@ -37,19 +37,19 @@
                     <input type="file" name="csv_file" id="csv_file"
                         class="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none text-gray-700 text-sm shadow-sm"
                         accept=".csv, .xlsx" required>
-                    <div class="flex justify-end mt-4">
-                        <!-- Close Button -->
-                        <button type="button" id="closeModalButton"
-                            class="bg-gray-400 text-white py-2 px-4 rounded-lg mr-2 hover:bg-gray-500 hover:shadow-md transition duration-300">
-                            Close
+                        <div class="flex justify-between gap-4 mt-8">
+                            <!-- Close Button -->
+                            <button type="button" id="closeModalButton"
+                            class="w-full md:w-auto font-semibold bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
+                            Cancel
                         </button>
-
-                        <!-- Add Product Button -->
-                        <button type="submit"
-                            class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 hover:shadow-md transition duration-300">
-                            Add Product
-                        </button>
-                    </div>
+            
+                            <!-- Submit Button -->
+                            <button type="submit"
+                                class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+                                Add Product
+                            </button>
+                        </div>
                 </form>
             </div>
         </div>
