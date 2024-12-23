@@ -56,13 +56,17 @@ class SubcategoryController extends Controller
     {
         // Find the subcategory by ID or show an error if not found
         $subcategory = Subcategory::findOrFail($id);
-
+    
         // Fetch categories for the category dropdown list
         $categories = Category::all();
-
-        // Return the view with the subcategory data and categories
-        return view('admin.subcategory.edit', compact('subcategory', 'categories'));
+    
+        // Pass only the necessary variables to the view
+        return view('admin.subcategory.edit', compact('subcategory', 'categories'), [
+            'title' => 'Manage SubCategory'
+        ]);
     }
+    
+    
 
     // Get subcategories by category ID for dynamic dropdowns
     public function getSubcategoriesByCategory($categoryId)

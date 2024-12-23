@@ -22,7 +22,7 @@
     <div class="mb-4 flex justify-end">
         <button id="openModalButton"
         class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">
-        Create Banner
+        Add Banner
         </button>
     </div>
     
@@ -62,6 +62,22 @@
                     </button>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
+        <div class="flex items-center space-x-2">
+            <label for="entries" class="mr-2">Show entries:</label>
+            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10" onchange="updateEntries()">
+                <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
+                <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
+                <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
+            </select>
+        </div>
+
+        <div class="flex items-center space-x-2 w-full sm:w-auto">
+            <span class="text-gray-700">Search:</span>
+            <input type="text" id="search" placeholder="Search..."
+                class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
         </div>
     </div>
 
