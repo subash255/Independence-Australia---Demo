@@ -120,33 +120,18 @@
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-50">
         <div class="bg-[#7eb6c6] py-2 text-black">
-            <section>
-                <div class="container mx-auto text-center overflow-hidden relative">
-                    <div class="slider-container relative h-8">
-                        <!-- Slider Text 1 -->
-                        <div
-                            class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
-                            <i class="ri-hand-heart-line text-[#00718f] mr-2"></i>
-                            Empowering independence through choice.
-                        </div>
-
-                        <!-- Slider Text 2 -->
-                        <div
-                            class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
-                            <i class="ri-user-heart-line text-[#00718f] mr-2"></i>
-                            Supporting living with dignity and care.
-                        </div>
-
-                        <!-- Slider Text 3 -->
-                        <div
-                            class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
-                            <i class="ri-lightbulb-line text-[#00718f] mr-2"></i>
-                            Innovative solutions for everyday living.
-                        </div>
+    <section>
+        <div class="container mx-auto text-center overflow-hidden relative">
+            <div class="slider-container relative h-8">
+                @foreach ($sliderTexts as $sliderText)
+                    <div class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                         {{ $sliderText->text }}
                     </div>
-                </div>
-            </section>
+                @endforeach
+            </div>
         </div>
+    </section>
+</div>
         <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px] hidden md:block">
     <div class="h-[65px] relative flex items-center justify-between text-[#00718f]">
         <div class="flex space-x-2 font-bold">
@@ -284,33 +269,35 @@
     </footer>
 
     <script>
-        const sliderTexts = document.querySelectorAll('.slider-text');
-        let currentIndexs = 0;
 
-        function showSliderText() {
-            sliderTexts.forEach((text, index) => {
-                text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full', 'opacity-100',
-                    'opacity-0');
+    document.addEventListener('DOMContentLoaded', function () {
+    const sliderTexts = document.querySelectorAll('.slider-text');
+    let currentIndex = 0;
 
-                if (index === currentIndexs) {
-                    // Show the current text
-                    text.classList.add('translate-x-0', 'opacity-100');
-                } else if (index === (currentIndexs - 1 + sliderTexts.length) % sliderTexts.length) {
-                    // Exit the previous text to the left
-                    text.classList.add('-translate-x-full', 'opacity-0');
-                } else {
-                    // Reset for all other texts
-                    text.classList.add('translate-x-full', 'opacity-0');
-                }
-            });
+    function showSliderText() {
+        sliderTexts.forEach((text, index) => {
+            text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full', 'opacity-100', 'opacity-0');
 
-            currentIndexs = (currentIndexs + 1) % sliderTexts.length;
-        }
+            if (index === currentIndex) {
+                // Show the current text
+                text.classList.add('translate-x-0', 'opacity-100');
+            } else if (index === (currentIndex - 1 + sliderTexts.length) % sliderTexts.length) {
+                // Exit the previous text to the left
+                text.classList.add('-translate-x-full', 'opacity-0');
+            } else {
+                // Reset for all other texts
+                text.classList.add('translate-x-full', 'opacity-0');
+            }
+        });
 
-        // Initial display and rotation
-        showSliderText();
-        setInterval(showSliderText, 4000);
-    </script>
+        currentIndex = (currentIndex + 1) % sliderTexts.length;
+    }
+
+    // Initial display and rotation
+    showSliderText();
+    setInterval(showSliderText, 4000);
+});
+</script>
 
 
 
