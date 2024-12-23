@@ -93,21 +93,16 @@
 
 <body class="bg-gray-100 text-gray-900 h-screen flex flex-col font-sans">
 
-  <div class="flex flex-1 h-full">
+  <div class="flex h-full">
     <!-- Sidebar -->
-    <aside id="sidebar" class="w-64 bg-white text-gray-900 shadow-lg flex flex-col fixed top-0 bottom-0 left-0 transition-all duration-300 overflow-hidden">
-      <!-- Logo and toggle button -->
+    <aside id="sidebar" class="w-64 bg-white text-gray-900 shadow-lg flex flex-col fixed top-0 bottom-0 left-0 transition-all duration-300 overflow-y-auto z-10">
       <div class="p-4 flex items-center justify-center bg-white cursor-pointer" onclick="toggleSidebar()">
-        <!-- The actual logo -->
         <img id="logo" src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain">
-        
-        <!-- The button (icon) to toggle the sidebar, initially hidden -->
         <button id="toggle-icon" onclick="toggleSidebar()" class="hidden px-4 py-2 bg-red-600 text-white rounded-full">
           <i class="ri-menu-3-fill"></i>
         </button>
       </div>
-
-      <!-- Navigation Links -->
+  
       <nav class="mt-6">
         <a href="{{ route('admin.dash') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-layout-masonry-fill"></i>
@@ -117,13 +112,12 @@
           <i class="ri-grid-line"></i>
           <span class="ml-4">Category</span>
         </a>
-
+  
         @if(Auth::user()->role == 'superadmin') 
         <a href="{{route('admin.admin.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-admin-fill"></i>
           <span class="ml-4">Manage Admin</span>
         </a>
-
         @endif
         <a href="{{route('admin.brand.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-price-tag-fill"></i>
@@ -134,13 +128,14 @@
           <span class="ml-4">Orders</span>
         </a>
         <a href="{{ route('admin.banner.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
-          <i class="ri-shopping-cart-2-fill"></i>
+          <i class="ri-image-fill"></i>
           <span class="ml-4">Banner</span>
         </a>
         <a href="{{ route('admin.text.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
-          <i class="ri-shopping-cart-2-fill"></i>
+          <i class="ri-file-text-line"></i>
           <span class="ml-4"> Manage Text </span>
         </a>
+        
         <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-bank-card-2-fill"></i>
           <span class="ml-4">Products</span>

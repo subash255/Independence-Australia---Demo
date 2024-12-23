@@ -21,8 +21,8 @@
 <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-20 rounded-lg relative z-10">
     <div class="mb-4 flex justify-end">
         <button id="openModalButton"
-            class="text-blue-500 font-medium bg-white border-2 border-blue-500 rounded-lg py-2 px-4 hover:bg-blue-600 hover:text-white transition duration-300">
-            make text Slideer
+        class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">
+        Add Text
         </button>
     </div>
     
@@ -51,14 +51,14 @@
                 <div class="flex justify-between gap-4 mt-8">
                     <!-- Close Button -->
                     <button type="button" id="closeModalButton"
-                        class="w-full md:w-auto bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition duration-300 focus:outline-none">
-                        Close
-                    </button>
-
+                    class="w-full md:w-auto bg-red-500 font-semibold text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
+                    Cancel
+                </button>
+    
                     <!-- Submit Button -->
-                    <button type="submit"
-                        class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
-                        Submit
+                    <button type="submit" 
+                            class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+                        Save Text
                     </button>
                 </div>
             </form>

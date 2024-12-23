@@ -37,7 +37,7 @@
             <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
             <select id="priority" name="priority" class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
                 <option value="" disabled>Select priority</option>
-                @foreach ($priorities as $priority)
+                @foreach ($availablePriorities as $priority)
                     <option value="{{ $priority }}" {{ $priority == old('priority', $text->priority) ? 'selected' : '' }}>
                         {{ $priority }}
                     </option>
