@@ -137,6 +137,10 @@
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4">Banner</span>
         </a>
+        <a href="{{ route('admin.text.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+          <i class="ri-shopping-cart-2-fill"></i>
+          <span class="ml-4"> Manage Text </span>
+        </a>
         <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
           <i class="ri-bank-card-2-fill"></i>
           <span class="ml-4">Products</span>

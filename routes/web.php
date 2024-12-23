@@ -19,6 +19,7 @@ use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ManageuserController;
 use App\Http\Controllers\NayaController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\TextController;
 use App\Http\Middleware\AdminMiddleware;
 
 use App\Models\Subcategory;
@@ -120,6 +121,16 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::get('admin/banner/{id}/edit', [BannerController::class, 'edit'])->name('admin.banner.edit');
     Route::patch('admin/banner/{id}/update', [BannerController::class, 'update'])->name('admin.banner.update');
     Route::delete('admin/banner/{id}/destroy', [BannerController::class, 'destroy'])->name('admin.banner.destroy');
+
+    // Manage Text routes
+    Route::get('admin/text/index', [TextController::class, 'index'])->name('admin.text.index');
+    Route::get('admin/text/create', [TextController::class, 'create'])->name('admin.text.create');
+    Route::post('admin/text/store', [TextController::class, 'store'])->name('admin.text.store');
+    Route::get('admin/text/{id}/edit', [TextController::class, 'edit'])->name('admin.text.edit');
+    Route::patch('admin/text/{id}/update', [TextController::class, 'update'])->name('admin.text.update');
+    Route::delete('admin/text/{id}/destroy', [TextController::class, 'destroy'])->name('admin.text.destroy');
+
+    
 
 
 });

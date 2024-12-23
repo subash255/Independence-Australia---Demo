@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Text;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,8 @@ class HomepageController extends Controller
     public function welcome()
     {
         $user = Auth::user();
-        $images = Banner::orderBy('priority', 'asc')->get();
+        $sliderTexts = Text::orderBy('priority')->get();
+        $images = Banner::orderBy('priority', 'desc')->get();
         $products = Product::limit(12)->get();
         $categories = Category::with('subcategories')->get();
         // Check if the user is authenticated before accessing its properties
@@ -33,7 +35,7 @@ class HomepageController extends Controller
             $users = collect();
         }
     
-        return view('welcome', compact('products', 'users', 'categories', 'images'));
+        return view('welcome', compact('products', 'users', 'categories', 'images','sliderTexts'));
     }
     
         // Display the homepage
