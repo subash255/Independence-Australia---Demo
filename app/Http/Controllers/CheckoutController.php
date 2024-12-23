@@ -113,7 +113,7 @@ class CheckoutController extends Controller
             // Send the data to the external API
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Basic ' . base64_encode(env('AEROHEALTH_API_KEY')) . ':' . env('AEROHEALTH_API_SECRET'),
+                'Authorization' => 'Basic ' . (env('AEROHEALTH_API_KEY')),
             ])->post(env('AEROHEALTH_API_URL'), $data);
     
             // Check if the request was successful

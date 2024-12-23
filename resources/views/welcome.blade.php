@@ -50,7 +50,7 @@
 {{-- Check if the user is not logged in --}}
 @guest
     <!-- This section is shown when the user is not logged in -->
-    <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-10 md:gap-18">
+    {{-- <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-10 md:gap-18">
         <div class="absolute inset-0 bg-cover bg-center"
             style="background-image: url('{{ asset('images/suddo.jpg') }}'); height: 400px;">
             <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
@@ -77,6 +77,34 @@
                 </p>
             </div>
         </div>
+    </div> --}}
+
+    <div class="relative w-full overflow-hidden">
+        <!-- Slider Wrapper -->
+        <div id="slider" class="flex transition-transform duration-700 ease-in-out">
+            <!-- First Image -->
+            <div class="w-full flex-shrink-0">
+                <img src="images/greet.jpg" alt="Image 1" class="w-full h-64 object-cover">
+            </div>
+            <!-- Second Image -->
+            <div class="w-full flex-shrink-0">
+                <img src="images/team.jpg" alt="Image 2" class="w-full h-64 object-cover">
+            </div>
+            <!-- Third Image -->
+            <div class="w-full flex-shrink-0">
+                <img src="images/resources.jpg" alt="Image 3" class="w-full h-64 object-cover">
+            </div>
+        </div>
+    
+        <!-- Navigation Buttons -->
+        <button id="prev"
+            class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 md:p-3 md:left-2">
+            &#10094;
+        </button>
+        <button id="next"
+            class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 md:p-3 md:right-2">
+            &#10095;
+        </button>
     </div>
 @endguest
 

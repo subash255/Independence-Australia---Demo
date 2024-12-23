@@ -65,22 +65,24 @@ class BannerController extends Controller
         $banner = Banner::findOrFail($id);
 
         $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'priority' => 'nullable|integer',
         ]);
 
         // If a new image is uploaded
         if ($request->hasFile('image')) {
-            // Delete the old image
-            if (file_exists(public_path('storage/' . $banner->image))) {
-                unlink(public_path('storage/' . $banner->image));
+            // Delete old image if exists
+            $oldImagePath = public_path('banner/' . $banner->image);
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
             }
 
-            // Handle file upload
-            $imagePath = $request->file('image')->store('banners', 'public');
-            $banner->image = $imagePath;
+            // Upload new image
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->extension();
+            $image->move(public_path('banner'), $imageName);
+            $banner->image = $imageName;
         }
-
         // Update other fields
         $banner->priority = $request->input('priority', $banner->priority);
         $banner->save();
