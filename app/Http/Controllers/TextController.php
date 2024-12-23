@@ -9,10 +9,18 @@ class TextController extends Controller
 {
      // Display a listing of the banners
      public function index()
-     {
-         $texts = Text::orderBy('priority')->paginate(5);  // Correct method for pagination
-         return view('admin.text.index', compact('texts'));
-     }
+{
+    // Fetch all texts to paginate
+    $texts = Text::orderBy('priority')->paginate(5);
+
+    $assignedPriorities = Text::pluck('priority')->toArray();  
+
+    $availablePriorities = range(1, 10); 
+    $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
+
+    return view('admin.text.index', compact('texts', 'availablePriorities'));
+}
+
  
      // Show the form to create a new banner
      public function create()
@@ -42,24 +50,26 @@ class TextController extends Controller
      }
  
      // Show the form for editing the specified banner
-     public function edit(Text $banner)
+     public function edit($id)
      {
+         // Find the text by ID
+         $text = Text::findOrFail($id);
          $assignedPriorities = Text::pluck('priority')->toArray();
          $availablePriorities = range(1, 10);
          $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
- 
-         return view('admin.text.edit', compact('banner', 'availablePriorities'));
+         return view('admin.text.edit', compact('text', 'availablePriorities'));
      }
  
      // Update the specified banner in the database
-     public function update(Request $request, Text $banner)
+     public function update(Request $request, $id)
      {
+        $text=Text::findOrFail($id);
          $request->validate([
              'text' => 'required|string|max:255',
              'priority' => 'required|integer|in:' . implode(',', range(1, 10)),
          ]);
  
-         $banner->update([
+         $text->update([
              'text' => $request->input('text'),
              'priority' => $request->input('priority'),
          ]);
@@ -68,9 +78,10 @@ class TextController extends Controller
      }
  
      // Remove the specified banner from the database
-     public function destroy(Text $banner)
+     public function destroy($id)
      {
-         $banner->delete();
+        $text=Text::findOrFail($id);
+         $text->delete();
          return redirect()->route('admin.text.index')->with('success', 'Text deleted successfully.');
      }
 }
