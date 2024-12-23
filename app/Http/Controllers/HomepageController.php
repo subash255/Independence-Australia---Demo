@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
@@ -12,15 +13,17 @@ class HomepageController extends Controller
 {
     public function index(){
         $user = Auth::user();
+        $images = Banner::orderBy('priority', 'desc')->get();
         $categories=Category::with('subcategories')->get(); 
         //get user whose role is user and  associate with current auth user
         $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
         
-        return view('user.welcome',compact('user','users','categories'));
+        return view('user.welcome',compact('user','users','categories','images'));
     }
     public function welcome()
     {
         $user = Auth::user();
+        $images = Banner::orderBy('priority', 'desc')->get();
         $products = Product::limit(12)->get();
         $categories = Category::with('subcategories')->get();
         // Check if the user is authenticated before accessing its properties
@@ -30,7 +33,7 @@ class HomepageController extends Controller
             $users = collect(); // or handle as needed if the user is not a vendor or not authenticated
         }
     
-        return view('welcome', compact('products', 'users', 'categories'));
+        return view('welcome', compact('products', 'users', 'categories', 'images'));
     }
     
         // Display the homepage

@@ -312,34 +312,6 @@
         setInterval(showSliderText, 4000);
     </script>
 
-    <script>
-        let currentIndex = 0;
-        const slides = document.querySelectorAll("#slider .flex-shrink-0");
-        const totalSlides = slides.length;
-        const slider = document.getElementById("slider");
-
-        const showSlide = (index) => {
-            const offset = -index * 100;
-            slider.style.transform = `translateX(${offset}%)`;
-        };
-
-        document.getElementById("next").addEventListener("click", () => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            showSlide(currentIndex);
-        });
-
-        document.getElementById("prev").addEventListener("click", () => {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            showSlide(currentIndex);
-        });
-
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            showSlide(currentIndex);
-        }, 3000);
-
-        showSlide(currentIndex);
-    </script>
 
 
 <script>
