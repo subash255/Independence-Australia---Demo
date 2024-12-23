@@ -18,7 +18,9 @@ class TextController extends Controller
     $availablePriorities = range(1, 10); 
     $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
 
-    return view('admin.text.index', compact('texts', 'availablePriorities'));
+    return view('admin.text.index', compact('texts', 'availablePriorities'), [
+        'title' => 'Manage Text'
+    ]);
 }
 
  

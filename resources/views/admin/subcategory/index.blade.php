@@ -111,8 +111,8 @@
                         <td class="border border-gray-300 px-4 py-2">
                             <img src="{{ asset('images/brand/' . $subcategory->category->image) }}" alt="{{ $subcategory->category->category_name }}" class="w-12 h-12 object-cover rounded-full">
                         </td>
-                        <td class="border border-gray-300 px-4 py-2">{{ $subcategory->category->category_name }}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ $subcategory->subcategory_name }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $subcategory->category->name }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $subcategory->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $subcategory->slug }}</td>
                         <td class="border border-gray-300 px-4 py-2">
                             <label for="status{{ $subcategory->id }}" class="inline-flex items-center cursor-pointer">
