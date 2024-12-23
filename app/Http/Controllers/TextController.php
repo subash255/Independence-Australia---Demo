@@ -9,25 +9,18 @@ class TextController extends Controller
 {
      // Display a listing of the banners
      public function index()
-     {
-         // Get all the texts and order them by priority
-         $texts = Text::orderBy('priority')->paginate(5);
-     
-         // Get assigned priorities to avoid duplicates in dropdown
-         $assignedPriorities = Text::pluck('priority')->toArray();
-         
-         // Define a range of priorities (1 to 10)
-         $availablePriorities = range(1, 10); // Example range of priorities
-         
-         // Remove assigned priorities from the available priorities
-         $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
-     
-         // Return the view with texts and available priorities
-         return view('admin.text.index', compact('texts', 'availablePriorities'), [
-             'title' => 'Manage Text'
-         ]);
-     }
-     
+{
+    // Fetch all texts to paginate
+    $texts = Text::orderBy('priority')->paginate(5);
+
+    $assignedPriorities = Text::pluck('priority')->toArray();  
+
+    $availablePriorities = range(1, 10); 
+    $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
+
+    return view('admin.text.index', compact('texts', 'availablePriorities'));
+}
+
  
      // Show the form to create a new banner
      public function create()
@@ -59,18 +52,18 @@ class TextController extends Controller
      // Show the form for editing the specified banner
      public function edit($id)
      {
-        $text = Text::findOrFail($id);
+         // Find the text by ID
+         $text = Text::findOrFail($id);
          $assignedPriorities = Text::pluck('priority')->toArray();
          $availablePriorities = range(1, 10);
          $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
- 
          return view('admin.text.edit', compact('text', 'availablePriorities'));
      }
  
-     // Update the specified text in the database
+     // Update the specified banner in the database
      public function update(Request $request, $id)
      {
-        $text = Text::findOrFail($id);
+        $text=Text::findOrFail($id);
          $request->validate([
              'text' => 'required|string|max:255',
              'priority' => 'required|integer|in:' . implode(',', range(1, 10)),
@@ -84,10 +77,10 @@ class TextController extends Controller
          return redirect()->route('admin.text.index')->with('success', 'Text updated successfully.');
      }
  
-     // Remove the specified text from the database
+     // Remove the specified banner from the database
      public function destroy($id)
      {
-        $text = Text::findOrFail($id);
+        $text=Text::findOrFail($id);
          $text->delete();
          return redirect()->route('admin.text.index')->with('success', 'Text deleted successfully.');
      }

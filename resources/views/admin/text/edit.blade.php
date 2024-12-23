@@ -21,29 +21,38 @@
 <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
     <h1 class="text-2xl font-bold mb-4">Edit Text</h1>
     
-    <form action="{{ route('admin.text.update', $text->id) }}" method="POST" enctype="multipart/form-data" class="mt-6">
+    <form action="{{ route('admin.text.update', $text->id) }}" method="POST"  class="mt-6">
         @csrf
         @method('PATCH')
 
         <!-- Text Input -->
         <div class="mb-6">
-            <label for="content" class="block text-sm font-medium text-gray-700">Text Content</label>
-            <textarea id="content" name="content" rows="4" placeholder="Enter text here"
+            <label for="text" class="block text-sm font-medium text-gray-700">Text Content</label>
+            <textarea id="text" name="text" rows="4" placeholder="Enter text here"
                 class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">{{ old('content', $text->content) }}</textarea>
         </div>
 
         <!-- Priority Input -->
         <div class="mb-6">
-            <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
-            <select id="priority" name="priority" class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
-                <option value="" disabled>Select priority</option>
-                @foreach ($availablePriorities as $priority)
-                    <option value="{{ $priority }}" {{ $priority == old('priority', $text->priority) ? 'selected' : '' }}>
-                        {{ $priority }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+    <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
+    <select id="priority" name="priority" class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+        <option value="" disabled>Select priority</option>
+        
+        <!-- Add the current priority of the text being edited -->
+        <option value="{{ $text->priority }}" selected>
+            Current: {{ $text->priority }}
+        </option>
+        
+        <!-- Loop through available priorities to populate the rest of the dropdown -->
+        @foreach ($availablePriorities as $priority)
+            <option value="{{ $priority }}" 
+                {{ $priority == old('priority', $text->priority) ? 'selected' : '' }}>
+                {{ $priority }}
+            </option>
+        @endforeach
+    </select>
+</div>
+
 
         <!-- Button Container -->
         <div class="flex justify-between gap-4 mt-8">
