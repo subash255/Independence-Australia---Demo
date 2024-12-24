@@ -44,7 +44,7 @@
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }} "
                         {{ old('category_id', $subcategory->category_id) == $category->id ? 'selected' : '' }}>
-                        {{ $category->category_name }}
+                        {{ $category->name }}
                     </option>
                 @endforeach
             </select>
@@ -65,7 +65,7 @@
             <label for="subcategory_name" class="block text-lg font-medium text-gray-700">Subcategory Name</label>
             <input type="text" name="subcategory_name" id="subcategory_name"
                 class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                value="{{ old('subcategory_name', $subcategory->subcategory_name) }}" required>
+                value="{{ old('name', $subcategory->name) }}" required>
         </div>
 
         <!-- Paragraph Input -->
@@ -116,7 +116,7 @@
                         data.forEach(subcategory => {
                             let option = document.createElement('option');
                             option.value = subcategory.id;
-                            option.textContent = subcategory.subcategory_name;
+                            option.textContent = subcategory.name;
                             subcategorySelect.appendChild(option);
                         });
 

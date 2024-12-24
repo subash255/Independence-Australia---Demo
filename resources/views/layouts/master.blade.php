@@ -94,8 +94,6 @@
             </div>
         </div>
     </header>
-      
-    
 
     <!-- Mobile Menu (Initially Hidden) -->
     <div id="mobileMenu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
@@ -116,87 +114,57 @@
         </div>
     </div>
 
-
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-50">
         <div class="bg-[#7eb6c6] py-2 text-black">
-    <section>
-        <div class="container mx-auto text-center overflow-hidden relative">
-            <div class="slider-container relative h-8">
-                @foreach ($sliderTexts as $sliderText)
-                    <div class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
-                         {{ $sliderText->text }}
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-</div>
-        <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px] hidden md:block">
-    <div class="h-[65px] relative flex items-center justify-between text-[#00718f]">
-        <div class="flex space-x-2 font-bold">
-            @foreach($categories as $category)
-                <div class="relative">
-                    <!-- Category Button -->
-                    <button class="px-6 py-2" onclick="toggleDropdown(event, 'dropdown-{{ $category->id }}')">
-                        {{ $category->name }}
-                    </button>
-
-                    <!-- Full Width Dropdown -->
-                    <div id="dropdown-{{ $category->id }}" class="absolute left-0 w-full bg-white text-[#00718f] mt-2 hidden px-6 py-4 max-h-[300px] overflow-y-auto">
-                        <!-- Dropdown content that changes based on hovered category -->
-                        <div class="flex items-center justify-between">
-                            <div class="w-1/2">
-                                <ul>
-                                    @foreach($category->subcategories as $subcategory)
-                                        <li class="py-2">
-                                            <a href="" class="text-blue-600 hover:text-blue-800">
-                                                {{ $subcategory->name }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+            <section>
+                <div class="container mx-auto text-center overflow-hidden relative">
+                    <div class="slider-container relative h-8">
+                        @foreach ($sliderTexts as $sliderText)
+                            <div class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                                {{ $sliderText->text }}
                             </div>
-                            <div class="w-1/2">
-                                <p class="text-lg">Explore the {{ $category->name }} section</p>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <img class="w-20 h-20 object-contain" src="{{ asset('images/banner.jpg') }}" alt="Category Banner">
-                        </div>
+                        @endforeach
                     </div>
                 </div>
-            @endforeach
+            </section>
         </div>
-    </div>
-</div>
 
-<script>
-    // Function to toggle the dropdown visibility on click
-    function toggleDropdown(event, dropdownId) {
-        // Prevent the page from scrolling when clicking the button
-        event.preventDefault();
+        <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px] hidden md:block">
+            <div class="h-[65px] relative flex items-center justify-between text-[#00718f]">
+                <div class="flex space-x-2 font-bold">
+                    @foreach($categories as $category)
+                        <div class="relative group">
+                            <button class="px-6 py-2" onclick="toggleDropdown(event, 'dropdown-{{ $category->id }}')">
+                                {{ $category->name }}
+                            </button>
 
-        // Get the dropdown element by its ID
-        const dropdown = document.getElementById(dropdownId);
-        
-        // Toggle the dropdown visibility
-        dropdown.classList.toggle('hidden');
-    }
-
-    // Close all dropdowns if the user clicks outside any dropdown
-    document.addEventListener('click', function (e) {
-        const dropdowns = document.querySelectorAll('.absolute');
-        dropdowns.forEach(dropdown => {
-            if (!dropdown.contains(e.target) && !e.target.closest('button')) {
-                dropdown.classList.add('hidden');
-            }
-        });
-    });
-</script>
-
-
-
+                            <div id="dropdown-{{ $category->id }}" class="absolute left-0 w-full bg-white text-[#00718f] mt-2 hidden px-6 py-4 max-h-[300px] overflow-y-auto">
+                                <div class="flex items-center justify-between">
+                                    <div class="w-1/2">
+                                        <ul>
+                                            @foreach($category->subcategories as $subcategory)
+                                                <li class="py-2">
+                                                    <a href="" class="text-blue-600 hover:text-blue-800">
+                                                        {{ $subcategory->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    <div class="w-1/2">
+                                        <p class="text-lg">Explore the {{ $category->name }} section</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <img class="w-20 h-20 object-contain" src="{{ asset('images/banner.jpg') }}" alt="Category Banner">
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </nav>
 
     <!-- Main Content -->
@@ -233,8 +201,7 @@
                 <p class="text-center lg:text-left">
                     &copy; 2024 Alwayson Medical &nbsp; | &nbsp; All rights reserved.
                 </p>
-                <div
-                    class="flex justify-center lg:justify-end space-x-8 text-[#00718f] text-sm font-extrabold mt-4 lg:mt-0">
+                <div class="flex justify-center lg:justify-end space-x-8 text-[#00718f] text-sm font-extrabold mt-4 lg:mt-0">
                     <a href="#" class="hover:underline">Shop by Brand</a>
                     <a href="#" class="hover:underline">FAQ</a>
                     <a href="#" class="hover:underline">Health Guides</a>
@@ -269,58 +236,24 @@
     </footer>
 
     <script>
+        // Function to toggle the dropdown visibility on click
+        function toggleDropdown(event, dropdownId) {
+            event.preventDefault();
+            const dropdown = document.getElementById(dropdownId);
+            dropdown.classList.toggle('hidden');
+        }
 
-    document.addEventListener('DOMContentLoaded', function () {
-    const sliderTexts = document.querySelectorAll('.slider-text');
-    let currentIndex = 0;
-
-    function showSliderText() {
-        sliderTexts.forEach((text, index) => {
-            text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full', 'opacity-100', 'opacity-0');
-
-            if (index === currentIndex) {
-                // Show the current text
-                text.classList.add('translate-x-0', 'opacity-100');
-            } else if (index === (currentIndex - 1 + sliderTexts.length) % sliderTexts.length) {
-                // Exit the previous text to the left
-                text.classList.add('-translate-x-full', 'opacity-0');
-            } else {
-                // Reset for all other texts
-                text.classList.add('translate-x-full', 'opacity-0');
-            }
+        // Close all dropdowns if the user clicks outside any dropdown
+        document.addEventListener('click', function (e) {
+            const dropdowns = document.querySelectorAll('.absolute');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(e.target) && !e.target.closest('button')) {
+                    dropdown.classList.add('hidden');
+                }
+            });
         });
 
-        currentIndex = (currentIndex + 1) % sliderTexts.length;
-    }
-
-    // Initial display and rotation
-    showSliderText();
-    setInterval(showSliderText, 4000);
-});
-</script>
-
-
-
-<script>
-    // Select all the category buttons and their respective dropdowns
-    const buttons = document.querySelectorAll('.group button');
-    const dropdowns = document.querySelectorAll('.group .absolute');
-
-    buttons.forEach((button, index) => {
-        button.addEventListener('mouseenter', () => {
-            // Show the corresponding dropdown when hovering over a category button
-            dropdowns[index].classList.remove('hidden');
-        });
-
-        button.addEventListener('mouseleave', () => {
-            // Hide the dropdown when not hovering
-            dropdowns[index].classList.add('hidden');
-        });
-    });
-</script>
-
-
-    <script>
+        // Mobile Menu toggle
         const menuToggle = document.getElementById("menuToggle");
         const mobileMenu = document.getElementById("mobileMenu");
         const closeMenu = document.getElementById("closeMenu");
@@ -332,22 +265,32 @@
         closeMenu.addEventListener("click", () => {
             mobileMenu.classList.add("hidden");
         });
+
+        // Slider Text
+        document.addEventListener('DOMContentLoaded', function () {
+            const sliderTexts = document.querySelectorAll('.slider-text');
+            let currentIndex = 0;
+
+            function showSliderText() {
+                sliderTexts.forEach((text, index) => {
+                    text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full', 'opacity-100', 'opacity-0');
+
+                    if (index === currentIndex) {
+                        text.classList.add('translate-x-0', 'opacity-100');
+                    } else if (index === (currentIndex - 1 + sliderTexts.length) % sliderTexts.length) {
+                        text.classList.add('-translate-x-full', 'opacity-0');
+                    } else {
+                        text.classList.add('translate-x-full', 'opacity-0');
+                    }
+                });
+
+                currentIndex = (currentIndex + 1) % sliderTexts.length;
+            }
+
+            showSliderText();
+            setInterval(showSliderText, 4000);
+        });
     </script>
-
-<script>
-    if (document.getElementById('flash-message')) setTimeout(() => {
-        const msg = document.getElementById('flash-message');
-        msg.style.opacity = 0;
-        msg.style.transition = "opacity 0.5s ease-out";
-        setTimeout(() => msg.remove(), 500);
-    }, 3000);
-
-    // Function to toggle the visibility of the dropdown
-    function toggleDropdown() {
-        const dropdown = document.getElementById('user-dropdown');
-        dropdown.classList.toggle('hidden'); // Toggle the 'hidden' class to show/hide the dropdown
-    }
-</script>
 </body>
 
 </html>
