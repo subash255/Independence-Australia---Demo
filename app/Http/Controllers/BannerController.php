@@ -11,7 +11,10 @@ class BannerController extends Controller
     public function index()
     {
         $banners = Banner::paginate(5);
-        return view('admin.banner.index', compact('banners'), [
+        $assignedPriorities = Banner::pluck('priority')->toArray();  
+        $availablePriorities = range(1, 10); 
+        $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
+        return view('admin.banner.index', compact('banners','availablePriorities'), [
             'title' => 'Manage Banners'
         ]);
     }
@@ -19,7 +22,10 @@ class BannerController extends Controller
     // Show the form for creating a new banner
     public function create()
     {
-        return view('admin.banner.create');
+        $assignedPriorities = Banner::pluck('priority')->toArray();
+        $availablePriorities = range(1, 10); // Example range of priorities
+        $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
+        return view('admin.banner.create', compact('availablePriorities'));
     }
 
     // Store a newly created banner in the database
@@ -55,8 +61,11 @@ class BannerController extends Controller
     // Show the form for editing the specified banner
     public function edit($id)
     {
+        $assignedPriorities = Banner::pluck('priority')->toArray();
+        $availablePriorities = range(1, 10);
+        $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
         $banner = Banner::findOrFail($id);
-        return view('admin.banner.edit', compact('banner'), [
+        return view('admin.banner.edit', compact('banner','availablePriorities'), [
             'title' => 'Manage Banners'
         ]);
     }

@@ -39,8 +39,22 @@
         <!-- Priority Input -->
         <div class="mb-6">
             <label for="priority" class="block text-sm font-medium text-gray-700">Priority</label>
-            <input type="number" id="priority" name="priority" value="{{ old('priority', $banner->priority) }}" placeholder="Enter priority"
-                class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+            <select id="priority" name="priority" class="mt-2 px-5 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg">
+                <option value="" disabled>Select priority</option>
+                
+                <!-- Add the current priority of the text being edited -->
+                <option value="{{ $banner->priority }}" selected>
+                    Current: {{ $banner->priority }}
+                </option>
+                
+                <!-- Loop through available priorities to populate the rest of the dropdown -->
+                @foreach ($availablePriorities as $priority)
+                    <option value="{{ $priority }}" 
+                        {{ $priority == old('priority', $banner->priority) ? 'selected' : '' }}>
+                        {{ $priority }}
+                    </option>
+                @endforeach
+            </select>
         </div>
 
         <!-- Button Container -->

@@ -65,7 +65,7 @@
                     <!-- Submit Button -->
                     <button type="submit" 
                             class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
-                        Save Subcategory
+                        Save Text
                     </button>
                 </div>
     </form>
