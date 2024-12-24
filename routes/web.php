@@ -30,6 +30,8 @@ Route::get('checkout', [CheckoutController::class, 'showCheckoutPage'])->name('c
 Route::post('checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
 Route::get('user/cart/show', [CheckoutController::class, 'show'])->name('user.cart.show');
 
+// Route::get('/product', [HomepageController::class, 'showproducts']);
+Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('product.show');
 
 Route::get('/naya', [NayaController::class, 'index']);
 
@@ -148,7 +150,6 @@ Route::get('user/manageuser/create', [ManageuserController::class, 'create'])->n
 Route::post('user/manageuser/store', [ManageuserController::class, 'store'])->name('user.manageuser.store'); 
 
 Route::get('/impersonate/{id}', [HomepageController::class, 'impersonate'])->name('impersonate');
-
 
 
 Route::post('/cart/{productId}', [CartController::class, 'addToCart'])->name('user.cart.add');

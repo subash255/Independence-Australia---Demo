@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Text;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -20,8 +21,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
+        $sliderTexts = Text::orderBy('priority')->get();
         $categories=Category::with('subcategories')->get();
-        return view('auth.register',compact('categories'));
+        return view('auth.register',compact('categories','sliderTexts'));
     }
 
     /**

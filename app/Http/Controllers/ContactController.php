@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Contact;
+use App\Models\Text;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +13,8 @@ class ContactController extends Controller
 {
     public function index()
     {
+        $sliderTexts = Text::orderBy('priority')->get();
+        $categories = Category::with('subcategories')->get();
         // Assuming user is authenticated
         $user = Auth::user();  // Get the entire user object
         $userId = $user->id;
@@ -18,7 +22,7 @@ class ContactController extends Controller
                  ->where('vendor_id', $userId)
                  ->get();
 
-        return view('user.contact.index', compact('userId' , 'users'));
+        return view('user.contact.index', compact('userId' , 'users','sliderTexts','categories'));
     }
 
     public function store(Request $request)

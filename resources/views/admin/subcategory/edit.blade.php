@@ -40,11 +40,11 @@
         <div class="mb-6">
             <label for="category_id" class="block text-lg font-medium text-gray-700">Category</label>
             <select name="category_id" id="category_id"
-                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white text-gray-700 z-50">
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }} "
                         {{ old('category_id', $subcategory->category_id) == $category->id ? 'selected' : '' }}>
-                        {{ $category->category_name }}
+                        {{ $category->name }}
                     </option>
                 @endforeach
             </select>
@@ -54,9 +54,9 @@
         <div class="mb-6">
             <label for="subcategory_id" class="block text-lg font-medium text-gray-700">Subcategory</label>
             <select name="subcategory_id" id="subcategory_id"
-                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-white text-gray-700 z-50">
                 <option value="">Select Subcategory</option>
-                <!-- Initially empty options, will be populated with JS -->
+                <!-- Options will be populated with JS -->
             </select>
         </div>
 
@@ -65,7 +65,7 @@
             <label for="subcategory_name" class="block text-lg font-medium text-gray-700">Subcategory Name</label>
             <input type="text" name="subcategory_name" id="subcategory_name"
                 class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-                value="{{ old('subcategory_name', $subcategory->subcategory_name) }}" required>
+                value="{{ old('name', $subcategory->name) }}" required>
         </div>
 
         <!-- Paragraph Input -->
@@ -116,7 +116,7 @@
                         data.forEach(subcategory => {
                             let option = document.createElement('option');
                             option.value = subcategory.id;
-                            option.textContent = subcategory.subcategory_name;
+                            option.textContent = subcategory.name;
                             subcategorySelect.appendChild(option);
                         });
 
@@ -128,7 +128,6 @@
                     })
                     .catch(error => console.error('Error fetching subcategories:', error));
             } else {
-                // If no category selected, clear subcategories
                 document.getElementById('subcategory_id').innerHTML =
                     '<option value="">Select Subcategory</option>';
             }
@@ -137,9 +136,10 @@
 </script>
 
 <script>
-        // Close the modal or go back to the previous page
-        document.getElementById('closeModalButton').addEventListener('click', function () {
-      window.history.back(); // Go back to the previous page
+    // Close the modal or go back to the previous page
+    document.getElementById('closeModalButton').addEventListener('click', function () {
+        window.history.back(); // Go back to the previous page
     });
 </script>
+
 @endsection

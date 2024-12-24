@@ -103,7 +103,7 @@
 
 
     <!--Banner images-->
-    <div class="w-full px-4 py-12 banner mt-4">
+    {{-- <div class="w-full px-4 py-12 banner mt-4">
         <img src="images/homepage.jpg" alt="Banner"
             class="w-full h-auto transform transition-all duration-300 ease-in-out shadow-lg">
     </div>
@@ -111,7 +111,7 @@
 
     <div class="w-full px-4 py-6">
         <img src="images/banner.jpg" alt="Banner" class="w-full h-auto">
-    </div>
+    </div> --}}
 
     <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
         Shop by Category
@@ -178,7 +178,7 @@
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @foreach($products as $product)
-        <a href="#" class="block">
+        <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">
             <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
                 <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
                 <!-- Image container with fixed aspect ratio and no cropping -->
@@ -201,14 +201,14 @@
                         Add to Basket
                     </button>
                     </form>
-                    <div class="flex gap-4 mt-4">
+                    {{-- <div class="flex gap-4 mt-4">
                         <span class="text-[#00718f] text-lg">
                             <i class="ri-heart-line"></i> Add Favourites
                         </span>
                         <span class="text-green-700 text-lg">
                             <i class="ri-arrow-left-right-fill"></i> Add to Compare
                         </span>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </a>
@@ -298,7 +298,7 @@
     </div>
 
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 px-6 md:px-16 bg-gray-100">
+    {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 px-6 md:px-16 bg-gray-100">
         <!-- Image Section -->
         <div class="flex justify-center items-center">
             <img class="w-full h-auto shadow-lg rounded-lg" src="images/wheel.jpg" alt="Alwayson Medical" />
@@ -353,7 +353,7 @@
             View more publications
         </a>
     </div>
-    
+     --}}
 
 
     <hr class="border-gray-300">

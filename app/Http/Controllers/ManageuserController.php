@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Text;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -10,7 +12,8 @@ class ManageuserController extends Controller
 {
 public function index()
 {
-   
+    $sliderTexts = Text::orderBy('priority')->get();
+    $categories = Category::with('subcategories')->get();
     $authenticatedUser = Auth::user();
 
     // Check if the authenticated user is a vendor
@@ -23,15 +26,16 @@ public function index()
     ->where('vendor_id', $authenticatedUser->id)
     ->paginate(5);
     //route for user index
-    return view('user.manageuser.index', compact('users'));
+    return view('user.manageuser.index', compact('users', 'sliderTexts','categories'));
 
 }
 public function create()
 {
+    $sliderTexts = Text::orderBy('priority')->get();
     $users = User::where('role', 'user')
     ->where('vendor_id', Auth::user()->id)
     ->get();
-    return view('user.manageuser.create', compact('users'));
+    return view('user.manageuser.create', compact('users', 'sliderTexts'));
 
 }
     public function store(Request $request)
