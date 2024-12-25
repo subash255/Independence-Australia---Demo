@@ -16,7 +16,7 @@ class HomepageController extends Controller
     {
         $user = Auth::user();
         $sliderTexts = Text::orderBy('priority')->get();
-        $images = Banner::orderBy('priority', 'asc')->get();
+        $images = Banner::orderBy('priority','asc')->get();
         $categories = Category::with('subcategories')->get();
         //get user whose role is user and  associate with current auth user
         $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
@@ -27,7 +27,7 @@ class HomepageController extends Controller
     {
         $user = Auth::user();
         $sliderTexts = Text::orderBy('priority')->get();
-        $images = Banner::orderBy('priority', 'desc')->get();
+        $images = Banner::orderBy('priority', 'asc')->get();
         $products = Product::limit(12)->get();
         $categories = Category::with('subcategories')->get();
         // Check if the user is authenticated before accessing its properties
