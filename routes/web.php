@@ -30,6 +30,9 @@ Route::get('checkout', [CheckoutController::class, 'showCheckoutPage'])->name('c
 Route::post('checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
 Route::get('user/cart/show', [CheckoutController::class, 'show'])->name('user.cart.show');
 
+Route::get('menu/index', [HomepageController::class, 'showcat'])->name('menu.index');
+
+
 // Route::get('/product', [HomepageController::class, 'showproducts']);
 Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('product.show');
 

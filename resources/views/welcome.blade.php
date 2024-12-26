@@ -119,10 +119,10 @@
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
         <!-- Continence Aids-->
-        <div class="relative row-span-2 overflow-hidden">
+       <a href="{{route('menu.index')}}"> <div class="relative row-span-2 overflow-hidden">
             <img src="{{ asset('images/category/1.jpg') }}" alt="Continence Aids"
                 class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
-        </div>
+        </div> </a>
 
         <!-- Nutrition -->
         <div class="relative overflow-hidden">
