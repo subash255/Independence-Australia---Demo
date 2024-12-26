@@ -49,6 +49,15 @@ class HomepageController extends Controller
         return view('homepage', compact('products', 'categories'));
     }
 
+    public function showcat()
+    {
+        $sliderTexts = Text::orderBy('priority')->get();
+        $categories = Category::all();
+        $products = Product::limit('12')->get();
+        return view('menu.index', compact('categories', 'sliderTexts', 'products'));
+    }
+
+
     public function showproduct($id)
     {
         $categories = Category::with('subcategories')->get();

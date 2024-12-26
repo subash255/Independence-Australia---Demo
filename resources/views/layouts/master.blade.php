@@ -134,16 +134,16 @@
        
 
 <!-- Dropdown Content (Full Width) -->
-<div class="max-w-screen-xl mx-auto px-6 py-4">
+<div class="max-w-screen-xl mx-auto px-8 bg-white py-4">
     <div class="flex items-center justify-between">
         <!-- Main Navbar Content -->
-        <div class="flex space-x-8 relative w-full">
+        <div class="flex space-x-10  relative w-full">
             @foreach($categories as $category)
-                <div class="relative group">
-                    <button class="text-lg font-semibold hover:text-gray-400 transition-colors duration-300" data-menu="menu{{ $category->id }}">
+                <a href="{{route('menu.index')}}"><div class="relative group">
+                    <button class="text-sm text-[#00718f] font-bold" data-menu="menu{{ $category->id }}">
                         {{ $category->name }}
                     </button>
-                </div>
+                </div></a>
             @endforeach
         </div>
     </div>
