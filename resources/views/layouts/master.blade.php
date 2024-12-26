@@ -130,41 +130,39 @@
             </section>
         </div>
 
-        <div class="m-auto bg-[#ffffff] px-3 2xl:px-0 max-w-[1329px] hidden md:block">
-            <div class="h-[65px] relative flex items-center justify-between text-[#00718f]">
-                <div class="flex space-x-2 font-bold">
-                    @foreach($categories as $category)
-                        <div class="relative group">
-                            <button class="px-6 py-2" onclick="toggleDropdown(event, 'dropdown-{{ $category->id }}')">
-                                {{ $category->name }}
-                            </button>
+        <div class="max-w-screen-xl mx-auto px-6 py-4 bg-white">
+    <div class="flex items-center justify-between">
+        <!-- Main Navbar Content -->
+        <div class="flex space-x-8 relative w-full">
+            @foreach($categories as $menu)
+                <div class="relative group">
+                    <button class="text-lg font-semibold hover:text-gray-400 transition-colors duration-300" data-menu="menu{{ $menu->id }}">{{ $menu->name }}</button>
+                </div>
+            @endforeach
+        </div>
+    </div>
+</div>
 
-                            <div id="dropdown-{{ $category->id }}" class="absolute left-0 w-full bg-white text-[#00718f] mt-2 hidden px-6 py-4 max-h-[300px] overflow-y-auto">
-                                <div class="flex items-center justify-between">
-                                    <div class="w-1/2">
-                                        <ul>
-                                            @foreach($category->subcategories as $subcategory)
-                                                <li class="py-2">
-                                                    <a href="" class="text-blue-600 hover:text-blue-800">
-                                                        {{ $subcategory->name }}
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                    <div class="w-1/2">
-                                        <p class="text-lg">Explore the {{ $category->name }} section</p>
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <img class="w-20 h-20 object-contain" src="{{ asset('images/banner.jpg') }}" alt="Category Banner">
-                                </div>
-                            </div>
-                        </div>
+<!-- Dropdown Content (Full Width) -->
+<div id="dropdown" class="absolute left-0 w-full bg-white shadow-lg opacity-0 scale-95 transition-all duration-300 ease-in-out hidden top-full z-50">
+    <div class="flex space-x-4">
+        <!-- Dropdown Menu Content -->
+        <div class="space-y-2 text-black px-4 py-2 w-1/2">
+            @foreach($categories as $menu)
+                <div class="menu-content hidden" id="menu{{ $menu->id }}">
+                    @foreach($menu->subcategories as $submenu)
+                        <a href="#" class="block py-2 hover:bg-gray-100 group relative" data-item="{{ $submenu->name }}">{{ $submenu->name }}</a>
                     @endforeach
                 </div>
-            </div>
+            @endforeach
         </div>
+
+        <!-- Paragraph Content on Right -->
+        <div id="right-paragraph" class="w-1/2 px-6 py-4 hidden bg-white shadow-md rounded-lg">
+            <div id="paragraph-text"></div>
+        </div>
+    </div>
+</div>
     </nav>
 
     <!-- Main Content -->
@@ -289,6 +287,86 @@
 
             showSliderText();
             setInterval(showSliderText, 4000);
+        });
+    </script>
+
+    <script>
+        // Get all buttons in the main menu
+        const buttons = document.querySelectorAll('[data-menu]');
+        const dropdown = document.getElementById('dropdown');
+        const menuContents = document.querySelectorAll('.menu-content');
+        const rightParagraph = document.getElementById('right-paragraph');
+        const paragraphText = document.getElementById('paragraph-text');
+
+        // Show dropdown and change content based on hovered menu
+        buttons.forEach(button => {
+            button.addEventListener('mouseenter', (e) => {
+                dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
+                dropdown.classList.add('opacity-100', 'scale-100');
+
+                // Hide all menu content
+                menuContents.forEach(content => content.classList.add('hidden'));
+
+                // Show the content for the hovered menu
+                const menuId = e.target.getAttribute('data-menu');
+                const menuContent = document.getElementById(menuId);
+                menuContent.classList.remove('hidden');
+            });
+        });
+
+        // Keep dropdown visible when hovering over it
+        dropdown.addEventListener('mouseenter', () => {
+            dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
+            dropdown.classList.add('opacity-100', 'scale-100');
+        });
+
+        // Hide dropdown when mouse leaves both menu and dropdown
+        dropdown.addEventListener('mouseleave', () => {
+            dropdown.classList.remove('opacity-100', 'scale-100');
+            dropdown.classList.add('opacity-0', 'scale-95', 'hidden');
+        });
+
+        // Show submenu on hover of menu items
+        const items = document.querySelectorAll('.group');
+        items.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                const submenu = item.querySelector('.submenu');
+                const paragraph = document.getElementById('right-paragraph');
+                const itemText = item.getAttribute('data-item');  // Get the item label
+
+                if (submenu) {
+                    submenu.classList.remove('hidden');
+                    submenu.style.left = '100%';  // Ensure it shows on the right of the parent
+                }
+
+                // Update the paragraph content with two <a> tags dynamically
+                paragraphText.innerHTML = ` 
+                    <a href="#" class="text-blue-500 hover:text-blue-700">${itemText} Link 1</a> | 
+                    <a href="#" class="text-blue-500 hover:text-blue-700">${itemText} Link 2</a>
+                    <div class="mt-4 grid grid-cols-3 gap-4" id="image-gallery">
+                        <img src="https://via.placeholder.com/150" alt="Photo 1" class="w-full h-32 object-cover rounded">
+                        <img src="https://via.placeholder.com/150" alt="Photo 2" class="w-full h-32 object-cover rounded">
+                        <img src="https://via.placeholder.com/150" alt="Photo 3" class="w-full h-32 object-cover rounded">
+                        <img src="https://via.placeholder.com/150" alt="Photo 4" class="w-full h-32 object-cover rounded">
+                        <img src="https://via.placeholder.com/150" alt="Photo 5" class="w-full h-32 object-cover rounded">
+                        <img src="https://via.placeholder.com/150" alt="Photo 6" class="w-full h-32 object-cover rounded">
+                    </div>
+                `;
+
+                // Show the paragraph when hovering over submenu
+                paragraph.classList.remove('hidden');
+            });
+            item.addEventListener('mouseleave', () => {
+                const submenu = item.querySelector('.submenu');
+                const paragraph = document.getElementById('right-paragraph');
+
+                if (submenu) {
+                    submenu.classList.add('hidden');
+                }
+
+                // Hide the paragraph when leaving submenu
+                paragraph.classList.add('hidden');
+            });
         });
     </script>
 </body>
