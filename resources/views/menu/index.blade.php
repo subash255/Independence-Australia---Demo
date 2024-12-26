@@ -18,36 +18,27 @@
             <h2 class="font-semibold text-lg text-gray-800 mb-4">Shop By</h2>
             <!-- Accordion Sections -->
             <div class="space-y-4">
-                <div>
-                    <button class="w-full text-left font-semibold text-gray-700">
-                        Continence Aids
-                    </button>
-                </div>
-                <div>
-                    <button class="w-full text-left font-semibold text-gray-700">
-                        Daily Living & Mobility Aids
-                    </button>
-                </div>
-                <div>
-                    <button class="w-full text-left font-semibold text-gray-700">
-                        Medical Aids
-                    </button>
-                </div>
-                <div>
-                    <button class="w-full text-left font-semibold text-gray-700">
-                        Nutrition
-                    </button>
-                </div>
-                <div>
-                    <button class="w-full text-left font-semibold text-gray-700">
-                        Skin Care
-                    </button>
-                </div>
-                <div>
-                    <button class="w-full text-left font-semibold text-gray-700">
-                        Wound Care
-                    </button>
-                </div>
+    @foreach($categories as $category)
+    <div>
+        <!-- Category button to toggle dropdown -->
+        <button onclick="toggle('subcategory-{{ $category->id }}')" class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-4 py-2 flex items-center justify-between">
+            <span>{{ $category->name }}</span>
+            <!-- Dropdown icon -->
+            <i class="ri-arrow-down-s-line text-gray-600"></i>
+        </button>
+
+        <!-- Dropdown with subcategories, hidden by default -->
+        <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+            @foreach($category->subcategories as $subcategory)
+            <div class="flex items-center space-x-2">
+                <span class="text-gray-600">{{ $subcategory->name }}</span>
+            </div>
+            @endforeach
+        </div>
+    </div>
+    @endforeach
+</div>
+                
             </div>
         </aside>
 
@@ -130,4 +121,22 @@
         </main>
     </div>
 </div>
+
+<script>
+    // Toggle the dropdown and animate the arrow
+    function toggle(id) {
+        const dropdown = document.getElementById(id);
+        const icon = dropdown.previousElementSibling.querySelector('i');
+
+        if (dropdown.classList.contains('hidden')) {
+            dropdown.classList.remove('hidden');
+            icon.classList.remove('ri-arrow-down-s-line');
+            icon.classList.add('ri-arrow-up-s-line');
+        } else {
+            dropdown.classList.add('hidden');
+            icon.classList.remove('ri-arrow-up-s-line');
+            icon.classList.add('ri-arrow-down-s-line');
+        }
+    }
+</script>
 @endsection
