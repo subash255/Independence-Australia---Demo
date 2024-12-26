@@ -5,7 +5,7 @@ namespace App\Imports;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
-use App\Models\Child_Category;
+use App\Models\ChildCategory;
 use App\Models\Subcategory;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -38,7 +38,7 @@ class ProductImport implements ToModel, WithHeadingRow
             // Create or find the child category
             $childCategory = null;
             if ($childCategoryName) {
-                $childCategory = Child_Category::firstOrCreate([
+                $childCategory = ChildCategory::firstOrCreate([
                     'name' => $childCategoryName,
                     'subcategory_id' => $subcategory ? $subcategory->id : $category->id,  // Link to subcategory or category
                 ]);

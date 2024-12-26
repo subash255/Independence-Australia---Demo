@@ -4,9 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Child_Category extends Model
+class ChildCategory extends Model
 {
     protected $guarded = [];
+    
     public function subcategory()
     {
         return $this->belongsTo(Subcategory::class);
