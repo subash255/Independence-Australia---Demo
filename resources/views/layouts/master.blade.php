@@ -95,6 +95,7 @@
         </div>
     </header>
 
+
     <!-- Mobile Menu (Initially Hidden) -->
     <div id="mobileMenu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
         <div class="bg-white p-6 space-y-6">
@@ -130,13 +131,18 @@
             </section>
         </div>
 
-        <div class="max-w-screen-xl mx-auto px-6 py-4 bg-white">
+       
+
+<!-- Dropdown Content (Full Width) -->
+<div class="max-w-screen-xl mx-auto px-6 py-4">
     <div class="flex items-center justify-between">
         <!-- Main Navbar Content -->
         <div class="flex space-x-8 relative w-full">
-            @foreach($categories as $menu)
+            @foreach($categories as $category)
                 <div class="relative group">
-                    <button class="text-lg font-semibold hover:text-gray-400 transition-colors duration-300" data-menu="menu{{ $menu->id }}">{{ $menu->name }}</button>
+                    <button class="text-lg font-semibold hover:text-gray-400 transition-colors duration-300" data-menu="menu{{ $category->id }}">
+                        {{ $category->name }}
+                    </button>
                 </div>
             @endforeach
         </div>
@@ -148,10 +154,14 @@
     <div class="flex space-x-4">
         <!-- Dropdown Menu Content -->
         <div class="space-y-2 text-black px-4 py-2 w-1/2">
-            @foreach($categories as $menu)
-                <div class="menu-content hidden" id="menu{{ $menu->id }}">
-                    @foreach($menu->subcategories as $submenu)
-                        <a href="#" class="block py-2 hover:bg-gray-100 group relative" data-item="{{ $submenu->name }}">{{ $submenu->name }}</a>
+            @foreach($categories as $category)
+                <div class="menu-content hidden" id="menu{{ $category->id }}">
+                    @foreach($category->subcategories as $submenu)
+                        <a href="#" class="block py-2 hover:bg-gray-100 group relative"
+                           data-item="{{ $submenu->name }}" 
+                           data-child-category="{{ json_encode($submenu->child_categories) }}">
+                            {{ $submenu->name }}
+                        </a>
                     @endforeach
                 </div>
             @endforeach
@@ -163,6 +173,9 @@
         </div>
     </div>
 </div>
+
+
+
     </nav>
 
     <!-- Main Content -->
@@ -291,83 +304,94 @@
     </script>
 
     <script>
-        // Get all buttons in the main menu
-        const buttons = document.querySelectorAll('[data-menu]');
-        const dropdown = document.getElementById('dropdown');
-        const menuContents = document.querySelectorAll('.menu-content');
-        const rightParagraph = document.getElementById('right-paragraph');
-        const paragraphText = document.getElementById('paragraph-text');
+  document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('[data-menu]');
+    const dropdown = document.getElementById('dropdown');
+    const menuContents = document.querySelectorAll('.menu-content');
+    const rightParagraph = document.getElementById('right-paragraph');
+    const paragraphText = document.getElementById('paragraph-text');
 
-        // Show dropdown and change content based on hovered menu
-        buttons.forEach(button => {
-            button.addEventListener('mouseenter', (e) => {
-                dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
-                dropdown.classList.add('opacity-100', 'scale-100');
-
-                // Hide all menu content
-                menuContents.forEach(content => content.classList.add('hidden'));
-
-                // Show the content for the hovered menu
-                const menuId = e.target.getAttribute('data-menu');
-                const menuContent = document.getElementById(menuId);
-                menuContent.classList.remove('hidden');
-            });
-        });
-
-        // Keep dropdown visible when hovering over it
-        dropdown.addEventListener('mouseenter', () => {
+    // Show dropdown and change content based on hovered menu
+    buttons.forEach(button => {
+        button.addEventListener('mouseenter', (e) => {
             dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
             dropdown.classList.add('opacity-100', 'scale-100');
+
+            // Hide all menu content
+            menuContents.forEach(content => content.classList.add('hidden'));
+
+            // Show the content for the hovered menu
+            const menuId = e.target.getAttribute('data-menu');
+            const menuContent = document.getElementById(menuId);
+            menuContent.classList.remove('hidden');
         });
+    });
 
-        // Hide dropdown when mouse leaves both menu and dropdown
-        dropdown.addEventListener('mouseleave', () => {
-            dropdown.classList.remove('opacity-100', 'scale-100');
-            dropdown.classList.add('opacity-0', 'scale-95', 'hidden');
-        });
+    // Keep dropdown visible when hovering over it
+    dropdown.addEventListener('mouseenter', () => {
+        dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
+        dropdown.classList.add('opacity-100', 'scale-100');
+    });
 
-        // Show submenu on hover of menu items
-        const items = document.querySelectorAll('.group');
-        items.forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                const submenu = item.querySelector('.submenu');
-                const paragraph = document.getElementById('right-paragraph');
-                const itemText = item.getAttribute('data-item');  // Get the item label
+    // Hide dropdown when mouse leaves both menu and dropdown
+    dropdown.addEventListener('mouseleave', () => {
+        dropdown.classList.remove('opacity-100', 'scale-100');
+        dropdown.classList.add('opacity-0', 'scale-95', 'hidden');
+    });
 
-                if (submenu) {
-                    submenu.classList.remove('hidden');
-                    submenu.style.left = '100%';  // Ensure it shows on the right of the parent
+    // Show submenu on hover of menu items
+    const items = document.querySelectorAll('.group');
+    items.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            const submenu = item.querySelector('.submenu');
+            const paragraph = document.getElementById('right-paragraph');
+            const itemText = item.getAttribute('data-item');  // Get the item label
+
+            // Find the <a> element and get the child category data
+            const anchor = item.querySelector('a');
+            if (anchor) {
+                const childCategoriesJson = anchor.getAttribute('data-child-category');
+                console.log('childCategoriesJson:', childCategoriesJson); // Debugging log
+
+                try {
+                    const childCategories = JSON.parse(childCategoriesJson);
+                    console.log('Parsed child categories:', childCategories); // Debugging log
+
+                    // Update the paragraph content with child category data dynamically
+                    paragraphText.innerHTML = `
+                        <h3 class="text-xl font-semibold mb-4">Child Categories:</h3>
+                        <ul class="space-y-2">
+                            ${childCategories.map(child => `
+                                <li>
+                                    <a href="#" class="text-blue-500 hover:text-blue-700">${child.name}</a>
+                                </li>`).join('')}
+                        </ul>
+                    `;
+                } catch (error) {
+                    console.error('Error parsing child categories:', error);
                 }
+            }
 
-                // Update the paragraph content with two <a> tags dynamically
-                paragraphText.innerHTML = ` 
-                    <a href="#" class="text-blue-500 hover:text-blue-700">${itemText} Link 1</a> | 
-                    <a href="#" class="text-blue-500 hover:text-blue-700">${itemText} Link 2</a>
-                    <div class="mt-4 grid grid-cols-3 gap-4" id="image-gallery">
-                        <img src="https://via.placeholder.com/150" alt="Photo 1" class="w-full h-32 object-cover rounded">
-                        <img src="https://via.placeholder.com/150" alt="Photo 2" class="w-full h-32 object-cover rounded">
-                        <img src="https://via.placeholder.com/150" alt="Photo 3" class="w-full h-32 object-cover rounded">
-                        <img src="https://via.placeholder.com/150" alt="Photo 4" class="w-full h-32 object-cover rounded">
-                        <img src="https://via.placeholder.com/150" alt="Photo 5" class="w-full h-32 object-cover rounded">
-                        <img src="https://via.placeholder.com/150" alt="Photo 6" class="w-full h-32 object-cover rounded">
-                    </div>
-                `;
-
-                // Show the paragraph when hovering over submenu
-                paragraph.classList.remove('hidden');
-            });
-            item.addEventListener('mouseleave', () => {
-                const submenu = item.querySelector('.submenu');
-                const paragraph = document.getElementById('right-paragraph');
-
-                if (submenu) {
-                    submenu.classList.add('hidden');
-                }
-
-                // Hide the paragraph when leaving submenu
-                paragraph.classList.add('hidden');
-            });
+            // Show the paragraph when hovering over submenu
+            paragraph.classList.remove('hidden');
         });
+
+        item.addEventListener('mouseleave', () => {
+            const submenu = item.querySelector('.submenu');
+            const paragraph = document.getElementById('right-paragraph');
+
+            if (submenu) {
+                submenu.classList.add('hidden');
+            }
+
+            // Hide the paragraph when leaving submenu
+            paragraph.classList.add('hidden');
+        });
+    });
+});
+
+
+
     </script>
 </body>
 

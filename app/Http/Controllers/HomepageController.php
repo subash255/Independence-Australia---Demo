@@ -29,7 +29,7 @@ class HomepageController extends Controller
         $sliderTexts = Text::orderBy('priority')->get();
         $images = Banner::orderBy('priority', 'asc')->get();
         $products = Product::limit(12)->get();
-        $categories = Category::with('subcategories')->get();
+        $categories = Category::all();
         // Check if the user is authenticated before accessing its properties
         if ($user && $user->role == 'vendor') {
             $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
