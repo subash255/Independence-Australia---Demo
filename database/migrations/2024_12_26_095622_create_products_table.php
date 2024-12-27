@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            
             $table->string('sku')->nullable();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
@@ -23,8 +22,9 @@ return new class extends Migration
         
             // Make category_id nullable, and brand_id nullable
             $table->foreignId('category_id')->nullable()->constrained()->onDelete('cascade'); 
+            $table->foreignId('subcategory_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('child_category_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('brand_id')->nullable()->constrained()->onDelete('cascade'); 
-            
             $table->timestamps();
         });
     }

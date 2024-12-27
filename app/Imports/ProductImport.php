@@ -59,7 +59,9 @@ class ProductImport implements ToModel, WithHeadingRow
             'description' => $row['description'],
             'price' => $row['price'],
             'image' => $row['image'],
-            'category_id' => $category ? $category->id : null,  
+            'category_id' => $category ? $category->id : null, 
+            'subcategory_id' => $subcategory ? $subcategory->id : null,
+            'child_category_id' => $childCategory ? $childCategory->id : null, 
              'brand_id' => $brand ? $brand->id : null,
         ]);
     }
