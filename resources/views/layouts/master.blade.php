@@ -10,6 +10,10 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+@php
+    $categories = \App\Models\Category::with('subcategories')->get();
+    $sliderTexts = \App\Models\Text::all();
+@endphp
 
 <body class="font-sans bg-white">
     <!-- Header Section -->
