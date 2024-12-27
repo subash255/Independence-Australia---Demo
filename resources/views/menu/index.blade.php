@@ -21,11 +21,13 @@
                 @foreach($categories as $category)
                 <div>
                     <!-- Category Button to Toggle Subcategories -->
-                    <a href="{{route('menu.index' , ['id' => $category->id])}}"><button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
-                        <span class="flex-grow">{{ $category->name }}</span>
-                        <!-- Dropdown Icon (Positioned within the same line) -->
-                        <i onclick="toggle('subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
-                    </button></a>
+                    <a href="{{route('menu.index' , ['id' => $category->id])}}">
+                        <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                            <span class="flex-grow">{{ $category->name }}</span>
+                            <!-- Dropdown Icon (Positioned within the same line) -->
+                            <i onclick="toggle(event, 'subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                        </button>
+                    </a>
         
                     <!-- Subcategory Dropdown (Hidden by Default) -->
                     <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
@@ -38,7 +40,7 @@
                 </div>
                 @endforeach
             </div>
-        </aside>        
+        </aside>
         
 
         <!-- Product Grid -->
@@ -72,7 +74,7 @@
 
                 <!-- Adjusted Grid Layout for 3-3 Product Display -->
                 <div class="max-w-7xl mx-auto p-6 grid grid-cols-3 gap-6">
-                    @foreach($category->products as $product)
+                    @foreach($products as $product)
                     <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">
                         <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
                             <!-- Featured Label -->
@@ -133,4 +135,18 @@
         }
     }
 </script>
+
+<script>
+    function toggle(event, id) {
+        // Prevent default action of anchor tag when clicking the icon
+        event.preventDefault();
+
+        // Toggle visibility of subcategory dropdown
+        const subcategory = document.getElementById(id);
+        if (subcategory) {
+            subcategory.classList.toggle('hidden');
+        }
+    }
+</script>
+
 @endsection

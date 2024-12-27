@@ -33,6 +33,7 @@ Route::get('user/cart/show', [CheckoutController::class, 'show'])->name('user.ca
 Route::get('menu/{id?}/index', [HomepageController::class, 'showcat'])->name('menu.index');
 
 
+
 // Route::get('/product', [HomepageController::class, 'showproducts']);
 Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('product.show');
 
