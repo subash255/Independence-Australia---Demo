@@ -49,13 +49,24 @@ class HomepageController extends Controller
         return view('homepage', compact('products', 'categories'));
     }
 
-    public function showcat()
+    public function showcat($id)
     {
+        // Fetch categories for the sidebar
+        $categories = Category::with('subcategories')->get();
+    
+        // Fetch the selected category (using the categoryId passed in the URL)
+        $category = Category::with(['products', 'subcategories'])->findOrFail($id);
+        
+        // Fetch the products belonging to this category
+        $products = Product::where('category_id', $id)->get();
+    
+        // Slider texts or any other necessary data
         $sliderTexts = Text::orderBy('priority')->get();
-        $categories = Category::all();
-        $products = Product::limit('12')->get();
-        return view('menu.index', compact('categories', 'sliderTexts', 'products'));
+    
+        // Return the view with necessary data
+        return view('menu.index', compact('category', 'categories', 'sliderTexts', 'products'));
     }
+    
 
 
     public function showproduct($id)
