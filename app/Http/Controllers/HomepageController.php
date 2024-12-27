@@ -7,8 +7,10 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Text;
 use App\Models\User;
+use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class HomepageController extends Controller
 {
@@ -56,6 +58,10 @@ class HomepageController extends Controller
     
         // Fetch the selected category (using the categoryId passed in the URL)
         $category = Category::with(['products', 'subcategories'])->findOrFail($id);
+
+        $subcategories = FacadesDB::table('subcategories')
+    ->where('category_id', $id)
+    ->get();
         
         // Fetch the products belonging to this category
         $products = Product::where('category_id', $id)->get();
@@ -64,7 +70,7 @@ class HomepageController extends Controller
         $sliderTexts = Text::orderBy('priority')->get();
     
         // Return the view with necessary data
-        return view('menu.index', compact('category', 'categories', 'sliderTexts', 'products'));
+        return view('menu.index', compact('category', 'categories', 'sliderTexts', 'products' , 'subcategories'));
     }
     
 

@@ -46,15 +46,19 @@
         <main class="w-full lg:w-3/4">
             <!-- Product Categories Overview -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($category->subcategories as $subcategory)
-                <div class="bg-white shadow rounded-md p-4">
-                    <h3 class="text-lg font-semibold text-gray-800">{{ ($subcategory)->name }}</h3>
-                    <p class="text-gray-600 mt-2">
-                        Discover a wide selection of clothing and dressing aids designed to promote independence and comfort.
-                    </p>
-                    <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
-                </div>
-                @endforeach
+            @if($subcategories->isNotEmpty())
+    @foreach($subcategories as $subcategory)
+        <div class="bg-white shadow rounded-md p-4">
+            <h3 class="text-lg font-semibold text-gray-800">{{ $subcategory->name }}</h3>
+            <p class="text-gray-600 mt-2">
+                Discover a wide selection of clothing and dressing aids designed to promote independence and comfort.
+            </p>
+            <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
+        </div>
+    @endforeach
+@else
+    <p>No subcategories found.</p>
+@endif
             </div>
 
             <!-- Product Listings -->
