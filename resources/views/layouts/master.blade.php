@@ -143,7 +143,7 @@
         <!-- Main Navbar Content -->
         <div class="flex space-x-10  relative w-full">
             @foreach($categories as $category)
-                <a href="{{route('menu.index')}}"><div class="relative group">
+                <a href="{{route('menu.index' , ['id' => $category->id])}}"><div class="relative group">
                     <button class="text-sm text-[#00718f] font-bold" data-menu="menu{{ $category->id }}">
                         {{ $category->name }}
                     </button>

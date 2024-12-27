@@ -36,7 +36,7 @@
                     <!-- Loop through users and display them -->
                     <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
                         <a href="{{ route('impersonate', $user->id) }}" class="block">
-                            {{ $user->name }} {{ $user->last_name }}
+                            {{ $user->name }} {{ $user->last_name }} 
                         </a>
                     </li>
                     @endforeach
