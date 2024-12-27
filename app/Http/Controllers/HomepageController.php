@@ -62,6 +62,10 @@ class HomepageController extends Controller
         $subcategories = FacadesDB::table('subcategories')
     ->where('category_id', $id)
     ->get();
+
+    $products = FacadesDB::table('products')
+    ->where('category_id', $id)
+    ->get();
         
         // Fetch the products belonging to this category
         $products = Product::where('category_id', $id)->get();
