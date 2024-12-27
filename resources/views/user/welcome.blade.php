@@ -22,7 +22,7 @@
 
         <!-- Check if the current user is a vendor, then show the Switch Account Button -->
         @if(Auth::user()->role == 'vendor') <!-- Adjust this condition based on how you define a vendor -->
-        <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggleDropdown()">
+        <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggles()">
             <i class="ri-refresh-line pr-2"></i>
             Switch Account
         </button>
@@ -101,4 +101,19 @@
         document.getElementById('account-info').classList.remove('hidden');
     });
 </script>
+
+<script>
+        if (document.getElementById('flash-message')) setTimeout(() => {
+            const msg = document.getElementById('flash-message');
+            msg.style.opacity = 0;
+            msg.style.transition = "opacity 0.5s ease-out";
+            setTimeout(() => msg.remove(), 500);
+        }, 3000);
+
+        // Function to toggle the visibility of the dropdown
+        function toggles() {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.classList.toggle('hidden'); // Toggle the 'hidden' class to show/hide the dropdown
+        }
+    </script>
 @endsection
