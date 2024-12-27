@@ -1,6 +1,6 @@
 @extends('layouts.master')
-
 @section('content')
+
 <div class="container mx-auto px-4 py-6">
     <!-- Header Section -->
     <div class="text-center mb-8">
@@ -21,14 +21,12 @@
                 @foreach($categories as $category)
                 <div>
                     <!-- Category Button to Toggle Subcategories -->
-                    <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-4 py-2 flex items-center justify-between">
-                        <span>{{ $category->name }}</span>
-                        <!-- Dropdown Icon -->
-                        <button onclick="toggle('subcategory-{{ $category->id }}')" >
-                            <i class="ri-arrow-down-s-line text-gray-600"></i>
-                        </button>
-                    </button>
-
+                    <a href="{{route('menu.index' , ['id' => $category->id])}}"><button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                        <span class="flex-grow">{{ $category->name }}</span>
+                        <!-- Dropdown Icon (Positioned within the same line) -->
+                        <i onclick="toggle('subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                    </button></a>
+        
                     <!-- Subcategory Dropdown (Hidden by Default) -->
                     <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                         @foreach($category->subcategories as $subcategory)
@@ -40,7 +38,8 @@
                 </div>
                 @endforeach
             </div>
-        </aside>
+        </aside>        
+        
 
         <!-- Product Grid -->
         <main class="w-full lg:w-3/4">
