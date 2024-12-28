@@ -91,29 +91,63 @@ class CheckoutController extends Controller
             'shipping' => $validated['shipping'],
             'line_items' => $lineItems->toArray(), // Convert to array
             'meta_data' => [
-                ['key' => 'submitting_site_order_id', 'value' => '12345'],
-                ['key' => 'submitting_site', 'value' => 'http://127.0.0.1:8000'],
-                ['key' => 'po_number', 'value' => 'ABC123'],
-                ['key' => 'order_memo', 'value' => 'Please rush.'],
-                ['key' => 'shipping_notes', 'value' => 'Mind the dog.'],
+                ['key' => 'submitting_site_order_id', 'value' => '123'],
+                ['key' => 'submitting_site', 'value' => 'https://exampled.com'],
+                ['key' => 'po_number', 'value' => 'ABC1234'],
+                ['key' => 'order_memo', 'value' => 'Please rushs.'],
+                ['key' => 'shipping_notes', 'value' => 'Mind the doog.'],
             ],
         ];
 
         // convert shipping_notes to JSON
         $data = json_encode($data);
-        // dd($data);
+       
+         // Base64 encode the API credentials
+    $apiKey = env('AEROHEALTH_API_KEY');
+    $apiSecret = env('AEROHEALTH_API_SECRET');
+    $base64Credentials = base64_encode("{$apiKey}:{$apiSecret}");
 
         // Convert the line_items and meta_data to JSON
         // $data['line_items'] = json_encode($data['line_items']);
         // $data['meta_data'] = json_encode($data['meta_data']);
         // dd($data);
     
+
+    // API URL to send the POST request to
+    $url = 'https://aerohealthcareonline.com/wp-json/aero-api/v3/orders';
+
+    // Initialize cURL session
+    $ch = curl_init();
+
+    // Set cURL options
+    curl_setopt($ch, CURLOPT_URL, $url); // Set the target URL
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+    curl_setopt($ch, CURLOPT_POST, true); // Specify that it's a POST request
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data); // Attach the data (encoded as JSON)
+    
+    // Set headers
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Content-Type: application/json',
+        'Authorization:  Basic {Y2tfdGttYXJmYnJDQzRsQXByYk5wSWJrbHdqbndRSTJrSkw6Y3NfU25BMkhXYlVtWE04U1U1WGpoNnY0WE4yQUoxamFad3o=}',
+        'User-Agent: YourAppName/1.0', // Set a custom user-agent
+        'Referer: https://yourwebsite.com', // Set the referrer (the website from where the request originates)
+    ]);
+
+    // Execute the cURL request and capture the response
+    $response = curl_exec($ch);
+
+    // Get any cURL errors
+    $err = curl_error($ch);
+
+    // Close the cURL session
+    curl_close($ch);
+    dd('here',$response , $err);
         
         try {
             // Send the data to the external API
             $response = Http::withHeaders([
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Basic {Y2tfMjV3UDdSU3lKRmpsaHhoaFZURVhxUVB4OVZxVVByZFM6Y3Nfb01Tc3BNSnc4RkF0UWJUMXN6bnROQVg2QmlzUmhYbWg=}',
+                'Authorization' => 'Basic ' . $base64Credentials,
             ])->post('https://aerohealthcareonline.com/wp-json/aero-api/v3/orders', $data);
     
             // Check if the request was successful
