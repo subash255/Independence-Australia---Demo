@@ -39,6 +39,17 @@
             </ul>
         </div>
         @endif
+
+        @if(session('impersonating'))
+    <!-- Show a button to stop impersonating -->
+    <form action="{{ route('stop.impersonation') }}" method="POST">
+        @csrf
+        <button type="submit" class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]">
+            <i class="ri-arrow-left-line pr-2"></i>
+            Switch Back
+        </button>
+    </form>
+@endif
     </div>
 </div>
 

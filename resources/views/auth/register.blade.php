@@ -25,14 +25,15 @@
         </div>
       </div>
 
-      <!-- Account Role Selection -->
-      <label class="block text-gray-700 font-medium mb-2">Account Role</label>
-      <div class="space-y-2">
-          <label class="flex items-center space-x-2">
-              <input type="radio" name="role" value="vendor" class="text-blue-600" >
-              <span>Vendor</span>
-          </label>
-      </div>
+      <label class="block text-gray-700 font-medium mb-4">Account Role</label>
+<div class="space-y-4">
+    <div class="flex items-center space-x-3">
+        <input type="checkbox" name="role" id="store" value="role" class="text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full"  />
+        <label for="store" class="text-gray-900 font-medium">Create Account as Store</label>
+    </div>
+    <!-- You can add more options here as needed -->
+</div>
+
 
       <!-- Email -->
       <div>
@@ -76,5 +77,7 @@
     </form>
   </div>
 </div>
+
+
 
 @endsection

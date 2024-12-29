@@ -154,6 +154,8 @@ Route::get('user/manageuser/create', [ManageuserController::class, 'create'])->n
 Route::post('user/manageuser/store', [ManageuserController::class, 'store'])->name('user.manageuser.store'); 
 
 Route::get('/impersonate/{id}', [HomepageController::class, 'impersonate'])->name('impersonate');
+Route::post('/stop-impersonating', [HomepageController::class, 'stopImpersonation'])->name('stop.impersonation');
+
 
 
 Route::post('/cart/{productId}', [CartController::class, 'addToCart'])->name('user.cart.add');
