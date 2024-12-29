@@ -43,8 +43,11 @@
     
             <!-- Search Box -->
             <div class="relative flex-1 max-w-md">
-                <input type="text" placeholder="What are you looking for?" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
-                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block hidden"></i>
+                <input type="text" id="search-input" onkeyup="searchFunction()" placeholder="What are you looking for?" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
+                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
+            
+                <!-- Search Results -->
+                <div id="search-results" class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden"></div>
             </div>
     
             <div class="flex items-center font-semibold space-x-2">
@@ -168,7 +171,7 @@
 
 
     <!-- Navigation Section -->
-    <nav class="sticky top-0 z-50 lg:block hidden">
+    <nav class="sticky top-0 z-40 lg:block hidden">
         <div class="bg-[#7eb6c6] py-2 text-black">
             <section>
                 <div class="container mx-auto text-center overflow-hidden relative">
@@ -452,6 +455,31 @@
             });
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function searchFunction() {
+        var query = document.getElementById('search-input').value;
+
+        if (query.length > 0) {
+            $.ajax({
+                url: "{{ route('search.products') }}",  // The route that handles the search
+                method: 'GET',
+                data: { query: query },  // Send the search query
+                success: function(response) {
+                    $('#search-results').html(response);  // Update the search results
+                    $('#search-results').removeClass('hidden');  // Show the results container
+                },
+                error: function() {
+                    console.log('Error fetching data');
+                }
+            });
+        } else {
+            $('#search-results').empty();  // Clear the results
+            $('#search-results').addClass('hidden');  // Hide the results container
+        }
+    }
+</script>
 </body>
 
 </html>
