@@ -12,8 +12,7 @@ class ManageuserController extends Controller
 {
 public function index()
 {
-    $sliderTexts = Text::orderBy('priority')->get();
-    $categories = Category::with('subcategories')->get();
+
     $authenticatedUser = Auth::user();
 
     // Check if the authenticated user is a vendor
@@ -26,7 +25,7 @@ public function index()
     ->where('vendor_id', $authenticatedUser->id)
     ->paginate(5);
     //route for user index
-    return view('user.manageuser.index', compact('users', 'sliderTexts','categories'));
+    return view('user.manageuser.index', compact('users'));
 
 }
 public function create()
