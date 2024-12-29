@@ -113,7 +113,7 @@
         <img src="images/banner.jpg" alt="Banner" class="w-full h-auto">
     </div> --}}
 
-    <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
+    {{-- <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
         Shop by Category
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
@@ -165,7 +165,7 @@
             <img src="{{ asset('images/category/5.jpg') }}" alt="Other"
                 class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-110">
         </div>
-    </div>
+    </div> --}}
 
     <!--Arko Banner image-->
     <div class="w-full px-4 py-10">
@@ -173,7 +173,7 @@
     </div>
 
     <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
-        Shop our featured products selection
+        Shop our featured products 
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -217,7 +217,7 @@
     
 
 
-    <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
+    {{-- <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
         Shop by Brand
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
@@ -295,7 +295,7 @@
                 View more brands
             </a>
         </div>
-    </div>
+    </div> --}}
 
 
     {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 px-6 md:px-16 bg-gray-100">
@@ -358,30 +358,30 @@
 
     <hr class="border-gray-300">
     <div class="w-full bg-white">
-        <div class="max-w-3xl mx-auto px-6"> 
-            <p id="text" class="text-black text-lg py-10">
+        <div class="w-full px-4 md:px-[8rem] flex flex-col items-center"> <!-- Adjusted padding for responsiveness -->
+            <p id="text" class="text-black text-lg py-7 text-center">
                 Alwayson Medical supplies healthcare and medical supplies to thousands of customers across Australia.
-                We stock all major and specialist brands. Key categories include continence, wound care, daily living &
-                mobility aids,
+                We stock all major and specialist brands. Key categories include continence, wound care, daily living & mobility aids,
                 urology, skin care, medical aids & nutrition. <br>
                 <span id="more-text" class="hidden">
                     Shop our complete range of products online to receive free shipping over $50, courier tracking and
                     optional discreet packaging.
                     We can make the purchase of your personal and medical supplies easy by providing quick delivery of more
-                    than
-                    13,000 products directly to your home, anywhere in Australia. <br>
+                    than 13,000 products directly to your home, anywhere in Australia. <br>
                     Alwayson Medical also has a unique social enterprise approach that leverages the sale of
                     healthcare products to support
                     our core charitable purpose to provide choices for people living with a disability or other personal
                     need.
                 </span>
             </p>
-
+        
             <button id="toggle-btn" class="text-[#00718f] font-bold hover:underline focus:outline-none">
                 More
             </button>
         </div>
     </div>
+    
+    
 
 
     <script>
