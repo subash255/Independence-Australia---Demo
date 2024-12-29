@@ -28,33 +28,56 @@
     </button>
 
     <!-- Modal -->
-    <div id="user-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
-        <div class="bg-white p-6 rounded-lg w-1/3 max-w-md">
-            <h2 class="text-xl font-bold mb-4">Select User to Impersonate</h2>
-            <ul class="py-2">
+    <div id="user-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center p-4">
+        <div class="bg-white p-6 rounded-lg w-full max-w-md relative shadow-xl">
+            
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-semibold text-gray-900">Select User to Switch</h2>
+                <button onclick="toggleModal()" class="text-gray-500 hover:text-gray-700 focus:outline-none">
+                    <i class="ri-close-line text-[5vh]"></i>
+                </button>
+            </div>
+            
+            <!-- Search Bar -->
+            <input type="text" id="search-user" placeholder="Search users..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
+    
+            <!-- User List -->
+            <ul id="user-list" class="py-2 space-y-2 max-h-60 overflow-y-auto">
                 @foreach ($users as $user)
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                        <a href="{{ route('impersonate', $user->id) }}" class="block">
-                            {{ $user->name }} {{ $user->last_name }}
+                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition ease-in-out duration-150  border-b border-gray-300">
+                        <a href="{{ route('impersonate', $user->id) }}" class="block text-gray-800">
+                            <span class="font-medium">{{ $user->name }} {{ $user->last_name }}</span>
                         </a>
                     </li>
                 @endforeach
             </ul>
-            <button class="mt-4 bg-gray-300 text-black px-4 py-2 rounded" onclick="toggleModal()">Close</button>
+        
         </div>
+    </div>
+    
+    
+@endif
+
+@if(session('impersonating'))
+    <div class="mt-4 flex items-center space-x-4"> <!-- Use flex to align buttons on the same row -->
+        
+        <!-- Show a button to stop impersonating -->
+        <form action="{{ route('stop.impersonation') }}" method="POST" class="inline-block">
+            @csrf
+            <button type="submit" class="flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#005f6b] transition duration-200">
+                <i class="ri-arrow-left-line pr-2"></i>
+                Switch Back
+            </button>
+        </form>
+
+        <!-- Start Shopping Button -->
+        <a href="/" class="inline-flex items-center justify-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#005f6b] transition duration-200">
+            Start Shopping
+        </a>
     </div>
 @endif
 
-        @if(session('impersonating'))
-    <!-- Show a button to stop impersonating -->
-    <form action="{{ route('stop.impersonation') }}" method="POST">
-        @csrf
-        <button type="submit" class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]">
-            <i class="ri-arrow-left-line pr-2"></i>
-            Switch Back
-        </button>
-    </form>
-@endif
     </div>
 </div>
 
@@ -90,7 +113,7 @@
             <div class="flex flex-col space-y-2">
                 <span> <b>Company Name:</b> BITS Pvt. Ltd.</span>
                 <span> <b>Name:</b> {{ Auth::user()->name }} {{ Auth::user()->last_name }}</span>
-                <span> <b>Email:</b> {{ $user->email }}</span>
+                <span> <b>Email:</b> {{ Auth::user()->email }}</span>
             </div>
             <div class="flex flex-row gap-2 mt-1">
                 <a href="#" class="text-[#00718f] hover:underline hidden sm:block font-semibold">

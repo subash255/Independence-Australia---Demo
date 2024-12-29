@@ -130,10 +130,6 @@
             </div>
         </div>
     </header>
-    
-    
-    
-
 
 
 <!-- Mobile Menu (Initially Hidden) -->
@@ -300,11 +296,12 @@
             <hr class="border-gray-300">
 
             <!-- Copyright Section Centered -->
-            <div class="flex justify-center lg:justify-center text-gray-700 text-sm mt-6">
+            <div class="flex justify-center text-gray-700 text-sm">
                 <p class="text-center">
                     &copy; 2024 Alwayson Medical &nbsp; | &nbsp; All rights reserved.
                 </p>
             </div>
+            
         </div>
 
     </footer>
