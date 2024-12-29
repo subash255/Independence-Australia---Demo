@@ -51,6 +51,7 @@ Route::get('/scrape-products', [ScraperController::class, 'scrapeProducts']);
 
 Route::get('/punchout', [PunchOutController::class, 'fetchCatalog']);
 
+Route::get('/search/welcome', [HomepageController::class, 'search'])->name('search.products');
 
 
 Route::middleware('auth')->group(function () {
