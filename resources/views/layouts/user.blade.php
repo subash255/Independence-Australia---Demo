@@ -472,20 +472,7 @@
         });
     </script>
 
-    <script>
-        if (document.getElementById('flash-message')) setTimeout(() => {
-            const msg = document.getElementById('flash-message');
-            msg.style.opacity = 0;
-            msg.style.transition = "opacity 0.5s ease-out";
-            setTimeout(() => msg.remove(), 500);
-        }, 3000);
-
-        // Function to toggle the visibility of the dropdown
-        function toggleDropdown() {
-            const dropdown = document.getElementById('user-dropdown');
-            dropdown.classList.toggle('hidden'); // Toggle the 'hidden' class to show/hide the dropdown
-        }
-    </script>
+   
 </body>
 
 </html>

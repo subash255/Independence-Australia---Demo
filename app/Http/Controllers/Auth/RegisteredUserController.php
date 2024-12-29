@@ -34,30 +34,38 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         // Validate the incoming request
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'role' => 'nullable|string|in:user,vendor',// Ensure role is either user or vendor
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
-            'address' => 'required|string',
-            'phone_number' => 'required|string',
+            'role' => 'nullable|string', // Single role is now acceptable
+            'address' => 'required|string|max:255',
+            'phone_number' => 'required|string|max:15',
         ]);
     
-        // Create the user based on the selected role
-        $user = User::create([
-            'name' => $request->name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role' => $request->role?: 'user',  // Ensure the role is passed here
-            'address' => $request->address,
-            'phone_number' => $request->phone_number,
-        ]);
+        // Create a new user
+        $user = new User();
+        $user->name = $validated['name'];
+        $user->last_name = $validated['last_name'];
+        $user->email = $validated['email'];
+        $user->password = Hash::make($validated['password']);
+        
+        // If the checkbox is checked, save the 'store' role, otherwise, default to 'user'
+        if ($request->has('role')) {
+            $user->role = 'vendor';  // Here you can modify based on your requirements
+        } else {
+            $user->role = 'user';  // Default role if checkbox isn't checked
+        }
     
-        // Redirect or perform further actions
+        $user->address = $validated['address'];
+        $user->phone_number = $validated['phone_number'];
+        $user->save();  // Save the user to the database
+    
         return redirect()->route('login')->with('success', 'Account created successfully!');
-    }    
+    } 
+    
+           
 
 
 }

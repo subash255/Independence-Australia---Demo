@@ -93,9 +93,9 @@ class HomepageController extends Controller
         $authUser = Auth::user();
 
         $userToImpersonate = User::findOrFail($id);
-
+        
         if ($authUser->id === $userToImpersonate->vendor_id) {
-
+            
             Auth::login($userToImpersonate);
 
             // Optionally, you could store the original user id in the session, so you can switch back later
@@ -106,4 +106,26 @@ class HomepageController extends Controller
 
         return redirect()->back()->with('error', 'You are not authorized to impersonate this user.');
     }
+    public function stopImpersonation()
+{
+    // Get the original user ID from the session
+    $originalUserId = session('impersonating');
+
+    if ($originalUserId) {
+        // Find the original user
+        $originalUser = User::findOrFail($originalUserId);
+
+        // Log in as the original user
+        Auth::login($originalUser);
+
+        // Clear the impersonation session
+        session()->forget('impersonating');
+
+        return redirect()->route('user.welcome');  // Redirect to wherever you need after switching back
+    }
+
+    // Return an error if no impersonation session exists
+    return redirect()->back()->with('error', 'You are not impersonating any user.');
+}
+
 }
