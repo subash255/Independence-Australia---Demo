@@ -11,19 +11,25 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 @php
-    $categories = \App\Models\Category::with('subcategories')->get();
-    $sliderTexts = \App\Models\Text::all();
-    
+    // Get categories with subcategories
+    $sliderTexts = App\Models\Text::orderBy('priority')->get();
+    $categories = App\Models\Category::with('subcategories')->get();
+
+    $user = Auth::user();
+
+    if ($user) {
+        $userId = $user->id;
+    } else {
+        $userId = null;
+    }
+
+    $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->get();
 @endphp
+
 
 <body class="font-sans bg-white">
     <!-- Header Section -->
     <header class="bg-white shadow-sm fixed w-full top-0 z-50 sm:relative">
-        <div class="bg-gray-100 container mx-auto flex justify-between sm:justify-end py-2 px-6 text-sm space-x-8">
-            <a href="#" class="text-gray-700 hover:underline">Quick Order</a>
-            <a href="#" class="text-gray-700 hover:underline">Our Story</a>
-            <a href="#" class="text-gray-700 hover:underline">Contact Us</a>
-        </div>
         <div class="container mx-auto flex items-center justify-between py-8 px-6">
             <!-- Mobile Menu Toggle -->
             <div class="md:hidden flex items-center justify-between pr-3">
@@ -34,40 +40,41 @@
             <a href="{{ auth()->check() ? route('user.welcome') : '/' }}" class="flex items-center space-x-4">
                 <img src="{{ asset('images/logo.png') }}" alt="Alwayson Medical Logo" class="h-10">
             </a>
-            
+    
+            <!-- Search Box -->
             <div class="relative flex-1 max-w-md">
-    <input type="text" id="search-input" onkeyup="searchFunction()" placeholder="What are you looking for?" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
-    <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
-
-    <!-- Search Results -->
-    <div id="search-results" class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden"></div>
-</div>
-
+                <input type="text" placeholder="What are you looking for?" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
+                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block hidden"></i>
+            </div>
+    
             <div class="flex items-center font-semibold space-x-2">
-                <!-- Profile Icon or Login/Signup -->
+                <!-- Profile Icon or Login/Signup (Hidden on Mobile) -->
                 @auth <!-- If the user is authenticated -->
-                    <div class="w-8 h-8 flex items-center justify-center">
+                    <!-- User Icon (Visible on Desktop only) -->
+                    <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
                         <i class="ri-user-3-fill text-[#00718f] text-[25px]"></i>
                     </div>
     
-                    <!-- User Information -->
-                    <a href="{{ route('user.welcome') }}">
-                        <div class="flex flex-col">
+                    <!-- User Information for Desktop -->
+                    <div class="hidden sm:flex flex-col">
+                        <a href="{{ route('user.welcome') }}">
                             <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
                             <p class="text-sm text-gray-500">B2B Customer</p>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
     
-                    <!-- Logout Button -->
-                    <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3">
+                    <!-- Logout Button (For Desktop View) -->
+                    <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3 hidden sm:flex">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
                             <button type="submit" class="text-red-500 font-medium hover:underline">
+                                <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
                                 Logout
                             </button>
                         </form>
                     </div>
-                @else <!-- If the user is not authenticated -->
+                @else
+                    <!-- If the user is not authenticated -->
                     <a href="/login" class="text-gray-900 hover:underline hidden sm:block">
                         <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
                     </a>
@@ -76,29 +83,50 @@
                 @endauth
             </div>
     
-            <div class="flex items-center space-x-2 mr-10">
+            <!-- Adjusted Section for Right Side Items (Mobile and Desktop) -->
+            <div class="flex items-center space-x-2">
+                <!-- Cart Icon with count -->
                 <div class="relative">
-                    <!-- Cart Icon -->
                     <a href="{{ route('user.cart.index') }}" class="text-gray-900 hidden sm:block">
                         <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
                         <span>Basket</span>
                     </a>
-                
+    
                     <!-- Cart Count -->
-                    @if(session('cart_count') > 0)
+                    @if (session('cart_count') > 0)
                         <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1 transform translate-x-1/2 -translate-y-1/2">
                             {{ session('cart_count') }}
                         </span>
                     @endif
                 </div>
-                
+    
                 <!-- Mobile Icons only -->
-                <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
-                </a>
-                <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
-                </a>
+                <div class="flex items-center space-x-2 sm:hidden">
+                    <!-- Search Icon -->
+                    <a href="#" class="text-gray-900">
+                        <i class="ri-search-line text-[#00718f] text-[20px]"></i>
+                    </a>
+    
+                    @auth <!-- If the user is authenticated -->
+                        <!-- Logout Icon for Mobile View -->
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="font-medium hover:underline">
+                                <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
+                            </button>
+                        </form>
+                    @else
+                        <!-- If the user is not authenticated -->
+                        <a href="{{ route('login') }}" class="text-gray-900 hover:underline">
+                            <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
+                        </a>
+                    @endauth
+    
+                    <!-- Cart Icon -->
+                    <a href="{{ route('user.cart.index') }}" class="text-gray-900">
+                        <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </header>
@@ -136,15 +164,18 @@
             @endforeach
         </div>
     </div>
+</div>
+
 
     <!-- Navigation Section -->
-    <nav class="sticky top-0 z-40">
+    <nav class="sticky top-0 z-50 lg:block hidden">
         <div class="bg-[#7eb6c6] py-2 text-black">
             <section>
                 <div class="container mx-auto text-center overflow-hidden relative">
                     <div class="slider-container relative h-8">
                         @foreach ($sliderTexts as $sliderText)
-                            <div class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                            <div
+                                class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
                                 {{ $sliderText->text }}
                             </div>
                         @endforeach
@@ -153,50 +184,51 @@
             </section>
         </div>
 
-       
 
-<!-- Dropdown Content (Full Width) -->
-<div class="max-w-screen-xl mx-auto px-8 bg-white py-4">
-    <div class="flex items-center justify-between">
-        <!-- Main Navbar Content -->
-        <div class="flex space-x-10  relative w-full">
-            @foreach($categories as $category)
-                <a href="{{route('menu.index' , ['id' => $category->id])}}"><div class="relative group">
-                    <button class="text-sm text-[#00718f] font-bold" data-menu="menu{{ $category->id }}">
-                        {{ $category->name }}
-                    </button>
-                </div></a>
-            @endforeach
-        </div>
-    </div>
-</div>
 
-<!-- Dropdown Content (Full Width) -->
-<div id="dropdown" class="absolute left-0 w-full bg-white shadow-lg opacity-0 scale-95 transition-all duration-300 ease-in-out hidden top-full z-50">
-    <div class="flex space-x-4">
-        <!-- Dropdown Menu Content -->
-        <div class="space-y-2 text-black px-4 py-2 w-1/2">
-            @foreach($categories as $category)
-                <div class="menu-content hidden" id="menu{{ $category->id }}">
-                    @foreach($category->subcategories as $submenu)
-                        <a href="#" class="block py-2 hover:bg-gray-100 group relative"
-                           data-item="{{ $submenu->name }}" 
-                           data-child-category="{{ json_encode($submenu->child_categories) }}">
-                            {{ $submenu->name }}
+        <!-- Dropdown Content (Full Width) -->
+        <div class="max-w-screen-xl mx-auto px-8 bg-white py-4">
+            <div class="flex items-center justify-between">
+                <!-- Main Navbar Content -->
+                <div class="flex space-x-10  relative w-full">
+                    @foreach ($categories as $category)
+                        <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                            <div class="relative group">
+                                <button class="text-sm text-[#00718f] font-bold" data-menu="menu{{ $category->id }}">
+                                    {{ $category->name }}
+                                </button>
+                            </div>
                         </a>
                     @endforeach
                 </div>
-            @endforeach
+            </div>
         </div>
 
-        <!-- Paragraph Content on Right -->
-        <div id="right-paragraph" class="w-1/2 px-6 py-4 hidden bg-white shadow-md rounded-lg">
-            <div id="paragraph-text"></div>
+        <!-- Dropdown Content (Full Width) -->
+        <div id="dropdown"
+            class="absolute left-0 w-full bg-white shadow-lg opacity-0 scale-95 transition-all duration-300 ease-in-out hidden top-full z-50">
+            <div class="flex space-x-4">
+                <!-- Dropdown Menu Content -->
+                <div class="space-y-2 text-black px-4 py-2 w-1/2">
+                    @foreach ($categories as $category)
+                        <div class="menu-content hidden" id="menu{{ $category->id }}">
+                            @foreach ($category->subcategories as $submenu)
+                                <a href="#" class="block py-2 hover:bg-gray-100 group relative"
+                                    data-item="{{ $submenu->name }}"
+                                    data-child-category="{{ json_encode($submenu->child_categories) }}">
+                                    {{ $submenu->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @endforeach
+                </div>
+
+                <!-- Paragraph Content on Right -->
+                <div id="right-paragraph" class="w-1/2 px-6 py-4 hidden bg-white shadow-md rounded-lg">
+                    <div id="paragraph-text"></div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
-
 
     </nav>
 
@@ -230,20 +262,14 @@
         </div>
 
         <div class="container mx-auto px-6 py-6 space-y-6">
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between text-gray-700 text-sm">
-                <p class="text-center lg:text-left">
-                    &copy; 2024 Alwayson Medical &nbsp; | &nbsp; All rights reserved.
-                </p>
-                <div class="flex justify-center lg:justify-end space-x-8 text-[#00718f] text-sm font-extrabold mt-4 lg:mt-0">
-                    <a href="#" class="hover:underline">Shop by Brand</a>
-                    <a href="#" class="hover:underline">FAQ</a>
-                    <a href="#" class="hover:underline">Health Guides</a>
-                    <a href="#" class="hover:underline">Terms & Conditions</a>
-                </div>
+            <div class="flex justify-center lg:justify-center space-x-8 text-[#00718f] text-sm font-extrabold mt-4">
+                <a href="#" class="hover:underline">Our Story</a>
+                <a href="#" class="hover:underline">Contact Us</a>
+                <a href="#" class="hover:underline">FAQ</a>
+                <a href="#" class="hover:underline">Terms & Conditions</a>
             </div>
-
             <hr class="border-gray-300">
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between text-gray-700 text-sm">
                 <!-- Social Media Icons -->
                 <div class="flex justify-center lg:justify-start space-x-4">
                     <a href="#" class="text-[#00718f] hover:opacity-75">
@@ -277,6 +303,7 @@
             </div>
             
         </div>
+
     </footer>
 
     <script>
@@ -288,7 +315,7 @@
         }
 
         // Close all dropdowns if the user clicks outside any dropdown
-        document.addEventListener('click', function (e) {
+        document.addEventListener('click', function(e) {
             const dropdowns = document.querySelectorAll('.absolute');
             dropdowns.forEach(dropdown => {
                 if (!dropdown.contains(e.target) && !e.target.closest('button')) {
@@ -311,13 +338,14 @@
         });
 
         // Slider Text
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const sliderTexts = document.querySelectorAll('.slider-text');
             let currentIndex = 0;
 
             function showSliderText() {
                 sliderTexts.forEach((text, index) => {
-                    text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full', 'opacity-100', 'opacity-0');
+                    text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full',
+                        'opacity-100', 'opacity-0');
 
                     if (index === currentIndex) {
                         text.classList.add('translate-x-0', 'opacity-100');
@@ -337,121 +365,93 @@
     </script>
 
     <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const buttons = document.querySelectorAll('[data-menu]');
-    const dropdown = document.getElementById('dropdown');
-    const menuContents = document.querySelectorAll('.menu-content');
-    const rightParagraph = document.getElementById('right-paragraph');
-    const paragraphText = document.getElementById('paragraph-text');
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('[data-menu]');
+            const dropdown = document.getElementById('dropdown');
+            const menuContents = document.querySelectorAll('.menu-content');
+            const rightParagraph = document.getElementById('right-paragraph');
+            const paragraphText = document.getElementById('paragraph-text');
 
-    // Show dropdown and change content based on hovered menu
-    buttons.forEach(button => {
-        button.addEventListener('mouseenter', (e) => {
-            dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
-            dropdown.classList.add('opacity-100', 'scale-100');
+            // Show dropdown and change content based on hovered menu
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', (e) => {
+                    dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
+                    dropdown.classList.add('opacity-100', 'scale-100');
 
-            // Hide all menu content
-            menuContents.forEach(content => content.classList.add('hidden'));
+                    // Hide all menu content
+                    menuContents.forEach(content => content.classList.add('hidden'));
 
-            // Show the content for the hovered menu
-            const menuId = e.target.getAttribute('data-menu');
-            const menuContent = document.getElementById(menuId);
-            menuContent.classList.remove('hidden');
-        });
-    });
+                    // Show the content for the hovered menu
+                    const menuId = e.target.getAttribute('data-menu');
+                    const menuContent = document.getElementById(menuId);
+                    menuContent.classList.remove('hidden');
+                });
+            });
 
-    // Keep dropdown visible when hovering over it
-    dropdown.addEventListener('mouseenter', () => {
-        dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
-        dropdown.classList.add('opacity-100', 'scale-100');
-    });
+            // Keep dropdown visible when hovering over it
+            dropdown.addEventListener('mouseenter', () => {
+                dropdown.classList.remove('opacity-0', 'scale-95', 'hidden');
+                dropdown.classList.add('opacity-100', 'scale-100');
+            });
 
-    // Hide dropdown when mouse leaves both menu and dropdown
-    dropdown.addEventListener('mouseleave', () => {
-        dropdown.classList.remove('opacity-100', 'scale-100');
-        dropdown.classList.add('opacity-0', 'scale-95', 'hidden');
-    });
+            // Hide dropdown when mouse leaves both menu and dropdown
+            dropdown.addEventListener('mouseleave', () => {
+                dropdown.classList.remove('opacity-100', 'scale-100');
+                dropdown.classList.add('opacity-0', 'scale-95', 'hidden');
+            });
 
-    // Show submenu on hover of menu items
-    const items = document.querySelectorAll('.group');
-    items.forEach(item => {
-        item.addEventListener('mouseenter', () => {
-            const submenu = item.querySelector('.submenu');
-            const paragraph = document.getElementById('right-paragraph');
-            const itemText = item.getAttribute('data-item');  // Get the item label
+            // Show submenu on hover of menu items
+            const items = document.querySelectorAll('.group');
+            items.forEach(item => {
+                item.addEventListener('mouseenter', () => {
+                    const submenu = item.querySelector('.submenu');
+                    const paragraph = document.getElementById('right-paragraph');
+                    const itemText = item.getAttribute('data-item'); // Get the item label
 
-            // Find the <a> element and get the child category data
-            const anchor = item.querySelector('a');
-            if (anchor) {
-                const childCategoriesJson = anchor.getAttribute('data-child-category');
-                console.log('childCategoriesJson:', childCategoriesJson); // Debugging log
+                    // Find the <a> element and get the child category data
+                    const anchor = item.querySelector('a');
+                    if (anchor) {
+                        const childCategoriesJson = anchor.getAttribute('data-child-category');
+                        console.log('childCategoriesJson:', childCategoriesJson); // Debugging log
 
-                try {
-                    const childCategories = JSON.parse(childCategoriesJson);
-                    console.log('Parsed child categories:', childCategories); // Debugging log
+                        try {
+                            const childCategories = JSON.parse(childCategoriesJson);
+                            console.log('Parsed child categories:',
+                                childCategories); // Debugging log
 
-                    // Update the paragraph content with child category data dynamically
-                    paragraphText.innerHTML = `
+                            // Update the paragraph content with child category data dynamically
+                            paragraphText.innerHTML = `
                         <h3 class="text-xl font-semibold mb-4">Child Categories:</h3>
                         <ul class="space-y-2">
                             ${childCategories.map(child => `
-                                <li>
-                                    <a href="#" class="text-blue-500 hover:text-blue-700">${child.name}</a>
-                                </li>`).join('')}
+                                        <li>
+                                            <a href="#" class="text-blue-500 hover:text-blue-700">${child.name}</a>
+                                        </li>`).join('')}
                         </ul>
                     `;
-                } catch (error) {
-                    console.error('Error parsing child categories:', error);
-                }
-            }
+                        } catch (error) {
+                            console.error('Error parsing child categories:', error);
+                        }
+                    }
 
-            // Show the paragraph when hovering over submenu
-            paragraph.classList.remove('hidden');
-        });
+                    // Show the paragraph when hovering over submenu
+                    paragraph.classList.remove('hidden');
+                });
 
-        item.addEventListener('mouseleave', () => {
-            const submenu = item.querySelector('.submenu');
-            const paragraph = document.getElementById('right-paragraph');
+                item.addEventListener('mouseleave', () => {
+                    const submenu = item.querySelector('.submenu');
+                    const paragraph = document.getElementById('right-paragraph');
 
-            if (submenu) {
-                submenu.classList.add('hidden');
-            }
+                    if (submenu) {
+                        submenu.classList.add('hidden');
+                    }
 
-            // Hide the paragraph when leaving submenu
-            paragraph.classList.add('hidden');
-        });
-    });
-});
-
-
-
-    </script>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function searchFunction() {
-        var query = document.getElementById('search-input').value;
-
-        if (query.length > 0) {
-            $.ajax({
-                url: "{{ route('search.products') }}",  // The route that handles the search
-                method: 'GET',
-                data: { query: query },  // Send the search query
-                success: function(response) {
-                    $('#search-results').html(response);  // Update the search results
-                    $('#search-results').removeClass('hidden');  // Show the results container
-                },
-                error: function() {
-                    console.log('Error fetching data');
-                }
+                    // Hide the paragraph when leaving submenu
+                    paragraph.classList.add('hidden');
+                });
             });
-        } else {
-            $('#search-results').empty();  // Clear the results
-            $('#search-results').addClass('hidden');  // Hide the results container
-        }
-    }
-</script>
-
+        });
+    </script>
 </body>
 
 </html>
