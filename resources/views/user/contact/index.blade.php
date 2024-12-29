@@ -53,82 +53,50 @@
     </nav>
     
     <!-- Container -->
-    <div class="w-[79%] mx-auto p-6 mt-4">
+    <div class="w-full bg-white rounded-lg shadow-lg p-6">
+  <!-- Warning -->
+  <div class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4 mb-6">
+    <p class="text-sm">
+      All billing address changes are subject to validation and approval process. All orders placed after changing the billing address will be held until it has been approved.
+    </p>
+  </div>
 
-        <form action="{{ route('user.contact.store') }}" method="POST">
-            @csrf 
-            <input type="hidden" name="user_id" value="{{ $userId }}">
+  <!-- Address Section -->
+  <div>
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Default Addresses</h2>
+    <div class="flex justify-between gap-6">
+      <!-- Default Billing Address -->
+      <div class="w-1/2">
+        <h3 class="font-semibold text-gray-800 mb-2">Default Billing Address</h3>
+        @if($billing->count() > 0)
+        <p class="text-gray-700">{{$billing->first()->firstname}} {{$billing->first()->lastname}}</p>
+        <p class="text-gray-700">{{$billing->first()->address}}</p>
+        <p class="text-gray-700">GLENDALOUGH, Western Australia, 6016</p>
+        <p class="text-gray-700">T:{{$billing->first()->contact_info}}</p>
+         @else
+        <p class="text-gray-600">You have no default billing address in your address book.</p>
+    @endif
+      </div>
 
-            <!-- Flex Container -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                <!-- Contact Information -->
-                <div>
-                    <h2 class="text-2xl font-semibold mb-2 text-[#00718f]">Contact Information</h2>
-                    <hr class="border-b border-gray-300 mt-2 mb-4 w-[80%]">
-                    <!-- First Name -->
-                    <div class="mb-4">
-                        <label for="firstname" class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" id="firstname" name="firstname" value="{{ old('firstname') }}" 
-                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                               required>
-                    </div>
+      <!-- Default Shipping Address -->
+      <div class="w-1/2">
+      <h3 class="font-semibold text-gray-800 mb-2">Default Shipping Address</h3>
+<p class="text-gray-700">{{$contact->first()->firstname}} {{$contact->first()->lastname}}</p>
+<p class="text-gray-700">{{$contact->first()->address}}</p>
+<p class="text-gray-700">GLENDALOUGH, Western Australia, 6016</p>
+<p class="text-gray-700">T:{{$contact->first()->contact_info}}</p>
+<a href="#" class="text-blue-600 hover:underline text-sm font-medium">Change Shipping Address</a>
+</div>
+</div>
+</div>
 
-                    <!-- Last Name -->
-                    <div class="mb-4">
-                        <label for="lastname" class="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" id="lastname" name="lastname" value="{{ old('lastname') }}" 
-                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                               required>
-                    </div>
-
-                    <!-- Phone Number -->
-                    <div class="mb-4">
-                        <label for="contact_info" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                        <input type="text" id="contact_info" name="contact_info" placeholder="XX XXXX XXXX"
-                               value="{{ old('contact_info') }}"
-                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                               required>
-                    </div>
-                </div>
-
-                <!-- Address Information -->
-                <div>
-                    <h2 class="text-2xl font-semibold mb-2 text-[#00718f]">Address</h2>
-                    <hr class="border-b border-gray-300 mt-2 mb-4 w-[80%]">
-                    <!-- Address Field -->
-                    <div class="mb-4">
-                        <label for="address" class="block text-sm font-medium text-gray-700">Please enter your address</label>
-                        <input type="text" id="address" name="address" placeholder="e.g. 123 Long Street, Melbourne VIC, 3000" 
-                               value="{{ old('address') }}"
-                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                               required>
-                    </div>
-
-                    <!-- Default Billing and Shipping -->
-                    <div class="flex items-center mb-2">
-                        <input type="checkbox" id="is_billing" name="is_billing" value="yes" 
-                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="is_billing" class="ml-2 text-sm text-gray-600">Use as my default billing address</label>
-                    </div>
-
-                    <div class="flex items-center mb-4">
-                        <input type="checkbox" id="is_shipping" name="is_shipping" value="yes" 
-                               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="is_shipping" class="ml-2 text-sm text-gray-600">Use as my default shipping address</label>
-                    </div>
-                    <div class="text-center mr-[6rem] mt-[4rem]">
-                        <button type="submit" 
-                        class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
-                        Save Address
-                        </button>
-                    </div>
-                </div>
-                
-            </div>
-            
-        </form>
-    </div>
+  <!-- Additional Address Entries -->
+  <div class="mt-8">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Additional Address Entries</h2>
+    <p class="text-gray-600">You have no other address entries in your address book.</p>
+    <a href="{{route('user.contact.address')}}" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Add New Address</a>
+  </div>
+</div>
 </div>
 
 @endsection
