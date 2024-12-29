@@ -22,23 +22,28 @@
 
         <!-- Check if the current user is a vendor, then show the Switch Account Button -->
         @if(Auth::user()->role == 'vendor') <!-- Adjust this condition based on how you define a vendor -->
-        <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggles()">
-            <i class="ri-refresh-line pr-2"></i>
-            Switch Account
-        </button>
-        <div id="user-dropdown" class="hidden bg-white shadow-lg rounded-lg mt-2 absolute z-30 w-80 sm:w-1/4 max-h-60 overflow-y-auto">
+    <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggleModal()">
+        <i class="ri-refresh-line pr-2"></i>
+        Switch Account
+    </button>
+
+    <!-- Modal -->
+    <div id="user-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg w-1/3 max-w-md">
+            <h2 class="text-xl font-bold mb-4">Select User to Impersonate</h2>
             <ul class="py-2">
                 @foreach ($users as $user)
-                <!-- Loop through users and display them -->
-                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    <a href="{{ route('impersonate', $user->id) }}" class="block">
-                        {{ $user->name }} {{ $user->last_name }}
-                    </a>
-                </li>
+                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        <a href="{{ route('impersonate', $user->id) }}" class="block">
+                            {{ $user->name }} {{ $user->last_name }}
+                        </a>
+                    </li>
                 @endforeach
             </ul>
+            <button class="mt-4 bg-gray-300 text-black px-4 py-2 rounded" onclick="toggleModal()">Close</button>
         </div>
-        @endif
+    </div>
+@endif
 
         @if(session('impersonating'))
     <!-- Show a button to stop impersonating -->
@@ -121,10 +126,13 @@
             setTimeout(() => msg.remove(), 500);
         }, 3000);
 
-        // Function to toggle the visibility of the dropdown
-        function toggles() {
-            const dropdown = document.getElementById('user-dropdown');
-            dropdown.classList.toggle('hidden'); // Toggle the 'hidden' class to show/hide the dropdown
+    </script>
+
+<script>
+        // Function to toggle the modal visibility
+        function toggleModal() {
+            const modal = document.getElementById('user-modal');
+            modal.classList.toggle('hidden');
         }
     </script>
 @endsection
