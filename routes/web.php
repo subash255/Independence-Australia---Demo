@@ -146,7 +146,9 @@ Route::middleware('auth')->group(function() {
     Route::get('user/welcome', [HomepageController::class, 'index'])->name('user.welcome');
 
 Route::get('user/contact/index', [ContactController::class, 'index'])->name('user.contact.index');
-Route::post('user/contact/store', [ContactController::class, 'store'])->name('user.contact.store'); 
+Route::post('user/contact/store', [ContactController::class, 'store'])->name('user.contact.store');
+Route::get('user/contact/address', [ContactController::class, 'address'])->name('user.contact.address'); 
+
 
 
 Route::get('user/manageuser/index', [ManageuserController::class, 'index'])->name('user.manageuser.index');

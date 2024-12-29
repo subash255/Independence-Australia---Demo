@@ -21,8 +21,23 @@ class ContactController extends Controller
         $users = User::where('role', 'user')
                  ->where('vendor_id', $userId)
                  ->get();
+       $contact = Contact::where('user_id', $userId)->where('is_shipping', '1')->get();
+       $billing= Contact::where('user_id', $userId)->where('is_billing', '1')->get();
 
-        return view('user.contact.index', compact('userId' , 'users','sliderTexts','categories'));
+        return view('user.contact.index', compact('userId' , 'users','sliderTexts','categories' , 'contact', 'billing'));
+    }
+    public function address()
+    {
+        $sliderTexts = Text::orderBy('priority')->get();
+        $categories = Category::with('subcategories')->get();
+        // Assuming user is authenticated
+        $user = Auth::user();  // Get the entire user object
+        $userId = $user->id;
+        $users = User::where('role', 'user')
+                 ->where('vendor_id', $userId)
+                 ->get();
+
+        return view('user.contact.address', compact('userId' , 'users','sliderTexts','categories'));
     }
 
     public function store(Request $request)
@@ -51,6 +66,6 @@ class ContactController extends Controller
         ]);
 
         // Return success message
-        return back()->with('success', 'Form submitted successfully!');
+        return redirect('user/contact/index')->with('success', 'Form submitted successfully!');
     }
 }
