@@ -128,4 +128,38 @@ class HomepageController extends Controller
     return redirect()->back()->with('error', 'You are not impersonating any user.');
 }
 
+public function search(Request $request)
+{
+    $query = $request->input('query');
+    
+    if ($query) {
+        // Perform the search using the query
+        $products = Product::where('name', 'like', "%$query%")->take(6)->get();
+
+        // HTML output for the grid
+        $output = '<div class="grid grid-cols-3 gap-9">';
+        
+        if ($products->count()) {
+            foreach ($products as $product) {
+               
+                $imagePath = asset( $product->image);
+
+                $output .= '<div class="product-item bg-white p-6 border rounded-lg shadow-md">';
+                $output .= '<img src="' . $imagePath . '" alt="' . $product->name . '" class="w-full h-20 object-cover rounded-lg mb-4">';
+                $output .= '<h3 class="text-sm font-semibold">' . $product->name . '</h3>';
+                $output .= '</div>';
+            }
+        } else {
+            $output .= '<p class="col-span-3">No products found.</p>';
+        }
+
+        $output .= '</div>'; // End the grid container
+
+        return response()->json($output);
+    }
+
+    return response()->json(['message' => 'No query provided.']);
+}
+
+
 }
