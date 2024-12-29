@@ -14,18 +14,15 @@
     // Get categories with subcategories
     $sliderTexts = App\Models\Text::orderBy('priority')->get();
     $categories = App\Models\Category::with('subcategories')->get();
-    
-    // Get authenticated user
+
     $user = Auth::user();
-    
-    // Check if user is authenticated before accessing the id
+
     if ($user) {
-        $userId = $user->id; // Correct way to access the id
+        $userId = $user->id;
     } else {
-        $userId = null; // Handle the case where no user is logged in
+        $userId = null;
     }
 
-    // Query users with the role 'user' and vendor matching the userId
     $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->get();
 @endphp
 
@@ -51,25 +48,27 @@
             </div>
     
             <div class="flex items-center font-semibold space-x-2">
-                <!-- Profile Icon or Login/Signup -->
+                <!-- Profile Icon or Login/Signup (Hidden on Mobile) -->
                 @auth <!-- If the user is authenticated -->
-                    <div class="w-8 h-8 flex items-center justify-center">
+                    <!-- User Icon (Visible on Desktop only) -->
+                    <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
                         <i class="ri-user-3-fill text-[#00718f] text-[25px]"></i>
                     </div>
     
-                    <!-- User Information -->
-                    <a href="{{ route('user.welcome') }}">
-                        <div class="flex flex-col">
+                    <!-- User Information for Desktop -->
+                    <div class="hidden sm:flex flex-col">
+                        <a href="{{ route('user.welcome') }}">
                             <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
                             <p class="text-sm text-gray-500">B2B Customer</p>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
     
-                    <!-- Logout Button -->
-                    <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3">
+                    <!-- Logout Button (For Desktop View) -->
+                    <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3 hidden sm:flex">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
                             <button type="submit" class="text-red-500 font-medium hover:underline">
+                                <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
                                 Logout
                             </button>
                         </form>
@@ -84,9 +83,10 @@
                 @endauth
             </div>
     
-            <div class="flex items-center space-x-2 mr-10">
+            <!-- Adjusted Section for Right Side Items (Mobile and Desktop) -->
+            <div class="flex items-center space-x-2">
+                <!-- Cart Icon with count -->
                 <div class="relative">
-                    <!-- Cart Icon -->
                     <a href="{{ route('user.cart.index') }}" class="text-gray-900 hidden sm:block">
                         <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
                         <span>Basket</span>
@@ -94,47 +94,82 @@
     
                     <!-- Cart Count -->
                     @if (session('cart_count') > 0)
-                        <span
-                            class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1 transform translate-x-1/2 -translate-y-1/2">
+                        <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1 transform translate-x-1/2 -translate-y-1/2">
                             {{ session('cart_count') }}
                         </span>
                     @endif
                 </div>
     
                 <!-- Mobile Icons only -->
-                <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="ri-search-line text-[#00718f] text-[20px]"></i>
-                </a>
-                <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
-                </a>
-                <a href="#" class="text-gray-900 sm:hidden">
-                    <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
-                </a>
+                <div class="flex items-center space-x-2 sm:hidden">
+                    <!-- Search Icon -->
+                    <a href="#" class="text-gray-900">
+                        <i class="ri-search-line text-[#00718f] text-[20px]"></i>
+                    </a>
+    
+                    @auth <!-- If the user is authenticated -->
+                        <!-- Logout Icon for Mobile View -->
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="font-medium hover:underline">
+                                <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
+                            </button>
+                        </form>
+                    @else
+                        <!-- If the user is not authenticated -->
+                        <a href="{{ route('login') }}" class="text-gray-900 hover:underline">
+                            <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
+                        </a>
+                    @endauth
+    
+                    <!-- Cart Icon -->
+                    <a href="{{ route('user.cart.index') }}" class="text-gray-900">
+                        <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </header>
     
+    
+    
 
 
-    <!-- Mobile Menu (Initially Hidden) -->
-    <div id="mobileMenu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
-        <div class="bg-white p-6 space-y-6">
-            <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6">
-                <i class="fa fa-times"></i>
-            </button>
-            <ul class="space-y-4 text-xl">
-                <li><a href="#">Continence Aids</a></li>
-                <li><a href="#">Daily Living & Mobility Aids</a></li>
-                <li><a href="#">Medical Aids</a></li>
-                <li><a href="#">Nutrition</a></li>
-                <li><a href="#">Skin Care</a></li>
-                <li><a href="#">Urology</a></li>
-                <li><a href="#">Wound Care</a></li>
-                <li><a href="#">Others</a></li>
-            </ul>
+
+<!-- Mobile Menu (Initially Hidden) -->
+<div id="mobileMenu" class="md:hidden fixed top-12 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
+    <div class="w-full lg:w-1/4 bg-gray-100 p-4 rounded-md shadow-sm">
+        <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6">
+            <i class="fa fa-times"></i>
+        </button>
+        <h2 class="font-semibold text-lg text-gray-800 mb-4">Shop By Category</h2>
+        <!-- Accordion Sections for Categories -->
+        <div class="space-y-4">
+            @foreach($categories as $category)
+            <div>
+                <!-- Category Button to Toggle Subcategories -->
+                <a href="{{route('menu.index' , ['id' => $category->id])}}">
+                    <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                        <span class="flex-grow">{{ $category->name }}</span>
+                        <!-- Dropdown Icon (Positioned within the same line) -->
+                        <i onclick="toggle(event, 'subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                    </button>
+                </a>
+
+                <!-- Subcategory Dropdown (Hidden by Default) -->
+                <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+                    @foreach($category->subcategories as $subcategory)
+                    <div class="flex items-center space-x-2">
+                        <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            @endforeach
         </div>
     </div>
+</div>
+
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-50 lg:block hidden">
@@ -251,7 +286,7 @@
                         <i class="ri-linkedin-box-fill text-[25px]"></i>
                     </a>
                 </div>
-        
+
                 <!-- Payment Methods -->
                 <div class="flex items-center justify-center lg:justify-end space-x-4 mt-4 lg:mt-0 h-8">
                     <span class="text-gray-700 font-semibold">We accept</span>
@@ -260,10 +295,10 @@
                     <i class="ri-paypal-fill text-[#00718f]"></i>
                 </div>
             </div>
-        
+
 
             <hr class="border-gray-300">
-        
+
             <!-- Copyright Section Centered -->
             <div class="flex justify-center lg:justify-center text-gray-700 text-sm mt-6">
                 <p class="text-center">
@@ -271,7 +306,7 @@
                 </p>
             </div>
         </div>
-        
+
     </footer>
 
     <script>
@@ -385,16 +420,16 @@
                         try {
                             const childCategories = JSON.parse(childCategoriesJson);
                             console.log('Parsed child categories:',
-                            childCategories); // Debugging log
+                                childCategories); // Debugging log
 
                             // Update the paragraph content with child category data dynamically
                             paragraphText.innerHTML = `
                         <h3 class="text-xl font-semibold mb-4">Child Categories:</h3>
                         <ul class="space-y-2">
                             ${childCategories.map(child => `
-                                    <li>
-                                        <a href="#" class="text-blue-500 hover:text-blue-700">${child.name}</a>
-                                    </li>`).join('')}
+                                        <li>
+                                            <a href="#" class="text-blue-500 hover:text-blue-700">${child.name}</a>
+                                        </li>`).join('')}
                         </ul>
                     `;
                         } catch (error) {
