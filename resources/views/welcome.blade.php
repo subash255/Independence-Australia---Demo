@@ -78,9 +78,8 @@
             </div>
         </div>
     </div>  -->
-
+    <!-- this is slider -->
     <div class="relative w-full overflow-hidden">
-    <!-- Slider Wrapper -->
     <div id="slider" class="flex transition-transform duration-700 ease-in-out">
         @foreach($images as $image)
             <div class="w-full flex-shrink-0">
@@ -89,15 +88,15 @@
         @endforeach
     </div>
 
-    <!-- Navigation buttons -->
-    <button id="prev"
-    class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 md:p-3 md:left-2 opacity-45">
-    &#10094;
-</button>
-<button id="next"
-    class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 md:p-3 md:right-2 opacity-45">
-    &#10095;
-</button>
+    <!-- Prev Button -->
+    <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 opacity-50 hover:opacity-100 md:p-3 md:left-2">
+        &#10094;
+    </button>
+    
+    <!-- Next Button -->
+    <button id="next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 opacity-50 hover:opacity-100 md:p-3 md:right-2">
+        &#10095;
+    </button>
 </div>
 @endguest
 
@@ -405,51 +404,56 @@
     </script>
 
 <script>
-    let currentIndex = 0;
-    const slider = document.getElementById('slider');
-    const totalSlides = @json(count($images));  // Dynamically embedding the number of slides
+   let currentIndex = 0; // Start at the first image
+const slider = document.getElementById('slider');
+const slides = document.querySelectorAll("#slider > div"); // Get all slide elements
+const totalSlides = slides.length;  // Total number of slides
 
-    const showSlide = (index) => {
-        // Ensure index is within bounds
-        if (index < 0) index = totalSlides - 1;
-        if (index >= totalSlides) index = 0;
-        
-        const offset = -index * 100;
-        slider.style.transform = `translateX(${offset}%)`;
-    };
+// Function to show slide based on index
+const showSlide = (index) => {
+    // Ensure index is within bounds
+    if (index < 0) index = totalSlides - 1; // If at the first slide, go to last
+    if (index >= totalSlides) index = 0;    // If at the last slide, go to first
+    
+    const offset = -index * 100; // Move the slider to the correct position
+    slider.style.transform = `translateX(${offset}%)`;
+};
 
-    // Next button functionality
-    document.getElementById("next").addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % totalSlides;
+// Next button functionality
+document.getElementById("next").addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % totalSlides; // Increment and loop back to 0
+    showSlide(currentIndex);
+    resetAutoSlide();
+});
+
+// Prev button functionality
+document.getElementById("prev").addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // Decrement and loop to last slide
+    showSlide(currentIndex);
+    resetAutoSlide();
+});
+
+// Automatic sliding every 3 seconds
+let autoSlideInterval;
+const startAutoSlide = () => {
+    autoSlideInterval = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalSlides; // Increment and loop back to 0
         showSlide(currentIndex);
-        resetAutoSlide();
-    });
+    }, 3000); // Change slide every 3 seconds
+};
 
-    // Prev button functionality
-    document.getElementById("prev").addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-        showSlide(currentIndex);
-        resetAutoSlide();
-    });
+const resetAutoSlide = () => {
+    clearInterval(autoSlideInterval);  // Reset the auto-slide timer
+    startAutoSlide();  // Restart auto-slide
+};
 
-    // Automatic sliding every 3 seconds
-    let autoSlideInterval;
-    const startAutoSlide = () => {
-        autoSlideInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            showSlide(currentIndex);
-        }, 3000);
-    };
+// Initialize the first slide
+showSlide(currentIndex);
 
-    const resetAutoSlide = () => {
-        clearInterval(autoSlideInterval);  // Reset auto-slide interval
-        startAutoSlide();  // Restart the auto-slide interval
-    };
+// Start the auto-slide when the page loads
+startAutoSlide();
 
-    startAutoSlide(); // Start auto-sliding when the page loads
-    showSlide(currentIndex); // Initialize the first slide
 </script>
-
 
 
 @endsection
