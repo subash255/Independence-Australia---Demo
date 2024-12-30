@@ -188,7 +188,6 @@
         </div>
 
 
-
         <!-- Dropdown Content (Full Width) -->
         <div class="max-w-screen-xl mx-auto px-8 bg-white py-4">
             <div class="flex items-center justify-between">
