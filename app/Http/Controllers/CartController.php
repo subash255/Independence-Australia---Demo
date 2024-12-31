@@ -77,4 +77,20 @@ class CartController extends Controller
         // Redirect back to the cart page with success message
         return redirect()->route('user.cart.index')->with('success', 'Cart updated successfully!');
     }
+     //delete function
+    public function removeFromCart($cartId)
+    {
+        // Find the cart item
+        $cartItem = CartItem::findOrFail($cartId);
+
+        // Delete the cart item
+        $cartItem->delete();
+
+        // Update the session cart count
+        $cartCount = CartItem::where('user_id', Auth::id())->sum('quantity');
+        session(['cart_count' => $cartCount]);
+
+        // Redirect back to the cart page with success message
+        return redirect()->route('user.cart.index')->with('success', 'Item removed from cart successfully!');
+    }
 }

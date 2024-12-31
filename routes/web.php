@@ -163,7 +163,8 @@ Route::post('/stop-impersonating', [HomepageController::class, 'stopImpersonatio
 
 Route::post('/cart/{productId}', [CartController::class, 'addToCart'])->name('user.cart.add');
     Route::get('user/cart/index', [CartController::class, 'viewCart'])->name('user.cart.index');
-    Route::post('/cart/update/{cartId}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
+    Route::patch('/cart/update/{cartId}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
+    Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('user.cart.remove');
 
 
 
