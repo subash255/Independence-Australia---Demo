@@ -25,7 +25,7 @@
                             <p class="text-sm text-gray-600">{{ $cartItem->product->sku }}</p>
                             <div class="flex justify-between items-center mt-2">
                                 <p class="text-lg font-semibold text-gray-800">{{ $cartItem->product->name }}</p>
-                                <form action="#" method="POST"
+                                <form action="{{route('user.cart.remove', $cartItem->id)}} " method="POST"
                                     class="text-xs text-red-500 hover:text-red-700 cursor-pointer">
                                     @csrf
                                     @method('DELETE')

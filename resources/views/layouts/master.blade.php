@@ -191,7 +191,7 @@
    <div class="max-w-screen-xl mx-auto px-8 bg-white py-4">
     <div class="flex items-center justify-between">
         <!-- Main Navbar Content -->
-        <div class="flex space-x-10 relative w-full">
+        <div class="flex space-x-5 relative w-full">
             @foreach ($categories as $category)
                 <a href="{{ route('menu.index', ['id' => $category->id]) }}">
                     <div class="relative group">
