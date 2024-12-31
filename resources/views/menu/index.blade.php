@@ -6,7 +6,7 @@
     <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-gray-800">{{$category->name}}</h1>
         <p class="text-gray-600 mt-2">
-            Independence Australia offers a comprehensive range of Daily Living and Mobility Aids, designed to support individuals of all ages, including children, seniors, and people with disabilities.
+            Alwayson Medica offers a comprehensive range of Daily Living and Mobility Aids, designed to support individuals of all ages, including children, seniors, and people with disabilities.
         </p>
         <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
     </div>
@@ -28,7 +28,7 @@
                             <i onclick="toggle(event, 'subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
                         </button>
                     </a>
-        
+            
                     <!-- Subcategory Dropdown (Hidden by Default) -->
                     <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                         @foreach($category->subcategories as $subcategory)
@@ -128,32 +128,24 @@
 </div>
 
 <script>
-    // Toggle the visibility of subcategories and animate the dropdown arrow
-    function toggle(id) {
-        const dropdown = document.getElementById(id);
-        const icon = dropdown.previousElementSibling.querySelector('i');
+    // Combined toggle function
+    function toggle(event, id) {
+        event.preventDefault(); // Prevent default anchor behavior
 
-        if (dropdown.classList.contains('hidden')) {
-            dropdown.classList.remove('hidden');
+        const subcategory = document.getElementById(id);
+        const icon = event.currentTarget; // Get the icon that was clicked
+
+        if (subcategory) {
+            subcategory.classList.toggle('hidden');
+        }
+
+        // Toggle the arrow direction
+        if (subcategory && !subcategory.classList.contains('hidden')) {
             icon.classList.remove('ri-arrow-down-s-line');
             icon.classList.add('ri-arrow-up-s-line');
         } else {
-            dropdown.classList.add('hidden');
             icon.classList.remove('ri-arrow-up-s-line');
             icon.classList.add('ri-arrow-down-s-line');
-        }
-    }
-</script>
-
-<script>
-    function toggle(event, id) {
-        // Prevent default action of anchor tag when clicking the icon
-        event.preventDefault();
-
-        // Toggle visibility of subcategory dropdown
-        const subcategory = document.getElementById(id);
-        if (subcategory) {
-            subcategory.classList.toggle('hidden');
         }
     }
 </script>
