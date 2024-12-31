@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
 @auth
     <!-- This section is shown when the user is logged in -->
@@ -78,26 +79,17 @@
             </div>
         </div>
     </div>  -->
-    <!-- this is slider -->
-    <div class="relative w-full overflow-hidden">
-    <div id="slider" class="flex transition-transform duration-700 ease-in-out">
+    <!-- Slider -->
+<div class="swiper swiper-container">
+    <div class="swiper-wrapper">
         @foreach($images as $image)
-            <div class="w-full flex-shrink-0">
+            <div class="swiper-slide">
                 <img src="{{ asset('banner/' . $image->image) }}" alt="Image {{ $image->id }}" class="w-full h-64 object-cover">
             </div>
         @endforeach
     </div>
-
-    <!-- Prev Button -->
-    <button id="prev" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 opacity-50 hover:opacity-100 md:p-3 md:left-2">
-        &#10094;
-    </button>
-    
-    <!-- Next Button -->
-    <button id="next" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full z-10 opacity-50 hover:opacity-100 md:p-3 md:right-2">
-        &#10095;
-    </button>
 </div>
+
 @endguest
 
 
@@ -402,58 +394,23 @@
         });
 
     </script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
 <script>
-   let currentIndex = 0; // Start at the first image
-const slider = document.getElementById('slider');
-const slides = document.querySelectorAll("#slider > div"); // Get all slide elements
-const totalSlides = slides.length;  // Total number of slides
-
-// Function to show slide based on index
-const showSlide = (index) => {
-    // Ensure index is within bounds
-    if (index < 0) index = totalSlides - 1; // If at the first slide, go to last
-    if (index >= totalSlides) index = 0;    // If at the last slide, go to first
-    
-    const offset = -index * 100; // Move the slider to the correct position
-    slider.style.transform = `translateX(${offset}%)`;
-};
-
-// Next button functionality
-document.getElementById("next").addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % totalSlides; // Increment and loop back to 0
-    showSlide(currentIndex);
-    resetAutoSlide();
-});
-
-// Prev button functionality
-document.getElementById("prev").addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides; // Decrement and loop to last slide
-    showSlide(currentIndex);
-    resetAutoSlide();
-});
-
-// Automatic sliding every 3 seconds
-let autoSlideInterval;
-const startAutoSlide = () => {
-    autoSlideInterval = setInterval(() => {
-        currentIndex = (currentIndex + 1) % totalSlides; // Increment and loop back to 0
-        showSlide(currentIndex);
-    }, 3000); // Change slide every 3 seconds
-};
-
-const resetAutoSlide = () => {
-    clearInterval(autoSlideInterval);  // Reset the auto-slide timer
-    startAutoSlide();  // Restart auto-slide
-};
-
-// Initialize the first slide
-showSlide(currentIndex);
-
-// Start the auto-slide when the page loads
-startAutoSlide();
-
+    const swiper = new Swiper('.swiper-container', {
+        // Parameters
+        loop: true,               // Loop through the slides
+        autoplay: {
+            delay: 3000,          // Auto-slide every 3 seconds
+            disableOnInteraction: false, // Keep autoplay even if user interacts
+        },
+        slidesPerView: 1,             // Show 1 slide at a time
+        spaceBetween: 0,              // No space between slides
+        effect: 'slide',              // Slide effect (can also use 'fade', 'cube', etc.)
+        speed: 700,                   // Slide transition speed (ms)
+    });
 </script>
+
 
 
 @endsection
