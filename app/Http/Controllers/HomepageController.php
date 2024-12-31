@@ -52,31 +52,58 @@ class HomepageController extends Controller
     }
 
     public function showcat($id)
-    {
-        // Fetch categories for the sidebar
-        $categories = Category::with('subcategories')->get();
-    
-        // Fetch the selected category (using the categoryId passed in the URL)
-        $category = Category::with(['products', 'subcategories'])->findOrFail($id);
+{
+    // Fetch categories for the sidebar
+    $categories = Category::with('subcategories')->get();
 
-        $subcategories = FacadesDB::table('subcategories')
-    ->where('category_id', $id)
-    ->get();
+    // Fetch the selected category (using the categoryId passed in the URL)
+    $category = Category::with(['products', 'subcategories'])->findOrFail($id);
 
-    $products = FacadesDB::table('products')
-    ->where('category_id', $id)
-    ->get();
-        
-        // Fetch the products belonging to this category
-        $products = Product::where('category_id', $id)->get();
-    
-        // Slider texts or any other necessary data
-        $sliderTexts = Text::orderBy('priority')->get();
-    
-        // Return the view with necessary data
-        return view('menu.index', compact('category', 'categories', 'sliderTexts', 'products' , 'subcategories'));
+    // Fetch subcategories for the category
+    $subcategories = FacadesDB::table('subcategories')
+        ->where('category_id', $id)
+        ->get();
+
+    // Fetch products for the category
+    $productsQuery = Product::where('category_id', $id);
+
+    // Get the selected sort option from the request, default to 'name_asc'
+    $sortBy = request('sort_by', 'name_asc');
+
+    // Apply sorting based on the selected option
+    switch ($sortBy) {
+        case 'name_asc':
+            $productsQuery = $productsQuery->orderBy('name', 'asc');
+            break;
+        case 'name_desc':
+            $productsQuery = $productsQuery->orderBy('name', 'desc');
+            break;
+        case 'price_asc':
+            $productsQuery = $productsQuery->orderBy('price', 'asc');
+            break;
+        case 'price_desc':
+            $productsQuery = $productsQuery->orderBy('price', 'desc');
+            break;
+        case 'rating_asc':
+            $productsQuery = $productsQuery->orderBy('rating', 'asc');
+            break;
+        case 'rating_desc':
+            $productsQuery = $productsQuery->orderBy('rating', 'desc');
+            break;
+        default:
+            $productsQuery = $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
+            break;
     }
-    
+
+    // Paginate the products, showing 15 per page
+    $products = $productsQuery->paginate(15);
+
+    // Fetch the slider texts or any other necessary data
+    $sliderTexts = Text::orderBy('priority')->get();
+
+    // Return the view with the necessary data
+    return view('menu.index', compact('category', 'categories', 'sliderTexts', 'products', 'subcategories'));
+}
 
 
     public function showproduct($id)

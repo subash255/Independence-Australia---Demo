@@ -65,42 +65,44 @@
             <!-- Product Listings -->
             <div class="mt-8">
                 <div class="flex items-center justify-between">
-                    <p class="text-gray-600">Displaying {{ count($category->products) }} Items</p>
-                    <select class="border-gray-300 rounded-md shadow-sm">
-                        <option>Sort by Price</option>
-                        <option>Sort by Rating</option>
-                    </select>
+                    <p class="text-gray-600">Displaying {{ $products->count() }} of {{ $products->total() }} Items</p>
+                    
+                    <!-- Form for sorting products -->
+                    <form method="GET" action="{{ route('menu.index', $category->id) }}" class="flex items-center">
+                        <select name="sort_by" class="border-gray-300 rounded-md shadow-sm" onchange="this.form.submit()">
+                            <option value="name_asc" {{ request('sort_by') == 'name_asc' ? 'selected' : '' }}>Sort by Product Name (A-Z)</option>
+                            <option value="name_desc" {{ request('sort_by') == 'name_desc' ? 'selected' : '' }}>Sort by Product Name (Z-A)</option>
+                            <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Sort by Price (Low to High)</option>
+                            <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Sort by Price (High to Low)</option>
+                            <option value="rating_asc" {{ request('sort_by') == 'rating_asc' ? 'selected' : '' }}>Sort by Rating (Low to High)</option>
+                            <option value="rating_desc" {{ request('sort_by') == 'rating_desc' ? 'selected' : '' }}>Sort by Rating (High to Low)</option>
+                        </select>
+                    </form>
                 </div>
-
-                <!-- Adjusted Grid Layout for 3-3 Product Display -->
-                <div class="max-w-7xl mx-auto p-6 grid grid-cols-3 gap-6">
+            
+                <!-- Product Grid Layout -->
+                <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($products as $product)
                     <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">
                         <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
-                            <!-- Featured Label -->
-                            <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
-                            
                             <!-- Product Image with Aspect Ratio Preservation -->
                             <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-2 overflow-hidden">
                                 <img src="{{ asset($product->image) }}" alt="{{ $product->name }} Image" class="object-contain w-full h-full">
                             </div>
-
+            
                             <!-- Product Details -->
                             <div class="flex flex-col justify-between items-center text-center h-full">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ optional($product)->name }}</h3>
-                                <p class="text-sm text-gray-900">
-                                    <span class="font-bold">{{ optional($product->brand)->name ?? 'Unknown Brand' }}</span>
-                                </p>
-
+            
+                                <!-- Product Price -->
+                                <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>
+            
                                 <!-- Product Ratings -->
                                 <div class="flex items-center mb-3 gap-1 text-yellow-500 text-sm justify-center">
                                     <span class="text-pink-500 text-lg">★★★★★</span>
-                                    <span class="text-gray-600">(5 Reviews)</span>
+                                    <span class="text-gray-600">{{ $product->rating }} ({{ $product->reviews_count }} Reviews)</span>
                                 </div>
-
-                                <!-- Product Price -->
-                                <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>
-
+            
                                 <!-- Add to Cart Button -->
                                 <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                                     @csrf
@@ -113,7 +115,14 @@
                     </a>
                     @endforeach
                 </div>
+            
+                <!-- Pagination Links -->
+                <div class="flex justify-center mt-4">
+                    {{ $products->links() }}
+                </div>
+            
             </div>
+            
         </main>
     </div>
 </div>
