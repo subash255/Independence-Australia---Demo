@@ -32,7 +32,7 @@
     <header class="bg-white shadow-sm fixed w-full top-0 z-50 sm:relative">
         <div class="container mx-auto flex items-center justify-between py-8 px-6">
             <!-- Mobile Menu Toggle -->
-            <div class="md:hidden flex items-center justify-between pr-3">
+            <div class="lg:hidden flex items-center justify-between pr-3">
                 <button id="menuToggle" class="mb-2">
                     <i class="ri-menu-fill font-bold text-2xl text-[#00718f]"></i>
                 </button>
@@ -136,37 +136,40 @@
 
 
 <!-- Mobile Menu (Initially Hidden) -->
-<div id="mobileMenu" class="md:hidden fixed top-24 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
-    <div class="w-full lg:w-1/4 bg-gray-100 p-4 rounded-md shadow-sm">
-        <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6">
+<div id="mobileMenu" class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
+    <div class="w-full bg-gray-100 p-4 rounded-md shadow-sm h-full flex flex-col">
+        <!-- Close Button -->
+        <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6 z-50">
             <i class="fa fa-times"></i>
         </button>
-        <div class="space-y-4">
-            @foreach($categories as $category)
-            <div>
-                <!-- Category Button to Toggle Subcategories -->
-                <a href="{{route('menu.index' , ['id' => $category->id])}}">
-                    <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
-                        <span class="flex-grow">{{ $category->name }}</span>
-                       
-                        <i onclick="toggle(event, 'subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
-                    </button>
-                </a>
 
-                <!-- Subcategory Dropdown (Hidden by Default) -->
-                <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
-                    @foreach($category->subcategories as $subcategory)
-                    <div class="flex items-center space-x-2">
-                        <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+        <!-- Scrollable Content Area -->
+        <div class="flex-grow overflow-y-auto">
+            <div class="space-y-4">
+                @foreach($categories as $category)
+                <div>
+                    <!-- Category Button to Toggle Subcategories -->
+                    <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                        <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                            <span class="flex-grow">{{ $category->name }}</span>
+                            <i onclick="showToggle(event, {{ $category->id }})" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                        </button>
+                    </a>
+
+                    <!-- Subcategory Dropdown (Hidden by Default) -->
+                    <div id="{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+                        @foreach($category->subcategories as $subcategory)
+                        <div class="flex items-center space-x-2">
+                            <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                        </div>
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
     </div>
 </div>
-
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-40 lg:block hidden">
@@ -295,18 +298,18 @@
     </footer>
 
     <script>
-        // Mobile Menu toggle
-        const menuToggle = document.getElementById("menuToggle");
-        const mobileMenu = document.getElementById("mobileMenu");
-        const closeMenu = document.getElementById("closeMenu");
+ const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const closeMenu = document.getElementById("closeMenu");
 
-        menuToggle.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
-        });
+    menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("left-[-100%]");  // Slide in/out
+        mobileMenu.classList.toggle("left-0");       // Position at 0 when visible
+    });
 
-        closeMenu.addEventListener("click", () => {
-            mobileMenu.classList.add("hidden");
-        });
+    closeMenu.addEventListener("click", () => {
+        mobileMenu.classList.add("left-[-100%]");  // Slide out to the left
+    });
 
         // Slider Text
         document.addEventListener('DOMContentLoaded', function() {
@@ -363,7 +366,7 @@
 
 <script>
     // Combined toggle function
-    function toggle(event, id) {
+    function showToggle(event, id) {
         event.preventDefault(); // Prevent default anchor behavior
 
         const subcategory = document.getElementById(id);

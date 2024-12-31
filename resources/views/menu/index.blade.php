@@ -6,7 +6,7 @@
     <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-gray-800">{{$category->name}}</h1>
         <p class="text-gray-600 mt-2">
-            Alwayson Medica offers a comprehensive range of Daily Living and Mobility Aids, designed to support individuals of all ages, including children, seniors, and people with disabilities.
+            Alwayson Medical offers a comprehensive range of Daily Living and Mobility Aids, designed to support individuals of all ages, including children, seniors, and people with disabilities.
         </p>
         <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
     </div>
@@ -21,14 +21,13 @@
                 @foreach($categories as $category)
                 <div>
                     <!-- Category Button to Toggle Subcategories -->
-                    <a href="{{route('menu.index' , ['id' => $category->id])}}">
+                    <a href="{{ route('menu.index', ['id' => $category->id]) }}">
                         <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
                             <span class="flex-grow">{{ $category->name }}</span>
-                          
                             <i onclick="toggle(event, 'subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
                         </button>
                     </a>
-    
+
                     <!-- Subcategory Dropdown (Hidden by Default) -->
                     <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                         @foreach($category->subcategories as $subcategory)
@@ -127,5 +126,29 @@
     </div>
 </div>
 
+
+
+<script>
+    // Combined toggle function
+    function toggle(event, id) {
+        event.preventDefault(); // Prevent default anchor behavior
+
+        const subcategory = document.getElementById(id);
+        const icon = event.currentTarget; // Get the icon that was clicked
+
+        if (subcategory) {
+            subcategory.classList.toggle('hidden');
+        }
+
+        // Toggle the arrow direction
+        if (subcategory && !subcategory.classList.contains('hidden')) {
+            icon.classList.remove('ri-arrow-down-s-line');
+            icon.classList.add('ri-arrow-up-s-line');
+        } else {
+            icon.classList.remove('ri-arrow-up-s-line');
+            icon.classList.add('ri-arrow-down-s-line');
+        }
+    }
+</script>
 
 @endsection
