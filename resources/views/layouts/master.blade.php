@@ -253,7 +253,7 @@
         </div>
 
         <div class="container mx-auto px-6 py-6 space-y-6">
-            <div class="flex justify-center lg:justify-center space-x-8 text-[#00718f] text-sm font-extrabold mt-4">
+            <div class="flex justify-center lg:justify-center space-x-8 text-[#00718f] text-sm font-extrabold mt-4 flex-wrap">
                 <a href="#" class="hover:underline">Our Story</a>
                 <a href="#" class="hover:underline">Contact Us</a>
                 <a href="#" class="hover:underline">FAQ</a>
