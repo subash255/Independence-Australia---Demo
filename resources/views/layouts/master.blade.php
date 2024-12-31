@@ -27,14 +27,14 @@
 @endphp
 
 
-<body class="font-sans bg-white">
+<body class="font-sans bg-white pt-1">
     <!-- Header Section -->
     <header class="bg-white shadow-sm fixed w-full top-0 z-50 sm:relative">
         <div class="container mx-auto flex items-center justify-between py-8 px-6">
             <!-- Mobile Menu Toggle -->
             <div class="md:hidden flex items-center justify-between pr-3">
-                <button id="menuToggle" class="text-black">
-                    <i class="ri-menu-3-line text-2xl text-[#00718f]"></i>
+                <button id="menuToggle" class="mb-2">
+                    <i class="ri-menu-fill font-bold text-2xl text-[#00718f]"></i>
                 </button>
             </div>
             <a href="{{ auth()->check() ? route('user.welcome') : '/' }}" class="flex items-center space-x-4">
@@ -44,7 +44,7 @@
             <!-- Search Box -->
             <div class="relative flex-1 max-w-md">
                 <input type="text" id="search-input" onkeyup="searchFunction()" placeholder="What are you looking for?" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
-                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block"></i>
+                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block lg:block hidden"></i>
             
                 <!-- Search Results -->
                 <div id="search-results" class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden"></div>
@@ -136,13 +136,11 @@
 
 
 <!-- Mobile Menu (Initially Hidden) -->
-<div id="mobileMenu" class="md:hidden fixed top-12 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
+<div id="mobileMenu" class="md:hidden fixed top-24 left-0 w-full h-full bg-black bg-opacity-50 hidden z-40">
     <div class="w-full lg:w-1/4 bg-gray-100 p-4 rounded-md shadow-sm">
         <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6">
             <i class="fa fa-times"></i>
         </button>
-        <h2 class="font-semibold text-lg text-gray-800 mb-4">Shop By Category</h2>
-        <!-- Accordion Sections for Categories -->
         <div class="space-y-4">
             @foreach($categories as $category)
             <div>
@@ -150,7 +148,7 @@
                 <a href="{{route('menu.index' , ['id' => $category->id])}}">
                     <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
                         <span class="flex-grow">{{ $category->name }}</span>
-                        <!-- Dropdown Icon (Positioned within the same line) -->
+                       
                         <i onclick="toggle(event, 'subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
                     </button>
                 </a>
@@ -188,14 +186,14 @@
         </div>
 
 
-   <div class="max-w-screen-xl mx-auto px-8 bg-white py-4">
+   <div class="max-w-screen-xl mx-auto px-5 bg-white py-4">
     <div class="flex items-center justify-between">
         <!-- Main Navbar Content -->
         <div class="flex space-x-5 relative w-full">
             @foreach ($categories as $category)
                 <a href="{{ route('menu.index', ['id' => $category->id]) }}">
                     <div class="relative group">
-                        <button class="text-sm text-[#00718f] font-semibold transition duration-200 ease-in-out hover:text-[#005f6b]">
+                        <button class="text-sm text-[#00718f] font-bold transition duration-200 ease-in-out hover:text-[#005f6b]">
                             {{ $category->name }}
                         </button>
 
@@ -219,12 +217,11 @@
 </div>
 
 
-
-
     </nav>
-
+    <div class="main-content pt-20 sm:pt-0">
     <!-- Main Content -->
     @yield('content')
+</div>
 
     <!-- Footer Section -->
     <footer class="bg-white py-6">
@@ -298,23 +295,6 @@
     </footer>
 
     <script>
-        // Function to toggle the dropdown visibility on click
-        function toggleDropdown(event, dropdownId) {
-            event.preventDefault();
-            const dropdown = document.getElementById(dropdownId);
-            dropdown.classList.toggle('hidden');
-        }
-
-        // Close all dropdowns if the user clicks outside any dropdown
-        document.addEventListener('click', function(e) {
-            const dropdowns = document.querySelectorAll('.absolute');
-            dropdowns.forEach(dropdown => {
-                if (!dropdown.contains(e.target) && !e.target.closest('button')) {
-                    dropdown.classList.add('hidden');
-                }
-            });
-        });
-
         // Mobile Menu toggle
         const menuToggle = document.getElementById("menuToggle");
         const mobileMenu = document.getElementById("mobileMenu");
@@ -377,6 +357,29 @@
         } else {
             $('#search-results').empty();  // Clear the results
             $('#search-results').addClass('hidden');  // Hide the results container
+        }
+    }
+</script>
+
+<script>
+    // Combined toggle function
+    function toggle(event, id) {
+        event.preventDefault(); // Prevent default anchor behavior
+
+        const subcategory = document.getElementById(id);
+        const icon = event.currentTarget; // Get the icon that was clicked
+
+        if (subcategory) {
+            subcategory.classList.toggle('hidden');
+        }
+
+        // Toggle the arrow direction
+        if (subcategory && !subcategory.classList.contains('hidden')) {
+            icon.classList.remove('ri-arrow-down-s-line');
+            icon.classList.add('ri-arrow-up-s-line');
+        } else {
+            icon.classList.remove('ri-arrow-up-s-line');
+            icon.classList.add('ri-arrow-down-s-line');
         }
     }
 </script>

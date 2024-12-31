@@ -53,10 +53,7 @@ class HomepageController extends Controller
 
     public function showcat($id)
 {
-    // Fetch categories for the sidebar
     $categories = Category::with('subcategories')->get();
-
-    // Fetch the selected category (using the categoryId passed in the URL)
     $category = Category::with(['products', 'subcategories'])->findOrFail($id);
 
     // Fetch subcategories for the category

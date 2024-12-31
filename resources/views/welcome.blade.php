@@ -80,15 +80,16 @@
         </div>
     </div>  -->
     <!-- Slider -->
-<div class="swiper swiper-container">
-    <div class="swiper-wrapper">
-        @foreach($images as $image)
-            <div class="swiper-slide">
-                <img src="{{ asset('banner/' . $image->image) }}" alt="Image {{ $image->id }}" class="w-full h-64 object-cover">
-            </div>
-        @endforeach
+    <div class="swiper swiper-container w-full">
+        <div class="swiper-wrapper">
+            @foreach($images as $image)
+                <div class="swiper-slide">
+                    <img src="{{ asset('banner/' . $image->image) }}" alt="Image {{ $image->id }}" class="w-full h-36 sm:h-64 object-cover">
+                </div>
+            @endforeach
+        </div>
     </div>
-</div>
+    
 
 @endguest
 
@@ -398,16 +399,16 @@
 
 <script>
     const swiper = new Swiper('.swiper-container', {
-        // Parameters
-        loop: true,               // Loop through the slides
+        
+        loop: true,               
         autoplay: {
-            delay: 3000,          // Auto-slide every 3 seconds
-            disableOnInteraction: false, // Keep autoplay even if user interacts
+            delay: 3000,         
+            disableOnInteraction: false, 
         },
-        slidesPerView: 1,             // Show 1 slide at a time
-        spaceBetween: 0,              // No space between slides
-        effect: 'slide',              // Slide effect (can also use 'fade', 'cube', etc.)
-        speed: 700,                   // Slide transition speed (ms)
+        slidesPerView: 1,             
+        spaceBetween: 0,              
+        effect: 'slide',              
+        speed: 700,                   
     });
 </script>
 

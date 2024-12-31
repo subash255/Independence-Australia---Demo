@@ -16,7 +16,7 @@
         <!-- Sidebar -->
         <aside class="w-full lg:w-1/4 bg-gray-100 p-4 rounded-md shadow-sm">
             <h2 class="font-semibold text-lg text-gray-800 mb-4">Shop By Category</h2>
-            <!-- Accordion Sections for Categories -->
+            <!-- According Sections for Categories -->
             <div class="space-y-4">
                 @foreach($categories as $category)
                 <div>
@@ -24,11 +24,11 @@
                     <a href="{{route('menu.index' , ['id' => $category->id])}}">
                         <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
                             <span class="flex-grow">{{ $category->name }}</span>
-                            <!-- Dropdown Icon (Positioned within the same line) -->
+                          
                             <i onclick="toggle(event, 'subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
                         </button>
                     </a>
-            
+    
                     <!-- Subcategory Dropdown (Hidden by Default) -->
                     <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                         @foreach($category->subcategories as $subcategory)
@@ -127,27 +127,5 @@
     </div>
 </div>
 
-<script>
-    // Combined toggle function
-    function toggle(event, id) {
-        event.preventDefault(); // Prevent default anchor behavior
-
-        const subcategory = document.getElementById(id);
-        const icon = event.currentTarget; // Get the icon that was clicked
-
-        if (subcategory) {
-            subcategory.classList.toggle('hidden');
-        }
-
-        // Toggle the arrow direction
-        if (subcategory && !subcategory.classList.contains('hidden')) {
-            icon.classList.remove('ri-arrow-down-s-line');
-            icon.classList.add('ri-arrow-up-s-line');
-        } else {
-            icon.classList.remove('ri-arrow-up-s-line');
-            icon.classList.add('ri-arrow-down-s-line');
-        }
-    }
-</script>
 
 @endsection
