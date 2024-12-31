@@ -71,20 +71,25 @@
         @if($billing->count() > 0)
         <p class="text-gray-700">{{$billing->first()->firstname}} {{$billing->first()->lastname}}</p>
         <p class="text-gray-700">{{$billing->first()->address}}</p>
-        <p class="text-gray-700">GLENDALOUGH, Western Australia, 6016</p>
+        <p class="text-gray-700"> {{$billing->first()->state}},{{$billing->first()->country}},{{$billing->first()->zip}}</p>
         <p class="text-gray-700">T:{{$billing->first()->contact_info}}</p>
          @else
-        <p class="text-gray-600">You have no default billing address in your address book.</p>
+        <p class="text-gray-600">You have no default shipping address in your address book.</p>
     @endif
       </div>
 
       <!-- Default Shipping Address -->
       <div class="w-1/2">
+      
       <h3 class="font-semibold text-gray-800 mb-2">Default Shipping Address</h3>
-<p class="text-gray-700">{{$contact->first()->firstname}} {{$contact->first()->lastname}}</p>
-<p class="text-gray-700">{{$contact->first()->address}}</p>
+      @if($shipping->count() > 0)
+<p class="text-gray-700">{{$shipping->first()->firstname}} {{$shipping->first()->lastname}}</p>
+<p class="text-gray-700">{{$shipping->first()->address}}</p>
 <p class="text-gray-700">GLENDALOUGH, Western Australia, 6016</p>
-<p class="text-gray-700">T:{{$contact->first()->contact_info}}</p>
+<p class="text-gray-700">T:{{$shipping->first()->shipping_info}}</p>
+@else
+        <p class="text-gray-600">You have no default billing address in your address book.</p>
+    @endif
 <a href="#" class="text-blue-600 hover:underline text-sm font-medium">Change Shipping Address</a>
 </div>
 </div>

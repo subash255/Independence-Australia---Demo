@@ -21,10 +21,10 @@ class ContactController extends Controller
         $users = User::where('role', 'user')
                  ->where('vendor_id', $userId)
                  ->get();
-       $contact = Contact::where('user_id', $userId)->where('is_shipping', '1')->get();
+       $shipping = Contact::where('user_id', $userId)->where('is_shipping', '1')->get();
        $billing= Contact::where('user_id', $userId)->where('is_billing', '1')->get();
 
-        return view('user.contact.index', compact('userId' , 'users','sliderTexts','categories' , 'contact', 'billing'));
+        return view('user.contact.index', compact('userId' , 'users','sliderTexts','categories' , 'shipping', 'billing'));
     }
     public function address()
     {
@@ -48,7 +48,12 @@ class ContactController extends Controller
             'user_id' => 'required|exists:users,id',
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'address' => 'required|string',
+            'address' => 'required|string', 
+            'city' => 'required|string',
+            'state' => 'required|string',
+            'zip' => 'required|string',
+            'country' => 'required|string',
+            'phone' => 'required|string',
             'contact_info' => 'required|string',
             'is_billing' => 'nullable|in:yes',
             'is_shipping' => 'nullable|in:yes',
@@ -60,6 +65,11 @@ class ContactController extends Controller
             'firstname' => $validated['firstname'],
             'lastname' => $validated['lastname'],
             'address' => $validated['address'],
+            'city' => $validated['city'],
+            'state' => $validated['state'],
+            'zip' => $validated['zip'],
+            'country' => $validated['country'],
+            'phone' => $validated['phone'],
             'contact_info' => $validated['contact_info'],          
             'is_billing' => $request->has('is_billing') && $request->is_billing == 'yes',
             'is_shipping' => $request->has('is_shipping') && $request->is_shipping == 'yes',
