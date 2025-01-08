@@ -89,6 +89,22 @@
     }
 </script>
 
+{{-- Flash Message --}}
+@if(session('success'))
+  <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+      {{ session('success') }}
+  </div>
+@endif
+
+<script>
+    if (document.getElementById('flash-message')) setTimeout(() => {
+        const msg = document.getElementById('flash-message');
+        msg.style.opacity = 0;
+        msg.style.transition = "opacity 0.5s ease-out";
+        setTimeout(() => msg.remove(), 500);
+    }, 3000);
+</script>
+
 </head>
 
 <body class="bg-gray-100 text-gray-900 h-screen flex flex-col font-sans">
@@ -98,45 +114,45 @@
     <aside id="sidebar" class="w-64 bg-white text-gray-900 shadow-lg flex flex-col fixed top-0 bottom-0 left-0 transition-all duration-300 overflow-y-auto z-10">
       <div class="p-4 flex items-center justify-center bg-white cursor-pointer" onclick="toggleSidebar()">
         <img id="logo" src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain">
-        <button id="toggle-icon" onclick="toggleSidebar()" class="hidden px-4 py-2 bg-red-600 text-white rounded-full">
+        <button id="toggle-icon" onclick="toggleSidebar()" class="hidden px-4 py-2 bg-blue-600 text-white rounded-full">
           <i class="ri-menu-3-fill"></i>
         </button>
       </div>
   
       <nav class="mt-6">
-        <a href="{{ route('admin.dash') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.dash') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-layout-masonry-fill"></i>
           <span class="ml-4">Dashboard</span>
         </a>
-        <a href="{{ route('admin.category.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.category.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-grid-line"></i>
           <span class="ml-4">Category</span>
         </a>
   
         @if(Auth::user()->role == 'superadmin') 
-        <a href="{{route('admin.admin.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{route('admin.admin.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-admin-fill"></i>
           <span class="ml-4">Manage Admin</span>
         </a>
         @endif
-        <a href="{{route('admin.brand.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{route('admin.brand.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-price-tag-fill"></i>
           <span class="ml-4">Brands</span>
         </a>
-        <a href="{{ route('admin.logos.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.logos.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4">Orders</span>
         </a>
-        <a href="{{ route('admin.banner.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.banner.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-image-fill"></i>
           <span class="ml-4">Banner</span>
         </a>
-        <a href="{{ route('admin.text.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.text.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-file-text-line"></i>
           <span class="ml-4"> Manage Text </span>
         </a>
         
-        <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-red-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-bank-card-2-fill"></i>
           <span class="ml-4">Products</span>
         </a>
@@ -144,7 +160,7 @@
     </aside>
 
    <!-- Header Section -->
-<div id="header" class="bg-red-600 text-white flex items-center justify-between px-8 py-[5rem] fixed top-0 left-[16rem] right-0 shadow-lg z-10">
+<div id="header" class="bg-blue-600 text-white flex items-center justify-between px-8 py-[5rem] fixed top-0 left-[16rem] right-0 shadow-lg z-10">
   <h1 class="text-3xl font-semibold mt-[-2rem]">{{ $title ?? 'Default Title' }}</h1>
   <div class="flex items-center space-x-4">
     <div class="relative group">
@@ -166,7 +182,7 @@
       </div>
     </div>
 
-    <button class="hover:bg-red-500 mt-[-2rem] transition ease-in-out duration-200">
+    <button class="hover:bg-blue-500 mt-[-2rem] transition ease-in-out duration-200">
       <i class="ri-moon-fill"></i>
     </button>
   </div>

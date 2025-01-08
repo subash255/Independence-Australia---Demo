@@ -80,6 +80,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::get('admin/product/index', [ProductController::class, 'index'])->name('admin.product.index');
     // Route::get('admin/product/create', [ProductController::class, 'create'])->name('admin.product.create');
     Route::post('admin/product/store', [ProductController::class, 'store'])->name('admin.product.store');
+    Route::delete('admin/product/{id}/destroy', [ProductController::class, 'destroy'])->name('admin.product.destroy');
     Route::get('/admin/product/{id}', [ProductController::class, 'show'])->name('admin.product.show');
     Route::get('/sub-categories/{categoryId}', [ProductController::class, 'getSubCategories']);
     Route::post('/admin/product/update-toggle/{product}', [ProductController::class, 'updateToggle'])->name('admin.product.updateToggle');

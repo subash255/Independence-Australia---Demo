@@ -1,27 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
-    {{-- Flash Message --}}
-    @if (session('success'))
-        <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
-            {{ session('success') }}
-        </div>
-    @endif
 
-    <script>
-        if (document.getElementById('flash-message')) setTimeout(() => {
-            const msg = document.getElementById('flash-message');
-            msg.style.opacity = 0;
-            msg.style.transition = "opacity 0.5s ease-out";
-            setTimeout(() => msg.remove(), 500);
-        }, 3000);
-    </script>
 
     <!-- Main container -->
     <div class="max-w-full mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
         <div class="mb-4 flex justify-end space-x-4">
             <button id="openModalButton"
-                class="text-red-500 font-medium bg-white border-2 border-red-500 rounded-lg py-2 px-4 hover:bg-red-600 hover:text-white transition duration-300">
+                class="text-blue-500 font-medium bg-white border-2 border-blue-500 rounded-lg py-2 px-4 hover:bg-blue-600 hover:text-white transition duration-300">
                 Add product
             </button>
         </div>
@@ -104,8 +90,8 @@
                             <td class="border border-gray-300 px-7 py-2">{{ $product->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->brand->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->price }}</td>
-                            <td class="px-2 py-2 mt-4 flex justify-center space-x-2">
-                                <button
+                            <td class="px-4 py-2 mt-4 flex justify-center space-x-2">
+                                {{-- <button
                                     class="text-white bg-blue-500 hover:bg-blue-700 w-8 h-8 flex items-center justify-center rounded-md">
                                     <i class="ri-alarm-line text-sm"></i>
                                 </button>
@@ -122,7 +108,16 @@
                                         class="text-white bg-green-500 hover:bg-green-700 w-8 h-8 flex items-center justify-center rounded-md">
                                         <i class="ri-eye-line text-sm"></i>
                                     </button>
-                                </a>
+                                </a> --}}
+
+                                <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-white bg-red-500 hover:bg-red-700 w-8 h-8 flex items-center justify-center rounded-md">
+                                        <i class="ri-delete-bin-line text-sm"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
