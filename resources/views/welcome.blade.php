@@ -5,28 +5,29 @@
 
 @auth
     <!-- This section is shown when the user is logged in -->
-    <div class="p-6 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
+    <div class="p-16 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
         <div class="my-8 ml-8 max-w-7xl mx-auto">
             <!-- Breadcrumbs -->
             <div class="text-sm text-gray-500">
-                <a href="/" class="hover:text-[#00718f]">Home</a> |
+                <a href="/" class="hover:text-blue-500">Home</a> |
                 <a href="{{route('user.welcome')}}"><span>Dashboard</span></a>
             </div>
 
             <!-- Welcome Heading -->
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#00718f] mt-2">Welcome {{ Auth::user()->name }}!</h1>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-500 mt-2">Welcome {{ Auth::user()->name }}!</h1>
 
             <hr class="border-b border-gray-300 mt-2 mb-2 w-3/4 sm:w-2/4 md:w-1/4">
 
+
             <p class="text-gray-600 mt-1 text-base sm:text-lg md:text-xl">
                 You are currently managing <br>
-                <span class="font-semibold text-[#00718f]">{{ Auth::user()->name }} {{ Auth::user()->last_name }}  @if(Auth::user()->role == 'vendor')  B2B
+                <span class="font-semibold text-blue-500">{{ Auth::user()->name }} {{ Auth::user()->last_name }}  @if(Auth::user()->role == 'vendor')  B2B
                     Customer</span> @endif
             </p>
 
        <!-- Check if the current user is a vendor, then show the Switch Account Button -->
        @if(Auth::user()->role == 'vendor') <!-- Adjust this condition based on how you define a vendor -->
-       <button class="mt-4 flex items-center bg-[#00718f] text-white px-4 py-2 rounded-lg hover:bg-[#00718f]" onclick="toggleDropdown()">
+       <button class="mt-4 flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-500" onclick="toggleDropdown()">
            <i class="ri-refresh-line pr-2"></i>
            Switch Account
        </button>
@@ -68,7 +69,7 @@
 
             <div class="space-y-4 md:space-y-0 md:flex md:flex-col md:gap-4">
                 <a href="/login"><button
-                    class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+                    class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
                     Sign in
                 </button></a>
                 
@@ -105,7 +106,7 @@
         <img src="images/banner.jpg" alt="Banner" class="w-full h-auto">
     </div> --}}
 
-    {{-- <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
+    {{-- <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
         Shop by Category
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
@@ -164,15 +165,14 @@
         <img src="images/banner1.jpg" alt="Banner" class="w-full h-auto">
     </div>
 
-    <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
+    <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
         Shop our featured products 
     </h1>
-    <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
-    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <div class="h-1.5 w-20 bg-pink-500 ml-4 mb-4"></div>
+    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         @foreach($products as $product)
         <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">
             <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
-                <div class="absolute top-2 left-2 bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">Featured</div>
                 <!-- Image container with fixed aspect ratio and no cropping -->
                 <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-2 overflow-hidden">
                     <img src="{{ asset($product->image) }}" alt="Product Image" class="object-contain w-full h-full">
@@ -189,27 +189,20 @@
                     <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>
                     <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                         @csrf
-                    <button type="submit" class="inline-block bg-white border-2 border-[#00718f] text-[#00718f] font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-[#00718f] hover:text-white transition-colors mt-2">
-                        Add to Basket
-                    </button>
+                        <button type="submit" class="inline-block bg-white border-2 border-blue-500 text-blue-500 font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-blue-500 hover:text-white transition-colors mt-2">
+                            Add to Basket
+                        </button>
                     </form>
-                    {{-- <div class="flex gap-4 mt-4">
-                        <span class="text-[#00718f] text-lg">
-                            <i class="ri-heart-line"></i> Add Favourites
-                        </span>
-                        <span class="text-green-700 text-lg">
-                            <i class="ri-arrow-left-right-fill"></i> Add to Compare
-                        </span>
-                    </div> --}}
                 </div>
             </div>
         </a>
         @endforeach
     </div>
     
+    
 
 
-    {{-- <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
+    {{-- <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
         Shop by Brand
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
@@ -283,7 +276,7 @@
         <!-- View More Button -->
         <div class="flex justify-center mt-8">
             <a href="#"
-                class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+                class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
                 View more brands
             </a>
         </div>
@@ -298,7 +291,7 @@
 
         <!-- Text Section -->
         <div>
-            <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] ml-4 mb-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-blue-500 ml-4 mb-4">
                 Product or Order Inquiry Form
             </h1>
             <p class="text-gray-700 text-lg leading-relaxed mb-6 ml-4">
@@ -307,13 +300,13 @@
                 customer service team will be in touch.
             </p>
             <a href="#"
-                class="py-[10px] px-[20px] ml-[150px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+                class="py-[10px] px-[20px] ml-[150px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
                 Fill the enquiry form
             </a>
         </div>
     </div>
 
-    <h1 class="text-3xl md:text-4xl font-bold text-[#00718f] mb-2 mt-6 px-4">
+    <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
         Explore our publications
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-10"></div>
@@ -341,7 +334,7 @@
     <!-- View More Button -->
     <div class="flex justify-center mt-8 pb-4">
         <a href="#"
-            class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+            class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
             View more publications
         </a>
     </div>
@@ -367,7 +360,7 @@
                 </span>
             </p>
         
-            <button id="toggle-btn" class="text-[#00718f] font-bold hover:underline focus:outline-none">
+            <button id="toggle-btn" class="text-blue-500 font-bold hover:underline focus:outline-none">
                 More
             </button>
         </div>

@@ -22,31 +22,31 @@
     <nav class="w-[21%] p-6 font-semibold mt-10">
         <a href="{{ route('user.welcome') }}" 
            class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] 
-           {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Account Dashboard</span>
         </a>
         <a href="#" 
            class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] 
-           {{ request()->routeIs('user.orders.index') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.orders.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Web Orders</span>
         </a>
         <a href="{{ route('user.contact.index') }}" 
            class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] 
-           {{ request()->routeIs('user.contact.index') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.contact.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">My Information</span>
         </a>
         <a href="#" 
            class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] 
-           {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Company Profile</span>
         </a>
         <!-- Conditionally show User Management link only if the user is a vendor -->
         @if(Auth::user()->role == 'vendor') <!-- Adjust this based on your role check -->
-        <a href="{{ route('user.manageuser.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.management') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+        <a href="{{ route('user.manageuser.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 {{ request()->routeIs('user.management') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">User Management</span>
         </a>
         @endif
@@ -64,7 +64,7 @@
                 
                 <!-- Contact Information -->
                 <div>
-                    <h2 class="text-2xl font-semibold mb-2 text-[#00718f]">Contact Information</h2>
+                    <h2 class="text-2xl font-semibold mb-2 text-blue-500">Contact Information</h2>
                     <hr class="border-b border-gray-300 mt-2 mb-4 w-[80%]">
                     <!-- First Name -->
                     <div class="mb-4">
@@ -94,7 +94,7 @@
 
                 <!-- Address Information -->
                 <div>
-                <h2 class="text-2xl font-semibold mb-2 text-[#00718f]">Address</h2>
+                <h2 class="text-2xl font-semibold mb-2 text-blue-500">Address</h2>
 <hr class="border-b border-gray-300 mt-2 mb-4 w-[80%]">
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -168,7 +168,7 @@
                     </div>
                     <div class="text-center mr-[6rem] mt-[4rem]">
                         <button type="submit" 
-                        class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+                        class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
                         Save Address
                         </button>
                     </div>

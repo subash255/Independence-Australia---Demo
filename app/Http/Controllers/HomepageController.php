@@ -30,7 +30,7 @@ class HomepageController extends Controller
         $user = Auth::user();
         $sliderTexts = Text::orderBy('priority')->get();
         $images = Banner::orderBy('priority', 'asc')->get();
-        $products = Product::limit(12)->get();
+        $products = Product::limit(20)->get();
         $categories = Category::all();
         // Check if the user is authenticated before accessing its properties
         if ($user && $user->role == 'vendor') {
@@ -47,7 +47,7 @@ class HomepageController extends Controller
     {
         $categories = Category::all();
 
-        $products = Product::limit('12')->get();
+        $products = Product::limit('20')->get();
         return view('homepage', compact('products', 'categories'));
     }
 

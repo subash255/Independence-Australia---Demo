@@ -105,7 +105,7 @@
                                 <!-- Add to Cart Button -->
                                 <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="inline-block bg-white border-2 border-[#00718f] text-[#00718f] font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-[#00718f] hover:text-white transition-colors mt-2">
+                                    <button type="submit" class="inline-block bg-white border-2 border-blue-500 text-blue-500 font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-blue-700 hover:text-white transition-colors mt-2">
                                         Add to Basket
                                     </button>
                                 </form>

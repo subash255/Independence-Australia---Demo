@@ -3,7 +3,7 @@
 
 <div class="container mx-auto px-4 py-8">
   <div class="bg-white p-6 sm:p-8 shadow-lg rounded-lg max-w-full mx-auto">
-    <h1 class="text-lg sm:text-3xl font-bold text-[#00718f] mb-6 pt-8">Create Account</h1>
+    <h1 class="text-lg sm:text-3xl font-bold text-blue-500 mb-6 pt-8">Create Account</h1>
     <form action="#" method="POST" class="space-y-6">
       @csrf
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -60,7 +60,7 @@
       </div>
 
       <!-- Address Information -->
-      <h2 class="text-lg sm:text-3xl font-bold text-[#00718f] mt-6">Address Information</h2>
+      <h2 class="text-lg sm:text-3xl font-bold text-blue-500 mt-6">Address Information</h2>
       <div>
         <label for="address" class="block text-gray-700 font-medium mb-2">Address</label>
         <input type="text" id="address" name="address" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="e.g. 123 Collins St, Melbourne" value="{{ old('address') }}" required>
@@ -73,7 +73,7 @@
     
 
       <!-- Submit Button -->
-      <button type="submit" class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+      <button type="submit" class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
         Create Account
       </button>
     </form>

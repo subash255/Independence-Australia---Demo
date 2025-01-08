@@ -5,7 +5,7 @@
 <div class="max-w-7xl mx-auto px-6 py-12">
     <!-- Breadcrumb -->
     <nav class="text-sm mb-6 text-gray-600">
-        <a href="/" class="hover:text-[#00718f] transition">Home</a> / 
+        <a href="/" class="hover:text-blue-700 transition">Home</a> / 
         <span class="font-semibold text-gray-800">{{ $product->name }}</span>
     </nav>
 
@@ -44,7 +44,7 @@
 
                 <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                     @csrf
-                    <button type="submit" class="py-[10px] px-[20px] bg-[#00718f] text-white font-bold rounded-[24px] border-2 border-[#00718f] hover:bg-[#ffffff] hover:text-[#00718f] transition">
+                    <button type="submit" class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-700 transition">
                         Add to Basket
                     </button>
                 </form>
@@ -52,7 +52,7 @@
 
             <!-- Action Buttons (Add to Favorites / Add to Compare) -->
             <div class="flex space-x-6 mt-8">
-                <span class="flex items-center text-[#00718f] text-lg font-medium cursor-pointer hover:text-blue-500 transition">
+                <span class="flex items-center text-blue-500 text-lg font-medium cursor-pointer hover:text-blue-700 transition">
                     <i class="ri-heart-line text-xl mr-2"></i> Add to Favourites
                 </span>
                 <span class="flex items-center text-green-700 text-lg font-medium cursor-pointer hover:text-green-500 transition">
@@ -66,7 +66,7 @@
         <!-- Tabs Section -->
         <div class="border-b border-gray-300">
           <ul class="flex space-x-6">
-            <li class="pb-2 border-b-2 text-xl border-teal-500 text-teal-600 font-semibold">
+            <li class="pb-2 border-b-2 text-xl border-blue-500 text-blue-600 font-semibold">
               <a href="#">Description</a>
             </li>
             {{-- <li class="pb-2 text-gray-600 hover:text-teal-600">

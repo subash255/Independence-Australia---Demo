@@ -50,28 +50,28 @@
             <!-- Mobile Menu Toggle -->
             <div class="lg:hidden flex items-center justify-between pr-3">
                 <button id="menuToggle" class="mb-2">
-                    <i class="ri-menu-fill font-bold text-2xl text-[#00718f]"></i>
+                    <i class="ri-menu-fill font-bold text-2xl text-blue-500"></i>
                 </button>
             </div>
-            <a href="{{ auth()->check() ? route('user.welcome') : '/' }}" class="flex items-center space-x-4">
+            <a href="/" class="flex items-center space-x-4">
                 <img src="{{ asset('images/logo.png') }}" alt="Alwayson Medical Logo" class="h-10">
             </a>
     
-            <!-- Search Box -->
-            <div class="relative flex-1 max-w-md">
+            <!-- Search Box - Centered and with more width -->
+            <div class="relative flex-1 max-w-lg mx-auto">
                 <input type="text" id="search-input" onkeyup="searchFunction()" placeholder="What are you looking for?" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
-                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-[#00718f] sm:block lg:block hidden"></i>
-            
+                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500 sm:block lg:block hidden"></i>
+    
                 <!-- Search Results -->
                 <div id="search-results" class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden"></div>
             </div>
     
-            <div class="flex items-center font-semibold space-x-2">
-                <!-- Profile Icon or Login/Signup (Hidden on Mobile) -->
+            <!-- Desktop User Authentication and Basket Section -->
+            <div class="flex items-center space-x-2 ml-auto hidden sm:flex">
                 @auth <!-- If the user is authenticated -->
-                    <!-- User Icon (Visible on Desktop only) -->
+                    <!-- User Icon -->
                     <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
-                        <i class="ri-user-3-fill text-[#00718f] text-[25px]"></i>
+                        <i class="ri-user-3-fill text-blue-500 text-[25px]"></i>
                     </div>
     
                     <!-- User Information for Desktop -->
@@ -93,21 +93,19 @@
                         </form>
                     </div>
                 @else
-                    <!-- If the user is not authenticated -->
-                    <a href="/login" class="text-gray-900 hover:underline hidden sm:block">
-                        <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i> <span>Sign In</span>
+                    <!-- If the user is not authenticated, show login and register buttons -->
+                    <a href="/login" class="text-gray-900 hover:underline font-bold">
+                        <i class="ri-user-3-fill text-blue-500 text-[20px]"></i> <span>Sign In</span>
                     </a>
-                    <span class="hidden sm:block px-0">/</span>
-                    <a href="/register" class="text-gray-900 hover:underline hidden sm:block">Register</a>
+                    <span class="px-1">/</span>
+                    <a href="/register" class="text-gray-900 hover:underline font-bold">Register</a>
                 @endauth
-            </div>
     
-            <!-- Adjusted Section for Right Side Items (Mobile and Desktop) -->
-            <div class="flex items-center space-x-2">
                 <!-- Cart Icon with count -->
                 <div class="relative">
-                    <a href="{{ route('user.cart.index') }}" class="text-gray-900 hidden sm:block">
-                        <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
+                    <span class="px-2"></span>
+                    <a href="{{ route('user.cart.index') }}" class="text-gray-900 font-bold">
+                        <i class="ri-shopping-basket-fill text-blue-500 font-light text-[25px]"></i>
                         <span>Basket</span>
                     </a>
     
@@ -118,37 +116,38 @@
                         </span>
                     @endif
                 </div>
+            </div>
     
-                <!-- Mobile Icons only -->
-                <div class="flex items-center space-x-2 sm:hidden">
-                    <!-- Search Icon -->
-                    <a href="#" class="text-gray-900">
-                        <i class="ri-search-line text-[#00718f] text-[20px]"></i>
+            <!-- Mobile Icons only -->
+            <div class="flex items-center space-x-2 sm:hidden">
+                <!-- Search Icon -->
+                <a href="#" class="text-gray-900">
+                    <i class="ri-search-line text-blue-500 text-[20px]"></i>
+                </a>
+    
+                @auth <!-- If the user is authenticated -->
+                    <!-- Logout Icon for Mobile View -->
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="font-medium hover:underline">
+                            <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
+                        </button>
+                    </form>
+                @else
+                    <!-- If the user is not authenticated -->
+                    <a href="{{ route('login') }}" class="text-gray-900 hover:underline">
+                        <i class="ri-user-3-fill text-blue-500 text-[20px]"></i>
                     </a>
+                @endauth
     
-                    @auth <!-- If the user is authenticated -->
-                        <!-- Logout Icon for Mobile View -->
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="font-medium hover:underline">
-                                <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
-                            </button>
-                        </form>
-                    @else
-                        <!-- If the user is not authenticated -->
-                        <a href="{{ route('login') }}" class="text-gray-900 hover:underline">
-                            <i class="ri-user-3-fill text-[#00718f] text-[20px]"></i>
-                        </a>
-                    @endauth
-    
-                    <!-- Cart Icon -->
-                    <a href="{{ route('user.cart.index') }}" class="text-gray-900">
-                        <i class="ri-shopping-basket-fill text-[#00718f] font-light text-[25px]"></i>
-                    </a>
-                </div>
+                <!-- Cart Icon -->
+                <a href="{{ route('user.cart.index') }}" class="text-gray-900">
+                    <i class="ri-shopping-basket-fill text-blue-500 font-light text-[25px]"></i>
+                </a>
             </div>
         </div>
     </header>
+    
 
 
 <!-- Mobile Menu (Initially Hidden) -->
@@ -160,36 +159,39 @@
         </button>
 
         <!-- Scrollable Content Area -->
-        <div class="flex-grow overflow-y-auto">
-            <div class="space-y-4">
-                @foreach($categories as $category)
-                <div>
-                    <!-- Category Button to Toggle Subcategories -->
-                    <a href="{{ route('menu.index', ['id' => $category->id]) }}">
-                        <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
-                            <span class="flex-grow">{{ $category->name }}</span>
-                            <i onclick="showToggle(event, {{ $category->id }})" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
-                        </button>
-                    </a>
-
-                    <!-- Subcategory Dropdown (Hidden by Default) -->
-                    <div id="{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
-                        @foreach($category->subcategories as $subcategory)
-                        <div class="flex items-center space-x-2">
-                            <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+        <div class="w-full overflow-x-hidden"> <!-- Prevents horizontal overflow -->
+            <div class="flex-grow overflow-y-auto">
+                <div class="space-y-4">
+                    @foreach($categories as $category)
+                    <div>
+                        <!-- Category Button to Toggle Subcategories -->
+                        <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                            <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                                <span class="flex-grow">{{ $category->name }}</span>
+                                <i onclick="showToggle(event, {{ $category->id }})" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                            </button>
+                        </a>
+        
+                        <!-- Subcategory Dropdown (Hidden by Default) -->
+                        <div id="{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+                            @foreach($category->subcategories as $subcategory)
+                            <div class="flex items-center space-x-2">
+                                <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                            </div>
+                            @endforeach
                         </div>
-                        @endforeach
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
         </div>
+        
     </div>
 </div>
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-40 lg:block hidden">
-        <div class="bg-[#7eb6c6] py-2 text-black">
+        <div class="bg-blue-500 py-2 text-white">
             <section>
                 <div class="container mx-auto text-center overflow-hidden relative">
                     <div class="slider-container relative h-8">
@@ -205,14 +207,14 @@
         </div>
 
 
-   <div class="max-w-screen-xl mx-auto px-5 bg-white py-4">
+   <div class="max-w-full mx-auto px-5 bg-white py-4">
     <div class="flex items-center justify-between">
         <!-- Main Navbar Content -->
-        <div class="flex space-x-5 relative w-full">
+        <div class="flex justify-center space-x-5 relative w-full">
             @foreach ($categories as $category)
                 <a href="{{ route('menu.index', ['id' => $category->id]) }}">
                     <div class="relative group">
-                        <button class="text-sm text-[#00718f] font-bold transition duration-200 ease-in-out hover:text-[#005f6b]">
+                        <button class="text-sm text-blue-500 font-bold transition duration-200 ease-in-out hover:text-blue-800">
                             {{ $category->name }}
                         </button>
 
@@ -220,7 +222,7 @@
                         <div class="menu-content absolute left-0 w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 transition-all duration-300 ease-in-out z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:block hidden">
                             <div class="space-y-2 text-black px-4 py-3">
                                 @foreach ($category->subcategories as $submenu)
-                                    <a href="#" class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-[#00718f] hover:text-white transition duration-150 ease-in-out"
+                                    <a href="#" class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
                                        data-item="{{ $submenu->name }}"
                                        data-child-category="{{ json_encode($submenu->child_categories) }}">
                                        {{ $submenu->name }}
@@ -244,12 +246,12 @@
 
     <!-- Footer Section -->
     <footer class="bg-white py-6">
-        <div class="bg-[#7eb6c6] w-full py-12 px-4 lg:px-16">
+        <div class="bg-blue-500 w-full py-12 px-4 lg:px-16">
             <div class="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0 md:space-x-8">
                 <!-- Info Section -->
                 <div class="text-center md:text-left max-w-xl">
-                    <h1 class="text-[#0f6178] text-4xl font-bold mb-4">Newsletter Sign Up</h1>
-                    <p class="text-black text-lg leading-relaxed">
+                    <h1 class="text-white text-4xl font-bold mb-4">Newsletter Sign Up</h1>
+                    <p class="text-white text-lg leading-relaxed">
                         By providing your email address, you are consenting to receive marketing communications such as
                         promotional offers and newsletters from Alwayson Medical. You can unsubscribe at any time.
                     </p>
@@ -261,7 +263,7 @@
 
                     <!-- Subscribe Button -->
                     <button
-                        class="bg-[#0f6178] font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-[#0f6178] border-2 border-[#0f6178] transition">
+                        class="bg-blue-700 font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-blue-900 border-2 border-blue-800 transition">
                         SUBSCRIBE
                     </button>
                 </div>
@@ -269,7 +271,7 @@
         </div>
 
         <div class="container mx-auto px-6 py-6 space-y-6">
-            <div class="flex justify-center lg:justify-center space-x-8 text-[#00718f] text-sm font-extrabold mt-4 flex-wrap">
+            <div class="flex justify-center lg:justify-center space-x-8 text-blue-500 text-sm font-extrabold mt-4 flex-wrap">
                 <a href="#" class="hover:underline">Our Story</a>
                 <a href="#" class="hover:underline">Contact Us</a>
                 <a href="#" class="hover:underline">FAQ</a>
@@ -279,13 +281,13 @@
             <div class="flex flex-col lg:flex-row lg:items-center justify-between text-gray-700 text-sm">
                 <!-- Social Media Icons -->
                 <div class="flex justify-center lg:justify-start space-x-4">
-                    <a href="#" class="text-[#00718f] hover:opacity-75">
+                    <a href="#" class="text-blue-500 hover:opacity-75">
                         <i class="ri-facebook-fill text-[25px] "></i>
                     </a>
-                    <a href="#" class="text-[#00718f] hover:opacity-75">
+                    <a href="#" class="text-blue-500 hover:opacity-75">
                         <i class="ri-twitter-fill text-[25px]"></i>
                     </a>
-                    <a href="#" class="text-[#00718f] hover:opacity-75">
+                    <a href="#" class="text-blue-500 hover:opacity-75">
                         <i class="ri-linkedin-box-fill text-[25px]"></i>
                     </a>
                 </div>
@@ -293,9 +295,9 @@
                 <!-- Payment Methods -->
                 <div class="flex items-center justify-center lg:justify-end space-x-4 mt-4 lg:mt-0 h-8">
                     <span class="text-gray-700 font-semibold">We accept</span>
-                    <i class="ri-visa-fill text-[#00718f]"></i>
-                    <i class="ri-mastercard-line text-[#00718f]"></i>
-                    <i class="ri-paypal-fill text-[#00718f]"></i>
+                    <i class="ri-visa-fill text-blue-500"></i>
+                    <i class="ri-mastercard-line text-blue-500"></i>
+                    <i class="ri-paypal-fill text-blue-500"></i>
                 </div>
             </div>
 

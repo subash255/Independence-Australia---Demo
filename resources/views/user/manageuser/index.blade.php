@@ -19,32 +19,48 @@
 
 <div class="flex flex-col lg:flex-row"> 
     <!-- Sidebar/Nav Section -->
-    <nav class="lg:w-[21%] w-full p-6 font-semibold mt-10 bg-white ">
-        <a href="{{ route('user.welcome') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+    <nav class="w-[21%] p-6 font-semibold mt-10">
+        <a href="{{ route('user.welcome') }}" 
+           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Account Dashboard</span>
         </a>
-        <a href="#" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.orders.index') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+        <a href="#" 
+           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.orders.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Web Orders</span>
         </a>
-        <a href="{{ route('user.contact.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.contact.index') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+        <a href="{{ route('user.contact.index') }}" 
+           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.contact.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">My Information</span>
         </a>
-        <a href="#" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+        <a href="#" 
+           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Company Profile</span>
         </a>
-    
         <!-- Conditionally show User Management link only if the user is a vendor -->
         @if(Auth::user()->role == 'vendor') <!-- Adjust this based on your role check -->
-        <a href="{{ route('user.manageuser.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-[#00718f] focus:bg-gray-300 focus:text-[#00718f] {{ request()->routeIs('user.management') ? 'bg-gray-300 text-[#00718f] font-bold' : '' }}">
+        <a href=" {{ route('user.manageuser.index') }}" 
+           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
+           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
+           {{ request()->routeIs('user.manageuser.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">User Management</span>
         </a>
+
+
         @endif
     </nav>
     
     <div class="lg:w-[79%] w-full p-6 mt-4">
     <div class="mb-4 flex justify-end">
         <a href="{{ route('user.manageuser.create') }}"
-            class="text-[#00718f] font-medium bg-white border-2 border-[#00718f] rounded-lg py-2 px-4 hover:bg-[#00718f] hover:text-white transition duration-300">Add
+            class="text-blue-500 font-medium bg-white border-2 border-blue-500 rounded-lg py-2 px-4 hover:bg-blue-500 hover:text-white transition duration-300">Add
             User</a>
     </div>
 
