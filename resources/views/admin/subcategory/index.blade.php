@@ -38,15 +38,8 @@
     
                 <!-- Category Selection -->
                 <div class="mb-6">
-                    <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
-                    <select name="category_id" id="category" 
-                            class="mt-2 px-4 py-3 w-full border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none transition duration-300 hover:border-indigo-400 text-lg" 
-                            required>
-                        <option value="">Select a category</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                        @endforeach
-                    </select>
+                    <label for="category" class="block text-sm font-medium text-gray-700">{{$categories->name}}</label>
+                  
                 </div>
     
                 <!-- Subcategory Name Input -->

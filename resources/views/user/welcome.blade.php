@@ -1,20 +1,6 @@
 @extends('layouts.master')
 @section('content')
-{{-- Flash Message --}}
-@if(session('success'))
-  <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
-      {{ session('success') }}
-  </div>
-@endif
 
-<script>
-    if (document.getElementById('flash-message')) setTimeout(() => {
-        const msg = document.getElementById('flash-message');
-        msg.style.opacity = 0;
-        msg.style.transition = "opacity 0.5s ease-out";
-        setTimeout(() => msg.remove(), 500);
-    }, 3000);
-</script>
 
 <div class="p-6 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
     <div class="my-8 ml-8 max-w-7xl mx-auto">

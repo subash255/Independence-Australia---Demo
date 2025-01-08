@@ -131,7 +131,7 @@
                             </form>
 
                             <!-- Settings Icon -->
-                            <a href="{{ route('admin.subcategory.index') }}" class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                            <a href="{{ route('admin.subcategory.index',['id' => $category->id]) }}" class="bg-green-500 hover:bg-green-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                 <i class="ri-settings-5-line text-white"></i>
                             </a>
                         </td>
