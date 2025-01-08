@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('sku')->nullable();
             $table->string('name')->nullable();
             $table->string('slug')->unique();
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
             $table->text('description')->nullable();
             $table->string('short_description')->nullable();
             $table->string('price', 8, 2)->nullable();

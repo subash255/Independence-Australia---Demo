@@ -163,6 +163,7 @@
             <div class="flex-grow overflow-y-auto">
                 <div class="space-y-4">
                     @foreach($categories as $category)
+                    @if ($category->status == 1)
                     <div>
                         <!-- Category Button to Toggle Subcategories -->
                         <a href="{{ route('menu.index', ['id' => $category->id]) }}">
@@ -181,6 +182,7 @@
                             @endforeach
                         </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
             </div>
@@ -212,6 +214,7 @@
         <!-- Main Navbar Content -->
         <div class="flex justify-center space-x-5 relative w-full">
             @foreach ($categories as $category)
+            @if ($category->status == 1)
                 <a href="{{ route('menu.index', ['id' => $category->id]) }}">
                     <div class="relative group">
                         <button class="text-sm text-blue-500 font-bold transition duration-200 ease-in-out hover:text-blue-800">
@@ -232,6 +235,7 @@
                         </div>
                     </div>
                 </a>
+            @endif
             @endforeach
         </div>
     </div>
@@ -404,6 +408,20 @@
         }
     }
 </script>
+
+<script>
+    // If needed, add a script to control the visibility dynamically
+    document.addEventListener('DOMContentLoaded', () => {
+        const categories = document.querySelectorAll('.category-container');
+        categories.forEach(category => {
+            const status = category.getAttribute('data-status');
+            if (status == 0) {
+                category.style.display = 'none';  // Hide inactive categories
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

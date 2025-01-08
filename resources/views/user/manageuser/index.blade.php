@@ -26,10 +26,10 @@
            {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Account Dashboard</span>
         </a>
-        <a href="#" 
+        <a href="{{route('user.myorder')}}" 
            class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
            hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.orders.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
+           {{ request()->routeIs('user.myorder') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Web Orders</span>
         </a>
         <a href="{{ route('user.contact.index') }}" 

@@ -21,7 +21,7 @@ use App\Http\Controllers\NayaController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TextController;
 use App\Http\Middleware\AdminMiddleware;
-
+use App\Models\Order;
 use App\Models\Subcategory;
 use Illuminate\Support\Facades\Route;
 
@@ -151,7 +151,7 @@ Route::get('user/contact/index', [ContactController::class, 'index'])->name('use
 Route::post('user/contact/store', [ContactController::class, 'store'])->name('user.contact.store');
 Route::get('user/contact/address', [ContactController::class, 'address'])->name('user.contact.address'); 
 
-
+Route::get('user.myorder',[HomepageController::class, 'order'])->name('user.myorder');
 
 Route::get('user/manageuser/index', [ManageuserController::class, 'index'])->name('user.manageuser.index');
 Route::get('user/manageuser/create', [ManageuserController::class, 'create'])->name('user.manageuser.create');

@@ -7,7 +7,7 @@
         <!-- Breadcrumbs -->
         <div class="text-sm text-gray-500">
             <a href="/" class="hover:text-blue-500">Home</a> |
-            <span>Dashboard</span>
+            <a href="{{route('user.welcome')}}"><span>Dashboard</span></a>
         </div>
 
         <!-- Welcome Heading -->
@@ -88,7 +88,7 @@
         <a href="{{ route('user.welcome') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Account Dashboard</span>
         </a>
-        <a href="#" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 {{ request()->routeIs('user.orders.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
+        <a href="{{route('user.myorder')}}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 {{ request()->routeIs('user.myorder') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
             <span class="ml-4">Web Orders</span>
         </a>
         <a href="{{ route('user.contact.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 {{ request()->routeIs('user.contact.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">

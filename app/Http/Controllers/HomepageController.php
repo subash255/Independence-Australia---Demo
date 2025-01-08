@@ -51,6 +51,22 @@ class HomepageController extends Controller
         return view('homepage', compact('products', 'categories'));
     }
 
+    public function order()
+    {
+        $user = Auth::user();
+        $sliderTexts = Text::orderBy('priority')->get();
+        $images = Banner::orderBy('priority', 'asc')->get();
+        $categories = Category::all();
+        // Check if the user is authenticated before accessing its properties
+        if ($user && $user->role == 'vendor') {
+            $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
+        } else {
+            $users = collect();
+        }
+
+        return view('user.myorder', compact('users', 'categories', 'images', 'sliderTexts'));
+    }
+
     public function showcat($id)
 {
     $categories = Category::with('subcategories')->get();
@@ -184,6 +200,7 @@ public function search(Request $request)
 
     return response()->json(['message' => 'No query provided.']);
 }
+
 
 
 }
