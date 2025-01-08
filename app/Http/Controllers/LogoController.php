@@ -3,17 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Models\Logo;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class LogoController extends Controller
 {
     // Display all logos
-    public function index()
+    public function index(Request $request)
     {
-        $logos = Logo::paginate(5);
-        return view('admin.logos.index', compact('logos'), [
-            'title' => 'Manage Images'
+        // Get the number of entries per page from the request or default to 5
+        $perPage = $request->get('entries', 5);
+        
+        // Paginate the orders without any search query
+        $orders = Order::paginate($perPage);
+        
+        // Decode the 'items' JSON column for each order
+        // foreach ($orders as $order) {
+        //     $order->items = json_decode($order->line_items, true); 
+        //     $order->billings = json_decode($order->billing, true);  // Decode the 'items' JSON column
+        // }
+       
+        
+        
+        // Return the view with the paginated orders
+        return view('admin.logos.index', [
+            'title' => 'Orders',
+            'orders' => $orders
         ]);
     }
 
