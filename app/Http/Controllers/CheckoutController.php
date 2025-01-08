@@ -125,16 +125,18 @@ class CheckoutController extends Controller
         })->filter(function ($item) {
             return !is_null($item);
         });
+
+        $line = json_decode($lineItems);
     
         $order = Order::create([
             'user_id' => $user->id,
-            'billing' => json_encode($billingData),
-            'shipping' => json_encode($shippingData),
-            'line_items' => json_encode($lineItems->toArray()),
+            'billing' => $billingData,
+            'shipping' => $shippingData,
+            'line_items' => $line[0],
             'status' => 'pending',
         ]);
     
-        
+        dd('done on local');
         $apiKey = env('AEROHEALTH_API_KEY');
         $apiSecret = env('AEROHEALTH_API_SECRET');
         $base64Credentials = base64_encode("{$apiKey}:{$apiSecret}");
