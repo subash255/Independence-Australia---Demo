@@ -23,6 +23,12 @@ class LogoController extends Controller
         //     $order->items = json_decode($order->line_items, true); 
         //     $order->billings = json_decode($order->billing, true);  // Decode the 'items' JSON column
         // }
+        // $billing = json_decode($orders->billing, true);
+
+        // // Extract the required data
+        // $name = $billing['first_name'] . ' ' . $billing['last_name'];
+        // $address = $billing['address_1'] . ', ' . $billing['city'] . ', ' . $billing['state'] . ', ' . $billing['postcode'] . ', ' . $billing['country'];
+        // $email = $billing['email'];
        
         
         
@@ -30,7 +36,7 @@ class LogoController extends Controller
         return view('admin.logos.index', [
             'title' => 'Orders',
             'orders' => $orders
-        ]);
+        ] );
     }
 
     // Show the form to create a new logo

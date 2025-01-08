@@ -67,81 +67,12 @@
                             <td class="border border-gray-300 px-4 py-2">${{ number_format($order->total, 2) }}</td>
                            
                             <td class="border border-gray-300 px-4 py-2">{{ucfirst($order->status) }}</td>
-                            <td class="py-3 px-4 border-b">
-                            <!-- Loop through the items array to display each item in separate rows -->
-                            <table class="min-w-full">
-                                <thead>
-                                    <tr>
-                                        <th class="border border-gray-300 px-4 py-2">Name</th>
-                                        <th class="border border-gray-300 px-4 py-2">Price</th>
-                                        <th class="border border-gray-300 px-4 py-2">sku</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($order->billings as $billing)
-    @php
-        // Decode the JSON string into an associative array
-        $billingData = json_decode($billing, true);
-    @endphp
-
-    <!-- Check if decoding was successful and $billingData is an array -->
-    @if ($billingData && is_array($billingData))
-        <tr>
-            <td class="border border-gray-300 px-4 py-2">{{ $billingData['first_name'] ?? 'N/A' }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ $billingData['email'] ?? 'N/A' }}</td>
-            <td class="border border-gray-300 px-4 py-2">{{ $billingData['address_1'] ?? 'N/A' }}</td>
-        </tr>
-    @else
-        <tr>
-            <td colspan="3" class="border border-gray-300 px-4 py-2">Invalid or missing billing data</td>
-        </tr>
-    @endif
-@endforeach
-                                </tbody>
-                            </table>
-                        </td>
-
                             
-                            <td class="py-3 px-4 border-b">
-                            <!-- Loop through the items array to display each item in separate rows -->
-                            <table class="min-w-full">
-                                <thead>
-                                    <tr>
-                                        <th class="border border-gray-300 px-4 py-2">Name</th>
-                                        <th class="border border-gray-300 px-4 py-2">Price</th>
-                                        <th class="border border-gray-300 px-4 py-2">Sku</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @php
-                // Check if line_items is a valid JSON string
-                $lineItemsArray = json_decode($order->line_items, true);
-            @endphp
-
-            @if ($lineItemsArray && is_array($lineItemsArray)) 
-                @foreach ($lineItemsArray as $item)
-                    <tr>
-                        <td class="border border-gray-300 px-4 py-2">{{ $item['name'] ?? 'N/A' }}</td>
-                        <td class="border border-gray-300 px-4 py-2">${{ number_format($item['price'] ?? 0, 2) }}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ $item['sku'] ?? 'N/A' }}</td>
-                    </tr>
-                @endforeach
-            @else
-                <tr>
-                    <td colspan="3" class="border border-gray-300 px-4 py-2">Invalid or missing line items</td>
-                </tr>
-            @endif
-                                </tbody>
-                            </table>
-                        </td>
 
                             <td class="px-2 py-2 flex justify-center space-x-4">
                                
-                                <form action="{{ route('admin.order.destroy', ['id' => $order->id]) }}"
-                                    method="post"
-                                    onsubmit="return confirm('Are you sure you want to delete this orders?');">
-                                    @csrf
-                                    @method('delete')
+                                <form action="#">
+                                   
                                     <button
                                         class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                         <i class="ri-delete-bin-line text-white"></i>
