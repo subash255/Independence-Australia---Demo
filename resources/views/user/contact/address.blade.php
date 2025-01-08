@@ -101,7 +101,7 @@
     <!-- Address Field -->
     <div class="mb-4">
         <label for="address" class="block text-sm font-medium text-gray-700">Please enter your address</label>
-        <input type="text" id="address" name="address" placeholder="e.g. 123 Long Street, Melbourne VIC, 3000"
+        <input type="text" id="address" name="address_1" placeholder="e.g. 123 Long Street, Melbourne VIC, 3000"
                value="{{ old('address') }}"
                class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                required>

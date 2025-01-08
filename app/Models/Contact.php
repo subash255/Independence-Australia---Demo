@@ -10,7 +10,7 @@ class Contact extends Model
         'user_id',
         'firstname',
         'lastname',
-        'address',
+        'address_1',
         'city',
         'state',
         'zip',
