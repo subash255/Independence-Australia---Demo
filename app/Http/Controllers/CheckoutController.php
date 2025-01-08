@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\CartItem;
 use App\Models\Category;
+use App\Models\Contact;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Support\Facades\Auth;
@@ -180,11 +182,19 @@ class CheckoutController extends Controller
         // Get any cURL errors
         $err = curl_error($ch);
 
-        if($response){
+        if ($response) {
+            // Get the authenticated user's ID
             $user = Auth::id();
-            CartItem::where('user_id', $user)->delete();
+        
+            // If you're storing cart items in session, clear them from session
+            session()->forget('cart.' . $user);  // This assumes cart items are stored in the session with the user's ID as the key.
+        
+            // Alternatively, if you use a different method to store cart items in the session, adjust this line accordingly.
+        
+            // Redirect back with success message
             return redirect()->route('user.welcome')->with('success', 'Your order has been placed successfully.');
         }
+        
         elseif($err){
             return redirect()->route('user.cart.index')->with('error', 'An error occurred while processing your order.');
         }

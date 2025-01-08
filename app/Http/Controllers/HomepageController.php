@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Text;
 use App\Models\User;
@@ -53,19 +54,33 @@ class HomepageController extends Controller
 
     public function order()
     {
-        $user = Auth::user();
-        $sliderTexts = Text::orderBy('priority')->get();
-        $images = Banner::orderBy('priority', 'asc')->get();
-        $categories = Category::all();
-        // Check if the user is authenticated before accessing its properties
-        if ($user && $user->role == 'vendor') {
-            $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
+        $user = Auth::user();  // Get the authenticated user
+        $sliderTexts = Text::orderBy('priority')->get();  // Fetch slider texts for the page
+        $images = Banner::orderBy('priority', 'asc')->get();  // Fetch banner images
+        $categories = Category::all();  // Fetch all categories
+    
+        // Check if the user is authenticated
+        if ($user) {
+            if ($user->role == 'vendor') {
+                // Fetch orders for users managed by the vendor
+                $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
+                $orders = Order::whereIn('user_id', $users->pluck('id'))->get();  // Get orders for users under this vendor
+            } else {
+                // Fetch orders for the authenticated user (regular user)
+                $orders = Order::where('user_id', $user->id)->get();
+                $users = collect();  // No users for regular customers
+            }
         } else {
-            $users = collect();
+            $orders = collect();  // No orders if the user is not authenticated
+            $users = collect();  // No users if the user is not authenticated
         }
-
-        return view('user.myorder', compact('users', 'categories', 'images', 'sliderTexts'));
+    
+        // Pass the data to the view
+        return view('user.myorder', compact('orders', 'users', 'categories', 'images', 'sliderTexts'));
     }
+    
+    
+    
 
     public function showcat($id)
 {
