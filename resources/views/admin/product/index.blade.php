@@ -81,6 +81,7 @@
                         <th class="border border-gray-300 px-7 py-2 font-medium">Short Description</th>
                         <th class="border border-gray-300 px-7 py-2 font-medium">Name</th>
                         <th class="border border-gray-300 px-7 py-2 font-medium">Brand</th>
+                    <th class="border border-gray-300 px-4 py-2">Status</th>
                         <th class="border border-gray-300 px-7 py-2 font-medium">Price</th>
                         <th class="border border-gray-300 px-2 py-2 font-medium">Action</th>
                     </tr>
@@ -94,10 +95,21 @@
                                 <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
                                     class="w-16 h-16 object-cover rounded-full" />
                             </td>
+                            
                             <td class="border border-gray-300 px-4 py-2">{{ $product->category->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->short_description }}</td>
                             <td class="border border-gray-300 px-7 py-2">{{ $product->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->brand->name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">
+                                <label for="status{{ $product->id }}" class="inline-flex items-center cursor-pointer">
+                                <input id="status{{ $product->id }}" type="checkbox" class="hidden toggle-switch" data-id="{{ $product->id }}" {{ $product->status ? 'checked' : '' }} />
+    
+                                    <div class="w-10 h-6 bg-gray-200 rounded-full relative">
+                                        <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition">
+                                        </div>
+                                    </div>
+                                </label>
+                            </td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->price }}</td>
                             <td class="px-4 py-2 mt-4 flex justify-center space-x-2">
                                 {{-- <button
@@ -151,7 +163,64 @@
 
     </div>
 
+<script>
+      document.querySelectorAll('.toggle-switch').forEach(toggle => {
+    const dot = toggle.parentNode.querySelector('.dot'); // The visual dot for the toggle switch
 
+    // Apply the correct initial state (visual toggle)
+    if (toggle.checked) {
+        dot.style.transform = 'translateX(100%)';
+        dot.style.backgroundColor = 'green';
+    } else {
+        dot.style.transform = 'translateX(0)';
+        dot.style.backgroundColor = 'white';
+    }
+
+    // Add event listener to handle checkbox state change
+    toggle.addEventListener('change', function() {
+        const productId = this.getAttribute('data-id'); // Get the category ID from the data-id attribute
+        const newState = this.checked ? 1 : 0; // 1 for checked, 0 for unchecked
+
+        // Toggle visual effect of the switch
+        if (this.checked) {
+            dot.style.transform = 'translateX(100%)';
+            dot.style.backgroundColor = 'green';
+        } else {
+            dot.style.transform = 'translateX(0)';
+            dot.style.backgroundColor = 'white';
+        }
+
+        // Send AJAX request to update the food item status
+        fetch(`/admin/product/update-toggle/${productId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // CSRF token for security
+            },
+            body: JSON.stringify({
+                state: newState, // The new state (1 or 0)
+                type: 'status',  // Indicate we're updating the status
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                // If update fails, reset the toggle state
+                this.checked = !this.checked;
+                dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
+                dot.style.backgroundColor = this.checked ? 'green' : 'white';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Reset the toggle state in case of an error
+            this.checked = !this.checked;
+            dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
+            dot.style.backgroundColor = this.checked ? 'green' : 'white';
+        });
+    });
+});
+</script>
     <script>
     // Open the modal
     document.getElementById('openModalButton').addEventListener('click', function() {

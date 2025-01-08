@@ -137,41 +137,20 @@ public function update(Request $request, $id)
     return response()->json(['success' => true]);
 }
 
-// ProductController.php
-
-public function updateStatus(Request $request, $id)
+public function updateToggleStatus(Request $request, $productId)
 {
-    // Find the product by ID or fail if not found
-    $product = Product::findOrFail($id);
-
-    // Ensure the status is only updated if it's still 'pending'
-    if ($product->status != 'pending') {
-        return response()->json([
-            'success' => false, 
-            'message' => 'Product status cannot be changed as it is not pending.'
-        ]);
-    }
-
-    // Validate incoming data (status and remarks)
-    $request->validate([
-        'status' => 'required|in:approved,rejected',
-        'remark' => 'required|string|max:255',
-    ]);
-
-    // Update the product's status and remark
-    $product->status = $request->status;
-    $product->remark = $request->remark;
+    // Retrieve the food item by ID from the database
+    $product = Product::findOrFail($productId);
+    
+    // Update the status field with the new value
+    $product->status = $request->state; // 'state' is 1 (checked) or 0 (unchecked)
+    
+    // Save the updated food item back to the database
     $product->save();
-
-    // Return the updated data
-    return response()->json([
-        'success' => true, 
-        'message' => 'Product status updated successfully.',
-        'status' => $product->status,
-        'remark' => $product->remark
-    ]);
+    
+    // Return a JSON response indicating success
+    return response()->json(['success' => true]);
 }
-
 
 
 

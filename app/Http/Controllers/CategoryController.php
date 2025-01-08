@@ -102,22 +102,18 @@ class CategoryController extends Controller
         return redirect()->route('admin.category.index')->with('success', 'Category deleted successfully');
     }
 
-    // Update Category Status (Toggle Visibility)
-    public function updateToggle(Request $request, $categoryId)
+    public function updateToggleStatus(Request $request, $categoryId)
     {
-        $category = Category::find($categoryId);
-
-        if (!$category) {
-            return response()->json(['success' => false, 'message' => 'Category not found.']);
-        }
-
-        // Update status field based on the request type
-        if ($request->type === 'status') {
-            $category->status = $request->state;
-        }
-
+        // Retrieve the food item by ID from the database
+        $category = Category::findOrFail($categoryId);
+        
+        // Update the status field with the new value
+        $category->status = $request->state; // 'state' is 1 (checked) or 0 (unchecked)
+        
+        // Save the updated food item back to the database
         $category->save();
-
+        
+        // Return a JSON response indicating success
         return response()->json(['success' => true]);
     }
 }

@@ -83,9 +83,8 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::delete('admin/product/{id}/destroy', [ProductController::class, 'destroy'])->name('admin.product.destroy');
     Route::get('/admin/product/{id}', [ProductController::class, 'show'])->name('admin.product.show');
     Route::get('/sub-categories/{categoryId}', [ProductController::class, 'getSubCategories']);
-    Route::post('/admin/product/update-toggle/{product}', [ProductController::class, 'updateToggle'])->name('admin.product.updateToggle');
-    Route::post('/admin/product/update-status/{id}', [ProductController::class, 'updateStatus'])->name('admin.product.update-status');
- 
+    Route::post('admin/product/update-toggle/{productId}', [ProductController::class, 'updateToggleStatus']);
+
 
     //Category routes
     Route::get('admin/category/index', [CategoryController::class, 'index'])->name('admin.category.index');
@@ -94,6 +93,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::get('admin/category/{id}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
     Route::patch('admin/category/{id}/updatecategory', [CategoryController::class, 'update'])->name('admin.category.updatecategory');
     Route::delete('admin/category/{id}/deletecategory', [CategoryController::class, 'destroy'])->name('admin.category.deletecategory');
+    Route::post('admin/category/update-toggle/{categoryId}', [CategoryController::class, 'updateToggleStatus']);
 
     //Subcategory routes
     Route::get('/admin/subcategory/index', [SubcategoryController::class, 'index'])->name('admin.subcategory.index');
