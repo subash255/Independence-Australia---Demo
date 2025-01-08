@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');  // Foreign key to link the user
             $table->string('firstname');
             $table->string('lastname');
-            $table->text('address');
+            $table->text('address_1');
             $table->string('city');
             $table->string('state');
             $table->string('zip');

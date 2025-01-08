@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -41,138 +42,159 @@ class CheckoutController extends Controller
 
     // Process the checkout by redirecting to another website (AeroHealth API)
  
+    public function processCheckout(Request $request)
+    {
 
-public function processCheckout(Request $request)
-{
-    // Get the authenticated user
-    $user = Auth::user();
+        $user = Auth::user();
     
-    // Get the user's cart details
-    $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
-
-    if ($cartItems->isEmpty()) {
-        return redirect()->route('welcome')->with('error', 'Your cart is empty.');
-    }
-dd($cartItems);
-    // Get the user's contact details
-    $contact = Contact::where('user_id', $user->id)->first();
-
-    if (!$contact) {
-        return redirect()->route('welcome')->with('error', 'No contact information found.');
-    }
-
-    if ($contact->is_billing == 0) {
-        return redirect()->route('welcome')->with('error', 'Billing information is required.');
-    }
-
-    if ($contact->is_shipping == 0) {
-        return redirect()->route('welcome')->with('warning', 'Do you want the billing and shipping address to be the same?');
-    }
+        $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
     
-    
-    // Validate the request
-    $useSameAddress = $request->input('same_address', false);
-    $validated = $request->validate([
-        'billing.first_name' => 'required|string|max:255',
-        'billing.last_name' => 'required|string|max:255',
-        'billing.address_1' => 'required|string|max:255',
-        'billing.city' => 'required|string|max:255',
-        'billing.state' => 'required|string|max:255',
-        'billing.postcode' => 'required|string|max:255',
-        'billing.country' => 'required|string|max:255',
-        'billing.email' => 'required|email|max:255',
-        'billing.phone' => 'required|string|max:255',
-        'shipping.first_name' => $useSameAddress ? 'nullable' : 'required|string|max:255',
-        'shipping.last_name' => $useSameAddress ? 'nullable' : 'required|string|max:255',
-        'shipping.address_1' => $useSameAddress ? 'nullable' : 'required|string|max:255',
-        'shipping.city' => $useSameAddress ? 'nullable' : 'required|string|max:255',
-        'shipping.state' => $useSameAddress ? 'nullable' : 'required|string|max:255',
-        'shipping.postcode' => $useSameAddress ? 'nullable' : 'required|string|max:255',
-        'shipping.country' => $useSameAddress ? 'nullable' : 'required|string|max:255',
-    ]);
-   
-
-    // Prepare billing and shipping data from Contact table
-    $billingData = [
-        'first_name' => $contact->firstname,
-        'last_name' => $contact->lastname,
-        'address_1' => $contact->address,
-        'city' => $contact->city,
-        'state' => $contact->state,
-        'postcode' => $contact->zip,
-        'country' => $contact->country,
-        'email' => $contact->contact_info,
-        'phone' => $contact->phone,
-    ];
-
-    // If shipping address is the same as billing, use billing data, otherwise use validated shipping data
-    $shippingData = $useSameAddress ? $billingData : $validated['shipping'];
-
-    // Prepare line items for the API request
-    $lineItems = $cartItems->map(function ($item) {
-        $product = $item->product;
-        return $product ? [
-            'sku' => $product->sku,
-            'quantity' => $item->quantity,
-        ] : null;
-    })->filter(function ($item) {
-        return !is_null($item);
-    });
-
-    // Store the order in the database
-    $order = Order::create([
-        'user_id' => $user->id,
-        'billing' => json_encode($billingData),  // Encode the billing data as JSON
-        'shipping' => json_encode($shippingData),  // Encode the shipping data as JSON
-        'line_items' => json_encode($lineItems->toArray()),  // Encode line items as JSON
-        'status' => 'pending', // Example status
-    ]);
-
-    // Now, send the order to the external API
-    $apiKey = env('AEROHEALTH_API_KEY');
-    $apiSecret = env('AEROHEALTH_API_SECRET');
-    $base64Credentials = base64_encode("{$apiKey}:{$apiSecret}");
-    $url = 'https://aerohealthcareonline.com/wp-json/aero-api/v3/orders';
-
-    // Prepare the data for the API request
-    $data = [
-        'billing' => $billingData,
-        'shipping' => $shippingData,
-        'line_items' => $lineItems->toArray(),
-        'meta_data' => [
-            ['key' => 'submitting_site_order_id', 'value' => $order->id],
-            ['key' => 'submitting_site', 'value' => 'https://example.com'],
-            ['key' => 'po_number', 'value' => 'ABC1234'],
-            ['key' => 'order_memo', 'value' => 'Please rush.'],
-            ['key' => 'shipping_notes', 'value' => 'Mind the dog.'],
-        ],
-    ];
-
-    // Convert the data to JSON
-    $jsonData = json_encode($data);
-
-    // Send data to external API using HTTP client (Laravel's Http facade)
-    try {
-        $response = Http::withHeaders([
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Basic ' . $base64Credentials,
-        ])->post($url, $jsonData);
-
-        // Check if the request was successful
-        if ($response->successful()) {
-            return redirect()->route('checkout.success')->with('success', 'Your order has been successfully placed and processed.');
-        } else {
-            Log::error('API request failed', [
-                'status' => $response->status(),
-                'response' => $response->body(),
-            ]);
-            return redirect()->route('checkout')->with('error', 'There was an issue processing your order.');
+        if ($cartItems->isEmpty()) {
+            return redirect()->route('welcome')->with('error', 'Your cart is empty.');
         }
-    } catch (\Exception $e) {
-        Log::error('Error communicating with API', ['exception' => $e->getMessage()]);
-        return redirect()->route('checkout')->with('error', 'An error occurred while communicating with the API.');
+        
+        $contacts = Contact::where('user_id', $user->id)->get();
+    
+        if (!$contacts->count() > 0) {
+            return redirect()->route('welcome')->with('error', 'No contact information found.');
+        }
+    
+   
+        $billingData = null;
+        $shippingData = null;
+        $bothData = null;
+        foreach ($contacts as $contact) {
+            if ($contact->is_billing == 1 && $contact->is_shipping == 1) {
+                $bothData = [
+                    'first_name' => $contact->firstname,
+                    'last_name' => $contact->lastname,
+                    'address_1' => $contact->address_1,
+                    'city' => $contact->city,
+                    'state' => $contact->state,
+                    'postcode' => $contact->zip,
+                    'country' => $contact->country,
+                    'email' => $contact->contact_info,
+                    'phone' => $contact->phone,
+                ];
+            }elseif ($contact->is_billing == 1 && $contact->is_shipping == 0) {
+                $billingData = [
+                    'first_name' => $contact->firstname,
+                    'last_name' => $contact->lastname,
+                    'address_1' => $contact->address_1,
+                    'city' => $contact->city,
+                    'state' => $contact->state,
+                    'postcode' => $contact->zip,
+                    'country' => $contact->country,
+                    'email' => $contact->contact_info,
+                    'phone' => $contact->phone,
+                ];
+
+            }elseif($contact->is_billing == 0 && $contact->is_shipping == 1){
+                $shippingData = [
+                    'first_name' => $contact->firstname,
+                    'last_name' => $contact->lastname,
+                    'address_1' => $contact->address_1,
+                    'city' => $contact->city,
+                    'state' => $contact->state,
+                    'postcode' => $contact->zip,
+                    'country' => $contact->country,
+                    'email' => $contact->contact_info,
+                    'phone' => $contact->phone,
+                ];
+            }
+           
+        }
+
+        if($bothData){
+            $billingData = $bothData;
+            $shippingData = $bothData;
+        }elseif($billingData){
+            $billingData = $billingData;
+        }elseif($shippingData){
+            $shippingData = $shippingData;
+        }
+
+        
+        // Prepare line items for the API request
+        $lineItems = $cartItems->map(function ($item) {
+            $product = $item->product;
+            return $product ? [
+                'sku' => $product->sku,
+                'quantity' => $item->quantity,
+            ] : null;
+        })->filter(function ($item) {
+            return !is_null($item);
+        });
+    
+        $order = Order::create([
+            'user_id' => $user->id,
+            'billing' => json_encode($billingData),
+            'shipping' => json_encode($shippingData),
+            'line_items' => json_encode($lineItems->toArray()),
+            'status' => 'pending',
+        ]);
+    
+        
+        $apiKey = env('AEROHEALTH_API_KEY');
+        $apiSecret = env('AEROHEALTH_API_SECRET');
+        $base64Credentials = base64_encode("{$apiKey}:{$apiSecret}");
+        $url = 'https://aerohealthcareonline.com/wp-json/aero-api/v3/orders';
+    
+        // Prepare the data for the API request
+        $data = [
+            'billing' => $billingData,
+            'shipping' => $shippingData,
+            'line_items' => $lineItems->toArray(),
+            'meta_data' => [
+                ['key' => 'submitting_site_order_id', 'value' => $order->id],
+                ['key' => 'submitting_site', 'value' => 'https://testins.com'],
+                ['key' => 'po_number', 'value' => 'ABC12348'],
+                ['key' => 'order_memo', 'value' => 'Please rush.'],
+                ['key' => 'shipping_notes', 'value' => 'Mind the dog.'],
+            ],
+        ];
+    
+        // Convert the data to JSON
+        $data = json_encode($data);
+    
+        // Initialize cURL
+       
+
+        $ch = curl_init();
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_URL, $url); // Set the target URL
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
+        curl_setopt($ch, CURLOPT_POST, true); // Specify that it's a POST request
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data); // Attach the data (encoded as JSON)
+        
+        // Set headers
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Authorization:  Basic {Y2tfdGttYXJmYnJDQzRsQXByYk5wSWJrbHdqbndRSTJrSkw6Y3NfU25BMkhXYlVtWE04U1U1WGpoNnY0WE4yQUoxamFad3o=}',
+            'User-Agent: YourAppName/1.0', // Set a custom user-agent
+            'Referer: https://yourwebsite.com', // Set the referrer (the website from where the request originates)
+        ]);
+    
+        // Execute the cURL request and capture the response
+        $response = curl_exec($ch);
+    
+        // Get any cURL errors
+        $err = curl_error($ch);
+
+        if($response){
+            $user = Auth::id();
+            CartItem::where('user_id', $user)->delete();
+            return redirect()->route('user.welcome')->with('success', 'Your order has been placed successfully.');
+        }
+        elseif($err){
+            return redirect()->route('user.cart.index')->with('error', 'An error occurred while processing your order.');
+        }
+    
+        // Close the cURL session
+        curl_close($ch);
     }
-}
+    
 
     
     
