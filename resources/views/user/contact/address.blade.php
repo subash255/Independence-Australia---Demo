@@ -94,16 +94,65 @@
 
                 <!-- Address Information -->
                 <div>
-                    <h2 class="text-2xl font-semibold mb-2 text-[#00718f]">Address</h2>
-                    <hr class="border-b border-gray-300 mt-2 mb-4 w-[80%]">
-                    <!-- Address Field -->
-                    <div class="mb-4">
-                        <label for="address" class="block text-sm font-medium text-gray-700">Please enter your address</label>
-                        <input type="text" id="address" name="address" placeholder="e.g. 123 Long Street, Melbourne VIC, 3000" 
-                               value="{{ old('address') }}"
-                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
-                               required>
-                    </div>
+                <h2 class="text-2xl font-semibold mb-2 text-[#00718f]">Address</h2>
+<hr class="border-b border-gray-300 mt-2 mb-4 w-[80%]">
+
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <!-- Address Field -->
+    <div class="mb-4">
+        <label for="address" class="block text-sm font-medium text-gray-700">Please enter your address</label>
+        <input type="text" id="address" name="address" placeholder="e.g. 123 Long Street, Melbourne VIC, 3000"
+               value="{{ old('address') }}"
+               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+               required>
+    </div>
+
+    <!-- City Field -->
+    <div class="mb-4">
+        <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+        <input type="text" id="city" name="city" placeholder="e.g. Melbourne"
+               value="{{ old('city') }}"
+               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               required>
+    </div>
+
+    <!-- Zip Code Field -->
+    <div class="mb-4">
+        <label for="zip" class="block text-sm font-medium text-gray-700">Zip Code</label>
+        <input type="text" id="zip" name="zip" placeholder="e.g. 3000"
+               value="{{ old('zip') }}"
+               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               required>
+    </div>
+
+    <!-- Country Field -->
+    <div class="mb-4">
+        <label for="country" class="block text-sm font-medium text-gray-700">Country</label>
+        <input type="text" id="country" name="country" placeholder="e.g. Australia"
+               value="{{ old('country') }}"
+               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               required>
+    </div>
+
+    <!-- State Field -->
+    <div class="mb-4">
+        <label for="state" class="block text-sm font-medium text-gray-700">State</label>
+        <input type="text" id="state" name="state" placeholder="e.g. Victoria"
+               value="{{ old('state') }}"
+               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               required>
+    </div>
+
+    <!-- Phone Number Field -->
+    <div class="mb-4">
+        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="e.g. +61 412 345 678"
+               value="{{ old('phone') }}"
+               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+               required>
+    </div>
+</div>
+
 
                     <!-- Default Billing and Shipping -->
                     <div class="flex items-center mb-2">

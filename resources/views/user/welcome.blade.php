@@ -1,6 +1,7 @@
 @extends('layouts.master')
 @section('content')
 
+
 <div class="p-6 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
     <div class="my-8 ml-8 max-w-7xl mx-auto">
         <!-- Breadcrumbs -->

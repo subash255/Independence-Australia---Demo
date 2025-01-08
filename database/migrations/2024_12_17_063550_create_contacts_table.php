@@ -17,6 +17,11 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->text('address');
+            $table->string('city');
+            $table->string('state');
+            $table->string('zip');
+            $table->string('country');
+            $table->string('phone');
             $table->string('contact_info');
             $table->boolean('is_billing')->default(false);
             $table->boolean('is_shipping')->default(false);
