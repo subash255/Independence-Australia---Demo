@@ -135,6 +135,14 @@
     </div>
 
     <script>
+        function updateEntries() {
+        const entries = document.getElementById('entries').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('entries', entries); 
+        window.location.href = url; 
+    }
+
+    
         document.getElementById('search').addEventListener('input', function() {
             const searchQuery = this.value.toLowerCase();
             history.pushState(null, null, `?search=${searchQuery}`);

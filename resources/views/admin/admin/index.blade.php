@@ -150,6 +150,12 @@
 
 
 <script>
+    function updateEntries() {
+        const entries = document.getElementById('entries').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('entries', entries); 
+        window.location.href = url; 
+    }
     // Get the dropdown and table
     const entriesDropdown = document.getElementById('entries');
     const dataTable = document.getElementById('dataTable');

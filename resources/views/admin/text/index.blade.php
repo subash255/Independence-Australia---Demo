@@ -135,6 +135,14 @@
     </div>
 
     <script>
+
+function updateEntries() {
+        const entries = document.getElementById('entries').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('entries', entries); 
+        window.location.href = url; 
+    }
+    
         // Open the modal
         document.getElementById('openModalButton').addEventListener('click', function() {
             document.getElementById('textModal').classList.remove('modal-hidden');

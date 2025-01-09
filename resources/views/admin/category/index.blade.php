@@ -155,6 +155,13 @@
 </div>
 
 <script>
+    function updateEntries() {
+        const entries = document.getElementById('entries').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('entries', entries); 
+        window.location.href = url; 
+    }
+    
      document.querySelectorAll('.toggle-switch').forEach(toggle => {
     const dot = toggle.parentNode.querySelector('.dot'); // The visual dot for the toggle switch
 
