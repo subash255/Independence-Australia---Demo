@@ -116,25 +116,26 @@ class CheckoutController extends Controller
 
 
         // Prepare line items for the API request
-        $lineItems = $cartItems->map(function ($item) {
-            $product = $item->product;
-            return $product ? [
-                'sku' => $product->sku,
-                'quantity' => $item->quantity,
-            ] : null;
-        })->filter(function ($item) {
-            return !is_null($item);
-        });
+        $lineItems = [];
+foreach ($cartItems as $item) {
+    $product = $item->product;
+    if ($product) {
+        $lineItems[] = "{$product->sku}:{$item->quantity}";
+    }
+}
 
-        $line = json_decode($lineItems);
+// Join the items as a string with a delimiter
+$line = implode('|', $lineItems);
+
 
         $order = Order::create([
             'user_id' => $user->id,
             'billing' => $billingData,
             'shipping' => $shippingData,
-            'line_items' => $line[0],
+            'line_items' => $line,
             'status' => 'pending',
         ]);
+        dd('here');
 
         $apiKey = env('AEROHEALTH_API_KEY');
         $apiSecret = env('AEROHEALTH_API_SECRET');
