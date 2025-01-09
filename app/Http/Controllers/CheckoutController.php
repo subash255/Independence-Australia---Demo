@@ -140,6 +140,7 @@ class CheckoutController extends Controller
             'billing' => $billingData,
             'shipping' => $shippingData,
             'line_items' => $line,
+            'line_items' => $line,
             'status' => 'pending',
         ]);
     
