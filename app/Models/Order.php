@@ -29,17 +29,4 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function getTotalAttribute()
-{
-    $lineItems = json_decode($this->line_items, true);
-    $total = 0;
-
-    foreach ($lineItems as $item) {
-        $total += $item['quantity'] * $item['price']; // Adjust this as needed for taxes or discounts
-    }
-
-    return $total;
-}
-
-
 }

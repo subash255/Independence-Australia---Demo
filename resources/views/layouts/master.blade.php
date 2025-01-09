@@ -54,18 +54,19 @@
                 </button>
             </div>
             <a href="/" class="flex items-center space-x-4">
-                <img src="{{ asset('images/logo.png') }}" alt="Alwayson Medical Logo" class="h-10">
+                {{-- <img src="{{ asset('images/logo.png') }}" alt="Always There Medical Logo" class="h-10"> --}}
+                <h1 class="text-2xl font-bold ">Always There <span class="text-blue-500">Medical</span></h1>
             </a>
-    
+
             <!-- Search Box - Centered and with more width -->
             <div class="relative flex-1 max-w-lg mx-auto">
                 <input type="text" id="search-input" onkeyup="searchFunction()" placeholder="What are you looking for?" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
                 <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500 sm:block lg:block hidden"></i>
-    
+
                 <!-- Search Results -->
                 <div id="search-results" class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden"></div>
             </div>
-    
+
             <!-- Desktop User Authentication and Basket Section -->
             <div class="flex items-center space-x-2 ml-auto hidden sm:flex">
                 @auth <!-- If the user is authenticated -->
@@ -73,7 +74,7 @@
                     <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
                         <i class="ri-user-3-fill text-blue-500 text-[25px]"></i>
                     </div>
-    
+
                     <!-- User Information for Desktop -->
                     <div class="hidden sm:flex flex-col">
                         <a href="{{ route('user.welcome') }}">
@@ -81,7 +82,7 @@
                             <p class="text-sm text-gray-500">B2B Customer</p>
                         </a>
                     </div>
-    
+
                     <!-- Logout Button (For Desktop View) -->
                     <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3 hidden sm:flex">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
@@ -100,7 +101,7 @@
                     <span class="px-1">/</span>
                     <a href="/register" class="text-gray-900 hover:underline font-bold">Register</a>
                 @endauth
-    
+
                 <!-- Cart Icon with count -->
                 <div class="relative">
                     <span class="px-2"></span>
@@ -108,7 +109,7 @@
                         <i class="ri-shopping-basket-fill text-blue-500 font-light text-[25px]"></i>
                         <span>Basket</span>
                     </a>
-    
+
                     <!-- Cart Count -->
                     @if (session('cart_count') > 0)
                         <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1 transform translate-x-1/2 -translate-y-1/2">
@@ -117,14 +118,14 @@
                     @endif
                 </div>
             </div>
-    
+
             <!-- Mobile Icons only -->
             <div class="flex items-center space-x-2 sm:hidden">
                 <!-- Search Icon -->
                 <a href="#" class="text-gray-900">
                     <i class="ri-search-line text-blue-500 text-[20px]"></i>
                 </a>
-    
+
                 @auth <!-- If the user is authenticated -->
                     <!-- Logout Icon for Mobile View -->
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
@@ -139,7 +140,7 @@
                         <i class="ri-user-3-fill text-blue-500 text-[20px]"></i>
                     </a>
                 @endauth
-    
+
                 <!-- Cart Icon -->
                 <a href="{{ route('user.cart.index') }}" class="text-gray-900">
                     <i class="ri-shopping-basket-fill text-blue-500 font-light text-[25px]"></i>
@@ -147,7 +148,7 @@
             </div>
         </div>
     </header>
-    
+
 
 
 <!-- Mobile Menu (Initially Hidden) -->
@@ -172,7 +173,7 @@
                                 <i onclick="showToggle(event, {{ $category->id }})" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
                             </button>
                         </a>
-        
+
                         <!-- Subcategory Dropdown (Hidden by Default) -->
                         <div id="{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                             @foreach($category->subcategories as $subcategory)
@@ -187,7 +188,7 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
 
@@ -314,7 +315,7 @@
                     &copy; 2024 Alwayson Medical &nbsp; | &nbsp; All rights reserved.
                 </p>
             </div>
-            
+
         </div>
 
     </footer>
@@ -360,7 +361,7 @@
         });
     </script>
 
-  
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function searchFunction() {

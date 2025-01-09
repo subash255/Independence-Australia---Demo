@@ -14,10 +14,8 @@
     window.onload = function () {
       const sidebar = document.getElementById('sidebar');
       const content = document.getElementById('content-container');
-      
+
       // Make sure the sidebar is always in expanded state
-      sidebar.classList.add('w-64');
-      content.classList.add('ml-[16rem]');
     };
   </script>
 
@@ -45,7 +43,10 @@
     <!-- Sidebar -->
     <aside id="sidebar" class="w-64 bg-white text-gray-900 shadow-lg flex flex-col fixed top-0 bottom-0 left-0 transition-all duration-300 overflow-y-auto z-10">
       <div class="p-4 flex items-center justify-center bg-white">
-        <img id="logo" src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain">
+        {{-- <img id="logo" src="{{ asset('images/logo.png') }}" alt="Logo" class="w-32 h-32 rounded-full border-2 border-gray-500 object-contain"> --}}
+        <div class="w-44 h-44 rounded-full border-2 border-gray-500 object-contain text-xl font-bold">
+            <span class="flex flex-col items-center justify-center h-full">Always There <br> <span class="text-blue-600">Medical</span></span>
+        </div>
       </div>
 
       <nav class="mt-6">
@@ -58,7 +59,7 @@
           <span class="ml-4">Category</span>
         </a>
 
-        @if(Auth::user()->role == 'superadmin') 
+        @if(Auth::user()->role == 'superadmin')
         <a href="{{route('admin.admin.index')}}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-admin-fill"></i>
           <span class="ml-4">Manage Admin</span>
@@ -69,7 +70,7 @@
           <i class="ri-price-tag-fill"></i>
           <span class="ml-4">Brands</span>
         </a>
-        <a href="{{ route('admin.logos.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
+        <a href="{{ route('admin.order.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-shopping-cart-2-fill"></i>
           <span class="ml-4">Orders</span>
         </a>
@@ -81,7 +82,7 @@
           <i class="ri-file-text-line"></i>
           <span class="ml-4"> Manage Text </span>
         </a>
-        
+
         <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 hover:bg-blue-600 hover:text-white transition-colors duration-200">
           <i class="ri-bank-card-2-fill"></i>
           <span class="ml-4">Products</span>
@@ -119,10 +120,10 @@
     </div>
 
     <!-- Main Content -->
-    <main id="content-container" class="flex-1 p-8 overflow-y-auto transition-all duration-300">
+    <main id="content-container" class="flex-1 p-8 overflow-y-auto ml-[16rem]">
       @yield('content')
     </main>
-    
+
   </div>
 
 </body>

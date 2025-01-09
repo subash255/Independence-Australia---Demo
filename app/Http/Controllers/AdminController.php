@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        // Paginate admins, excluding super_admins
+        // Paginate admins, excluding supedr_admins
         $admins = User::where('role', 'admin')->paginate(10); 
     
         return view('admin.admin.index', compact('admins'), [

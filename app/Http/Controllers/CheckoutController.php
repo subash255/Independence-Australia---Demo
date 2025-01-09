@@ -41,25 +41,25 @@ class CheckoutController extends Controller
     }
 
     // Process the checkout by redirecting to another website (AeroHealth API)
- 
+
     public function processCheckout(Request $request)
     {
 
         $user = Auth::user();
-    
+
         $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
-    
+
         if ($cartItems->isEmpty()) {
             return redirect()->route('welcome')->with('error', 'Your cart is empty.');
         }
-        
+
         $contacts = Contact::where('user_id', $user->id)->get();
-    
+
         if (!$contacts->count() > 0) {
             return redirect()->route('welcome')->with('error', 'No contact information found.');
         }
-    
-   
+
+
         $billingData = null;
         $shippingData = null;
         $bothData = null;
@@ -102,7 +102,7 @@ class CheckoutController extends Controller
                     'phone' => $contact->phone,
                 ];
             }
-           
+
         }
 
         if($bothData){
@@ -114,7 +114,7 @@ class CheckoutController extends Controller
             $shippingData = $shippingData;
         }
 
-        
+
         // Prepare line items for the API request
         $lineItems = $cartItems->map(function ($item) {
             $product = $item->product;
@@ -127,7 +127,7 @@ class CheckoutController extends Controller
         });
 
         $line = json_decode($lineItems);
-    
+
         $order = Order::create([
             'user_id' => $user->id,
             'billing' => $billingData,
@@ -135,13 +135,12 @@ class CheckoutController extends Controller
             'line_items' => $line[0],
             'status' => 'pending',
         ]);
-    
-        dd('done on local');
+
         $apiKey = env('AEROHEALTH_API_KEY');
         $apiSecret = env('AEROHEALTH_API_SECRET');
         $base64Credentials = base64_encode("{$apiKey}:{$apiSecret}");
         $url = 'https://aerohealthcareonline.com/wp-json/aero-api/v3/orders';
-    
+
         // Prepare the data for the API request
         $data = [
             'billing' => $billingData,
@@ -155,12 +154,12 @@ class CheckoutController extends Controller
                 ['key' => 'shipping_notes', 'value' => 'Mind the dog.'],
             ],
         ];
-    
+
         // Convert the data to JSON
         $data = json_encode($data);
-    
+
         // Initialize cURL
-       
+
 
         $ch = curl_init();
 
@@ -169,7 +168,7 @@ class CheckoutController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
         curl_setopt($ch, CURLOPT_POST, true); // Specify that it's a POST request
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data); // Attach the data (encoded as JSON)
-        
+
         // Set headers
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
@@ -177,35 +176,35 @@ class CheckoutController extends Controller
             'User-Agent: YourAppName/1.0', // Set a custom user-agent
             'Referer: https://yourwebsite.com', // Set the referrer (the website from where the request originates)
         ]);
-    
+
         // Execute the cURL request and capture the response
         $response = curl_exec($ch);
-    
+
         // Get any cURL errors
         $err = curl_error($ch);
 
         if ($response) {
             // Get the authenticated user's ID
             $user = Auth::id();
-        
-            // If you're storing cart items in session, clear them from session
-            session()->forget('cart.' . $user);  // This assumes cart items are stored in the session with the user's ID as the key.
-        
+
+            //remove all cart items
+            CartItem::where('user_id', $user)->delete();
+
             // Alternatively, if you use a different method to store cart items in the session, adjust this line accordingly.
-        
+
             // Redirect back with success message
             return redirect()->route('user.welcome')->with('success', 'Your order has been placed successfully.');
         }
-        
+
         elseif($err){
             return redirect()->route('user.cart.index')->with('error', 'An error occurred while processing your order.');
         }
-    
+
         // Close the cURL session
         curl_close($ch);
     }
-    
 
-    
-    
+
+
+
 }
