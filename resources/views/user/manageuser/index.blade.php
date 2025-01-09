@@ -18,44 +18,8 @@
 </script>
 
 <div class="flex flex-col lg:flex-row"> 
-    <!-- Sidebar/Nav Section -->
-    <nav class="w-[21%] p-6 font-semibold mt-10">
-        <a href="{{ route('user.welcome') }}" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">Account Dashboard</span>
-        </a>
-        <a href="{{route('user.myorder')}}" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.myorder') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">Web Orders</span>
-        </a>
-        <a href="{{ route('user.contact.index') }}" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.contact.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">My Information</span>
-        </a>
-        <a href="#" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">Company Profile</span>
-        </a>
-        <!-- Conditionally show User Management link only if the user is a vendor -->
-        @if(Auth::user()->role == 'vendor') <!-- Adjust this based on your role check -->
-        <a href=" {{ route('user.manageuser.index') }}" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.manageuser.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">User Management</span>
-        </a>
-
-
-        @endif
-    </nav>
+    {{-- Sidebar/Nav Section --}}
+    @include('user.nav')
     
     <div class="lg:w-[79%] w-full p-6 mt-4">
     <div class="mb-4 flex justify-end">
@@ -84,10 +48,10 @@
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
-        <table class="min-w-full border-collapse border border-gray-300">
+        <table id="manageuserTable" class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr>
-                    <th class="border border-gray-300 px-4 py-2">Order</th>
+                    <th class="border border-gray-300 px-4 py-2">S.N</th>
                     <th class="border border-gray-300 px-4 py-2">Name</th>
                     <th class="border border-gray-300 px-4 py-2">Email</th>
                     <th class="border border-gray-300 px-4 py-2">Action</th>
@@ -138,13 +102,41 @@
 
 
 <script>
-    
-    function updateEntries() {
+
+function updateEntries() {
         const entries = document.getElementById('entries').value;
         const url = new URL(window.location.href);
         url.searchParams.set('entries', entries); 
         window.location.href = url; 
     }
+    
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByUsername(searchQuery);
+    });
+
+
+    function filterTableByUsername(query) {
+        const rows = document.querySelectorAll('#manageuserTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const usernameCell = cells[2];
+
+            if (usernameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByUsername(searchQuery);
+    });
 </script>
 
 @endsection
