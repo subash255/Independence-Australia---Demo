@@ -8,10 +8,11 @@ use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
 {
-    public function index()
+    public function index($id)
     {
+        $subcategories=Subcategory::where('category_id', $id)->paginate(5);;
         // Fetch the subcategories and categories
-        $subcategories = Subcategory::paginate(5);
+         
         $categories = Category::all(); // Fetch all categories
     
         // Pass both variables to the view
