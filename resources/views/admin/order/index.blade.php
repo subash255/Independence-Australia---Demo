@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
-
     {{-- Flash Message --}}
     @if (session('success'))
         <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
@@ -23,7 +21,7 @@
 
 
 
-<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+    <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
         <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
             <div class="flex items-center space-x-2">
                 <label for="entries" class="mr-2">Show entries:</label>
@@ -44,7 +42,7 @@
 
         <div class="overflow-x-auto">
             <!-- Table Section -->
-            <table id="usersTable" class="min-w-full border-collapse border border-gray-300">
+            <table id="orderTable" class="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -68,36 +66,35 @@
                             </td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <span>{{ $order->product->name }}</span><br>
-                        </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $order->user->name }} {{ $order->user->last_name }}</td>
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $order->user->name }}
+                                {{ $order->user->last_name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->user->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">${{ ucfirst($order->total) }} </td>
 
-                            <td class="border border-gray-300 px-4 py-2">{{ucfirst($order->status) }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ json_decode($order->billings)->first_name
-                            }}
-                            <br>
-                            {{ json_decode($order->billings)->last_name }}
-                            <br>
-                            {{ json_decode($order->billings)->address_1 }}
-                            <br>
-                            {{ json_decode($order->billings)->city }}
-                            <br>
-                            {{ json_decode($order->billings)->country }}
-                            <br>
+                            <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ json_decode($order->billings)->first_name }}
+                                <br>
+                                {{ json_decode($order->billings)->last_name }}
+                                <br>
+                                {{ json_decode($order->billings)->address_1 }}
+                                <br>
+                                {{ json_decode($order->billings)->city }}
+                                <br>
+                                {{ json_decode($order->billings)->country }}
+                                <br>
                             </td>
 
-                            <td class="border border-gray-300 px-4 py-2">{{ json_decode($order->shippings)->first_name
-                            }}
-                            <br>
-                            {{ json_decode($order->shippings)->last_name }}
-                            <br>
-                            {{ json_decode($order->shippings)->address_1 }}
-                            <br>
-                            {{ json_decode($order->shippings)->city }}
-                            <br>
-                            {{ json_decode($order->shippings)->country }}
-                            <br>
+                            <td class="border border-gray-300 px-4 py-2">{{ json_decode($order->shippings)->first_name }}
+                                <br>
+                                {{ json_decode($order->shippings)->last_name }}
+                                <br>
+                                {{ json_decode($order->shippings)->address_1 }}
+                                <br>
+                                {{ json_decode($order->shippings)->city }}
+                                <br>
+                                {{ json_decode($order->shippings)->country }}
+                                <br>
                             </td>
 
 
@@ -138,33 +135,32 @@
     </div>
 
     <script>
+        document.getElementById('search').addEventListener('input', function() {
+            const searchQuery = this.value.toLowerCase();
+            history.pushState(null, null, `?search=${searchQuery}`);
+            filterTableByUsername(searchQuery);
+        });
 
-document.getElementById('search').addEventListener('input', function() {
-    const searchQuery = this.value.toLowerCase();
-    history.pushState(null, null, `?search=${searchQuery}`);
-    filterTableByUsername(searchQuery);
-});
 
+        function filterTableByUsername(query) {
+            const rows = document.querySelectorAll('#orderTable tbody tr');
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                const usernameCell = cells[4];
 
-function filterTableByUsername(query) {
-    const rows = document.querySelectorAll('#usersTable tbody tr');
-    rows.forEach(row => {
-        const cells = row.getElementsByTagName('td');
-        const usernameCell = cells[1];
-
-        if (usernameCell.textContent.toLowerCase().startsWith(query)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
+                if (usernameCell.textContent.toLowerCase().startsWith(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
         }
-    });
-}
 
-window.addEventListener('popstate', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchQuery = urlParams.get('search') || '';
-    document.getElementById('search').value = searchQuery;
-    filterTableByUsername(searchQuery);
-});
-        </script>
+        window.addEventListener('popstate', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchQuery = urlParams.get('search') || '';
+            document.getElementById('search').value = searchQuery;
+            filterTableByUsername(searchQuery);
+        });
+    </script>
 @endsection

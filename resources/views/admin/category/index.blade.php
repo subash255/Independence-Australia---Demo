@@ -85,7 +85,7 @@
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
-        <table class="min-w-full border-collapse border border-gray-300">
+        <table id="categoryTable" class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">Order</th>
@@ -211,6 +211,36 @@
         });
     });
 });
+</script>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByCategoryname(searchQuery);
+    });
+
+
+    function filterTableByCategoryname(query) {
+        const rows = document.querySelectorAll('#categoryTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const categorynameCell = cells[1];
+
+            if (categorynameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByCategoryname(searchQuery);
+    });
 </script>
 
 <script>

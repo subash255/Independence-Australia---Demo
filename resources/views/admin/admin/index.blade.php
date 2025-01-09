@@ -92,7 +92,7 @@
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
-        <table class="min-w-full bg-white border-collapse border border-gray-300 shadow-md rounded-lg">
+        <table id="adminTable" class="min-w-full bg-white border-collapse border border-gray-300 shadow-md rounded-lg">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2  ">S.N</th>
@@ -176,6 +176,36 @@
 
     // Call filterTable initially to set the default view (5 entries)
     filterTable();
+</script>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByAdminname(searchQuery);
+    });
+
+
+    function filterTableByAdminname(query) {
+        const rows = document.querySelectorAll('#adminTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const adminnameCell = cells[2];
+
+            if (adminnameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByAdminname(searchQuery);
+    });
 </script>
 
 <script>

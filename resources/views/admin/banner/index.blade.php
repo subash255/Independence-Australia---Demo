@@ -73,12 +73,6 @@
                 <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
             </select>
         </div>
-
-        <div class="flex items-center space-x-2 w-full sm:w-auto">
-            <span class="text-gray-700">Search:</span>
-            <input type="text" id="search" placeholder="Search..."
-                class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
-        </div>
     </div>
 
     <!-- Table Section -->

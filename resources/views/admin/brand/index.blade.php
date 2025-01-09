@@ -77,7 +77,7 @@
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
-        <table class="min-w-full border-collapse border border-gray-300">
+        <table id="brandTable" class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -135,6 +135,36 @@
     </div>
 
 </div>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByBrandname(searchQuery);
+    });
+
+
+    function filterTableByBrandname(query) {
+        const rows = document.querySelectorAll('#brandTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const brandnameCell = cells[2];
+
+            if (brandnameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByBrandname(searchQuery);
+    });
+</script>
 
 <script>
     // Open the modal

@@ -77,7 +77,7 @@
     </div>
 
     <div class="overflow-x-auto">
-        <table class="min-w-full border-collapse border border-gray-300">
+        <table id="subcategoryTable" class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr>
                     <th class="border border-gray-300 px-4 py-2">Order</th>
@@ -194,6 +194,36 @@
                 dot.style.backgroundColor = this.checked ? 'green' : 'white';
             });
         });
+    });
+</script>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableBySubcategoryname(searchQuery);
+    });
+
+
+    function filterTableBySubcategoryname(query) {
+        const rows = document.querySelectorAll('#subcategoryTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const subcategorynameCell = cells[1];
+
+            if (subcategorynameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableBySubcategoryname(searchQuery);
     });
 </script>
 
