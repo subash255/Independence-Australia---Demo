@@ -15,20 +15,34 @@ class OrderController extends Controller
     {
         // Get the number of entries per page from the request or default to 5
         $perPage = $request->get('entries', 5);
-
+        
         // Paginate the orders without any search query
         $orders = Order::paginate($perPage);
         foreach ($orders as $order) {
             $order->shippings = json_encode($order->shipping);
             $order->billings = json_encode($order->billing);
-            $order->line_items = $order->line_items;
+            $orderitems=[];
+
             $items = $order->line_items;
             $order->total = 0;
-            $sku = $items['sku'];
-            $product = Product::where('sku', $sku)->first();
-            $order->total += $product->price * $items['quantity'];
-            $order->product = $product;
+            $totalprice = 0;
+            foreach($items as $item)
+            {
+                $sku = $item['sku'];
+                $product = Product::where('sku', $sku)->first();
+                $product->quantity = $item['quantity'];
+                $product->total = $product->price * $product->quantity;
+                $totalprice += $product->total;
+                $orderitems[] = $product;
+            }
+
+            $order->total = $totalprice;
+
+            $order->orderitems = $orderitems;
+            // $lineItems=json_decode($order->line_items,true);
         }
+
+        
 
 
         // Return the view with the paginated orders

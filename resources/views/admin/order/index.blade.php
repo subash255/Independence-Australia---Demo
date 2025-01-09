@@ -46,66 +46,57 @@
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
-                        <th class="border border-gray-300 px-4 py-2">Product Image</th>
-                        <th class="border border-gray-300 px-4 py-2">Product</th>
                         <th class="border border-gray-300 px-4 py-2">Name</th>
                         <th class="border border-gray-300 px-4 py-2">Email</th>
                         <th class="border border-gray-300 px-4 py-2">Price</th>
                         <th class="border border-gray-300 px-4 py-2">Status</th>
                         <th class="border border-gray-300 px-4 py-2">Billing Address</th>
                         <th class="border border-gray-300 px-4 py-2">Shipping Address</th>
+                        <th class="border border-gray-300 px-4 py-2">Product</th>
                         <th class="border border-gray-300 px-4 py-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($orders as $order)
+                        @php
+                            $billing = json_decode($order->billings);
+                            $shipping = json_decode($order->shippings);
+                        @endphp
                         <tr class="border border-gray-300 items-center">
                             <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
-                            <td class="border border-gray-300 px-4 py-2">
-                                <img src="{{ $order->product->image }}" alt="" class="w-32">
-                            </td>
-                            <td class="border border-gray-300 px-4 py-2">
-                                <span>{{ $order->product->name }}</span><br>
-                            </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $order->user->name }}
-                                {{ $order->user->last_name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $order->user->name }} {{ $order->user->last_name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->user->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">${{ ucfirst($order->total) }} </td>
-
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ json_decode($order->billings)->first_name }}
-                                <br>
-                                {{ json_decode($order->billings)->last_name }}
-                                <br>
-                                {{ json_decode($order->billings)->address_1 }}
-                                <br>
-                                {{ json_decode($order->billings)->city }}
-                                <br>
-                                {{ json_decode($order->billings)->country }}
-                                <br>
+                            <td class="border border-gray-300 px-4 py-2">
+                                {{ $billing->first_name }}<br>
+                                {{ $billing->last_name }}<br>
+                                {{ $billing->address_1 }}<br>
+                                {{ $billing->city }}<br>
+                                {{ $billing->country }}
                             </td>
-
-                            <td class="border border-gray-300 px-4 py-2">{{ json_decode($order->shippings)->first_name }}
-                                <br>
-                                {{ json_decode($order->shippings)->last_name }}
-                                <br>
-                                {{ json_decode($order->shippings)->address_1 }}
-                                <br>
-                                {{ json_decode($order->shippings)->city }}
-                                <br>
-                                {{ json_decode($order->shippings)->country }}
-                                <br>
+                            <td class="border border-gray-300 px-4 py-2">
+                                {{ $shipping->first_name }}<br>
+                                {{ $shipping->last_name }}<br>
+                                {{ $shipping->address_1 }}<br>
+                                {{ $shipping->city }}<br>
+                                {{ $shipping->country }}
                             </td>
-
-
-
-
+                            <td class="border border-gray-300 px-2 py-2">
+                                @if(isset($order->orderitems) && count($order->orderitems) > 0)
+                                    @foreach($order->orderitems as $orderItem)
+                                        <div class="px-4 py-2">
+                                            <span class="font-semibold">SKU: {{ $orderItem->sku }}</span>, 
+                                            <span>Quantity: {{ $orderItem->quantity }}</span>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="px-4 py-2 text-center">No items available</div>
+                                @endif
+                            </td>
                             <td class="px-2 py-2 flex justify-center items-center space-x-4">
-
                                 <form action="#" class="flex items-center">
-
-                                    <button
-                                        class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                    <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                         <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>
@@ -114,6 +105,7 @@
                     @endforeach
                 </tbody>
             </table>
+            
         </div>
 
         <!-- Pagination and Show Entries Section at the Bottom -->
@@ -142,7 +134,7 @@
         window.location.href = url; 
     }
 
-    
+
         document.getElementById('search').addEventListener('input', function() {
             const searchQuery = this.value.toLowerCase();
             history.pushState(null, null, `?search=${searchQuery}`);

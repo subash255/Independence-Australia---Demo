@@ -40,19 +40,20 @@
                 </button>
             </div>
             
-            <!-- Search Bar -->
-            <input type="text" id="search-user" placeholder="Search users..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
-    
-            <!-- User List -->
-            <ul id="user-list" class="py-2 space-y-2 max-h-60 overflow-y-auto">
-                @foreach ($users as $user)
-                    <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition ease-in-out duration-150  border-b border-gray-300">
-                        <a href="{{ route('impersonate', $user->id) }}" class="block text-gray-800">
-                            <span class="font-medium">{{ $user->name }} {{ $user->last_name }}</span>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
+<!-- Search Bar -->
+<input type="text" id="search-user" placeholder="Search users..." class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" />
+
+<!-- User List -->
+<ul id="user-list" class="py-2 space-y-2 max-h-60 overflow-y-auto">
+    @foreach ($users as $user)
+        <li class="user-item px-4 py-2 hover:bg-gray-100 cursor-pointer transition ease-in-out duration-150  border-b border-gray-300">
+            <a href="{{ route('impersonate', $user->id) }}" class="block text-gray-800">
+                <span class="font-medium">{{ $user->name }} {{ $user->last_name }}</span>
+            </a>
+        </li>
+    @endforeach
+</ul>
+
         
         </div>
     </div>
@@ -116,28 +117,50 @@
     </div>
 </div>
 
+
 <script>
     document.getElementById('dashboard-link').addEventListener('click', function() {
         // If you want to toggle visibility of account info, you can do this:
         document.getElementById('account-info').classList.remove('hidden');
     });
+
+    // Function to toggle the modal visibility
+    function toggleModal() {
+        const modal = document.getElementById('user-modal');
+        modal.classList.toggle('hidden');
+    }
+
 </script>
 
 <script>
-        if (document.getElementById('flash-message')) setTimeout(() => {
-            const msg = document.getElementById('flash-message');
-            msg.style.opacity = 0;
-            msg.style.transition = "opacity 0.5s ease-out";
-            setTimeout(() => msg.remove(), 500);
-        }, 3000);
+        document.addEventListener('DOMContentLoaded', function () {
+        // Search functionality
+        const searchInput = document.getElementById('search-user');
+        const userList = document.getElementById('user-list');
 
-    </script>
-
-<script>
-        // Function to toggle the modal visibility
-        function toggleModal() {
-            const modal = document.getElementById('user-modal');
-            modal.classList.toggle('hidden');
+        // Only add event listener if the search input exists
+        if (searchInput && userList) {
+            searchInput.addEventListener('keyup', function () {
+                const filter = searchInput.value.toLowerCase();  // Get the lowercase input value
+                
+                // Get all the user list items
+                const userItems = userList.getElementsByClassName('user-item');
+                
+                // Loop through the user items and hide/show based on search query
+                Array.from(userItems).forEach(item => {
+                    const userName = item.querySelector('span').textContent.toLowerCase();
+                    
+                    if (userName.includes(filter)) {
+                        item.style.display = '';  // Show the item
+                    } else {
+                        item.style.display = 'none';  // Hide the item
+                    }
+                });
+            });
         }
-    </script>
+    });
+</script>
+
+
+    
 @endsection
