@@ -77,8 +77,26 @@
         </div>
     </div>
 
+    <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
+        <div class="flex items-center space-x-2">
+            <label for="entries" class="mr-2">Show entries:</label>
+            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10" onchange="updateEntries()">
+                <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
+                <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
+                <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
+            </select>
+        </div>
+
+        <div class="flex items-center space-x-2 w-full sm:w-auto">
+            <span class="text-gray-700">Search:</span>
+            <input type="text" id="search" placeholder="Search..."
+                class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
+        </div>
+    </div>
+
+    <!-- Table Section -->
     <div class="overflow-x-auto">
-        <table id="subcategoryTabl" class="min-w-full border-collapse border border-gray-300">
+        <table id="subcategoryTable" class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr>
                     <th class="border border-gray-300 px-4 py-2">Order</th>
@@ -210,7 +228,7 @@
         const rows = document.querySelectorAll('#subcategoryTable tbody tr');
         rows.forEach(row => {
             const cells = row.getElementsByTagName('td');
-            const subcategorynameCell = cells[1];
+            const subcategorynameCell = cells[3];
 
             if (subcategorynameCell.textContent.toLowerCase().startsWith(query)) {
                 row.style.display = '';
@@ -251,33 +269,4 @@
     });
 </script>
 
-<script>
-    document.getElementById('search').addEventListener('input', function() {
-        const searchQuery = this.value.toLowerCase();
-        history.pushState(null, null, `?search=${searchQuery}`);
-        filterTableBySubcategoryname(searchQuery);
-    });
-
-
-    function filterTableBySubcategoryname(query) {
-        const rows = document.querySelectorAll('#subcategoryTable tbody tr');
-        rows.forEach(row => {
-            const cells = row.getElementsByTagName('td');
-            const subcategorynameCell = cells[1];
-
-            if (subcategorynameCell.textContent.toLowerCase().startsWith(query)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
-
-    window.addEventListener('popstate', function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const searchQuery = urlParams.get('search') || '';
-        document.getElementById('search').value = searchQuery;
-        filterTableBySubcategoryname(searchQuery);
-    });
-</script>
 @endsection
