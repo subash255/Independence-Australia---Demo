@@ -95,12 +95,20 @@
                                 @endif
                             </td>
                             <td class="px-2 py-2 flex justify-center items-center space-x-4">
+                                <a href="{{ route('admin.order.view', $order->id) }}" class="flex items-center">
+                                    <button class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                        <i class="ri-eye-line text-white"></i>
+                                    </button>
+                                </a>
+                                <!-- Delete button -->
                                 <form action="#" class="flex items-center">
                                     <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                         <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>
+                                
                             </td>
+                            
                         </tr>
                     @endforeach
                 </tbody>

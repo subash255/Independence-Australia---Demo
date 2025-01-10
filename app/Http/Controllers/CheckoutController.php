@@ -116,15 +116,15 @@ class CheckoutController extends Controller
 
         
         // Prepare line items for the API request
-        // $lineItems = $cartItems->map(function ($item) {
-        //     $product = $item->product;
-        //     return $product ? [
-        //         'sku' => $product->sku,
-        //         'quantity' => $item->quantity,
-        //     ] : null;
-        // })->filter(function ($item) {
-        //     return !is_null($item);
-        // });
+        $lineItems = $cartItems->map(function ($item) {
+            $product = $item->product;
+            return $product ? [
+                'sku' => $product->sku,
+                'quantity' => $item->quantity,
+            ] : null;
+        })->filter(function ($item) {
+            return !is_null($item);
+        });
 
         // $line = json_decode($lineItems);
         $line = $cartItems->map(function ($item) {
@@ -140,11 +140,10 @@ class CheckoutController extends Controller
             'billing' => $billingData,
             'shipping' => $shippingData,
             'line_items' => $line,
-            'line_items' => $line,
             'status' => 'pending',
         ]);
     
-        dd('done on local');
+        
         $apiKey = env('AEROHEALTH_API_KEY');
         $apiSecret = env('AEROHEALTH_API_SECRET');
         $base64Credentials = base64_encode("{$apiKey}:{$apiSecret}");

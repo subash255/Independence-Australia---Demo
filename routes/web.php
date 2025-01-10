@@ -109,6 +109,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
 
     //Order routes
     Route::get('admin/order/index', [OrderController::class, 'index'])->name('admin.order.index');
+    Route::get('/admin/order/view/{id}', [OrderController::class, 'view'])->name('admin.order.view');
     Route::delete('admin/order/{id}/destroy', [OrderController::class, 'destroy'])->name('admin.order.destroy');
 
 
