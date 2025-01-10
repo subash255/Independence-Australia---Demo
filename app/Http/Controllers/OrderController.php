@@ -34,6 +34,7 @@ class OrderController extends Controller
                 $totalprice += $product->total;
                 $orderitems[] = $product;
             }
+            $order->product=$product;
 
             $order->total = $totalprice;
 

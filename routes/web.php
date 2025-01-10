@@ -27,7 +27,10 @@ Route::get('checkout', [CheckoutController::class, 'showCheckoutPage'])->name('c
 Route::post('checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
 Route::get('user/cart/show', [CheckoutController::class, 'show'])->name('user.cart.show');
 
-Route::get('menu/{id?}/index', [HomepageController::class, 'showcat'])->name('menu.index');
+Route::get('menu/{id?}', [HomepageController::class, 'showcat'])->name('menu.index');
+Route::get('product/index', [HomepageController::class, 'allproduct'])->name('product.index');
+
+
 
 
 
@@ -84,7 +87,7 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     //Category routes
     Route::get('admin/category/index', [CategoryController::class, 'index'])->name('admin.category.index');
     Route::post('admin/category/store', [CategoryController::class, 'store'])->name('admin.category.store');
-    Route::get('admin/category/{id}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
+    Route::get('admin/category/{slug}/edit', [CategoryController::class, 'edit'])->name('admin.category.edit');
     Route::patch('admin/category/{id}/updatecategory', [CategoryController::class, 'update'])->name('admin.category.updatecategory');
     Route::delete('admin/category/{id}/deletecategory', [CategoryController::class, 'destroy'])->name('admin.category.deletecategory');
     Route::post('admin/category/update-toggle/{categoryId}', [CategoryController::class, 'updateToggleStatus']);

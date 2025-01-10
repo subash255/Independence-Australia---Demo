@@ -39,27 +39,42 @@
                 </div>
                 @endforeach
             </div>
+<!-- Shop by Brands Section -->
+<h2 class="font-semibold text-lg text-gray-800 mb-4">Shop By Brands</h2>
+@foreach($brands as $brand)
+    <div class="flex items-center space-x-2">
+        <input type="checkbox" name="brand" value="{{ $brand->id }}"
+            id="brand-{{ $brand->id }}"
+            {{ request('brand') == $brand->id ? 'checked' : '' }}
+            class="brand-checkbox">
+        <label for="brand-{{ $brand->id }}">{{ $brand->name }}</label>
+    </div>
+@endforeach
+
         </aside>
         
 
         <!-- Product Grid -->
-        <main class="w-full lg:w-3/4">
-            <!-- Product Categories Overview -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            @if($subcategories->isNotEmpty())
-    @foreach($subcategories as $subcategory)
-        <div class="bg-white shadow rounded-md p-4 ">
-            <h3 class="text-lg font-semibold text-gray-800">{{ $subcategory->name }}</h3>
-            <p class="text-gray-600 mt-2">
-                Discover a wide selection of clothing and dressing aids designed to promote independence and comfort.
-            </p>
-            <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
-        </div>
-    @endforeach
-@else
-    <p>No subcategories found.</p>
-@endif
-            </div>
+        <main class="w-full lg:w-3/4"  >
+           
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        @if($subcategories->isNotEmpty())
+            @foreach($subcategories as $subcategory)
+                <div class="bg-white shadow rounded-md p-4 ">
+                    <h3 class="text-lg font-semibold text-gray-800">{{ $subcategory->name }}</h3>
+                    <p class="text-gray-600 mt-2">
+                        Discover a wide selection of clothing and dressing aids designed to promote independence and comfort.
+                    </p>
+                    <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
+                </div>
+            @endforeach
+        @else
+            <p>No subcategories found.</p>
+        @endif
+    </div>
+
+
+
 
             <!-- Product Listings -->
             <div class="mt-8">
@@ -80,7 +95,7 @@
                 </div>
             
                 <!-- Product Grid Layout -->
-                <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div id="product" class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($products as $product)
                     <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">
                         <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
@@ -150,5 +165,46 @@
         }
     }
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const brandCheckboxes = document.querySelectorAll('.brand-checkbox');
+    
+    // Event listener for checkbox changes
+    brandCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Ensure only one checkbox is checked at a time
+            brandCheckboxes.forEach(box => {
+                if (box !== this) {
+                    box.checked = false; // Uncheck other checkboxes
+                }
+            });
+
+            // Trigger the page reload with the selected brand in the URL
+            updateProductsBasedOnSelectedBrand();
+        });
+    });
+
+    // Function to update products based on the selected brand
+    function updateProductsBasedOnSelectedBrand() {
+        const selectedBrand = Array.from(brandCheckboxes).find(checkbox => checkbox.checked);
+        const brandId = selectedBrand ? selectedBrand.value : null;
+
+        // Construct URL with brand filter
+        const url = new URL(window.location.href);
+        url.searchParams.delete('brand');  // Remove the existing brand parameter
+        if (brandId) {
+            url.searchParams.append('brand', brandId);  // Append the selected brand to the URL
+        }
+
+        // Reload the page with the updated URL (brand filter applied)
+        window.location.href = url.toString();
+    }
+});
+
+
+
+
+</script>
+
 
 @endsection

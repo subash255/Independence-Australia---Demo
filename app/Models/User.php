@@ -52,5 +52,8 @@ public function contact()
     
     return $this->hasOne(Contact::class);
 }
-
+public function orders()
+{
+    return $this->hasMany(Order::class);
+}
 }

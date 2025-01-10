@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Order;
@@ -84,7 +85,7 @@ class HomepageController extends Controller
             if ($user->role == 'vendor') {
                 // Fetch orders for users managed by the vendor
                 $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
-                $orders = Order::whereIn('user_id', $users->pluck('id'))->get();  // Get orders for users under this vendor
+                $orders = Order::whereIn('user_id', $users->pluck('id'))->get();  // Fetch orders for users under this vendor
             } else {
                 // Fetch orders for the authenticated user (regular user)
                 $orders = Order::where('user_id', $user->id)->get();
@@ -95,63 +96,165 @@ class HomepageController extends Controller
             $users = collect();  // No users if the user is not authenticated
         }
     
+        // Process the orders if available
+        foreach ($orders as $order) {
+            $order->shippings = json_encode($order->shipping);
+            $order->billings = json_encode($order->billing);
+            $orderitems = [];
+    
+            $totalprice = 0;
+    
+            // Loop through the line items (which are stored as JSON in the 'line_items' field)
+            foreach ($order->line_items as $item) {
+                // Fetch the product by SKU (or other identifier, based on your data structure)
+                $product = Product::where('sku', $item['sku'])->first();  // Assuming 'sku' is the identifier for the product
+    
+                if ($product) {
+                    // Calculate the product total based on quantity
+                    $product->quantity = $item['quantity'];
+                    $product->total = $product->price * $product->quantity;
+    
+                    // Add the product to the order items array
+                    $orderitems[] = $product;
+    
+                    // Update the total price for the order
+                    $totalprice += $product->total;
+                }
+            }
+    
+            $order->total = $totalprice;
+            $order->orderitems = $orderitems;
+        }
+    
         // Pass the data to the view
         return view('user.myorder', compact('orders', 'users', 'categories', 'images', 'sliderTexts'));
     }
     
     
     
+    
 
-    public function showcat($id)
-{
-    $categories = Category::with('subcategories')->get();
-    $category = Category::with(['products', 'subcategories'])->findOrFail($id);
-
-    // Fetch subcategories for the category
-    $subcategories = FacadesDB::table('subcategories')
-        ->where('category_id', $id)
-        ->get();
-
-    // Fetch products for the category
-    $productsQuery = Product::where('category_id', $id);
-
-    // Get the selected sort option from the request, default to 'name_asc'
-    $sortBy = request('sort_by', 'name_asc');
-
-    // Apply sorting based on the selected option
-    switch ($sortBy) {
-        case 'name_asc':
-            $productsQuery = $productsQuery->orderBy('name', 'asc');
-            break;
-        case 'name_desc':
-            $productsQuery = $productsQuery->orderBy('name', 'desc');
-            break;
-        case 'price_asc':
-            $productsQuery = $productsQuery->orderBy('price', 'asc');
-            break;
-        case 'price_desc':
-            $productsQuery = $productsQuery->orderBy('price', 'desc');
-            break;
-        case 'rating_asc':
-            $productsQuery = $productsQuery->orderBy('rating', 'asc');
-            break;
-        case 'rating_desc':
-            $productsQuery = $productsQuery->orderBy('rating', 'desc');
-            break;
-        default:
-            $productsQuery = $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
-            break;
+    public function showcat(Request $request, $id)
+    {
+        // Get all categories along with their subcategories
+        $categories = Category::with('subcategories')->get();
+        
+        // Get the category with products and subcategories
+        $category = Category::with(['products', 'subcategories'])->findOrFail($id);
+        
+        // Fetch subcategories for the category
+        $subcategories = FacadesDB::table('subcategories')
+            ->where('category_id', $id)
+            ->get();
+        
+        // Get all brands to display in the filter
+        $brands = Brand::all();
+        
+        // Get the selected brand from the request (single brand ID)
+        $selectedBrand = $request->input('brand');
+        
+        // Get the sorting option from the request
+        $sortBy = $request->input('sort_by', 'name_asc');
+        
+        // Start the products query for the selected category
+        $productsQuery = Product::where('category_id', $id);
+        
+        // Apply brand filter if a brand is selected
+        if ($selectedBrand) {
+            // Filter products by the selected brand
+            $productsQuery = $productsQuery->where('brand_id', $selectedBrand);
+        }
+        
+        // Apply sorting based on the selected sort option
+        switch ($sortBy) {
+            case 'name_asc':
+                $productsQuery = $productsQuery->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $productsQuery = $productsQuery->orderBy('name', 'desc');
+                break;
+            case 'price_asc':
+                $productsQuery = $productsQuery->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $productsQuery = $productsQuery->orderBy('price', 'desc');
+                break;
+            case 'rating_asc':
+                $productsQuery = $productsQuery->orderBy('rating', 'asc');
+                break;
+            case 'rating_desc':
+                $productsQuery = $productsQuery->orderBy('rating', 'desc');
+                break;
+            default:
+                $productsQuery = $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
+                break;
+        }
+        
+        // Paginate the products
+        $products = $productsQuery->paginate(15);
+        
+        // Return the view with all necessary data
+        return view('menu.index', compact('category', 'categories', 'products', 'subcategories', 'brands', 'selectedBrand', 'sortBy'));
     }
+    
+    public function allproduct(Request $request)
+    {
+        // Fetch categories and brands
+        $categories = Category::with('subcategories')->get();
+        $brands = Brand::all();
+    
+        // Handle sorting and filtering
+        $selectedBrand = $request->input('brand');
+        $sortBy = $request->input('sort_by', 'name_asc');
+    
+        // Initialize the products query
+        $productsQuery = Product::query();
+    
+        if ($selectedBrand) {
+            // Filter products by the selected brand
+            $productsQuery->where('brand_id', $selectedBrand);
+        }
+    
+        // Apply sorting based on the selected sort option
+        switch ($sortBy) {
+            case 'name_asc':
+                $productsQuery->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $productsQuery->orderBy('name', 'desc');
+                break;
+            case 'price_asc':
+                $productsQuery->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $productsQuery->orderBy('price', 'desc');
+                break;
+            case 'rating_asc':
+                $productsQuery->orderBy('rating', 'asc');
+                break;
+            case 'rating_desc':
+                $productsQuery->orderBy('rating', 'desc');
+                break;
+            default:
+                $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
+                break;
+        }
+    
+        // Paginate the products
+        $products = $productsQuery->paginate(15);
+    
+        // Return the view with products, categories, and subcategories
+        return view('product.index', compact('products', 'categories', 'brands', 'selectedBrand', 'sortBy'));
+    }
+    
 
-    // Paginate the products, showing 15 per page
-    $products = $productsQuery->paginate(15);
 
-    // Fetch the slider texts or any other necessary data
-    $sliderTexts = Text::orderBy('priority')->get();
+    
 
-    // Return the view with the necessary data
-    return view('menu.index', compact('category', 'categories', 'sliderTexts', 'products', 'subcategories'));
-}
+
+    
+
+    
 
 
     public function showproduct($id)
