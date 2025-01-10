@@ -40,10 +40,10 @@
                     <div class="w-1/2">
                         <h3 class="font-semibold text-gray-800 mb-2">Default Billing Address</h3>
                         @if($billing->count() > 0)
-                        <p class="text-gray-700">{{ $billing->first()->firstname }} {{ $billing->first()->lastname }}</p>
+                        <p class="text-gray-700">Name: {{ $billing->first()->firstname }} {{ $billing->first()->lastname }}</p>
                         <p class="text-gray-700">{{ $billing->first()->address }}</p>
                         <p class="text-gray-700">{{ $billing->first()->state }}, {{ $billing->first()->country }}, {{ $billing->first()->zip }}</p>
-                        <p class="text-gray-700">T: {{ $billing->first()->contact_info }}</p>
+                        <p class="text-gray-700">Tel: {{ $billing->first()->contact_info }}</p>
                         @else
                         <p class="text-gray-600">You have no default billing address in your address book.</p>
                         @endif
@@ -53,10 +53,10 @@
                     <div class="w-1/2">
                         <h3 class="font-semibold text-gray-800 mb-2">Default Shipping Address</h3>
                         @if($shipping->count() > 0)
-                        <p class="text-gray-700">{{ $shipping->first()->firstname }} {{ $shipping->first()->lastname }}</p>
+                        <p class="text-gray-700">Name: {{ $shipping->first()->firstname }} {{ $shipping->first()->lastname }}</p>
                         <p class="text-gray-700">{{ $shipping->first()->address }}</p>
                         <p class="text-gray-700">GLENDALOUGH, Western Australia, 6016</p>
-                        <p class="text-gray-700">T: {{ $shipping->first()->shipping_info }}</p>
+                        <p class="text-gray-700">Tel: {{ $shipping->first()->shipping_info }}</p>
                         @else
                         <p class="text-gray-600">You have no default shipping address in your address book.</p>
                         @endif

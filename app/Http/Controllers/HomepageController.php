@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Text;
@@ -17,15 +18,34 @@ class HomepageController extends Controller
 {
     public function index()
     {
+        // Get the currently authenticated user
         $user = Auth::user();
+        
+        // Get slider texts ordered by priority
         $sliderTexts = Text::orderBy('priority')->get();
-        $images = Banner::orderBy('priority','asc')->get();
+        
+        // Get banner images ordered by priority
+        $images = Banner::orderBy('priority', 'asc')->get();
+        
+        // Fetch categories along with subcategories
         $categories = Category::with('subcategories')->get();
-        //get user whose role is user and  associate with current auth user
-        $users = User::where('role', 'user')->where('vendor_id', $user->id)->get();
-
-        return view('user.welcome', compact('user', 'users', 'categories', 'images', 'sliderTexts'));
+        
+        // Get the current user's ID
+        $userId = $user->id;
+        
+        // Get users associated with the current user's vendor ID
+        $users = User::where('role', 'user')->where('vendor_id', $userId)->get();
+        
+        // Fetch shipping contact for the current user
+        $shipping = Contact::where('user_id', $userId)->where('is_shipping', '1')->first();
+        
+        // Fetch billing contact for the current user
+        $billing = Contact::where('user_id', $userId)->where('is_billing', '1')->first();
+    
+        // Pass the data to the view
+        return view('user.welcome', compact('user', 'users', 'categories', 'images', 'sliderTexts', 'shipping', 'billing'));
     }
+    
     public function welcome()
     {
         $user = Auth::user();
