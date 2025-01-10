@@ -45,18 +45,20 @@ class CategoryController extends Controller
 
 
     // Show Edit Form
-    public function edit($id)
+    public function edit($slug)
     {
-        $category = Category::findOrFail($id);
+        $categorys = Category::where('slug',$slug)->firstOrFail();
+        $category = Category::findOrFail($categorys->id);
         return view('admin.category.edit', compact('category'), [
             'title' => 'Manage Category'
         ]);
     }
 
     // Update Category
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $category = Category::findOrFail($id);
+        $categorys = Category::where('slug',$slug)->firstOrFail();
+        $category = Category::findOrFail($categorys->id);
 
         $request->validate([
             'category_name' => 'required|string|max:255',
@@ -87,9 +89,10 @@ class CategoryController extends Controller
     }
 
     // Delete Category
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $category = Category::findOrFail($id);
+        $categorys = Category::where('slug',$slug)->firstOrFail();
+        $category = Category::findOrFail($categorys->id);
 
         // Delete the image
         $imagePath = public_path('images/brand/' . $category->image);
@@ -101,7 +104,7 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.category.index')->with('success', 'Category deleted successfully');
     }
-
+    
     public function updateToggleStatus(Request $request, $categoryId)
     {
         // Retrieve the food item by ID from the database

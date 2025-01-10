@@ -19,38 +19,7 @@
 
 <div class="flex">
     <!-- Sidebar/Nav Section -->
-    <nav class="w-[21%] p-6 font-semibold mt-10">
-        <a href="{{ route('user.welcome') }}" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.welcome') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">Account Dashboard</span>
-        </a>
-        <a href="#" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.orders.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">Web Orders</span>
-        </a>
-        <a href="{{ route('user.contact.index') }}" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.contact.index') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">My Information</span>
-        </a>
-        <a href="#" 
-           class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200
-           hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 
-           {{ request()->routeIs('user.company.profile') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">Company Profile</span>
-        </a>
-        <!-- Conditionally show User Management link only if the user is a vendor -->
-        @if(Auth::user()->role == 'vendor') <!-- Adjust this based on your role check -->
-        <a href="{{ route('user.manageuser.index') }}" class="flex items-center py-4 border-b border-gray-300 transition-colors duration-200 hover:text-blue-500 focus:bg-gray-300 focus:text-blue-500 {{ request()->routeIs('user.management') ? 'bg-gray-300 text-blue-500 font-bold' : '' }}">
-            <span class="ml-4">User Management</span>
-        </a>
-        @endif
-    </nav>
+   @include('user.nav')
     
     <!-- Container -->
     <div class="w-[79%] mx-auto p-6 mt-4">
@@ -69,7 +38,7 @@
                     <!-- First Name -->
                     <div class="mb-4">
                         <label for="firstname" class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" id="firstname" name="firstname" value="{{ old('firstname') }}" 
+                        <input type="text" id="firstname" name="firstname" value="{{ old('name') }}" 
                                class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                                required>
                     </div>
@@ -77,7 +46,7 @@
                     <!-- Last Name -->
                     <div class="mb-4">
                         <label for="lastname" class="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" id="lastname" name="lastname" value="{{ old('lastname') }}" 
+                        <input type="text" id="lastname" name="lastname" value="{{ old('last_name') }}" 
                                class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                                required>
                     </div>
@@ -86,7 +55,7 @@
                     <div class="mb-4">
                         <label for="contact_info" class="block text-sm font-medium text-gray-700">Phone Number</label>
                         <input type="text" id="contact_info" name="contact_info" placeholder="XX XXXX XXXX"
-                               value="{{ old('contact_info') }}"
+                               value="{{ old('phone_number') }}"
                                class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
                                required>
                     </div>

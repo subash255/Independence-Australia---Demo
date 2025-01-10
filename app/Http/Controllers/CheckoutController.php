@@ -116,17 +116,17 @@ class CheckoutController extends Controller
 
         
         // Prepare line items for the API request
-        // $lineItems = $cartItems->map(function ($item) {
-        //     $product = $item->product;
-        //     return $product ? [
-        //         'sku' => $product->sku,
-        //         'quantity' => $item->quantity,
-        //     ] : null;
-        // })->filter(function ($item) {
-        //     return !is_null($item);
-        // });
+        $lineItems = $cartItems->map(function ($item) {
+            $product = $item->product;
+            return $product ? [
+                'sku' => $product->sku,
+                'quantity' => $item->quantity,
+            ] : null;
+        })->filter(function ($item) {
+            return !is_null($item);
+        });
 
-        // $line = json_decode($lineItems);
+        //
         $line = $cartItems->map(function ($item) {
             return [
                 'sku' => $item->product->sku,
@@ -134,6 +134,7 @@ class CheckoutController extends Controller
             ];
             
         });
+        // $lineItems = json_decode($line)->toArray();
     
         $order = Order::create([
             'user_id' => $user->id,
@@ -144,7 +145,7 @@ class CheckoutController extends Controller
             'status' => 'pending',
         ]);
     
-        dd('done on local');
+       
         $apiKey = env('AEROHEALTH_API_KEY');
         $apiSecret = env('AEROHEALTH_API_SECRET');
         $base64Credentials = base64_encode("{$apiKey}:{$apiSecret}");
@@ -195,13 +196,8 @@ class CheckoutController extends Controller
         if ($response) {
             // Get the authenticated user's ID
             $user = Auth::id();
-        
-            // If you're storing cart items in session, clear them from session
-            session()->forget('cart.' . $user);  // This assumes cart items are stored in the session with the user's ID as the key.
-        
-            // Alternatively, if you use a different method to store cart items in the session, adjust this line accordingly.
-        
-            // Redirect back with success message
+            
+            CartItem::where('user_id', $user)->delete();
             return redirect()->route('user.welcome')->with('success', 'Your order has been placed successfully.');
         }
         

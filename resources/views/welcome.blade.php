@@ -199,6 +199,12 @@
         </a>
         @endif
         @endforeach
+        <div class="flex justify-center mt-8">
+            <a href="{{ route('product.index') }}"
+                class="py-[10px] px-[20px] justify-between bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
+                View more Products
+            </a>
+        </div>
     </div>
     
     
