@@ -16,12 +16,7 @@
         }, 3000);
     </script>
 
-
-
-
-
-
-    <div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+    <div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20  rounded-lg">
         <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
             <div class="flex items-center space-x-2">
                 <label for="entries" class="mr-2">Show entries:</label>
@@ -40,7 +35,7 @@
             </div>
         </div>
 
-        <div class="overflow-x-auto">
+        <div class="">
             <!-- Table Section -->
             <table id="orderTable" class="min-w-full border-collapse border border-gray-300">
                 <thead>
@@ -64,7 +59,8 @@
                         @endphp
                         <tr class="border border-gray-300 items-center">
                             <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $order->user->name }} {{ $order->user->last_name }}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{ $order->user->name }}
+                                {{ $order->user->last_name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->user->email }}</td>
                             <td class="border border-gray-300 px-4 py-2">${{ ucfirst($order->total) }} </td>
                             <td class="border border-gray-300 px-4 py-2">{{ ucfirst($order->status) }}</td>
@@ -83,10 +79,10 @@
                                 {{ $shipping->country }}
                             </td>
                             <td class="border border-gray-300 px-2 py-2">
-                                @if(isset($order->orderitems) && count($order->orderitems) > 0)
-                                    @foreach($order->orderitems as $orderItem)
+                                @if (isset($order->orderitems) && count($order->orderitems) > 0)
+                                    @foreach ($order->orderitems as $orderItem)
                                         <div class="px-4 py-2">
-                                            <span class="font-semibold">SKU: {{ $orderItem->sku }}</span>, 
+                                            <span class="font-semibold">SKU: {{ $orderItem->sku }}</span>,
                                             <span>Quantity: {{ $orderItem->quantity }}</span>
                                         </div>
                                     @endforeach
@@ -96,24 +92,26 @@
                             </td>
                             <td class="px-2 py-2 flex justify-center items-center space-x-4">
                                 <a href="{{ route('admin.order.view', $order->id) }}" class="flex items-center">
-                                    <button class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                    <button
+                                        class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                         <i class="ri-eye-line text-white"></i>
                                     </button>
                                 </a>
                                 <!-- Delete button -->
                                 <form action="#" class="flex items-center">
-                                    <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                    <button
+                                        class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
                                         <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>
-                                
+
                             </td>
-                            
+
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            
+
         </div>
 
         <!-- Pagination and Show Entries Section at the Bottom -->
@@ -136,11 +134,11 @@
 
     <script>
         function updateEntries() {
-        const entries = document.getElementById('entries').value;
-        const url = new URL(window.location.href);
-        url.searchParams.set('entries', entries); 
-        window.location.href = url; 
-    }
+            const entries = document.getElementById('entries').value;
+            const url = new URL(window.location.href);
+            url.searchParams.set('entries', entries);
+            window.location.href = url;
+        }
 
 
         document.getElementById('search').addEventListener('input', function() {

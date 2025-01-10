@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Panel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Raleway:wght@100..900&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
   @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -37,7 +39,7 @@
 
 </head>
 
-<body class="bg-gray-100 text-gray-900 h-screen flex flex-col font-sans">
+<body class="bg-gray-100 text-gray-900 h-screen flex flex-col font-[Jost]">
 
   <div class="flex h-full">
     <!-- Sidebar -->
@@ -90,19 +92,23 @@
       </nav>
     </aside>
 
-    <!-- Header Section -->
-    <div id="header" class="bg-blue-600 text-white flex items-center justify-between px-8 py-[5rem] fixed top-0 left-[16rem] right-0 shadow-lg z-10">
-      <h1 class="text-3xl font-semibold mt-[-2rem]">{{ $title ?? 'Default Title' }}</h1>
+    
+
+    <!-- Main Content -->
+    <main class="ml-64 w-full">
+      <!-- Header Section -->
+    <div class="w-full bg-blue-600 text-white flex items-center justify-between px-4 py-14 shadow-lg">
+      <h1 class="text-xl font-semibold">{{ $title ?? 'Default Title' }}</h1>
       <div class="flex items-center space-x-4">
         <div class="relative group">
-          <div class="flex items-center mt-[-2rem] text-lg font-medium hover:text-white focus:outline-none cursor-pointer px-2 py-3">
+          <div class="flex items-center text-lg font-medium hover:text-white focus:outline-none cursor-pointer">
             <!-- Display the logged-in user's name -->
             <span>{{ Auth::user()->name }}</span>
             <i class="ri-arrow-down-s-line text-white"></i>
           </div>
 
           <!-- Dropdown Menu -->
-          <div class="absolute right-0 mt-[-2rem] w-40 bg-white text-gray-800 rounded-md shadow-lg hidden group-hover:block z-[50]">
+          <div class="absolute right-0 w-40 bg-white text-gray-800 rounded-md shadow-lg hidden group-hover:block z-[50]">
             <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
             <form action="{{ route('logout') }}" method="POST" class="w-full">
               @csrf
@@ -113,16 +119,18 @@
           </div>
         </div>
 
-        <button class="hover:bg-blue-500 mt-[-2rem] transition ease-in-out duration-200">
-          <i class="ri-moon-fill"></i>
-        </button>
+        <div>
+          <button class="hover:bg-blue-500 transition ease-in-out duration-200">
+            <i class="ri-moon-fill"></i>
+          </button>
+        </div>
       </div>
     </div>
-
-    <!-- Main Content -->
-    <main id="content-container" class="flex-1 p-8 overflow-y-auto ml-[16rem]">
+     <div class="pb-6">
       @yield('content')
-    </main>
+     </div>
+  </main>
+  
 
   </div>
 

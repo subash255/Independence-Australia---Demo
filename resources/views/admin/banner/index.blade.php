@@ -12,13 +12,23 @@
     }
 </style>
 
-<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
-    <div class="mb-4 flex justify-end">
-        <button id="openModalButton"
-        class="text-blue-500 font-medium bg-white border-2 border-blue-500 rounded-lg py-2 px-4 hover:bg-blue-600 hover:text-white transition duration-300">
-        Add Banner
+<div class="p-4 bg-white shadow-lg -mt-12 mx-4 z-20  rounded-lg">
+
+    <div class="mb-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <label for="entries" class="mr-2">Show entries:</label>
+            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10" onchange="updateEntries()">
+                <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
+                <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
+                <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
+            </select>
+        </div>
+        <button id="openModalButton" class="text-blue-500 font-medium bg-white border-2 border-blue-500 rounded-lg py-2 px-4 hover:bg-blue-600 hover:text-white transition duration-300">
+            Add Banner
         </button>
     </div>
+    
+
     
     <!-- Modal Structure for Create Banner -->
     <div id="bannerModal" class="fixed inset-0 bg-black bg-opacity-70 modal-hidden items-center justify-center z-50 backdrop-blur-[1px]">
@@ -64,16 +74,7 @@
             </form>
         </div>
     </div>
-    <div class="flex flex-col sm:flex-row justify-between mb-4 gap-4">
-        <div class="flex items-center space-x-2">
-            <label for="entries" class="mr-2">Show entries:</label>
-            <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10" onchange="updateEntries()">
-                <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
-                <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
-                <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
-            </select>
-        </div>
-    </div>
+
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
