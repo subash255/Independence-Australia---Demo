@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="max-w-full mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+<div class="p-4 bg-white shadow-lg -mt-11 mx-4 z-20  rounded-lg">
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Product Information Section -->

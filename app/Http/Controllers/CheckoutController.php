@@ -41,25 +41,25 @@ class CheckoutController extends Controller
     }
 
     // Process the checkout by redirecting to another website (AeroHealth API)
- 
+
     public function processCheckout(Request $request)
     {
 
         $user = Auth::user();
-    
+
         $cartItems = CartItem::where('user_id', $user->id)->with('product')->get();
-    
+
         if ($cartItems->isEmpty()) {
             return redirect()->route('welcome')->with('error', 'Your cart is empty.');
         }
-        
+
         $contacts = Contact::where('user_id', $user->id)->get();
-    
+
         if (!$contacts->count() > 0) {
             return redirect()->route('welcome')->with('error', 'No contact information found.');
         }
-    
-   
+
+
         $billingData = null;
         $shippingData = null;
         $bothData = null;
@@ -76,7 +76,7 @@ class CheckoutController extends Controller
                     'email' => $contact->contact_info,
                     'phone' => $contact->phone,
                 ];
-            }elseif ($contact->is_billing == 1 && $contact->is_shipping == 0) {
+            } elseif ($contact->is_billing == 1 && $contact->is_shipping == 0) {
                 $billingData = [
                     'first_name' => $contact->firstname,
                     'last_name' => $contact->lastname,
@@ -88,8 +88,7 @@ class CheckoutController extends Controller
                     'email' => $contact->contact_info,
                     'phone' => $contact->phone,
                 ];
-
-            }elseif($contact->is_billing == 0 && $contact->is_shipping == 1){
+            } elseif ($contact->is_billing == 0 && $contact->is_shipping == 1) {
                 $shippingData = [
                     'first_name' => $contact->firstname,
                     'last_name' => $contact->lastname,
@@ -102,19 +101,18 @@ class CheckoutController extends Controller
                     'phone' => $contact->phone,
                 ];
             }
-           
         }
 
-        if($bothData){
+        if ($bothData) {
             $billingData = $bothData;
             $shippingData = $bothData;
-        }elseif($billingData){
+        } elseif ($billingData) {
             $billingData = $billingData;
-        }elseif($shippingData){
+        } elseif ($shippingData) {
             $shippingData = $shippingData;
         }
 
-        
+
         // Prepare line items for the API request
         $lineItems = $cartItems->map(function ($item) {
             $product = $item->product;
@@ -135,16 +133,15 @@ class CheckoutController extends Controller
             return !is_null($item);
         });
 
-        //
+       
         $line = $cartItems->map(function ($item) {
             return [
                 'sku' => $item->product->sku,
                 'quantity' => $item->quantity,
             ];
-            
         });
         // $lineItems = json_decode($line)->toArray();
-    
+
         $order = Order::create([
             'user_id' => $user->id,
             'billing' => $billingData,
@@ -152,13 +149,13 @@ class CheckoutController extends Controller
             'line_items' => $line,
             'status' => 'pending',
         ]);
-    
-        
+
+
         $apiKey = env('AEROHEALTH_API_KEY');
         $apiSecret = env('AEROHEALTH_API_SECRET');
         $base64Credentials = base64_encode("{$apiKey}:{$apiSecret}");
         $url = 'https://aerohealthcareonline.com/wp-json/aero-api/v3/orders';
-    
+
         // Prepare the data for the API request
         $data = [
             'billing' => $billingData,
@@ -172,12 +169,12 @@ class CheckoutController extends Controller
                 ['key' => 'shipping_notes', 'value' => 'Mind the dog.'],
             ],
         ];
-    
+
         // Convert the data to JSON
         $data = json_encode($data);
-    
+
         // Initialize cURL
-       
+
 
         $ch = curl_init();
 
@@ -186,7 +183,7 @@ class CheckoutController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // Return the response as a string
         curl_setopt($ch, CURLOPT_POST, true); // Specify that it's a POST request
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data); // Attach the data (encoded as JSON)
-        
+
         // Set headers
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
@@ -194,30 +191,24 @@ class CheckoutController extends Controller
             'User-Agent: YourAppName/1.0', // Set a custom user-agent
             'Referer: https://yourwebsite.com', // Set the referrer (the website from where the request originates)
         ]);
-    
+
         // Execute the cURL request and capture the response
         $response = curl_exec($ch);
-    
+
         // Get any cURL errors
         $err = curl_error($ch);
 
         if ($response) {
             // Get the authenticated user's ID
             $user = Auth::id();
-            
+
             CartItem::where('user_id', $user)->delete();
             return redirect()->route('user.welcome')->with('success', 'Your order has been placed successfully.');
-        }
-        
-        elseif($err){
+        } elseif ($err) {
             return redirect()->route('user.cart.index')->with('error', 'An error occurred while processing your order.');
         }
-    
+
         // Close the cURL session
         curl_close($ch);
     }
-    
-
-    
-    
 }

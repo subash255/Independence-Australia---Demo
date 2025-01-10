@@ -59,7 +59,9 @@ class TextController extends Controller
          $assignedPriorities = Text::pluck('priority')->toArray();
          $availablePriorities = range(1, 10);
          $availablePriorities = array_diff($availablePriorities, $assignedPriorities);
-         return view('admin.text.edit', compact('text', 'availablePriorities'));
+         return view('admin.text.edit', compact('text', 'availablePriorities'), [
+            'title' => 'Manage Text'
+        ]);
      }
  
      // Update the specified banner in the database

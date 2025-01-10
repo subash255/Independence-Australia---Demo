@@ -56,7 +56,7 @@
                         <p class="text-gray-700">Name: {{ $shipping->first()->firstname }} {{ $shipping->first()->lastname }}</p>
                         <p class="text-gray-700">{{ $shipping->first()->address }}</p>
                         <p class="text-gray-700">GLENDALOUGH, Western Australia, 6016</p>
-                        <p class="text-gray-700">Tel: {{ $shipping->first()->shipping_info }}</p>
+                        <p class="text-gray-700">Tel: {{ $shipping->first()->contact_info }}</p>
                         @else
                         <p class="text-gray-600">You have no default shipping address in your address book.</p>
                         @endif

@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="max-w-8xl mx-auto p-8 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+<div class="p-4 bg-white shadow-lg -mt-11 mx-4 z-20  rounded-lg">
     <!-- Order Header -->
     <div class="flex justify-between items-center mb-8">
         <h2 class="text-3xl font-semibold text-gray-800">Order #{{ $order->id }}</h2>

@@ -18,19 +18,19 @@
 </script>
 
 <div class="flex">
-    <!-- Sidebar/Nav Section -->
-   @include('user.nav')
-    
+    {{-- Sidebar/Nav Section --}}
+    @include('user.nav')
+
     <!-- Container -->
     <div class="w-[79%] mx-auto p-6 mt-4">
 
         <form action="{{ route('user.contact.store') }}" method="POST">
-            @csrf 
+            @csrf
             <input type="hidden" name="user_id" value="{{ $userId }}">
 
             <!-- Flex Container -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
+
                 <!-- Contact Information -->
                 <div>
                     <h2 class="text-2xl font-semibold mb-2 text-blue-500">Contact Information</h2>
@@ -38,16 +38,16 @@
                     <!-- First Name -->
                     <div class="mb-4">
                         <label for="firstname" class="block text-sm font-medium text-gray-700">First Name</label>
-                        <input type="text" id="firstname" name="firstname" value="{{ old('name') }}" 
-                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                        <input type="text" id="firstname" name="firstname" value="{{ old('firstname')?? auth()->user()->name }}"
+                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                required>
                     </div>
 
                     <!-- Last Name -->
                     <div class="mb-4">
                         <label for="lastname" class="block text-sm font-medium text-gray-700">Last Name</label>
-                        <input type="text" id="lastname" name="lastname" value="{{ old('last_name') }}" 
-                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                        <input type="text" id="lastname" name="lastname" value="{{ old('lastname') ?? auth()->user()->last_name }}"
+                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                required>
                     </div>
 
@@ -55,8 +55,8 @@
                     <div class="mb-4">
                         <label for="contact_info" class="block text-sm font-medium text-gray-700">Phone Number</label>
                         <input type="text" id="contact_info" name="contact_info" placeholder="XX XXXX XXXX"
-                               value="{{ old('phone_number') }}"
-                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+                               value="{{ old('contact_info') ?? auth()->user()->phone_number }}"
+                               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                                required>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
         <label for="address" class="block text-sm font-medium text-gray-700">Please enter your address</label>
         <input type="text" id="address" name="address_1" placeholder="e.g. 123 Long Street, Melbourne VIC, 3000"
                value="{{ old('address') }}"
-               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" 
+               class="mt-1 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                required>
     </div>
 
@@ -125,26 +125,26 @@
 
                     <!-- Default Billing and Shipping -->
                     <div class="flex items-center mb-2">
-                        <input type="checkbox" id="is_billing" name="is_billing" value="yes" 
+                        <input type="checkbox" id="is_billing" name="is_billing" value="yes"
                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                         <label for="is_billing" class="ml-2 text-sm text-gray-600">Use as my default billing address</label>
                     </div>
 
                     <div class="flex items-center mb-4">
-                        <input type="checkbox" id="is_shipping" name="is_shipping" value="yes" 
+                        <input type="checkbox" id="is_shipping" name="is_shipping" value="yes"
                                class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
                         <label for="is_shipping" class="ml-2 text-sm text-gray-600">Use as my default shipping address</label>
                     </div>
                     <div class="text-center mr-[6rem] mt-[4rem]">
-                        <button type="submit" 
+                        <button type="submit"
                         class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
                         Save Address
                         </button>
                     </div>
                 </div>
-                
+
             </div>
-            
+
         </form>
     </div>
 </div>

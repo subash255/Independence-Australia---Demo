@@ -54,40 +54,40 @@
       <nav class="mt-6">
         <a href="{{ route('admin.dash') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.dash') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-layout-masonry-fill"></i>
-          <span class="ml-4">Dashboard</span>
+          <span class="ml-4 font-semibold">Dashboard</span>
         </a>
         <a href="{{ route('admin.category.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.category.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-grid-line"></i>
-          <span class="ml-4">Category</span>
+          <span class="ml-4 font-semibold">Category</span>
         </a>
     
         @if(Auth::user()->role == 'superadmin')
         <a href="{{ route('admin.admin.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.admin.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-admin-fill"></i>
-          <span class="ml-4">Manage Admin</span>
+          <span class="ml-4 font-semibold">Manage Admin</span>
         </a>
         @endif
     
         <a href="{{ route('admin.brand.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.brand.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-price-tag-fill"></i>
-          <span class="ml-4">Brands</span>
+          <span class="ml-4 font-semibold">Brands</span>
         </a>
         <a href="{{ route('admin.order.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.order.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-shopping-cart-2-fill"></i>
-          <span class="ml-4">Orders</span>
+          <span class="ml-4 font-semibold">Orders</span>
         </a>
         <a href="{{ route('admin.banner.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.banner.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-image-fill"></i>
-          <span class="ml-4">Banner</span>
+          <span class="ml-4 font-semibold">Banner</span>
         </a>
         <a href="{{ route('admin.text.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.text.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-file-text-line"></i>
-          <span class="ml-4"> Manage Text </span>
+          <span class="ml-4 font-semibold"> Manage Text </span>
         </a>
     
         <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.product.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-bank-card-2-fill"></i>
-          <span class="ml-4">Products</span>
+          <span class="ml-4 font-semibold">Products</span>
         </a>
       </nav>
     </aside>

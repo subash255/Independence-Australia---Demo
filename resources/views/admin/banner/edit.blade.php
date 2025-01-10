@@ -18,7 +18,7 @@
     }, 3000);
 </script>
 
-<div class="max-w-8xl mx-auto p-4 bg-white shadow-lg mt-[7rem] rounded-lg relative z-10">
+<div class="p-4 bg-white shadow-lg -mt-11 mx-4 z-20  rounded-lg">
     <h1 class="text-2xl font-bold mb-4">Edit Banner</h1>
     
     <form action="{{ route('admin.banner.update', $banner->id) }}" method="POST" enctype="multipart/form-data" class="mt-6">
