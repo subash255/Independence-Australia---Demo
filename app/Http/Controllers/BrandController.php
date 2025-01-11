@@ -15,10 +15,10 @@ class BrandController extends Controller
     public function index()
     {
 
-            $brands = Brand::paginate(5);
-            return view('admin.brand.index', compact('brands'), [
-                'title' => 'Brand'
-            ]);
+        $brands = Brand::paginate(5);
+        return view('admin.brand.index', compact('brands'), [
+            'title' => 'Brand'
+        ]);
     }
     public function create()
     {
@@ -37,7 +37,7 @@ class BrandController extends Controller
         $image = time() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(public_path('images/brands'), $image);
         $data['image'] = $image;
-  
+
         // Create the category
         Brand::create($data);
 
@@ -77,7 +77,7 @@ class BrandController extends Controller
         }
 
         // Update brand record
-       $brand->save();
+        $brand->save();
 
         return redirect()->route('admin.brand.index')->with('success', 'Brand updated successfully.');
     }
@@ -95,6 +95,4 @@ class BrandController extends Controller
 
         return redirect()->route('admin.brand.index')->with('success', 'Brand deleted successfully.');
     }
-
 }
-

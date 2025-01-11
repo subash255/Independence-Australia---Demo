@@ -19,12 +19,12 @@ class ContactController extends Controller
         $user = Auth::user();  // Get the entire user object
         $userId = $user->id;
         $users = User::where('role', 'user')
-                 ->where('vendor_id', $userId)
-                 ->get();
-       $shipping = Contact::where('user_id', $userId)->where('is_shipping', '1')->get();
-       $billing= Contact::where('user_id', $userId)->where('is_billing', '1')->get();
+            ->where('vendor_id', $userId)
+            ->get();
+        $shipping = Contact::where('user_id', $userId)->where('is_shipping', '1')->get();
+        $billing = Contact::where('user_id', $userId)->where('is_billing', '1')->get();
 
-        return view('user.contact.index', compact('userId' , 'users','sliderTexts','categories' , 'shipping', 'billing'));
+        return view('user.contact.index', compact('userId', 'users', 'sliderTexts', 'categories', 'shipping', 'billing'));
     }
     public function address()
     {
@@ -34,21 +34,21 @@ class ContactController extends Controller
         $user = Auth::user();  // Get the entire user object
         $userId = $user->id;
         $users = User::where('role', 'user')
-                 ->where('vendor_id', $userId)
-                 ->get();
+            ->where('vendor_id', $userId)
+            ->get();
 
-        return view('user.contact.address', compact('userId' , 'users','sliderTexts','categories'));
+        return view('user.contact.address', compact('userId', 'users', 'sliderTexts', 'categories'));
     }
 
     public function store(Request $request)
     {
-        
+
         // Validate the form data
         $validated = $request->validate([
             'user_id' => 'required|exists:users,id',
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'address_1' => 'required|string', 
+            'address_1' => 'required|string',
             'city' => 'required|string',
             'state' => 'required|string',
             'zip' => 'required|string',
@@ -70,7 +70,7 @@ class ContactController extends Controller
             'zip' => $validated['zip'],
             'country' => $validated['country'],
             'phone' => $validated['phone'],
-            'contact_info' => $validated['contact_info'],          
+            'contact_info' => $validated['contact_info'],
             'is_billing' => $request->has('is_billing') && $request->is_billing == 'yes',
             'is_shipping' => $request->has('is_shipping') && $request->is_shipping == 'yes',
         ]);

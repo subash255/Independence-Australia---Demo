@@ -35,19 +35,19 @@ class CategoryController extends Controller
         $image = time() . '.' . $request->file('image')->getClientOriginalExtension();
         $request->file('image')->move(public_path('images/brand'), $image);
         $data['image'] = $image;
-  
+
         // Create the category
         Category::create($data);
-        
+
         return redirect()->route('admin.category.index')->with('success', 'Category created successfully');
     }
-    
+
 
 
     // Show Edit Form
     public function edit($slug)
     {
-        $categorys = Category::where('slug',$slug)->firstOrFail();
+        $categorys = Category::where('slug', $slug)->firstOrFail();
         $category = Category::findOrFail($categorys->id);
         return view('admin.category.edit', compact('category'), [
             'title' => 'Manage Category'
@@ -57,7 +57,7 @@ class CategoryController extends Controller
     // Update Category
     public function update(Request $request, $slug)
     {
-        $categorys = Category::where('slug',$slug)->firstOrFail();
+        $categorys = Category::where('slug', $slug)->firstOrFail();
         $category = Category::findOrFail($categorys->id);
 
         $request->validate([
@@ -91,7 +91,7 @@ class CategoryController extends Controller
     // Delete Category
     public function destroy($slug)
     {
-        $categorys = Category::where('slug',$slug)->firstOrFail();
+        $categorys = Category::where('slug', $slug)->firstOrFail();
         $category = Category::findOrFail($categorys->id);
 
         // Delete the image
@@ -104,18 +104,18 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.category.index')->with('success', 'Category deleted successfully');
     }
-    
+
     public function updateToggleStatus(Request $request, $categoryId)
     {
         // Retrieve the food item by ID from the database
         $category = Category::findOrFail($categoryId);
-        
+
         // Update the status field with the new value
         $category->status = $request->state; // 'state' is 1 (checked) or 0 (unchecked)
-        
+
         // Save the updated food item back to the database
         $category->save();
-        
+
         // Return a JSON response indicating success
         return response()->json(['success' => true]);
     }

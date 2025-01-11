@@ -133,7 +133,7 @@ class CheckoutController extends Controller
             return !is_null($item);
         });
 
-       
+
         $line = $cartItems->map(function ($item) {
             return [
                 'sku' => $item->product->sku,

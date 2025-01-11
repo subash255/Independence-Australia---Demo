@@ -11,20 +11,20 @@ class DashboardController extends Controller
     public function index()
     {
         return view('admin.dash', [
-            'title' => 'Dashboard' 
+            'title' => 'Dashboard'
         ]);
     }
     public function product()
     {
         return view('admin.product.product', [
-            'title' => 'Product' 
+            'title' => 'Product'
         ]);
     }
 
     public function category()
     {
         return view('admin.category', [
-            'title' => 'Category' 
+            'title' => 'Category'
         ]);
     }
 
