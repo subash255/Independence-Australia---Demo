@@ -10,10 +10,12 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\Text;
 use App\Models\User;
+use App\Models\Visit;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Support\Facades\Session;
 
 class HomepageController extends Controller
 {
@@ -386,4 +388,5 @@ class HomepageController extends Controller
         Session::put('visit', 'yes');
         Session::save();
     }
+}
 }

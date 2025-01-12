@@ -149,7 +149,7 @@ class CheckoutController extends Controller
             'line_items' => $line,
             'status' => 'pending',
         ]);
-
+        // dd('here');
 
         $apiKey = env('AEROHEALTH_API_KEY');
         $apiSecret = env('AEROHEALTH_API_SECRET');

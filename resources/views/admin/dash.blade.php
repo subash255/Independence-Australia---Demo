@@ -9,9 +9,11 @@
             max-height: 500px; 
             margin: 0 auto; 
         }
+            #orderLineChart {
+        height: 285px !important;
+    }
     </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
 
     <!-- Cards Section -->
@@ -30,7 +32,7 @@
         <!-- Processing Orders Card -->
         <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-8 lg:-translate-y-12 shadow-lg">
             <div>
-                <h2 class="text-gray-700 font-medium mb-2">Processing Orders</h2>
+                <h2 class="text-gray-700 font-medium mb-2">Orders Completed</h2>
                 <p class="text-gray-700 font-medium">{{$completedorder}}</p>
             </div>
             <div class="bg-yellow-600 text-white w-12 h-12 flex items-center justify-center rounded-full">
@@ -86,16 +88,18 @@
 
        
 
-        <!-- Order Line Chart -->
-        <div class="bg-white shadow-lg rounded-lg p-6 w-full sm:w-1/2 lg:w-2/3">
-            <h2 class="text-xl font-semibold text-center mb-4">Orders by Day</h2>
-            <canvas id="orderLineChart"></canvas>
-        </div>
-         <!-- Category Pie Chart -->
-         <div class="bg-white shadow-lg rounded-lg p-6 w-full sm:w-1/2 lg:w-1/3">
-            <h2 class="text-xl font-semibold text-center mb-4">Categories and Product Count</h2>
-            <canvas id="categoryChart"></canvas>
-        </div>
+<!-- Order Line Chart -->
+<div class="bg-white rounded-lg p-6 w-full sm:w-2/3 lg:w-3/4 xl:w-3/4">
+    <h2 class="text-xl font-semibold text-center mb-4">Daily Orders</h2>
+    <canvas id="orderLineChart"></canvas>
+</div>
+
+<!-- Category Pie Chart -->
+<div class="bg-white rounded-lg p-6 w-full sm:w-2/3 lg:w-2/3 xl:w-2/3">
+    <h2 class="text-xl font-semibold text-center mb-4">Categories and Product Count</h2>
+    <canvas id="categoryChart"></canvas>
+</div>
+
 
     </div>
     <div class="flex items-center justify-center py-8 px-4">
@@ -139,7 +143,7 @@
                         'rgba(153, 102, 255, 1)',
                         'rgba(255, 159, 64, 1)'
                     ],
-                    borderWidth: 1
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -147,17 +151,37 @@
                 plugins: {
                     legend: {
                         position: 'top',
+                        labels: {
+                            font: {
+                                family: 'Arial, sans-serif',
+                                weight: 'bold',
+                                size: 14
+                            },
+                            boxWidth: 12, // Adjusts the box size of the legend
+                            padding: 15,
+                            color: '#4A4A4A', // Font color for the legend
+                        }
                     },
                     tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)', // Darker background
+                        titleFont: {
+                            size: 16,
+                            weight: 'bold',
+                        },
+                        bodyFont: {
+                            size: 14
+                        },
                         callbacks: {
                             label: function(tooltipItem) {
                                 return tooltipItem.label + ': ' + tooltipItem.raw + ' products';
                             }
-                        }
+                        },
+                        displayColors: false, // Hide color boxes in tooltips
                     }
                 }
             }
         });
+    
 
         // Order Line Chart
         var ctx2 = document.getElementById('orderLineChart').getContext('2d');
@@ -207,6 +231,7 @@
             }
         });
     </script>
+    
      <script>
         const chart = new Chart(document.getElementById("myChart"), {
             type: "line",
