@@ -35,18 +35,33 @@
                 @endforeach
             </div>
 
-            <!-- Shop by Brands Section -->
-<h2 class="font-semibold text-lg text-gray-800 mb-4">Shop By Brands</h2>
-@foreach($brands as $brand)
-    <div class="flex items-center space-x-2">
-        <input type="checkbox" name="brand" value="{{ $brand->id }}"
-            id="brand-{{ $brand->id }}"
-            {{ request('brand') == $brand->id ? 'checked' : '' }}
-            class="brand-checkbox">
-        <label for="brand-{{ $brand->id }}">{{ $brand->name }}</label>
-    </div>
-@endforeach
-        </aside>
+    <!-- Shop by Brands Section -->
+    <h2 class="font-semibold text-xl text-gray-900 mb-6 mt-6">Shop By Brands</h2>
+
+<!-- Brands Section -->
+<div id="brands-section" class="space-y-4">
+    <!-- Show the first 10 brands by default -->
+    @foreach($brands as $index => $brand)
+        <div class="flex items-center space-x-3 brand-item" id="brand-{{ $index }}" style="display: {{ $index < 10 ? 'block' : 'none' }}">
+            <input type="checkbox" name="brand" value="{{ $brand->id }}"
+                id="brand-{{ $brand->id }}"
+                {{ request('brand') == $brand->id ? 'checked' : '' }}
+                class="brand-checkbox">
+            <label for="brand-{{ $brand->id }}" class="text-gray-700">{{ $brand->name }}</label>
+        </div>
+    @endforeach
+</div>
+
+<!-- Show More / Show Less Button -->
+<div class="mt-4 text-center">
+    <button id="show-more-btn" class="text-blue-600 hover:text-blue-800 focus:outline-none">
+        Show More
+    </button>
+    <button id="show-less-btn" class="text-blue-600 hover:text-blue-800 focus:outline-none mt-2" style="display: none;">
+        Show Less
+    </button>
+</div>
+</aside>
 
         <!-- Product Grid -->
         <main class="w-full lg:w-3/4">
@@ -165,6 +180,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
+</script>
+
+<script>
+    // Number of brands displayed initially
+    let brands = document.querySelectorAll('.brand-item');
+    let brandsDisplayed = 10;  // Initially, we show 10 brands
+
+    // Show More Button
+    document.getElementById('show-more-btn').addEventListener('click', function() {
+        // Show all brands
+        for (let i = 10; i < brands.length; i++) {
+            brands[i].style.display = 'block';
+        }
+
+        // Hide Show More button since all brands are shown
+        document.getElementById('show-more-btn').style.display = 'none';
+
+        // Show Show Less button after showing all brands
+        document.getElementById('show-less-btn').style.display = 'inline-block';
+    });
+
+    // Show Less Button
+    document.getElementById('show-less-btn').addEventListener('click', function() {
+        // Hide brands beyond the first 10
+        for (let i = 10; i < brands.length; i++) {
+            brands[i].style.display = 'none';
+        }
+
+        // Reset brandsDisplayed to 10
+        brandsDisplayed = 10;
+
+        // Show Show More button again
+        document.getElementById('show-more-btn').style.display = 'inline-block';
+
+        // Hide Show Less button when only the first 10 are shown
+        document.getElementById('show-less-btn').style.display = 'none';
+    });
 </script>
 
 
