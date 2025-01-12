@@ -11,28 +11,29 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 @php
-    // Get categories with subcategories
-    $sliderTexts = App\Models\Text::orderBy('priority')->get();
-    $categories = App\Models\Category::with('subcategories')->get();
+// Get categories with subcategories
+$sliderTexts = App\Models\Text::orderBy('priority')->get();
+$categories = App\Models\Category::with('subcategories')->get();
 
-    $user = Auth::user();
+$user = Auth::user();
 
-    if ($user) {
-        $userId = $user->id;
-    } else {
-        $userId = null;
-    }
+if ($user) {
+$userId = $user->id;
+} else {
+$userId = null;
+}
 
-    $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->get();
+$users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->get();
 @endphp
 
 
 {{-- Flash Message --}}
 @if(session('success'))
-  <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
-      {{ session('success') }}
-  </div>
+<div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+    {{ session('success') }}
+</div>
 @endif
+
 
 <script>
     if (document.getElementById('flash-message')) setTimeout(() => {
@@ -60,46 +61,52 @@
 
             <!-- Search Box - Centered and with more width -->
             <div class="relative flex-1 max-w-lg mx-auto">
-                <input type="text" id="search-input" onkeyup="searchFunction()" placeholder="What are you looking for?" class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden">
-                <i class="ri-search-line absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500 sm:block lg:block hidden"></i>
+                <input type="text" id="search-input" placeholder="What are you looking for?"
+                    class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden"
+                    value="{{ $query ?? '' }}" >
+                <button type="button" id="search-button" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500">
+                    <i class="ri-search-line"></i> <!-- Icon for search button -->
+                </button>
 
-                <!-- Search Results -->
-                <div id="search-results" class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden"></div>
+                <!-- Search Results Dropdown (Only visible when there's a query) -->
+                <div id="search-results" class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden">
+                    <!-- The results will be injected here by the JavaScript -->
+                </div>
             </div>
 
             <!-- Desktop User Authentication and Basket Section -->
             <div class="flex items-center space-x-2 ml-auto hidden sm:flex">
                 @auth <!-- If the user is authenticated -->
-                    <!-- User Icon -->
-                    <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
-                        <i class="ri-user-3-fill text-blue-500 text-[25px]"></i>
-                    </div>
+                <!-- User Icon -->
+                <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
+                    <i class="ri-user-3-fill text-blue-500 text-[25px]"></i>
+                </div>
 
-                    <!-- User Information for Desktop -->
-                    <div class="hidden sm:flex flex-col">
-                        <a href="{{ route('user.welcome') }}">
-                            <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
-                            <p class="text-sm text-gray-500">B2B Customer</p>
-                        </a>
-                    </div>
-
-                    <!-- Logout Button (For Desktop View) -->
-                    <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3 hidden sm:flex">
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
-                            @csrf
-                            <button type="submit" class="text-red-500 font-medium hover:underline">
-                                <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
-                                Logout
-                            </button>
-                        </form>
-                    </div>
-                @else
-                    <!-- If the user is not authenticated, show login and register buttons -->
-                    <a href="/login" class="text-gray-900 hover:underline font-bold">
-                        <i class="ri-user-3-fill text-blue-500 text-[20px]"></i> <span>Sign In</span>
+                <!-- User Information for Desktop -->
+                <div class="hidden sm:flex flex-col">
+                    <a href="{{ route('user.welcome') }}">
+                        <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
+                        <p class="text-sm text-gray-500">B2B Customer</p>
                     </a>
-                    <span class="px-1">/</span>
-                    <a href="/register" class="text-gray-900 hover:underline font-bold">Register</a>
+                </div>
+
+                <!-- Logout Button (For Desktop View) -->
+                <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3 hidden sm:flex">
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="text-red-500 font-medium hover:underline">
+                            <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
+                            Logout
+                        </button>
+                    </form>
+                </div>
+                @else
+                <!-- If the user is not authenticated, show login and register buttons -->
+                <a href="/login" class="text-gray-900 hover:underline font-bold">
+                    <i class="ri-user-3-fill text-blue-500 text-[20px]"></i> <span>Sign In</span>
+                </a>
+                <span class="px-1">/</span>
+                <a href="/register" class="text-gray-900 hover:underline font-bold">Register</a>
                 @endauth
 
                 <!-- Cart Icon with count -->
@@ -112,9 +119,9 @@
 
                     <!-- Cart Count -->
                     @if (session('cart_count') > 0)
-                        <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1 transform translate-x-1/2 -translate-y-1/2">
-                            {{ session('cart_count') }}
-                        </span>
+                    <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1 transform translate-x-1/2 -translate-y-1/2">
+                        {{ session('cart_count') }}
+                    </span>
                     @endif
                 </div>
             </div>
@@ -127,18 +134,18 @@
                 </a>
 
                 @auth <!-- If the user is authenticated -->
-                    <!-- Logout Icon for Mobile View -->
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="font-medium hover:underline">
-                            <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
-                        </button>
-                    </form>
+                <!-- Logout Icon for Mobile View -->
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                    @csrf
+                    <button type="submit" class="font-medium hover:underline">
+                        <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
+                    </button>
+                </form>
                 @else
-                    <!-- If the user is not authenticated -->
-                    <a href="{{ route('login') }}" class="text-gray-900 hover:underline">
-                        <i class="ri-user-3-fill text-blue-500 text-[20px]"></i>
-                    </a>
+                <!-- If the user is not authenticated -->
+                <a href="{{ route('login') }}" class="text-gray-900 hover:underline">
+                    <i class="ri-user-3-fill text-blue-500 text-[20px]"></i>
+                </a>
                 @endauth
 
                 <!-- Cart Icon -->
@@ -151,46 +158,46 @@
 
 
 
-<!-- Mobile Menu (Initially Hidden) -->
-<div id="mobileMenu" class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
-    <div class="w-full bg-gray-100 p-4 rounded-md shadow-sm h-full flex flex-col">
-        <!-- Close Button -->
-        <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6 z-50">
-            <i class="fa fa-times"></i>
-        </button>
+    <!-- Mobile Menu (Initially Hidden) -->
+    <div id="mobileMenu" class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
+        <div class="w-full bg-gray-100 p-4 rounded-md shadow-sm h-full flex flex-col">
+            <!-- Close Button -->
+            <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6 z-50">
+                <i class="fa fa-times"></i>
+            </button>
 
-        <!-- Scrollable Content Area -->
-        <div class="w-full overflow-x-hidden"> <!-- Prevents horizontal overflow -->
-            <div class="flex-grow overflow-y-auto">
-                <div class="space-y-4">
-                    @foreach($categories as $category)
-                    @if ($category->status == 1)
-                    <div>
-                        <!-- Category Button to Toggle Subcategories -->
-                        <a href="{{ route('menu.index', ['id' => $category->id]) }}">
-                            <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
-                                <span class="flex-grow">{{ $category->name }}</span>
-                                <i onclick="showToggle(event, {{ $category->id }})" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
-                            </button>
-                        </a>
+            <!-- Scrollable Content Area -->
+            <div class="w-full overflow-x-hidden"> <!-- Prevents horizontal overflow -->
+                <div class="flex-grow overflow-y-auto">
+                    <div class="space-y-4">
+                        @foreach($categories as $category)
+                        @if ($category->status == 1)
+                        <div>
+                            <!-- Category Button to Toggle Subcategories -->
+                            <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                                <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                                    <span class="flex-grow">{{ $category->name }}</span>
+                                    <i onclick="showToggle(event, {{ $category->id }})" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                                </button>
+                            </a>
 
-                        <!-- Subcategory Dropdown (Hidden by Default) -->
-                        <div id="{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
-                            @foreach($category->subcategories as $subcategory)
-                            <div class="flex items-center space-x-2">
-                                <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                            <!-- Subcategory Dropdown (Hidden by Default) -->
+                            <div id="{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+                                @foreach($category->subcategories as $subcategory)
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                                </div>
+                                @endforeach
                             </div>
-                            @endforeach
                         </div>
+                        @endif
+                        @endforeach
                     </div>
-                    @endif
-                    @endforeach
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-40 lg:block hidden">
@@ -199,10 +206,10 @@
                 <div class="container mx-auto text-center overflow-hidden relative">
                     <div class="slider-container relative h-8">
                         @foreach ($sliderTexts as $sliderText)
-                            <div
-                                class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
-                                {{ $sliderText->text }}
-                            </div>
+                        <div
+                            class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                            {{ $sliderText->text }}
+                        </div>
                         @endforeach
                     </div>
                 </div>
@@ -210,44 +217,44 @@
         </div>
 
 
-   <div class="max-w-full mx-auto px-5 bg-white py-4">
-    <div class="flex items-center justify-between">
-        <!-- Main Navbar Content -->
-        <div class="flex justify-center space-x-5 relative w-full">
-            @foreach ($categories as $category)
-            @if ($category->status == 1)
-                <a href="{{ route('menu.index', ['id' => $category->id]) }}">
-                    <div class="relative group">
-                        <button class="text-sm text-blue-500 font-bold transition duration-200 ease-in-out hover:text-blue-800">
-                            {{ $category->name }}
-                        </button>
+        <div class="max-w-full mx-auto px-5 bg-white py-4">
+            <div class="flex items-center justify-between">
+                <!-- Main Navbar Content -->
+                <div class="flex justify-center space-x-5 relative w-full">
+                    @foreach ($categories as $category)
+                    @if ($category->status == 1)
+                    <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                        <div class="relative group">
+                            <button class="text-sm text-blue-500 font-bold transition duration-200 ease-in-out hover:text-blue-800">
+                                {{ $category->name }}
+                            </button>
 
-                        <!-- Dropdown Menu for Each Category -->
-                        <div class="menu-content absolute left-0 w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 transition-all duration-300 ease-in-out z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:block hidden">
-                            <div class="space-y-2 text-black px-4 py-3">
-                                @foreach ($category->subcategories as $submenu)
+                            <!-- Dropdown Menu for Each Category -->
+                            <div class="menu-content absolute left-0 w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 transition-all duration-300 ease-in-out z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:block hidden">
+                                <div class="space-y-2 text-black px-4 py-3">
+                                    @foreach ($category->subcategories as $submenu)
                                     <a href="#" class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                                       data-item="{{ $submenu->name }}"
-                                       data-child-category="{{ json_encode($submenu->child_categories) }}">
-                                       {{ $submenu->name }}
+                                        data-item="{{ $submenu->name }}"
+                                        data-child-category="{{ json_encode($submenu->child_categories) }}">
+                                        {{ $submenu->name }}
                                     </a>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </a>
-            @endif
-            @endforeach
+                    </a>
+                    @endif
+                    @endforeach
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
 
     </nav>
     <div class="main-content pt-20 sm:pt-0">
-    <!-- Main Content -->
-    @yield('content')
-</div>
+        <!-- Main Content -->
+        @yield('content')
+    </div>
 
     <!-- Footer Section -->
     <footer class="bg-white py-6">
@@ -321,18 +328,18 @@
     </footer>
 
     <script>
- const menuToggle = document.getElementById("menuToggle");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const closeMenu = document.getElementById("closeMenu");
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const closeMenu = document.getElementById("closeMenu");
 
-    menuToggle.addEventListener("click", () => {
-        mobileMenu.classList.toggle("left-[-100%]");  // Slide in/out
-        mobileMenu.classList.toggle("left-0");       // Position at 0 when visible
-    });
+        menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("left-[-100%]"); // Slide in/out
+            mobileMenu.classList.toggle("left-0"); // Position at 0 when visible
+        });
 
-    closeMenu.addEventListener("click", () => {
-        mobileMenu.classList.add("left-[-100%]");  // Slide out to the left
-    });
+        closeMenu.addEventListener("click", () => {
+            mobileMenu.classList.add("left-[-100%]"); // Slide out to the left
+        });
 
         // Slider Text
         document.addEventListener('DOMContentLoaded', function() {
@@ -362,66 +369,123 @@
     </script>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    function searchFunction() {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    // Handle search on click of the search button (redirects to product.index)
+    document.getElementById('search-button').addEventListener('click', function() {
         var query = document.getElementById('search-input').value;
+        if (query.length > 0) {
+            // Redirect to the product index page with the search query as a parameter
+            window.location.href = "{{ route('product.index') }}?query=" + encodeURIComponent(query);
+        }
+    });
+
+    // Handle search function on keyup (show product suggestions in the dropdown)
+    document.getElementById('search-input').addEventListener('keyup', function() {
+        var query = document.getElementById('search-input').value;
+
+        console.log("Keyup detected, query:", query);  // Debugging line to check if the keyup event fires
 
         if (query.length > 0) {
             $.ajax({
-                url: "{{ route('search.products') }}",  // The route that handles the search
+                url: "{{ route('product.index') }}", // The route that handles the search
                 method: 'GET',
-                data: { query: query },  // Send the search query
+                data: {
+                    query: query
+                }, // Send the search query
                 success: function(response) {
-                    $('#search-results').html(response);  // Update the search results
-                    $('#search-results').removeClass('hidden');  // Show the results container
+                    console.log("Search results response:", response);  // Log the response to see the data
+                    
+                    // Ensure that response.products is defined and is an array
+                    if (response && response.products && Array.isArray(response.products)) {
+                        var products = response.products;
+                        var resultsHtml = '';
+
+                        if (products.length > 0) {
+                            products.forEach(function(product) {
+                                resultsHtml += `
+                                <div class="search-item py-2 px-4 flex items-center cursor-pointer hover:bg-gray-100" data-id="${product.id}">
+                                    <img src="${product.image}" alt="${product.name}" class="w-8 h-8 mr-4">
+                                    <span class="text-sm font-semibold">${product.name}</span>
+                                </div>
+                            `;
+                            });
+                        } else {
+                            resultsHtml = '<div class="no-results py-2 px-4 text-center text-sm text-gray-500">No products found</div>';
+                        }
+
+                        $('#search-results').html(resultsHtml);
+                        $('#search-results').removeClass('hidden'); // Show the results container
+                        console.log("Dropdown shown"); // Log to check if the dropdown is shown
+                    } else {
+                        console.error('Invalid response structure:', response);
+                        $('#search-results').html('<div class="text-center text-sm text-red-500">Error: No products found or invalid response</div>');
+                        $('#search-results').removeClass('hidden');
+                    }
                 },
                 error: function() {
                     console.log('Error fetching data');
+                    $('#search-results').html('<div class="text-center text-sm text-red-500">Error fetching search results. Please try again.</div>');
+                    $('#search-results').removeClass('hidden');
                 }
             });
         } else {
-            $('#search-results').empty();  // Clear the results
-            $('#search-results').addClass('hidden');  // Hide the results container
+            $('#search-results').empty(); // Clear the results if no query
+            $('#search-results').addClass('hidden'); // Hide the results container
+            console.log("Dropdown hidden"); // Log to check if the dropdown is hidden
         }
-    }
-</script>
+    });
 
-<script>
-    // Combined toggle function
-    function showToggle(event, id) {
-        event.preventDefault(); // Prevent default anchor behavior
+    // Handle click on search result item (update input field with product name only, not image)
+    $('#search-results').on('click', '.search-item', function() {
+        var productName = $(this).find('span').text(); // Get the clicked search item text (product name)
+        
+        // Update the input field with the selected product's name (only the name, not the image)
+        $('#search-input').val(productName);
 
-        const subcategory = document.getElementById(id);
-        const icon = event.currentTarget; // Get the icon that was clicked
-
-        if (subcategory) {
-            subcategory.classList.toggle('hidden');
-        }
-
-        // Toggle the arrow direction
-        if (subcategory && !subcategory.classList.contains('hidden')) {
-            icon.classList.remove('ri-arrow-down-s-line');
-            icon.classList.add('ri-arrow-up-s-line');
-        } else {
-            icon.classList.remove('ri-arrow-up-s-line');
-            icon.classList.add('ri-arrow-down-s-line');
-        }
-    }
-</script>
-
-<script>
-    // If needed, add a script to control the visibility dynamically
-    document.addEventListener('DOMContentLoaded', () => {
-        const categories = document.querySelectorAll('.category-container');
-        categories.forEach(category => {
-            const status = category.getAttribute('data-status');
-            if (status == 0) {
-                category.style.display = 'none';  // Hide inactive categories
-            }
-        });
+        // Clear the dropdown after selection
+        $('#search-results').empty();
+        $('#search-results').addClass('hidden');
     });
 </script>
+
+
+
+    <script>
+        // Combined toggle function
+        function showToggle(event, id) {
+            event.preventDefault(); // Prevent default anchor behavior
+
+            const subcategory = document.getElementById(id);
+            const icon = event.currentTarget; // Get the icon that was clicked
+
+            if (subcategory) {
+                subcategory.classList.toggle('hidden');
+            }
+
+            // Toggle the arrow direction
+            if (subcategory && !subcategory.classList.contains('hidden')) {
+                icon.classList.remove('ri-arrow-down-s-line');
+                icon.classList.add('ri-arrow-up-s-line');
+            } else {
+                icon.classList.remove('ri-arrow-up-s-line');
+                icon.classList.add('ri-arrow-down-s-line');
+            }
+        }
+    </script>
+
+    <script>
+        // If needed, add a script to control the visibility dynamically
+        document.addEventListener('DOMContentLoaded', () => {
+            const categories = document.querySelectorAll('.category-container');
+            categories.forEach(category => {
+                const status = category.getAttribute('data-status');
+                if (status == 0) {
+                    category.style.display = 'none'; // Hide inactive categories
+                }
+            });
+        });
+    </script>
 
 </body>
 
