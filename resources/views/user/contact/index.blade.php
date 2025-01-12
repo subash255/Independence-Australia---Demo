@@ -19,7 +19,7 @@
         }
     </script>
 
-    <div class="flex">
+    <div class="flex flex-col md:flex-row gap-6">
             {{-- Sidebar/Nav Section --}}
     @include('user.nav')
         

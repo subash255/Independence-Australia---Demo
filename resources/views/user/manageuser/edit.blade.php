@@ -32,12 +32,16 @@
                 @enderror
             </div>
 
-            <div class="flex justify-between items-center mt-6">
-                <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300">
+            <div class="flex justify-between items-center mt-8">
+                <button type="submit" class="bg-blue-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
                     Update User
                 </button>
-                <a href="{{ route('user.manageuser.index') }}" class="text-sm text-gray-500 hover:text-gray-700 transition duration-300">Cancel</a>
+                <a href="{{ route('user.manageuser.index') }}" class="inline-block text-sm py-3 px-8 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
+                    Cancel
+                </a>
             </div>
+            
+            
         </form>
     </div>
 </div>

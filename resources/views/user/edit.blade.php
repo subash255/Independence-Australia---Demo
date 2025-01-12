@@ -2,10 +2,9 @@
 
 @section('content')
 <div class="container mx-auto p-6">
-    <div class="flex flex-1">
-        <!-- Navigation Sidebar -->
-        
-            @include('user.nav')
+    <div class="flex flex-col md:flex-row gap-6">
+        {{-- Sidebar/Nav Section --}}
+@include('user.nav')
     
 
         <!-- User Edit Form -->

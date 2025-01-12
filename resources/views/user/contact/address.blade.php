@@ -17,9 +17,9 @@
   }, 3000);
 </script>
 
-<div class="flex">
+<div class="flex flex-col md:flex-row gap-6">
     {{-- Sidebar/Nav Section --}}
-    @include('user.nav')
+@include('user.nav')
 
     <!-- Container -->
     <div class="w-[79%] mx-auto p-6 mt-4">

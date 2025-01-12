@@ -108,7 +108,7 @@
                 <span> <b>Email:</b> {{ Auth::user()->email }}</span>
             </div>
             <div class="flex flex-row gap-2 mt-1">
-                <a href="{{ route('user.edit', $user->id) }}" class="text-blue-500 hover:underline hidden sm:block font-semibold">
+                <a href="{{ route('user.edit', $user->id) }}" class="text-blue-500 hover:underline font-semibold">
                     <span>Edit</span>
                 </a>
 

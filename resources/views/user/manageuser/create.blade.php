@@ -63,9 +63,15 @@
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
-        Create Account
-      </button>
+      <div class="flex justify-between items-center mt-8">
+        <button type="submit" class="bg-blue-600 text-white py-3 px-8 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
+            Create User
+        </button>
+        <a href="{{ route('user.manageuser.index') }}" class="inline-block text-sm py-3 px-8 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transition duration-300 ease-in-out shadow-md hover:shadow-lg">
+            Cancel
+        </a>
+    </div>
+
     </form>
   </div>
 </div>

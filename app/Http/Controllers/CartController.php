@@ -40,7 +40,7 @@ class CartController extends Controller
         $cartCount = CartItem::where('user_id', $user->id)->sum('quantity');
         session(['cart_count' => $cartCount]);
 
-        return redirect()->route('welcome');
+        return redirect()->route('welcome')->with('success', 'Item added to cart successfully!');
     }
 
     // View the cart
