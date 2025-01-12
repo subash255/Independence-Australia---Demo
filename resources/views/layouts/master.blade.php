@@ -11,27 +11,27 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 @php
-// Get categories with subcategories
-$sliderTexts = App\Models\Text::orderBy('priority')->get();
-$categories = App\Models\Category::with('subcategories')->get();
+    // Get categories with subcategories
+    $sliderTexts = App\Models\Text::orderBy('priority')->get();
+    $categories = App\Models\Category::with('subcategories')->get();
 
-$user = Auth::user();
+    $user = Auth::user();
 
-if ($user) {
-$userId = $user->id;
-} else {
-$userId = null;
-}
+    if ($user) {
+        $userId = $user->id;
+    } else {
+        $userId = null;
+    }
 
-$users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->get();
+    $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->get();
 @endphp
 
 
 {{-- Flash Message --}}
-@if(session('success'))
-<div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
-    {{ session('success') }}
-</div>
+@if (session('success'))
+    <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+        {{ session('success') }}
+    </div>
 @endif
 
 
@@ -63,13 +63,15 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
             <div class="relative flex-1 max-w-lg mx-auto">
                 <input type="text" id="search-input" placeholder="What are you looking for?"
                     class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden"
-                    value="{{ $query ?? '' }}" >
-                <button type="button" id="search-button" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500">
+                    value="{{ $query ?? '' }}">
+                <button type="button" id="search-button"
+                    class="sm:block hidden absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500">
                     <i class="ri-search-line"></i> <!-- Icon for search button -->
                 </button>
 
                 <!-- Search Results Dropdown (Only visible when there's a query) -->
-                <div id="search-results" class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden">
+                <div id="search-results"
+                    class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden">
                     <!-- The results will be injected here by the JavaScript -->
                 </div>
             </div>
@@ -77,36 +79,36 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
             <!-- Desktop User Authentication and Basket Section -->
             <div class="flex items-center space-x-2 ml-auto hidden sm:flex">
                 @auth <!-- If the user is authenticated -->
-                <!-- User Icon -->
-                <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
-                    <i class="ri-user-3-fill text-blue-500 text-[25px]"></i>
-                </div>
+                    <!-- User Icon -->
+                    <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
+                        <i class="ri-user-3-fill text-blue-500 text-[25px]"></i>
+                    </div>
 
-                <!-- User Information for Desktop -->
-                <div class="hidden sm:flex flex-col">
-                    <a href="{{ route('user.welcome') }}">
-                        <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
-                        <p class="text-sm text-gray-500">B2B Customer</p>
-                    </a>
-                </div>
+                    <!-- User Information for Desktop -->
+                    <div class="hidden sm:flex flex-col">
+                        <a href="{{ route('user.welcome') }}">
+                            <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
+                            <p class="text-sm text-gray-500">B2B Customer</p>
+                        </a>
+                    </div>
 
-                <!-- Logout Button (For Desktop View) -->
-                <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3 hidden sm:flex">
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="text-red-500 font-medium hover:underline">
-                            <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
-                            Logout
-                        </button>
-                    </form>
-                </div>
+                    <!-- Logout Button (For Desktop View) -->
+                    <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3 hidden sm:flex">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit" class="text-red-500 font-medium hover:underline">
+                                <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
+                                Logout
+                            </button>
+                        </form>
+                    </div>
                 @else
-                <!-- If the user is not authenticated, show login and register buttons -->
-                <a href="/login" class="text-gray-900 hover:underline font-bold">
-                    <i class="ri-user-3-fill text-blue-500 text-[20px]"></i> <span>Sign In</span>
-                </a>
-                <span class="px-1">/</span>
-                <a href="/register" class="text-gray-900 hover:underline font-bold">Register</a>
+                    <!-- If the user is not authenticated, show login and register buttons -->
+                    <a href="/login" class="text-gray-900 hover:underline font-bold">
+                        <i class="ri-user-3-fill text-blue-500 text-[20px]"></i> <span>Sign In</span>
+                    </a>
+                    <span class="px-1">/</span>
+                    <a href="/register" class="text-gray-900 hover:underline font-bold">Register</a>
                 @endauth
 
                 <!-- Cart Icon with count -->
@@ -119,9 +121,10 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
 
                     <!-- Cart Count -->
                     @if (session('cart_count') > 0)
-                    <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1 transform translate-x-1/2 -translate-y-1/2">
-                        {{ session('cart_count') }}
-                    </span>
+                        <span
+                            class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-2 py-1 transform translate-x-1/2 -translate-y-1/2">
+                            {{ session('cart_count') }}
+                        </span>
                     @endif
                 </div>
             </div>
@@ -129,23 +132,23 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
             <!-- Mobile Icons only -->
             <div class="flex items-center space-x-2 sm:hidden">
                 <!-- Search Icon -->
-                <a href="#" class="text-gray-900">
+                <a href="#" id="mobile-search-toggle" class="text-gray-900">
                     <i class="ri-search-line text-blue-500 text-[20px]"></i>
                 </a>
 
                 @auth <!-- If the user is authenticated -->
-                <!-- Logout Icon for Mobile View -->
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" class="font-medium hover:underline">
-                        <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
-                    </button>
-                </form>
+                    <!-- Logout Icon for Mobile View -->
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="font-medium hover:underline">
+                            <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
+                        </button>
+                    </form>
                 @else
-                <!-- If the user is not authenticated -->
-                <a href="{{ route('login') }}" class="text-gray-900 hover:underline">
-                    <i class="ri-user-3-fill text-blue-500 text-[20px]"></i>
-                </a>
+                    <!-- If the user is not authenticated -->
+                    <a href="{{ route('login') }}" class="text-gray-900 hover:underline">
+                        <i class="ri-user-3-fill text-blue-500 text-[20px]"></i>
+                    </a>
                 @endauth
 
                 <!-- Cart Icon -->
@@ -153,13 +156,41 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
                     <i class="ri-shopping-basket-fill text-blue-500 font-light text-[25px]"></i>
                 </a>
             </div>
+
+           <!-- Mobile Search Box (Initially Hidden) -->
+<div id="mobile-search-popup" class="absolute top-0 left-0 right-0 w-full bg-white p-4 z-50 hidden">
+    <div class="relative max-w-md mx-auto">
+        <input type="text" id="search-input-mobile" placeholder="What are you looking for?"
+            class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none"
+            value="{{ $query ?? '' }}">
+        
+        <!-- Add search button for mobile view -->
+        <button type="button" id="search-button-mobile"
+            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500">
+            <i class="ri-search-line"></i> <!-- Icon for search button -->
+        </button>
+    </div>
+
+    <!-- Search Results Dropdown (Only visible when there's a query) -->
+    <div id="search-results-mobile"
+        class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden">
+        <!-- The results will be injected here by the JavaScript -->
+    </div>
+
+    <!-- Close Button to Hide Search Popup -->
+    <button id="close-search-popup" class="absolute top-2 right-2 text-gray-500">
+        <i class="ri-close-line text-[20px]"></i>
+    </button>
+</div>
+
         </div>
     </header>
 
 
 
     <!-- Mobile Menu (Initially Hidden) -->
-    <div id="mobileMenu" class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
+    <div id="mobileMenu"
+        class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
         <div class="w-full bg-gray-100 p-4 rounded-md shadow-sm h-full flex flex-col">
             <!-- Close Button -->
             <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6 z-50">
@@ -170,27 +201,30 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
             <div class="w-full overflow-x-hidden"> <!-- Prevents horizontal overflow -->
                 <div class="flex-grow overflow-y-auto">
                     <div class="space-y-4">
-                        @foreach($categories as $category)
-                        @if ($category->status == 1)
-                        <div>
-                            <!-- Category Button to Toggle Subcategories -->
-                            <a href="{{ route('menu.index', ['id' => $category->id]) }}">
-                                <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
-                                    <span class="flex-grow">{{ $category->name }}</span>
-                                    <i onclick="showToggle(event, {{ $category->id }})" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
-                                </button>
-                            </a>
+                        @foreach ($categories as $category)
+                            @if ($category->status == 1)
+                                <div>
+                                    <!-- Category Button to Toggle Subcategories -->
+                                    <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                                        <button
+                                            class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                                            <span class="flex-grow">{{ $category->name }}</span>
+                                            <i onclick="showToggle(event, {{ $category->id }})"
+                                                class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                                        </button>
+                                    </a>
 
-                            <!-- Subcategory Dropdown (Hidden by Default) -->
-                            <div id="{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
-                                @foreach($category->subcategories as $subcategory)
-                                <div class="flex items-center space-x-2">
-                                    <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                                    <!-- Subcategory Dropdown (Hidden by Default) -->
+                                    <div id="{{ $category->id }}"
+                                        class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+                                        @foreach ($category->subcategories as $subcategory)
+                                            <div class="flex items-center space-x-2">
+                                                <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
+                            @endif
                         @endforeach
                     </div>
                 </div>
@@ -206,10 +240,10 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
                 <div class="container mx-auto text-center overflow-hidden relative">
                     <div class="slider-container relative h-8">
                         @foreach ($sliderTexts as $sliderText)
-                        <div
-                            class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
-                            {{ $sliderText->text }}
-                        </div>
+                            <div
+                                class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                                {{ $sliderText->text }}
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -222,28 +256,31 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
                 <!-- Main Navbar Content -->
                 <div class="flex justify-center space-x-5 relative w-full">
                     @foreach ($categories as $category)
-                    @if ($category->status == 1)
-                    <a href="{{ route('menu.index', ['id' => $category->id]) }}">
-                        <div class="relative group">
-                            <button class="text-sm text-blue-500 font-bold transition duration-200 ease-in-out hover:text-blue-800">
-                                {{ $category->name }}
-                            </button>
+                        @if ($category->status == 1)
+                            <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                                <div class="relative group">
+                                    <button
+                                        class="text-sm text-blue-500 font-bold transition duration-200 ease-in-out hover:text-blue-800">
+                                        {{ $category->name }}
+                                    </button>
 
-                            <!-- Dropdown Menu for Each Category -->
-                            <div class="menu-content absolute left-0 w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 transition-all duration-300 ease-in-out z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:block hidden">
-                                <div class="space-y-2 text-black px-4 py-3">
-                                    @foreach ($category->subcategories as $submenu)
-                                    <a href="#" class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                                        data-item="{{ $submenu->name }}"
-                                        data-child-category="{{ json_encode($submenu->child_categories) }}">
-                                        {{ $submenu->name }}
-                                    </a>
-                                    @endforeach
+                                    <!-- Dropdown Menu for Each Category -->
+                                    <div
+                                        class="menu-content absolute left-0 w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 transition-all duration-300 ease-in-out z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:block hidden">
+                                        <div class="space-y-2 text-black px-4 py-3">
+                                            @foreach ($category->subcategories as $submenu)
+                                                <a href="#"
+                                                    class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+                                                    data-item="{{ $submenu->name }}"
+                                                    data-child-category="{{ json_encode($submenu->child_categories) }}">
+                                                    {{ $submenu->name }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </a>
-                    @endif
+                            </a>
+                        @endif
                     @endforeach
                 </div>
             </div>
@@ -283,7 +320,8 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
         </div>
 
         <div class="container mx-auto px-6 py-6 space-y-6">
-            <div class="flex justify-center lg:justify-center space-x-8 text-blue-500 text-sm font-extrabold mt-4 flex-wrap">
+            <div
+                class="flex justify-center lg:justify-center space-x-8 text-blue-500 text-sm font-extrabold mt-4 flex-wrap">
                 <a href="#" class="hover:underline">Our Story</a>
                 <a href="#" class="hover:underline">Contact Us</a>
                 <a href="#" class="hover:underline">FAQ</a>
@@ -371,83 +409,129 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    // Handle search on click of the search button (redirects to product.index)
-    document.getElementById('search-button').addEventListener('click', function() {
-        var query = document.getElementById('search-input').value;
-        if (query.length > 0) {
-            // Redirect to the product index page with the search query as a parameter
-            window.location.href = "{{ route('product.index') }}?query=" + encodeURIComponent(query);
-        }
-    });
-
-    // Handle search function on keyup (show product suggestions in the dropdown)
-    document.getElementById('search-input').addEventListener('keyup', function() {
-        var query = document.getElementById('search-input').value;
-
-        console.log("Keyup detected, query:", query);  // Debugging line to check if the keyup event fires
-
-        if (query.length > 0) {
-            $.ajax({
-                url: "{{ route('product.index') }}", // The route that handles the search
-                method: 'GET',
-                data: {
-                    query: query
-                }, // Send the search query
-                success: function(response) {
-                    console.log("Search results response:", response);  // Log the response to see the data
-                    
-                    // Ensure that response.products is defined and is an array
-                    if (response && response.products && Array.isArray(response.products)) {
-                        var products = response.products;
-                        var resultsHtml = '';
-
-                        if (products.length > 0) {
-                            products.forEach(function(product) {
-                                resultsHtml += `
-                                <div class="search-item py-2 px-4 flex items-center cursor-pointer hover:bg-gray-100" data-id="${product.id}">
-                                    <img src="${product.image}" alt="${product.name}" class="w-8 h-8 mr-4">
-                                    <span class="text-sm font-semibold">${product.name}</span>
-                                </div>
-                            `;
-                            });
+        // Common function to handle search results for both mobile and desktop views
+        function handleSearch(query, resultsContainer, inputElement) {
+            if (query.length > 0) {
+                $.ajax({
+                    url: "{{ route('product.index') }}", // The route that handles the search
+                    method: 'GET',
+                    data: {
+                        query: query
+                    },
+                    success: function(response) {
+                        console.log("Search results response:", response); // Log the response to see the data
+    
+                        if (response && response.products && Array.isArray(response.products)) {
+                            var products = response.products;
+                            var resultsHtml = '';
+    
+                            if (products.length > 0) {
+                                products.forEach(function(product) {
+                                    resultsHtml += `
+                                        <div class="search-item py-2 px-4 flex items-center cursor-pointer hover:bg-gray-100" data-id="${product.id}">
+                                            <img src="${product.image}" alt="${product.name}" class="w-8 h-8 mr-4">
+                                            <span class="text-sm font-semibold">${product.name}</span>
+                                        </div>
+                                    `;
+                                });
+                            } else {
+                                resultsHtml = '<div class="no-results py-2 px-4 text-center text-sm text-gray-500">No products found</div>';
+                            }
+    
+                            $(resultsContainer).html(resultsHtml);
+                            $(resultsContainer).removeClass('hidden'); // Show the results container
                         } else {
-                            resultsHtml = '<div class="no-results py-2 px-4 text-center text-sm text-gray-500">No products found</div>';
+                            console.error('Invalid response structure:', response);
+                            $(resultsContainer).html(
+                                '<div class="text-center text-sm text-red-500">Error: No products found or invalid response</div>'
+                            );
+                            $(resultsContainer).removeClass('hidden');
                         }
-
-                        $('#search-results').html(resultsHtml);
-                        $('#search-results').removeClass('hidden'); // Show the results container
-                        console.log("Dropdown shown"); // Log to check if the dropdown is shown
-                    } else {
-                        console.error('Invalid response structure:', response);
-                        $('#search-results').html('<div class="text-center text-sm text-red-500">Error: No products found or invalid response</div>');
-                        $('#search-results').removeClass('hidden');
+                    },
+                    error: function() {
+                        console.log('Error fetching data');
+                        $(resultsContainer).html(
+                            '<div class="text-center text-sm text-red-500">Error fetching search results. Please try again.</div>'
+                        );
+                        $(resultsContainer).removeClass('hidden');
                     }
-                },
-                error: function() {
-                    console.log('Error fetching data');
-                    $('#search-results').html('<div class="text-center text-sm text-red-500">Error fetching search results. Please try again.</div>');
-                    $('#search-results').removeClass('hidden');
-                }
-            });
-        } else {
-            $('#search-results').empty(); // Clear the results if no query
-            $('#search-results').addClass('hidden'); // Hide the results container
-            console.log("Dropdown hidden"); // Log to check if the dropdown is hidden
+                });
+            } else {
+                $(resultsContainer).empty(); // Clear the results if no query
+                $(resultsContainer).addClass('hidden'); // Hide the results container
+            }
         }
-    });
-
-    // Handle click on search result item (update input field with product name only, not image)
-    $('#search-results').on('click', '.search-item', function() {
-        var productName = $(this).find('span').text(); // Get the clicked search item text (product name)
-        
-        // Update the input field with the selected product's name (only the name, not the image)
-        $('#search-input').val(productName);
-
-        // Clear the dropdown after selection
-        $('#search-results').empty();
-        $('#search-results').addClass('hidden');
-    });
-</script>
+    
+        // Handle desktop search input (keyup event)
+        document.getElementById('search-input').addEventListener('keyup', function() {
+            var query = document.getElementById('search-input').value;
+            handleSearch(query, '#search-results', '#search-input');
+        });
+    
+        // Handle click on the search button (desktop)
+        document.getElementById('search-button').addEventListener('click', function(e) {
+            e.preventDefault();  // Prevent the default form submit (if any)
+            var query = document.getElementById('search-input').value;
+            
+            if (query.length > 0) {
+                // Redirect to the product index page with the search query as a parameter
+                window.location.href = "{{ route('product.index') }}?query=" + encodeURIComponent(query);
+            }
+        });
+    
+        // Handle mobile search input (input event)
+        document.getElementById('search-input-mobile').addEventListener('input', function() {
+            var query = document.getElementById('search-input-mobile').value.trim();
+            handleSearch(query, '#search-results-mobile', '#search-input-mobile');
+        });
+    
+        // Handle mobile search button click
+        document.getElementById('search-button-mobile').addEventListener('click', function() {
+            var query = document.getElementById('search-input-mobile').value.trim();
+            
+            if (query.length > 0) {
+                // Redirect to the product index page with the search query as a parameter
+                window.location.href = "{{ route('product.index') }}?query=" + encodeURIComponent(query);
+            }
+        });
+    
+        // Mobile search toggle button
+        const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+        const mobileSearchPopup = document.getElementById('mobile-search-popup');
+        const closeSearchPopup = document.getElementById('close-search-popup');
+    
+        // Show search box on mobile when search icon is clicked
+        mobileSearchToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            mobileSearchPopup.classList.remove('hidden');
+            document.getElementById('search-input-mobile').focus(); // Focus on input when the search box is opened
+        });
+    
+        // Close the search popup when the close button is clicked
+        closeSearchPopup.addEventListener('click', function() {
+            mobileSearchPopup.classList.add('hidden');
+            document.getElementById('search-results-mobile').classList.add('hidden'); // Hide results when closing the popup
+        });
+    
+        // Handle click on search result item (both for desktop and mobile)
+        function handleSearchResultClick(event, inputElement, resultsContainer) {
+            var productName = $(event.currentTarget).find('span').text(); // Get the clicked search item text (product name)
+            $(inputElement).val(productName); // Update the input field with the selected product's name (only the name, not the image)
+            $(resultsContainer).empty();
+            $(resultsContainer).addClass('hidden');
+        }
+    
+        // For Desktop Results Click
+        $('#search-results').on('click', '.search-item', function(event) {
+            handleSearchResultClick(event, '#search-input', '#search-results');
+        });
+    
+        // For Mobile Results Click
+        $('#search-results-mobile').on('click', '.search-item', function(event) {
+            handleSearchResultClick(event, '#search-input-mobile', '#search-results-mobile');
+        });
+    </script>
+    
 
 
 
@@ -486,6 +570,7 @@ $users = App\Models\User::where('role', 'user')->where('vendor_id', $userId)->ge
             });
         });
     </script>
+
 
 </body>
 
