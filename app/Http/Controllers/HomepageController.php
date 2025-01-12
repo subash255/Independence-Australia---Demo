@@ -49,6 +49,7 @@ class HomepageController extends Controller
 
     public function welcome()
     {
+        $this->visits();
         $user = Auth::user();
         $sliderTexts = Text::orderBy('priority')->get();
         $images = Banner::orderBy('priority', 'asc')->get();
@@ -355,5 +356,34 @@ class HomepageController extends Controller
         }
 
         return response()->json(['message' => 'No query provided.']);
+    }
+
+    //visited people
+    public function visits()
+{
+    if (!Session::has('visit')) {
+
+        $last_date = Visit::latest('visit_date')->first();
+        $visit_date = date('Y-m-d');
+        if ($last_date) {
+            if ($last_date->visit_date != $visit_date) {
+                $number_of_visits = 1;
+                $d = new Visit();
+                $d->visit_date = $visit_date;
+                $d->number_of_visits = $number_of_visits;
+                $d->save();
+            } else {
+                $newvisit = $last_date->number_of_visits + 1;
+                Visit::where('visit_date', $visit_date)->update(['number_of_visits' => $newvisit]);
+            }
+        } else {
+            $number_of_visits = 1;
+            $d = new Visit();
+            $d->visit_date = $visit_date;
+            $d->number_of_visits = $number_of_visits;
+            $d->save();
+        }
+        Session::put('visit', 'yes');
+        Session::save();
     }
 }
