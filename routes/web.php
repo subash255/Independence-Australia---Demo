@@ -141,6 +141,9 @@ Route::middleware('auth')->group(function () {
     Route::post('user/contact/store', [ContactController::class, 'store'])->name('user.contact.store');
     Route::get('user/contact/address', [ContactController::class, 'address'])->name('user.contact.address');
 
+    Route::patch('/user/{user}', [ProfileController::class, 'update'])->name('user.update');
+Route::get('/user/{user}/edit', [ProfileController::class, 'edit'])->name('user.edit');
+
     //My Order
     Route::get('user.myorder', [HomepageController::class, 'order'])->name('user.myorder');
 
