@@ -141,6 +141,9 @@ Route::middleware('auth')->group(function () {
     Route::post('user/contact/store', [ContactController::class, 'store'])->name('user.contact.store');
     Route::get('user/contact/address', [ContactController::class, 'address'])->name('user.contact.address');
 
+    Route::patch('/user/{user}', [ProfileController::class, 'update'])->name('user.update');
+Route::get('/user/{user}/edit', [ProfileController::class, 'edit'])->name('user.edit');
+
     //My Order
     Route::get('user.myorder', [HomepageController::class, 'order'])->name('user.myorder');
 
@@ -148,6 +151,9 @@ Route::middleware('auth')->group(function () {
     Route::get('user/manageuser/index', [ManageuserController::class, 'index'])->name('user.manageuser.index');
     Route::get('user/manageuser/create', [ManageuserController::class, 'create'])->name('user.manageuser.create');
     Route::post('user/manageuser/store', [ManageuserController::class, 'store'])->name('user.manageuser.store');
+    Route::get('user/manageuser/{user}/edit', [ManageuserController::class, 'edit'])->name('user.manageuser.edit');
+    Route::patch('user/manageuser/{user}/update', [ManageuserController::class, 'update'])->name('user.manageuser.update');
+    
 
     //Switch User
     Route::get('/impersonate/{id}', [HomepageController::class, 'impersonate'])->name('impersonate');

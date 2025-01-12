@@ -70,4 +70,22 @@ public function create()
 
     return redirect()->route('user.manageuser.index')->with('success', 'User added successfully!');
 }
+
+public function edit(User $user)
+{
+    return view('user.manageuser.edit', compact('user'));
+}
+
+public function update(Request $request, User $user)
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+    ]);
+
+    $user->update($validatedData);
+
+    return redirect()->route('user.manageuser.index')->with('success', 'User updated successfully!');
+}
+
 }
