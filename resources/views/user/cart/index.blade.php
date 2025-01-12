@@ -133,7 +133,7 @@
 
     <!-- Continue Shopping Link at Bottom Left Corner -->
     <div class="absolute  left-0 mb-6 ml-6 lg:block hidden">
-        <a href="{{ route('user.welcome') }}" class="flex font-semibold text-indigo-600 text-sm hover:underline">
+        <a href="{{ route('product.index') }}" class="flex font-semibold text-indigo-600 text-sm hover:underline">
             <i class="ri-arrow-left-s-line text-indigo-600 mr-2"></i> Continue Shopping
         </a>
     </div>

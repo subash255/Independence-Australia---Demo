@@ -27,7 +27,7 @@
 @endphp
 
 
-{{-- Flash Message --}}
+{{-- Flash Message
 @if (session('success'))
     <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
         {{ session('success') }}
@@ -42,7 +42,7 @@
         msg.style.transition = "opacity 0.5s ease-out";
         setTimeout(() => msg.remove(), 500);
     }, 3000);
-</script>
+</script> --}}
 
 <body class="font-sans bg-white">
     <!-- Header Section -->

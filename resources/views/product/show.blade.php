@@ -93,7 +93,10 @@
             <ul class="space-y-2">
               <li class="flex space-x-[5rem] text-gray-700">
                 <span>Brand</span>
-                <span class="font-semibold">{{ $product->brand->name }}</span>
+                <span class="font-semibold">
+                  {{ $product->brand ? $product->brand->name : 'No Brand' }}
+              </span>
+              
               </li>
             </ul>
           </div>
