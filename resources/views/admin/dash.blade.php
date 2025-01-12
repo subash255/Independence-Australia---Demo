@@ -20,7 +20,7 @@
         <div class="bg-white p-6 text-left hover:shadow-2xl flex flex-row items-center justify-between w-full h-20 rounded-lg transform sm:-translate-y-8 lg:-translate-y-12 shadow-lg z-[5]">
             <div>
                 <h2 class="text-gray-700 font-medium">Pending Orders</h2>
-                <p class="text-gray-700 font-medium">1</p>
+                <p class="text-gray-700 font-medium">{{$pendingorder}}</p>
             </div>
             <div class="bg-yellow-500 text-white w-12 h-12 flex items-center justify-center rounded-full">
                 <i class="ri-time-line text-2xl"></i>
@@ -31,7 +31,7 @@
         <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-8 lg:-translate-y-12 shadow-lg">
             <div>
                 <h2 class="text-gray-700 font-medium mb-2">Processing Orders</h2>
-                <p class="text-gray-700 font-medium">1</p>
+                <p class="text-gray-700 font-medium">{{$completedorder}}</p>
             </div>
             <div class="bg-yellow-600 text-white w-12 h-12 flex items-center justify-center rounded-full">
                 <i class="ri-settings-2-line text-2xl"></i>
@@ -53,7 +53,7 @@
         <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-4 lg:-translate-y-8 shadow-lg">
             <div>
                 <h2 class="text-gray-700 font-medium mb-2">Orders</h2>
-                <p class="text-gray-700 font-medium">142</p>
+                <p class="text-gray-700 font-medium">{{$totalorder}}</p>
             </div>
             <div class="bg-green-500 text-white w-12 h-12 flex items-center justify-center rounded-full">
                 <i class="ri-shopping-cart-fill text-2xl"></i>
@@ -75,7 +75,7 @@
         <div class="bg-white p-6 rounded-lg text-left hover:shadow-2xl transition-shadow duration-300 flex flex-row items-center justify-between w-full h-20 transform sm:-translate-y-4 lg:-translate-y-8 shadow-lg">
             <div>
                 <h2 class="text-gray-700 font-medium mb-2">Visitors</h2>
-                <p class="text-gray-700 font-medium">200</p>
+                <p class="text-gray-700 font-medium">{{$totalvisits}}</p>
             </div>
             <div class="bg-red-500 text-white w-12 h-12 flex items-center justify-center rounded-full">
                 <i class="ri-earth-fill text-2xl"></i>

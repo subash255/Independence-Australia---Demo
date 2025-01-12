@@ -43,6 +43,10 @@ public function index()
         $orderLabels[] = Carbon::parse($order->order_date)->format('Y-m-d');  // Date formatted as Y-m-d
         $orderData[] = $order->total_orders;  // Order count for that day
     }
+    $order=Order::count();
+    $pendingorder=Order::where('status','pending')->count();
+    $completedorder=Order::where('status','completed')->count();
+
     
     // Passing all the data to the view
     return view('admin.dash', [
@@ -55,6 +59,9 @@ public function index()
         'totalvisits' => $totalvisits,
         'visitdate' => $visitdate,
         'visits' => $visits,
+        'totalorder'=>$order,
+        'pendingorder'=>$pendingorder,
+        'completedorder'=>$completedorder
     ]);
 }
 
