@@ -47,7 +47,7 @@
                         <th class="border border-gray-300 px-4 py-2">Status</th>
                         <th class="border border-gray-300 px-4 py-2">Billing Address</th>
                         <th class="border border-gray-300 px-4 py-2">Shipping Address</th>
-                        <th class="border border-gray-300 px-4 py-2">Product</th>
+                        <th class="border border-gray-300 px-4 py-2">Total Products</th>
                         <th class="border border-gray-300 px-4 py-2">Action</th>
                     </tr>
                 </thead>
@@ -79,17 +79,14 @@
                                 {{ $shipping->country }}
                             </td>
                             <td class="border border-gray-300 px-2 py-2">
-                                @if (isset($order->orderitems) && count($order->orderitems) > 0)
-                                    @foreach ($order->orderitems as $orderItem)
-                                        <div class="px-4 py-2">
-                                            <span class="font-semibold">SKU: {{ $orderItem->sku }}</span>,
-                                            <span>Quantity: {{ $orderItem->quantity }}</span>
-                                        </div>
-                                    @endforeach
-                                @else
-                                    <div class="px-4 py-2 text-center">No items available</div>
-                                @endif
-                            </td>
+    @if (isset($order->orderitems) && count($order->orderitems) > 0)
+        <div class="px-4 py-2">
+            <span class="font-semibold"> {{ collect($order->orderitems)->unique('sku')->count() }}</span>
+        </div>
+    @else
+        <div class="px-4 py-2 text-center">No items available</div>
+    @endif
+</td>
                             <td class="px-2 py-2 flex justify-center items-center space-x-4">
                                 <a href="{{ route('admin.order.view', $order->id) }}" class="flex items-center">
                                     <button
