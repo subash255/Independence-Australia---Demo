@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Imports\ProductImport;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
@@ -111,9 +112,20 @@ public function update(Request $request, $id)
     public function destroy($id)
     {
         $product = Product::find($id);
+
+       
+
         if (!$product) {
             return redirect()->route('admin.product.index')->with('error', 'Product not found.');
         }
+
+        $ordersWithProduct = Order::whereJsonContains('line_items', ['sku' => $product->sku])->exists();
+
+        if ($ordersWithProduct) {
+            // If the product is part of an order, do not allow deletion
+            return redirect()->back()->with('error', 'This product is already part of an order and cannot be deleted.');
+        }
+        
         $product->delete();
         return redirect()->route('admin.product.index')->with('success', 'Product deleted successfully.');
     }
