@@ -58,7 +58,7 @@
                             $shipping = json_decode($order->shippings);
                         @endphp
                         <tr class="border border-gray-300 items-center">
-                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->user->name }}
                                 {{ $order->user->last_name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $order->user->email }}</td>
