@@ -81,30 +81,29 @@
         <table class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-100">
-                    <th class="border border-gray-300 px-4 py-2">Order</th>
-                    <th class="border border-gray-300 px-4 py-2">Banner Image</th>
                     <th class="border border-gray-300 px-4 py-2">Priority</th>
+                    <th class="border border-gray-300 px-4 py-2">Banner Image</th>
                     <th class="border border-gray-300 px-4 py-2">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($banners as $banner)
                     <tr class="border border-gray-300">
-                        <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                        <td class="border border-gray-300 px-4 py-2 text-center">{{ $banner->priority }}</td>
+
                         <td class="border border-gray-300 px-4 py-2">
                             <img src="{{ asset('banner/'. $banner->image) }}" alt="Banner Image" class="object-cover rounded">
                         </td>
-                        <td class="border border-gray-300 px-4 py-2">{{ $banner->priority }}</td>
                         <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                             <!-- Edit Icon -->
-                            <a href="{{ route('admin.banner.edit', $banner->id) }}" class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                            <a href="{{ route('admin.banner.edit', $banner->id) }}" class="bg-blue-500 hover:bg-blue-700 mt-8 p-1 w-8 h-8 rounded-full flex items-center justify-center">
                                 <i class="ri-edit-box-line text-white"></i>
                             </a>
                             <!-- Delete Icon -->
                             <form action="{{ route('admin.banner.destroy', $banner->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this banner?');">
                                 @csrf
                                 @method('DELETE')
-                                <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                <button class="bg-red-500 hover:bg-red-700 mt-8 p-1 w-8 h-8 rounded-full flex items-center justify-center">
                                     <i class="ri-delete-bin-line text-white"></i>
                                 </button>
                             </form>

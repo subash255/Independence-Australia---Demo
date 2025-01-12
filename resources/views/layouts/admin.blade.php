@@ -82,7 +82,7 @@
         </a>
         <a href="{{ route('admin.text.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.text.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
           <i class="ri-file-text-line"></i>
-          <span class="ml-4 font-semibold"> Manage Text </span>
+          <span class="ml-4 font-semibold"> Slider Text </span>
         </a>
     
         <a href="{{ route('admin.product.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.product.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">

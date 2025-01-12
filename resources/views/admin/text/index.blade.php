@@ -85,23 +85,21 @@
             <table class="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
-                        <th class="border border-gray-300 px-4 py-2">Order</th>
-                        <th class="border border-gray-300 px-4 py-2">Text</th>
                         <th class="border border-gray-300 px-4 py-2">Priority</th>
+                        <th class="border border-gray-300 px-4 py-2">Text</th>
                         <th class="border border-gray-300 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($texts as $text)
                         <tr class="border border-gray-300">
-                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $text->priority }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $text->text }}
                             </td>
-                            <td class="border border-gray-300 px-4 py-2">{{ $text->priority }}</td>
                             <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                                 <!-- Edit Icon -->
                                 <a href="{{ route('admin.text.edit', $text->id) }}"
-                                    class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                    class="bg-blue-500 hover:bg-blue-700 p-1 w-8 h-8 rounded-full flex items-center justify-center">
                                     <i class="ri-edit-box-line text-white"></i>
                                 </a>
                                 <!-- Delete Icon -->
@@ -110,7 +108,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button
-                                        class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                        class="bg-red-500 hover:bg-red-700 p-1 w-8 h-8 rounded-full flex items-center justify-center">
                                         <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>

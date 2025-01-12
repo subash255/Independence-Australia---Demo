@@ -89,7 +89,7 @@
                 <tbody>
                     @foreach ($products as $product)
                         <tr class="border border-gray-300 product-row" data-product-id="{{ $product->id }}">
-                            <td class="border border-gray-300 px-4 py-2">{{ $loop->iteration }}</td>
+                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->sku }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
@@ -135,8 +135,8 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="text-white bg-red-500 hover:bg-red-700 w-8 h-8 flex items-center justify-center rounded-md">
-                                        <i class="ri-delete-bin-line text-sm"></i>
+                                        class="bg-red-500 hover:bg-red-700 p-1 w-8 h-8 rounded-full flex items-center justify-center">
+                                        <i class="ri-delete-bin-line text-white"></i>
                                     </button>
                                 </form>
                             </td>

@@ -105,7 +105,7 @@
             <tbody>
                 @foreach ($admins as $admin)
                     <tr class="border border-gray-300 hover:bg-gray-50">
-                        <td class="border border-gray-300 px-4 py-2 text-sm">{{ $loop->iteration }}</td>
+                        <td class="border border-gray-300 px-4 py-2 text-sm text-center">{{ $loop->iteration }}</td>
                         <td class="border border-gray-300 px-4 py-2 text-sm">{{ $admin->name }}</td>
                         <td class="border border-gray-300 px-4 py-2 text-sm">{{ $admin->email }}</td>
 
@@ -113,7 +113,7 @@
                         <td class="px-2 py-2 flex justify-center space-x-4">
                             <!-- Edit Icon -->
                             <a href="{{ route('admin.admin.edit', ['user' => $admin->id]) }}"
-                               class="bg-blue-500 hover:bg-blue-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                               class="bg-blue-500 hover:bg-blue-700 p-1 w-8 h-8 rounded-full flex items-center justify-center">
                                 <i class="ri-edit-box-line text-white"></i>
                             </a>
 
@@ -121,7 +121,7 @@
                             <form action="{{ route('admin.admin.destroy', ['user' => $admin->id]) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this admin?');">
                                 @csrf
                                 @method('delete')
-                                <button class="bg-red-500 hover:bg-red-700 p-2 w-10 h-10 rounded-full flex items-center justify-center">
+                                <button class="bg-red-500 hover:bg-red-700 p-1 w-8 h-8 rounded-full flex items-center justify-center">
                                     <i class="ri-delete-bin-line text-white"></i>
                                 </button>
                             </form>
