@@ -182,16 +182,23 @@ class HomepageController extends Controller
         // Fetch categories and brands
         $categories = Category::with('subcategories')->get();
         $brands = Brand::all();
-    
+        
         // Handle sorting and filtering
         $selectedBrand = $request->input('brand');
         $sortBy = $request->input('sort_by', 'name_asc');
-    
+        
         // Initialize the products query
         $productsQuery = Product::query();
+        
+        // Handle search query
+        $query = $request->input('query'); // Get the search query from request
+        if ($query) {
+            // Filter products by search query (name)
+            $productsQuery->where('name', 'like', '%' . $query . '%');
+        }
     
+        // Filter products by selected brand
         if ($selectedBrand) {
-            // Filter products by the selected brand
             $productsQuery->where('brand_id', $selectedBrand);
         }
     
@@ -219,13 +226,24 @@ class HomepageController extends Controller
                 $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
                 break;
         }
-    
+        
         // Paginate the products
         $products = $productsQuery->paginate(15);
-    
+        
+        // Check if the request is AJAX
+        if ($request->ajax()) {
+            // Return a JSON response with the paginated products and additional information for pagination
+            return response()->json([
+                'products' => $products->items(), // Send only the items on the current page
+                'next_page_url' => $products->nextPageUrl(), // URL for the next page
+            ]);
+        }
+        
         // Return the view with products, categories, and subcategories
-        return view('product.index', compact('products', 'categories', 'brands', 'selectedBrand', 'sortBy'));
+        return view('product.index', compact('products', 'categories', 'brands', 'selectedBrand', 'sortBy', 'query'));
     }
+    
+
     
 
 
