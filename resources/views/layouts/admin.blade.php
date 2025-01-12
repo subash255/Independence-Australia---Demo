@@ -27,6 +27,11 @@
       {{ session('success') }}
   </div>
   @endif
+  @if(session('error'))
+  <div id="flash-message" class="bg-red-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+        {{ session('error') }}
+    </div>
+@endif
 
   <script>
     if (document.getElementById('flash-message')) setTimeout(() => {

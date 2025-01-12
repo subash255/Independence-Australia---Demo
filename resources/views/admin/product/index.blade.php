@@ -131,7 +131,7 @@
                                     </button>
                                 </a> --}}
 
-                                <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this category?');">
+                                <form action="{{ route('admin.product.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this Product?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
