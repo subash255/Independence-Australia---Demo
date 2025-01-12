@@ -2,9 +2,9 @@
 @section('content')
 {{-- Flash Message --}}
 @if(session('success'))
-  <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
-      {{ session('success') }}
-  </div>
+<div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+    {{ session('success') }}
+</div>
 @endif
 
 <script>
@@ -16,7 +16,14 @@
     }, 3000);
 </script>
 
+@if($cartItems->isEmpty())
+<div class="flex items-center justify-center mt-10">
+    <i class="ri-shopping-cart-line text-6xl text-gray-400 mr-4"></i>
+    <p class="text-lg text-gray-600">Your cart is empty!</p>
+</div>
+@else
 <div class="container mx-auto mt-16 min-h-screen relative">
+
     <div class="sm:flex shadow-lg rounded-lg my-12 overflow-hidden">
         <!-- Cart Items Section -->
         <div class="w-full sm:w-3/4 bg-white px-8 py-10">
@@ -24,6 +31,7 @@
                 <h1 class="font-semibold text-2xl text-gray-800">Shopping Cart</h1>
                 <h2 class="font-semibold text-2xl text-gray-600">{{ count($cartItems) }} Items</h2>
             </div>
+
 
             <!-- Cart Item Loop -->
             <div class="space-y-6">
@@ -121,9 +129,10 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Continue Shopping Link at Bottom Left Corner -->
-    <div class="absolute bottom-0 left-0 mb-6 ml-6 lg:block hidden">
+    <div class="absolute  left-0 mb-6 ml-6 lg:block hidden">
         <a href="{{ route('user.welcome') }}" class="flex font-semibold text-indigo-600 text-sm hover:underline">
             <i class="ri-arrow-left-s-line text-indigo-600 mr-2"></i> Continue Shopping
         </a>
