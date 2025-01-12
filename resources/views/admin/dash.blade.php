@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-1 justify-between gap-8">
+    <div class="flex flex-col md:flex-row justify-between gap-8">
 
        
 
