@@ -22,22 +22,22 @@
         }, 3000);
     </script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
-    @auth
-        <!-- This section is shown when the user is logged in -->
-        <div class="p-16 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
-            <div class="my-8 ml-8 max-w-7xl mx-auto">
-                <!-- Breadcrumbs -->
-                <div class="text-sm text-gray-500">
-                    <a href="/" class="hover:text-blue-500">Home</a> |
-                    <a href="{{ route('user.welcome') }}"><span>Dashboard</span></a>
-                </div>
+@auth
+<!-- This section is shown when the user is logged in -->
+<div class="p-16 items-center justify-between bg-cover bg-center" style="background-image: url('/images/dr.jpg');">
+    <div class="my-8 ml-8 max-w-7xl mx-auto">
+        <!-- Breadcrumbs -->
+        <div class="text-sm text-gray-500">
+            <a href="/" class="hover:text-blue-500">Home</a> |
+            <a href="{{ route('user.welcome') }}"><span>Dashboard</span></a>
+        </div>
 
-                <!-- Welcome Heading -->
-                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-500 mt-2">Welcome {{ Auth::user()->name }}!</h1>
+        <!-- Welcome Heading -->
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-500 mt-2">Welcome {{ Auth::user()->name }}!</h1>
 
-                <hr class="border-b border-gray-300 mt-2 mb-2 w-3/4 sm:w-2/4 md:w-1/4">
+        <hr class="border-b border-gray-300 mt-2 mb-2 w-3/4 sm:w-2/4 md:w-1/4">
 
 
                 <p class="text-gray-600 mt-1 text-base sm:text-lg md:text-xl">
@@ -50,32 +50,32 @@
                     @endif
                 </p>
 
-                <!-- Check if the current user is a vendor, then show the Switch Account Button -->
-                @if (Auth::user()->role == 'vendor')
-                    <!-- Adjust this condition based on how you define a vendor -->
-                    <button class="mt-4 flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-500"
-                        onclick="toggleDropdown()">
-                        <i class="ri-refresh-line pr-2"></i>
-                        Switch Account
-                    </button>
+        <!-- Check if the current user is a vendor, then show the Switch Account Button -->
+        @if (Auth::user()->role == 'vendor')
+        <!-- Adjust this condition based on how you define a vendor -->
+        <button class="mt-4 flex items-center bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-500"
+            onclick="toggleDropdown()">
+            <i class="ri-refresh-line pr-2"></i>
+            Switch Account
+        </button>
 
-                    <div id="user-dropdown"
-                        class="hidden bg-white shadow-lg rounded-lg mt-2 absolute z-30 w-80 sm:w-1/4 max-h-60 overflow-y-auto">
-                        <ul class="py-2">
-                            @foreach ($users as $user)
-                                <!-- Loop through users and display them -->
-                                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                                    <a href="{{ route('impersonate', $user->id) }}" class="block">
-                                        {{ $user->name }} {{ $user->last_name }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-            </div>
+        <div id="user-dropdown"
+            class="hidden bg-white shadow-lg rounded-lg mt-2 absolute z-30 w-80 sm:w-1/4 max-h-60 overflow-y-auto">
+            <ul class="py-2">
+                @foreach ($users as $user)
+                <!-- Loop through users and display them -->
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                    <a href="{{ route('impersonate', $user->id) }}" class="block">
+                        {{ $user->name }} {{ $user->last_name }}
+                    </a>
+                </li>
+                @endforeach
+            </ul>
         </div>
-    @endauth
+        @endif
+    </div>
+</div>
+@endauth
 
     {{-- Check if the user is not logged in --}}
     @guest
@@ -121,11 +121,11 @@
         </div>
 
 
-    @endguest
+@endguest
 
 
-    <!--Banner images-->
-    {{-- <div class="w-full px-4 py-12 banner mt-4">
+<!--Banner images-->
+{{-- <div class="w-full px-4 py-12 banner mt-4">
         <img src="images/homepage.jpg" alt="Banner"
             class="w-full h-auto transform transition-all duration-300 ease-in-out shadow-lg">
     </div>
@@ -135,7 +135,7 @@
         <img src="images/banner.jpg" alt="Banner" class="w-full h-auto">
     </div> --}}
 
-    {{-- <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
+{{-- <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
         Shop by Category
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
@@ -189,10 +189,10 @@
 </div>
 </div> --}}
 
-    <!--Arko Banner image-->
-    <div class="w-full px-4 py-10">
-        <img src="images/banner1.jpg" alt="Banner" class="w-full h-auto">
-    </div>
+<!--Arko Banner image-->
+<div class="w-full px-4 py-10">
+    <img src="images/banner1.jpg" alt="Banner" class="w-full h-auto">
+</div>
 
     <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
         Shop our featured products
@@ -261,7 +261,7 @@
 
 
 
-    {{-- <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
+{{-- <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
         Shop by Brand
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-4"></div>
@@ -342,7 +342,7 @@
     </div> --}}
 
 
-    {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 px-6 md:px-16 bg-gray-100">
+{{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 px-6 md:px-16 bg-gray-100">
         <!-- Image Section -->
         <div class="flex justify-center items-center">
             <img class="w-full h-auto shadow-lg rounded-lg" src="images/wheel.jpg" alt="Alwayson Medical" />
@@ -400,67 +400,67 @@ class="w-full h-64 object-contain transform transition-transform duration-300 ho
 --}}
 
 
-    <hr class="border-gray-300">
-    <div class="w-full bg-white">
-        <div class="w-full px-4 md:px-[8rem] flex flex-col items-center"> <!-- Adjusted padding for responsiveness -->
-            <p id="text" class="text-black text-lg py-7 text-center">
-                Alwayson Medical supplies healthcare and medical supplies to thousands of customers across Australia.
-                We stock all major and specialist brands. Key categories include continence, wound care, daily living &
-                mobility aids,
-                urology, skin care, medical aids & nutrition. <br>
-                <span id="more-text" class="hidden">
-                    Shop our complete range of products online to receive free shipping over $50, courier tracking and
-                    optional discreet packaging.
-                    We can make the purchase of your personal and medical supplies easy by providing quick delivery of more
-                    than 13,000 products directly to your home, anywhere in Australia. <br>
-                    Alwayson Medical also has a unique social enterprise approach that leverages the sale of
-                    healthcare products to support
-                    our core charitable purpose to provide choices for people living with a disability or other personal
-                    need.
-                </span>
-            </p>
+<hr class="border-gray-300">
+<div class="w-full bg-white">
+    <div class="w-full px-4 md:px-[8rem] flex flex-col items-center"> <!-- Adjusted padding for responsiveness -->
+        <p id="text" class="text-black text-lg py-7 text-center">
+            Alwayson Medical supplies healthcare and medical supplies to thousands of customers across Australia.
+            We stock all major and specialist brands. Key categories include continence, wound care, daily living &
+            mobility aids,
+            urology, skin care, medical aids & nutrition. <br>
+            <span id="more-text" class="hidden">
+                Shop our complete range of products online to receive free shipping over $50, courier tracking and
+                optional discreet packaging.
+                We can make the purchase of your personal and medical supplies easy by providing quick delivery of more
+                than 13,000 products directly to your home, anywhere in Australia. <br>
+                Alwayson Medical also has a unique social enterprise approach that leverages the sale of
+                healthcare products to support
+                our core charitable purpose to provide choices for people living with a disability or other personal
+                need.
+            </span>
+        </p>
 
-            <button id="toggle-btn" class="text-blue-500 font-bold hover:underline focus:outline-none">
-                More
-            </button>
-        </div>
+        <button id="toggle-btn" class="text-blue-500 font-bold hover:underline focus:outline-none">
+            More
+        </button>
     </div>
+</div>
 
 
 
 
-    <script>
-        const toggleBtn = document.getElementById('toggle-btn');
-        const moreText = document.getElementById('more-text');
-        const text = document.getElementById('text');
+<script>
+    const toggleBtn = document.getElementById('toggle-btn');
+    const moreText = document.getElementById('more-text');
+    const text = document.getElementById('text');
 
-        toggleBtn.addEventListener('click', (event) => {
-            event.preventDefault();
+    toggleBtn.addEventListener('click', (event) => {
+        event.preventDefault();
 
 
-            if (moreText.classList.contains('hidden')) {
-                moreText.classList.remove('hidden');
-                toggleBtn.textContent = 'Less';
-            } else {
-                moreText.classList.add('hidden');
-                toggleBtn.textContent = 'More';
-            }
-        });
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+        if (moreText.classList.contains('hidden')) {
+            moreText.classList.remove('hidden');
+            toggleBtn.textContent = 'Less';
+        } else {
+            moreText.classList.add('hidden');
+            toggleBtn.textContent = 'More';
+        }
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
-    <script>
-        const swiper = new Swiper('.swiper-container', {
+<script>
+    const swiper = new Swiper('.swiper-container', {
 
-            loop: true,
-            autoplay: {
-                delay: 3000,
-                disableOnInteraction: false,
-            },
-            slidesPerView: 1,
-            spaceBetween: 0,
-            effect: 'slide',
-            speed: 700,
-        });
-    </script>
+        loop: true,
+        autoplay: {
+            delay: 3000,
+            disableOnInteraction: false,
+        },
+        slidesPerView: 1,
+        spaceBetween: 0,
+        effect: 'slide',
+        speed: 700,
+    });
+</script>
 @endsection
