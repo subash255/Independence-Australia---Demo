@@ -38,14 +38,46 @@ public function index()
     
     $orderLabels = [];
     $orderData = [];
+
     
     foreach ($orders as $order) {
         $orderLabels[] = Carbon::parse($order->order_date)->format('Y-m-d');  // Date formatted as Y-m-d
-        $orderData[] = $order->total_orders;  // Order count for that day
+        $orderData[] = $order->total_orders;
+        $items = $order->line_items;
+        $order->total = 0;
+        $totalprice = 0;
     }
     $order=Order::count();
+
     $pendingorder=Order::where('status','pending')->count();
     $completedorder=Order::where('status','completed')->count();
+
+    $orderitems = Order::all();
+    $totalOrderPrice = 0;  // Initialize the total price
+
+    // Loop through each order to calculate the total
+    foreach ($orderitems as $orderitem) {
+        $totalprice = 0;  // Initialize the total price for the current order
+        
+        // Loop through the line items of each order to calculate the total price for this order
+        foreach ($orderitem->line_items as $item) {
+            $sku = $item['sku'];
+            $product = Product::where('sku', $sku)->first();
+            
+            if ($product) {
+                // Calculate total for this product
+                $productTotal = $product->price * $item['quantity'];
+                $totalprice += $productTotal;  // Add the product total to the order total
+            }
+        }
+
+        // Add the current order's total price to the overall total price
+        $totalOrderPrice += $totalprice;
+    }
+    //i want total order price overall of all order
+
+
+
 
     
     // Passing all the data to the view
@@ -61,7 +93,8 @@ public function index()
         'visits' => $visits,
         'totalorder'=>$order,
         'pendingorder'=>$pendingorder,
-        'completedorder'=>$completedorder
+        'completedorder'=>$completedorder,
+        'totalprice'=>$totalOrderPrice,
     ]);
 }
 
