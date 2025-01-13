@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\Contact;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Text;
 use App\Models\User;
 use App\Models\Visit;
@@ -280,10 +281,11 @@ class HomepageController extends Controller
 
     public function showproduct($id)
     {
+        $reviews = Review::where('product_id', $id)->get();
         $categories = Category::with('subcategories')->get();
         $sliderTexts = Text::orderBy('priority')->get();
         $product = Product::findOrFail($id); // Fetch product by ID
-        return view('product.show', compact('product', 'sliderTexts', 'categories'));
+        return view('product.show', compact('product', 'sliderTexts', 'categories', 'reviews'));
     }
 
     public function impersonate($id)

@@ -18,6 +18,7 @@ use App\Http\Controllers\ManageuserController;
 use App\Http\Controllers\NayaController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TextController;
 use App\Http\Middleware\AdminMiddleware;
@@ -40,6 +41,11 @@ Route::post('newsletter/store', [NewsletterController::class, 'store'])->name('n
 Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('product.show');
 
 Route::get('/naya', [NayaController::class, 'index']);
+
+//review routes
+Route::get('review/create/{productId}', [ReviewController::class, 'create'])->name('review.create');
+Route::post('review', [ReviewController::class, 'store'])->name('review.store');
+Route::get('review/{productId}', [ReviewController::class, 'index'])->name('review.index');
 
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');

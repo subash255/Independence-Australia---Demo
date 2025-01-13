@@ -63,45 +63,91 @@
 
     <div class="container mx-auto p-4">
         <!-- Tabs Section -->
-        <div class="border-b border-gray-300">
-          <ul class="flex space-x-6">
-            <li class="pb-2 border-b-2 text-xl border-blue-500 text-blue-600 font-semibold">
-              <a href="#">Description</a>
+        <div class="border-b border-gray-300 pb-4">
+    <ul class="flex space-x-6 justify-center md:justify-start border-b-2 mb-6">
+        <!-- Description Tab -->
+        <li class="pb-2 text-xl font-semibold border-b-2 border-blue-500 text-blue-600" id="description-tab">
+            <a href="javascript:void(0)" class="hover:text-blue-700 transition duration-300">Description</a>
+        </li>
+        
+        <!-- Reviews Tab with Dynamic Review Count -->
+        <li class="pb-2 text-gray-600 hover:text-teal-600" id="reviews-tab">
+            <a href="javascript:void(0)" class="flex items-center">
+                Reviews
+                <span class="bg-green-500 text-white text-xs rounded-full px-2 ml-2"></span>
+            </a>
+        </li>
+
+        <!-- Shipping & Returns Tab -->
+        <li class="pb-2 text-gray-600 hover:text-teal-600">
+            <a href="#" class="hover:text-teal-600 transition duration-300">Shipping & Returns</a>
+        </li>
+    </ul>
+</div>
+
+<!-- Content Section -->
+<div class="flex flex-col md:flex-row mt-6 space-y-4 md:space-y-0 md:space-x-8">
+
+    <!-- Left Section -->
+    <div class="md:w-2/3 bg-white p-6 rounded-lg shadow-md" id="description-section">
+        <h2 class="text-2xl font-semibold text-gray-800">{{ $product->name }}</h2>
+        <p class="text-gray-700 mt-4">
+            {!! $product->description !!}
+        </p>
+    </div>
+
+    <!-- Right Section: Specifications -->
+    <div class="md:w-1/3 bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold mb-4 text-gray-800">Specifications</h3>
+        <ul class="space-y-4">
+            <li class="flex justify-between items-center text-gray-700">
+                <span class="font-medium">Brand</span>
+                <span class="font-semibold text-gray-900">
+                    {{ $product->brand ? $product->brand->name : 'No Brand' }}
+                </span>
             </li>
-            {{-- <li class="pb-2 text-gray-600 hover:text-teal-600">
-              <a href="#">Reviews <span class="bg-green-500 text-white text-sm rounded-full px-2 ml-1">6</span></a>
-            </li>
-            <li class="pb-2 text-gray-600 hover:text-teal-600">
-              <a href="#">Shipping & Returns</a>
-            </li> --}}
-          </ul>
-        </div>
-      
-        <!-- Content Section -->
-        <div class="flex flex-col md:flex-row mt-6 space-y-4 md:space-y-0 md:space-x-8">
-          <!-- Left Section -->
-          <div class="md:w-2/3">
-            <h2 class="text-lg font-semibold">{{ $product->name }}</h2>
-            <p class="text-gray-700 mt-2">
-                {!! $product->description !!}
-            </p>
-          </div>
-      
-          <!-- Right Section -->
-          <div class="md:w-1/3 p-2">
-            <h3 class="text-lg font-semibold mb-4">Specifications</h3>
-            <ul class="space-y-2">
-              <li class="flex space-x-[5rem] text-gray-700">
-                <span>Brand</span>
-                <span class="font-semibold">
-                  {{ $product->brand ? $product->brand->name : 'No Brand' }}
-              </span>
-              
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+            <!-- Additional specifications can go here, following the same structure -->
+        </ul>
+    </div>
+</div>
+
+<!-- Reviews Section -->
+<div id="reviews-section" class="md:w-2/3 mt-8 hidden">
+    @include('review.index')
+</div>
+
+
       
 </div>
+
+<script>
+    // Get the elements for the tabs and content sections
+    const descriptionTab = document.getElementById('description-tab');
+    const reviewsTab = document.getElementById('reviews-tab');
+    const descriptionSection = document.getElementById('description-section');
+    const reviewsSection = document.getElementById('reviews-section');
+
+    // Add event listeners for tabs
+    descriptionTab.addEventListener('click', function() {
+        // Show Description and hide Reviews
+        descriptionSection.classList.remove('hidden');
+        reviewsSection.classList.add('hidden');
+        // Update the active tab styling
+        descriptionTab.classList.add('border-blue-500', 'text-blue-600');
+        descriptionTab.classList.remove('border-b-2', 'text-gray-600');
+        reviewsTab.classList.remove('border-blue-500', 'text-blue-600');
+        reviewsTab.classList.add('text-gray-600');
+    });
+
+    reviewsTab.addEventListener('click', function() {
+        // Show Reviews and hide Description
+        reviewsSection.classList.remove('hidden');
+        descriptionSection.classList.add('hidden');
+        // Update the active tab styling
+        reviewsTab.classList.add('border-blue-500', 'text-blue-600');
+        reviewsTab.classList.remove('text-gray-600');
+        descriptionTab.classList.remove('border-blue-500', 'text-blue-600');
+        descriptionTab.classList.add('text-gray-600');
+    });
+</script>
 @endsection
