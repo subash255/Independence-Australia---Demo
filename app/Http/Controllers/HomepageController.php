@@ -71,10 +71,8 @@ class HomepageController extends Controller
             $users = collect();
         }
          // Ensure $reviews[$product->id] is a collection before calling avg() on it
-         $productReviews = $reviews[$product->id] ?? collect(); // Default to an empty collection if no reviews
-         $averageRating = $productReviews->avg('rating'); // Calculate average rating for this product
-
-        return view('welcome', compact('products', 'users', 'categories', 'images', 'sliderTexts', 'reviews', 'averageRating'));
+         
+        return view('welcome', compact('products', 'users', 'categories', 'images', 'sliderTexts', 'reviews'));
     }
 
     // Display the homepage
