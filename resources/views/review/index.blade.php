@@ -59,10 +59,7 @@
         </div>
         @endforeach
     </div>
-</div>
-
-<!-- Modal (Review Form) -->
-<div id="reviewModal"
+    <div id="reviewModal"
     class="fixed inset-0 bg-black bg-opacity-70 modal-hidden items-center justify-center z-50 backdrop-blur-[1px]">
     <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
         <h1 class="text-3xl font-semibold text-center mb-6 text-gray-800">Submit Your Review</h1>
@@ -124,6 +121,8 @@
         </form>
     </div>
 </div>
+</div>
+
 
 <script>
     // Open the modal

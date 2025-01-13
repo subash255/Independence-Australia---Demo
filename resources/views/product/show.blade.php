@@ -1,5 +1,6 @@
 @extends('layouts.master')
 @section('content')
+
     <!-- Product Detail Section -->
     <div class="max-w-7xl mx-auto px-6 py-12">
         <!-- Breadcrumb -->
