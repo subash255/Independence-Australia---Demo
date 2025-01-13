@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    public function adminindex()
+    {
+        $reviews = Review::paginate(10);
+        return view('admin.reviews.index', compact('reviews'), ['title' => 'Reviews']);
+    }
 
     // Store the review
     public function store(Request $request)
@@ -45,6 +50,14 @@ class ReviewController extends Controller
         $product = $id;
         $reviews = Review::where('product_id', $product)->latest()->get();
         return view('review.index', compact('reviews', 'product'));
+    }
+
+    public function destroy($id)
+    {
+        $review = Review::findOrFail($id);
+        $review->delete();
+        return redirect()->route('admin.reviews.index')
+                         ->with('success', 'Review deleted successfully!');
     }
 }
 

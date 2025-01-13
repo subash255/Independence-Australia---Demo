@@ -21,18 +21,26 @@
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">S.N</th>
+                    <th class="border border-gray-300 px-4 py-2">Image</th>
+                    <th class="border border-gray-300 px-4 py-2">Product Name</th>
                     <th class="border border-gray-300 px-4 py-2">Email</th>
+                    <th class="border border-gray-300 px-4 py-2">Message</th>
                     <th class="border border-gray-300 px-4 py-2">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($newsletters as $newsletter)
+                @foreach ($reviews as $review)
                     <tr class="border border-gray-300">
                         <td class="border border-gray-300 px-4 py-2 text-center">{{ $loop->iteration }}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ $newsletter->email }}</td>
+                        <td class="border border-gray-300 px-4 py-2">
+                            <img src="{{ asset($review->product->image) }}" alt="{{ $review->product->name }}" class="w-16 h-16 object-cover rounded-lg">
+                        </td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $review->product->name }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $review->email }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $review->message }}</td>
                         <td class="flex justify-center py-4">
                             <!-- Delete Icon -->
-                            <form action="{{route('admin.newsletter.destroy',$newsletter->id)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this newsletter?');">
+                            <form action="{{route('admin.review.destroy',$review->id)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
                                 @csrf
                                 @method('DELETE')
                                 <button class="bg-red-500 hover:bg-red-700 mt-2 p-1 w-8 h-8 rounded-full flex items-center justify-center">
@@ -50,12 +58,12 @@
     <div class="flex justify-between items-center mt-4">
         <div class="flex items-center space-x-2">
             <span class="ml-4 text-gray-700">
-                Showing {{ $newsletters->firstItem() }} to {{ $newsletters->lastItem() }} of {{ $newsletters->total() }} entries
+                Showing {{ $reviews->firstItem() }} to {{ $reviews->lastItem() }} of {{ $reviews->total() }} entries
             </span>
         </div>
     
         <div class="flex items-center space-x-2">
-            {{ $newsletters->links() }}
+            {{ $reviews->links() }}
         </div>
     </div>
 </div>

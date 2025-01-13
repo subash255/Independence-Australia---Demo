@@ -135,6 +135,10 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     //Newsletter routes
     Route::get('admin/newsletter/index', [NewsletterController::class, 'index'])->name('admin.newsletter.index');
     Route::delete('admin/newsletter/{id}/destroy', [NewsletterController::class, 'destroy'])->name('admin.newsletter.destroy');
+
+    //Review routes
+    Route::get('admin/reviews/index', [ReviewController::class, 'adminindex'])->name('admin.reviews.index');
+    Route::delete('admin/reviews/{id}/destroy', [ReviewController::class, 'destroy'])->name('admin.review.destroy');
 });
 
 Route::middleware('auth')->group(function () {

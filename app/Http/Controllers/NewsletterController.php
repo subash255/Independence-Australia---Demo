@@ -37,4 +37,12 @@ class NewsletterController extends Controller
         return back()->with('success', 'You have been successfully subscribed to our newsletter');
     }
 }
+
+    public function destroy($id)
+    {
+        $newsletter = Newsletter::findOrFail($id);
+        $newsletter->delete();
+        return redirect()->route('admin.newsletter.index')
+                         ->with('success', 'Newsletter deleted successfully!');
+    }
 }
