@@ -215,7 +215,7 @@
                             <p class="text-sm text-gray-900">
                                 <span class="font-bold">{{ $product->brand->name }}</span>
                             </p>
-                            <div class="flex items-center mb-3 gap-1 text-yellow-500 text-sm justify-center">
+                            <div class="flex items-center mb-3 gap-1 text-red-500 text-sm font-medium justify-center">
 
                                 @php
                                     $productReviews = $reviews[$product->id] ?? collect();
