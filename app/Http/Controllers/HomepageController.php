@@ -54,9 +54,15 @@ class HomepageController extends Controller
     {
         $this->visits();
         $user = Auth::user();
+        
         $sliderTexts = Text::orderBy('priority')->get();
         $images = Banner::orderBy('priority', 'asc')->get();
         $products = Product::limit(20)->get();
+        $reviews = [];
+        foreach ($products as $product) {
+            // Get reviews for this particular product
+            $reviews[$product->id] = Review::where('product_id', $product->id)->get();
+        }
         $categories = Category::all();
         // Check if the user is authenticated before accessing its properties
         if ($user && $user->role == 'vendor') {
@@ -64,8 +70,11 @@ class HomepageController extends Controller
         } else {
             $users = collect();
         }
+         // Ensure $reviews[$product->id] is a collection before calling avg() on it
+         $productReviews = $reviews[$product->id] ?? collect(); // Default to an empty collection if no reviews
+         $averageRating = $productReviews->avg('rating'); // Calculate average rating for this product
 
-        return view('welcome', compact('products', 'users', 'categories', 'images', 'sliderTexts'));
+        return view('welcome', compact('products', 'users', 'categories', 'images', 'sliderTexts', 'reviews', 'averageRating'));
     }
 
     // Display the homepage
