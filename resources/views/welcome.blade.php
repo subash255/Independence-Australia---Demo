@@ -213,8 +213,21 @@
                                 <span class="font-bold">{{ $product->brand->name }}</span>                 
                             </p>                 
                             <div class="flex items-center mb-3 gap-1 text-yellow-500 text-sm justify-center">                     
-                                <span class="text-pink-500 text-lg">★★★★★</span>                     
-                                <span class="text-gray-600">(5 Reviews)</span>                 
+                            
+
+        @if($productReviews->count() > 0)
+            <!-- Display stars based on average rating -->
+            @for ($i = 0; $i < round($averageRating); $i++)
+                <i class="ri-star-fill text-yellow-400 text-xl"></i>
+            @endfor
+            @for ($i = round($averageRating); $i < 5; $i++)
+                <i class="ri-star-line text-gray-300 text-xl"></i>
+            @endfor
+        @else
+            <p>No reviews for this product yet.</p>
+        @endif
+    
+               
                             </div>                 
                             <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>                 
                             <form action="{{ route('user.cart.add', $product->id) }}" method="POST">                     

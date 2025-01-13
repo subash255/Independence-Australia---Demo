@@ -64,10 +64,7 @@
     <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
         <h1 class="text-3xl font-semibold text-center mb-6 text-gray-800">Submit Your Review</h1>
 
-        @if (session('success'))
-        <div class="bg-green-500 text-white p-4 rounded-md shadow-lg mb-6 text-center">{{ session('success') }}
-        </div>
-        @endif
+      
 
         <form action="{{ route('review.store') }}" method="POST" class="space-y-6">
             @csrf
