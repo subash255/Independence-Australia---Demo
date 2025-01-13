@@ -43,7 +43,6 @@ Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('p
 
 
 //review routes
-Route::get('review/create/{id}', [ReviewController::class, 'create'])->name('review.create');
 Route::post('review', [ReviewController::class, 'store'])->name('review.store');
 Route::get('review/{id}', [ReviewController::class, 'index'])->name('review.index');
 

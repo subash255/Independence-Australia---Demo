@@ -9,13 +9,6 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    // Display the review form
-    public function create($id)
-    {
-        $product = Product::findOrFail($id);
-        return view('review.create', compact('product'));
-    }
-
 
     // Store the review
     public function store(Request $request)

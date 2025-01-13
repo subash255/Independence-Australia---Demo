@@ -1,26 +1,26 @@
 @extends('layouts.master')
 @section('content')
 
-{{-- Flash Message --}}
-@if(session('success'))
-<div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
-    {{ session('success') }}
-</div>
-@endif
-@if(session('error'))
-  <div id="flash-message" class="bg-red-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
-        {{ session('error') }}
-    </div>
-@endif
+    {{-- Flash Message --}}
+    @if (session('success'))
+        <div id="flash-message" class="bg-green-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div id="flash-message" class="bg-red-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+            {{ session('error') }}
+        </div>
+    @endif
 
-<script>
-    if (document.getElementById('flash-message')) setTimeout(() => {
-        const msg = document.getElementById('flash-message');
-        msg.style.opacity = 0;
-        msg.style.transition = "opacity 0.5s ease-out";
-        setTimeout(() => msg.remove(), 500);
-    }, 3000);
-</script>
+    <script>
+        if (document.getElementById('flash-message')) setTimeout(() => {
+            const msg = document.getElementById('flash-message');
+            msg.style.opacity = 0;
+            msg.style.transition = "opacity 0.5s ease-out";
+            setTimeout(() => msg.remove(), 500);
+        }, 3000);
+    </script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
 
@@ -45,7 +45,8 @@
                     <span class="font-semibold text-blue-500">{{ Auth::user()->name }} {{ Auth::user()->last_name }}
                         @if (Auth::user()->role == 'vendor')
                             B2B
-                            Customer</span>
+                            Customer
+                    </span>
                     @endif
                 </p>
 
@@ -80,33 +81,33 @@
     @guest
         <!-- This section is shown when the user is not logged in -->
         <!-- <div class="relative flex flex-col md:flex-row-reverse items-center bg-gray-100 p-8 md:p-16 gap-10 md:gap-18">
-                <div class="absolute inset-0 bg-cover bg-center"
-                    style="background-image: url('{{ asset('images/suddo.jpg') }}'); height: 400px;">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                </div>
+                                <div class="absolute inset-0 bg-cover bg-center"
+                                    style="background-image: url('{{ asset('images/suddo.jpg') }}'); height: 400px;">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                                </div>
 
-                <div class="relative z-10 text-center md:text-left w-full md:w-1/2 text-white px-6">
-                    <h1 class="text-teal-700 text-3xl md:text-4xl font-bold mb-4 text-shadow-md">
-                        Welcome to Alwayson Medical
-                    </h1>
-                    <p class="text-sm md:text-base leading-relaxed text-gray-900 mb-6">
-                        Alwayson Medical is a social enterprise that provides choices for people living with a disability or
-                        other personal need, enabling them to regain and retain their independence within an inclusive community.
-                    </p>
+                                <div class="relative z-10 text-center md:text-left w-full md:w-1/2 text-white px-6">
+                                    <h1 class="text-teal-700 text-3xl md:text-4xl font-bold mb-4 text-shadow-md">
+                                        Welcome to Alwayson Medical
+                                    </h1>
+                                    <p class="text-sm md:text-base leading-relaxed text-gray-900 mb-6">
+                                        Alwayson Medical is a social enterprise that provides choices for people living with a disability or
+                                        other personal need, enabling them to regain and retain their independence within an inclusive community.
+                                    </p>
 
-                    <div class="space-y-4 md:space-y-0 md:flex md:flex-col md:gap-4">
-                        <a href="/login"><button
-                            class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
-                            Sign in
-                        </button></a>
-                        
-                        <p class="text-sm text-gray-300">
-                            Don't have an account yet?
-                            <a href="/register" class="text-teal-700 font-medium hover:underline">Register now</a>
-                        </p>
-                    </div>
-                </div>
-            </div>  -->
+                                    <div class="space-y-4 md:space-y-0 md:flex md:flex-col md:gap-4">
+                                        <a href="/login"><button
+                                            class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
+                                            Sign in
+                                        </button></a>
+                                        
+                                        <p class="text-sm text-gray-300">
+                                            Don't have an account yet?
+                                            <a href="/register" class="text-teal-700 font-medium hover:underline">Register now</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>  -->
         <!-- Slider -->
         <div class="swiper swiper-container w-full">
             <div class="swiper-wrapper">
@@ -198,57 +199,64 @@
     </h1>
     <div class=" h-1.5 w-20 bg-pink-500 ml-4 mb-4">
     </div>
-    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">     
-        @foreach($products as $product)     
-            @if ($product->status == 1)     
-                <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">         
-                    <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">             
-                        <!-- Image container with fixed aspect ratio and no cropping -->             
-                        <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-2 overflow-hidden">                 
-                            <img src="{{ asset($product->image) }}" alt="Product Image" class="object-contain w-full h-full">             
-                        </div>             
-                        <div class="flex flex-col justify-between items-center text-center h-full">                 
-                            <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->name }}</h3>                 
-                            <p class="text-sm text-gray-900">                     
-                                <span class="font-bold">{{ $product->brand->name }}</span>                 
-                            </p>                 
-                            <div class="flex items-center mb-3 gap-1 text-yellow-500 text-sm justify-center">                     
-                            
+    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        @foreach ($products as $product)
+            @if ($product->status == 1)
+                <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">
+                    <div
+                        class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
+                        <!-- Image container with fixed aspect ratio and no cropping -->
+                        <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-2 overflow-hidden">
+                            <img src="{{ asset($product->image) }}" alt="Product Image"
+                                class="object-contain w-full h-full">
+                        </div>
+                        <div class="flex flex-col justify-between items-center text-center h-full">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->name }}</h3>
+                            <p class="text-sm text-gray-900">
+                                <span class="font-bold">{{ $product->brand->name }}</span>
+                            </p>
+                            <div class="flex items-center mb-3 gap-1 text-yellow-500 text-sm justify-center">
 
-        @if($productReviews->count() > 0)
-            <!-- Display stars based on average rating -->
-            @for ($i = 0; $i < round($averageRating); $i++)
-                <i class="ri-star-fill text-yellow-400 text-xl"></i>
-            @endfor
-            @for ($i = round($averageRating); $i < 5; $i++)
-                <i class="ri-star-line text-gray-300 text-xl"></i>
-            @endfor
-        @else
-            <p>No reviews for this product yet.</p>
-        @endif
-    
-               
-                            </div>                 
-                            <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>                 
-                            <form action="{{ route('user.cart.add', $product->id) }}" method="POST">                     
-                                @csrf                     
-                                <button type="submit" class="inline-block bg-white border-2 border-blue-500 text-blue-500 font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-blue-500 hover:text-white transition-colors mt-2">                         
-                                    Add to Basket                     
-                                </button>                 
-                            </form>             
-                        </div>         
-                    </div>     
-                </a>     
-            @endif     
-        @endforeach     
+                                @php
+                                    $productReviews = $reviews[$product->id] ?? collect();
+                                    $averageRating = $productReviews->avg('rating');
+                                @endphp
+                                @if ($productReviews->count() > 0)
+                                    <!-- Display stars based on average rating -->
+                                    @for ($i = 0; $i < round($averageRating); $i++)
+                                        <i class="ri-star-fill text-yellow-400 text-xl"></i>
+                                    @endfor
+                                    @for ($i = round($averageRating); $i < 5; $i++)
+                                        <i class="ri-star-line text-gray-300 text-xl"></i>
+                                    @endfor
+                                @else
+                                    <p>No reviews for this product yet.</p>
+                                @endif
+
+
+                            </div>
+                            <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>
+                            <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
+                                @csrf
+                                <button type="submit"
+                                    class="inline-block bg-white border-2 border-blue-500 text-blue-500 font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-blue-500 hover:text-white transition-colors mt-2">
+                                    Add to Basket
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </a>
+            @endif
+        @endforeach
     </div>
-            <!-- View More Products Button -->
-            <div class="flex justify-center my-3 w-full">         
-                <a href="{{ route('product.index') }}" class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition mx-auto">             
-                    View more Products         
-                </a>     
-            </div> 
-    
+    <!-- View More Products Button -->
+    <div class="flex justify-center my-3 w-full">
+        <a href="{{ route('product.index') }}"
+            class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition mx-auto">
+            View more Products
+        </a>
+    </div>
+
 
 
 
