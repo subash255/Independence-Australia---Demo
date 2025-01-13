@@ -89,10 +89,10 @@
                         Price (Low to High)</option>
                     <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Sort by
                         Price (High to Low)</option>
-                    <option value="rating_asc" {{ request('sort_by') == 'rating_asc' ? 'selected' : '' }}>Sort by
+                    {{-- <option value="rating_asc" {{ request('sort_by') == 'rating_asc' ? 'selected' : '' }}>Sort by
                         Rating (Low to High)</option>
                     <option value="rating_desc" {{ request('sort_by') == 'rating_desc' ? 'selected' : '' }}>Sort by
-                        Rating (High to Low)</option>
+                        Rating (High to Low)</option> --}}
                 </select>
             </form>
         </div>
@@ -108,9 +108,25 @@
                                 <div class="flex flex-col justify-between items-center text-center h-full">
                                     <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ $product->name }}</h3>
                                     <p class="text-lg font-semibold text-gray-900">${{ number_format($product->price, 2) }}</p>
-                                    <div class="flex items-center mb-3 gap-1 text-yellow-500 text-sm justify-center">
-                                        <span class="text-pink-500 text-lg">★★★★★</span>
-                                        <span class="text-gray-600">{{ $product->rating }} ({{ $product->reviews_count }} Reviews)</span>
+                                    <div class="flex items-center mb-3 gap-1 text-red-500 text-sm font-medium justify-center">
+
+                                        @php
+                                            $productReviews = $reviews[$product->id] ?? collect();
+                                            $averageRating = $productReviews->avg('rating');
+                                        @endphp
+                                        @if ($productReviews->count() > 0)
+                                            <!-- Display stars based on average rating -->
+                                            @for ($i = 0; $i < round($averageRating); $i++)
+                                                <i class="ri-star-fill text-yellow-400 text-xl"></i>
+                                            @endfor
+                                            @for ($i = round($averageRating); $i < 5; $i++)
+                                                <i class="ri-star-line text-gray-300 text-xl"></i>
+                                            @endfor
+                                        @else
+                                            <p>No reviews for this product yet.</p>
+                                        @endif
+        
+        
                                     </div>
                                     <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                                         @csrf
@@ -138,6 +154,11 @@
     document.getElementById('filter-toggle-btn').addEventListener('click', function() {
         const sidebar = document.getElementById('sidebar');
         sidebar.classList.toggle('hidden');
+
+                // Scroll to the filter section after the toggle
+                if (!sidebar.classList.contains('hidden')) {
+            sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
     });
 
     // Combined toggle function for subcategories (unchanged)

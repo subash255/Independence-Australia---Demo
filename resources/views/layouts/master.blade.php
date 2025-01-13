@@ -52,7 +52,7 @@
 <body class="font-sans bg-white">
     <!-- Header Section -->
     <header class="bg-white shadow-sm fixed w-full top-0 z-50 sm:relative">
-        <div class="container mx-auto flex items-center justify-between py-8 px-6">
+        <div class="container mx-auto flex items-center justify-between gap-x-4 py-8 px-6">
             <!-- Mobile Menu Toggle -->
             <div class="lg:hidden flex items-center justify-between pr-3">
                 <button id="menuToggle" class="mb-2">
@@ -65,7 +65,7 @@
             </a>
 
             <!-- Search Box - Centered and with more width -->
-            <div class="relative flex-1 max-w-lg mx-auto">
+            <div class="relative flex-1 max-w-lg mx-auto lg:block hidden">
                 <input type="text" id="search-input" placeholder="What are you looking for?"
                     class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none sm:block hidden"
                     value="{{ $query ?? '' }}">
@@ -82,15 +82,15 @@
             </div>
 
             <!-- Desktop User Authentication and Basket Section -->
-            <div class="flex items-center space-x-2 ml-auto hidden sm:flex">
+            <div class="items-center space-x-4 ml-auto hidden lg:flex">
                 @auth <!-- If the user is authenticated -->
                     <!-- User Icon -->
-                    <div class="w-8 h-8 flex items-center justify-center sm:block hidden">
+                    <div class="w-8 h-8">
                         <i class="ri-user-3-fill text-blue-500 text-[25px]"></i>
                     </div>
 
                     <!-- User Information for Desktop -->
-                    <div class="hidden sm:flex flex-col">
+                    <div>
                         <a href="{{ route('user.welcome') }}">
                             <p class="font-bold text-gray-800">{{ Auth::user()->name }} {{ Auth::user()->last_name }}</p>
                             <p class="text-sm text-gray-500">B2B Customer</p>
@@ -98,30 +98,32 @@
                     </div>
 
                     <!-- Logout Button (For Desktop View) -->
-                    <div class="flex items-center space-x-2 ml-3 border-l-2 pl-3 hidden sm:flex">
+                    <div class="border-l-2 pl-3">
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
-                            <button type="submit" class="text-red-500 font-medium hover:underline">
+                            <button type="submit" class="text-red-500 font-medium flex items-center gap-x-1">
                                 <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
-                                Logout
+                               <span>Logout</span>
                             </button>
                         </form>
                     </div>
                 @else
-                    <!-- If the user is not authenticated, show login and register buttons -->
-                    <a href="/login" class="text-gray-900 hover:underline font-bold">
+                <div class="flex items-center space-x-1">
+                     <!-- If the user is not authenticated, show login and register buttons -->
+                     <a href="/login" class="text-gray-900 font-bold flex items-center gap-x-1">
                         <i class="ri-user-3-fill text-blue-500 text-[20px]"></i> <span>Sign In</span>
                     </a>
                     <span class="px-1">/</span>
-                    <a href="/register" class="text-gray-900 hover:underline font-bold">Register</a>
+                    <a href="/register" class="text-gray-900 font-bold">Register</a>
+                </div>
+                   
                 @endauth
 
                 <!-- Cart Icon with count -->
                 <div class="relative">
-                    <span class="px-2"></span>
-                    <a href="{{ route('user.cart.index') }}" class="text-gray-900 font-bold">
+                    <a href="{{ route('user.cart.index') }}" class="text-gray-900 font-bold flex items-center space-x-1">
                         <i class="ri-shopping-basket-fill text-blue-500 font-light text-[25px]"></i>
-                        <span>Basket</span>
+                        <span class="lg:block hidden">Basket</span>
                     </a>
 
                     <!-- Cart Count -->
@@ -135,7 +137,7 @@
             </div>
 
             <!-- Mobile Icons only -->
-            <div class="flex items-center space-x-2 sm:hidden">
+            <div class="flex items-center space-x-2 lg:hidden">
                 <!-- Search Icon -->
                 <a href="#" id="mobile-search-toggle" class="text-gray-900">
                     <i class="ri-search-line text-blue-500 text-[20px]"></i>

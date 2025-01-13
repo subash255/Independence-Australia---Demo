@@ -66,6 +66,21 @@
 
             <!-- Product Grid -->
             <main class="w-full lg:w-3/4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-4 gap-6">
+                    @if($subcategories->isNotEmpty())
+                        @foreach($subcategories as $subcategory)
+                            <div class="bg-white shadow rounded-md p-4 ">
+                                <h3 class="text-lg font-semibold text-gray-800">{{ $subcategory->name }}</h3>
+                                <p class="text-gray-600 mt-2">
+                                    Discover a wide selection of clothing and dressing aids designed to promote independence and comfort.
+                                </p>
+                                <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
+                            </div>
+                        @endforeach
+                    @else
+                        <p>No subcategories found.</p>
+                    @endif
+                </div>
 
                 <!-- Product Count and Sort Form -->
                 <div class="flex items-center justify-between mb-6 flex-wrap">
@@ -95,10 +110,10 @@
                                 Price (Low to High)</option>
                             <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Sort by
                                 Price (High to Low)</option>
-                            <option value="rating_asc" {{ request('sort_by') == 'rating_asc' ? 'selected' : '' }}>Sort by
+                            {{-- <option value="rating_asc" {{ request('sort_by') == 'rating_asc' ? 'selected' : '' }}>Sort by
                                 Rating (Low to High)</option>
                             <option value="rating_desc" {{ request('sort_by') == 'rating_desc' ? 'selected' : '' }}>Sort by
-                                Rating (High to Low)</option>
+                                Rating (High to Low)</option> --}}
                         </select>
                     </form>
                 </div>
@@ -153,6 +168,11 @@
         document.getElementById('filter-toggle-btn').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('hidden');
+
+                    // Scroll to the filter section after the toggle
+        if (!sidebar.classList.contains('hidden')) {
+            sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
         });
 
         // Combined toggle function for subcategories (unchanged)
@@ -211,6 +231,7 @@
             }
         });
     </script>
+
 
     <script>
         // Number of brands displayed initially

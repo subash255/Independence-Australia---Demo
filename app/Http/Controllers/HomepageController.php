@@ -189,11 +189,11 @@ class HomepageController extends Controller
             case 'price_desc':
                 $productsQuery = $productsQuery->orderBy('price', 'desc');
                 break;
-            case 'rating_asc':
-                $productsQuery = $productsQuery->orderBy('rating', 'asc');
+            case 'review_asc':
+                $productsQuery = $productsQuery->orderBy('review', 'asc');
                 break;
-            case 'rating_desc':
-                $productsQuery = $productsQuery->orderBy('rating', 'desc');
+            case 'review_desc':
+                $productsQuery = $productsQuery->orderBy('review', 'desc');
                 break;
             default:
                 $productsQuery = $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
