@@ -43,9 +43,9 @@ Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('p
 Route::get('/naya', [NayaController::class, 'index']);
 
 //review routes
-Route::get('review/create/{productId}', [ReviewController::class, 'create'])->name('review.create');
+Route::get('review/create/{id}', [ReviewController::class, 'create'])->name('review.create');
 Route::post('review', [ReviewController::class, 'store'])->name('review.store');
-Route::get('review/{productId}', [ReviewController::class, 'index'])->name('review.index');
+Route::get('review/{id}', [ReviewController::class, 'index'])->name('review.index');
 
 
 Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');

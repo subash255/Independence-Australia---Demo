@@ -9,10 +9,12 @@ use Illuminate\Http\Request;
 class ReviewController extends Controller
 {
     // Display the review form
-    public function create($productId)
+    public function create($id)
     {
-        return view('reviews.create', compact('productId'));
+        $productId = $id;
+        return view('review.create', compact('productId'));
     }
+
 
     // Store the review
     public function store(Request $request)
@@ -33,15 +35,16 @@ class ReviewController extends Controller
             'product_id' => $request->product_id,
         ]);
 
-        return redirect()->route('reviews.create', $request->product_id)
+        return redirect()->route('review.create', $request->product_id)
                          ->with('success', 'Review submitted successfully!');
     }
 
     // Display all reviews for a product
-    public function index($productId)
+    public function index($id)
     {
+        $productId = $id;
         $reviews = Review::where('product_id', $productId)->latest()->get();
-        return view('reviews.index', compact('reviews', 'productId'));
+        return view('review.index', compact('reviews', 'productId'));
     }
 }
 
