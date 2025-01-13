@@ -40,7 +40,7 @@ Route::post('newsletter/store', [NewsletterController::class, 'store'])->name('n
 // Route::get('/product', [HomepageController::class, 'showproducts']);
 Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('product.show');
 
-Route::get('/naya', [NayaController::class, 'index']);
+
 
 //review routes
 Route::get('review/create/{id}', [ReviewController::class, 'create'])->name('review.create');
@@ -51,13 +51,7 @@ Route::get('review/{id}', [ReviewController::class, 'index'])->name('review.inde
 Route::get('/', [HomepageController::class, 'welcome'])->name('welcome');
 Route::get('/homepage', [HomepageController::class, 'homepage'])->name('homepage');
 
-//Fake Store API
-Route::get('/fetch-test', [TestController::class, 'fetchAndStore']);
-Route::get('/test', [TestController::class, 'showTests']);
 
-Route::get('/scrape-products', [ScraperController::class, 'scrapeProducts']);
-
-Route::get('/punchout', [PunchOutController::class, 'fetchCatalog']);
 
 Route::get('/search/welcome', [HomepageController::class, 'search'])->name('search.products');
 

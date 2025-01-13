@@ -56,7 +56,7 @@ class CheckoutController extends Controller
         $contacts = Contact::where('user_id', $user->id)->get();
 
         if (!$contacts->count() > 0) {
-            return redirect()->route('welcome')->with('error', 'No contact information found.');
+            return redirect()->route('user.welcome')->with('error', 'No Billing & Shipping Details Please Fill Out The Deatils.');
         }
 
 
