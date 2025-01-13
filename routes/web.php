@@ -16,6 +16,7 @@ use App\Http\Controllers\ScraperController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ManageuserController;
 use App\Http\Controllers\NayaController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TextController;
@@ -30,7 +31,8 @@ Route::get('user/cart/show', [CheckoutController::class, 'show'])->name('user.ca
 Route::get('menu/{id?}', [HomepageController::class, 'showcat'])->name('menu.index');
 Route::get('product/index', [HomepageController::class, 'allproduct'])->name('product.index');
 
-
+//newsletter submission
+Route::post('newsletter/store', [NewsletterController::class, 'store'])->name('newsletter.store');
 
 
 

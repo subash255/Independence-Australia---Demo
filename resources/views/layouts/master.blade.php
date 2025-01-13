@@ -33,6 +33,11 @@
         {{ session('success') }}
     </div>
 @endif
+@if(session('error'))
+  <div id="flash-message" class="bg-red-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+        {{ session('error') }}
+    </div>
+@endif
 
 
 <script>
@@ -305,17 +310,21 @@
                         promotional offers and newsletters from Alwayson Medical. You can unsubscribe at any time.
                     </p>
                 </div>
-
+                <form action="{{route('newsletter.store')}}" method="post">
+                    @csrf
                 <div class="flex w-full sm:w-auto">
-                    <input type="email" placeholder="Enter your email"
+                    
+                    <input type="email" name="email" placeholder="Enter your email"
                         class="px-6 py-3 rounded-l-full border border-gray-300 focus:outline-none w-full sm:w-[400px]">
 
                     <!-- Subscribe Button -->
-                    <button
+                    <button type="submit"
                         class="bg-blue-700 font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-blue-900 border-2 border-blue-800 transition">
                         SUBSCRIBE
                     </button>
+                    
                 </div>
+                </form>
             </div>
         </div>
 
