@@ -6,7 +6,7 @@
     <!-- Left Section (Image and Social Links) -->
     <div class="flex-1 md:flex hidden flex-col justify-between bg-gray-100 p-6">
         <div class="text-center mt-6">
-            <img src="images/Login-cuate.svg" alt="signin Image" class="w-[400px] mx-auto h-auto rounded-lg shadow-none">
+            <img src="images/Login-cuate.svg" alt="signin Image" class="w-full object-cover mx-auto h-auto rounded-lg shadow-none">
         </div>
     </div>
 

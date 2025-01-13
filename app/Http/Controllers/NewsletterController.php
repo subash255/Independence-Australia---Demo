@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class NewsletterController extends Controller
 {
+
+    public function index()
+    {
+        $newsletters = Newsletter::latest()->paginate(10);
+        return view('admin.newsletter.index', compact('newsletters'), ['title' => 'Newsletter']);
+    }
+
     public function store(Request $request)
 {
     // Validate the email format only (not uniqueness)

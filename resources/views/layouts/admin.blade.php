@@ -94,6 +94,11 @@
           <i class="ri-bank-card-2-fill"></i>
           <span class="ml-4 font-semibold">Products</span>
         </a>
+
+        <a href="{{ route('admin.newsletter.index') }}" class="sidebar-link flex items-center px-6 py-4 {{ request()->routeIs('admin.newsletter.index') ? 'bg-blue-600 text-white' : 'hover:bg-blue-500 hover:text-white' }} transition-colors duration-200">
+          <i class="ri-bank-card-2-fill"></i>
+          <span class="ml-4 font-semibold">Newsletter</span>
+        </a>
       </nav>
     </aside>
     

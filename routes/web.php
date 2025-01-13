@@ -132,6 +132,10 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::get('admin/text/{id}/edit', [TextController::class, 'edit'])->name('admin.text.edit');
     Route::patch('admin/text/{id}/update', [TextController::class, 'update'])->name('admin.text.update');
     Route::delete('admin/text/{id}/destroy', [TextController::class, 'destroy'])->name('admin.text.destroy');
+
+    //Newsletter routes
+    Route::get('admin/newsletter/index', [NewsletterController::class, 'index'])->name('admin.newsletter.index');
+    Route::delete('admin/newsletter/{id}/destroy', [NewsletterController::class, 'destroy'])->name('admin.newsletter.destroy');
 });
 
 Route::middleware('auth')->group(function () {
