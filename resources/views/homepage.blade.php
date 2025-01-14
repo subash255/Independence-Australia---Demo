@@ -115,7 +115,7 @@
         <!-- Video Section -->
         <div class="flex justify-center items-center">
             <iframe class="w-full max-w-md h-[250px] md:h-[300px] lg:h-[300px] shadow-lg rounded-lg"
-                src="https://www.youtube.com/embed/WO2b03Zdu4Q" title="Alwayson Medical - Your Way" frameborder="0"
+                src="https://www.youtube.com/embed/WO2b03Zdu4Q" title="Always There Medical - Your Way" frameborder="0"
                 allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen>
             </iframe>
         </div>
@@ -123,11 +123,11 @@
         <!-- Text Section -->
         <div>
             <h1 class="text-3xl md:text-4xl font-extrabold text-[#00718f] mb-4">
-                Welcome to <br>Alwayson Medical
+                Welcome to <br>Always There Medical
             </h1>
             <div class="h-1 w-16 bg-pink-600 mb-4"></div>
             <p class="text-gray-700 text-lg leading-relaxed mb-6">
-                Alwayson Medical is a social enterprise that provides choices for people living with a disability or
+                Always There Medical is a social enterprise that provides choices for people living with a disability or
                 other personal need, enabling them to regain and retain their independence within an inclusive community.
             </p>
             <a href="#"

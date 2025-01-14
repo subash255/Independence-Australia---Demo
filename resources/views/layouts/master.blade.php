@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alwayson Medical</title>
+    <title>Always There Medical</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
@@ -309,7 +309,7 @@
                     <h1 class="text-white text-4xl font-bold mb-4">Newsletter Sign Up</h1>
                     <p class="text-white text-lg leading-relaxed">
                         By providing your email address, you are consenting to receive marketing communications such as
-                        promotional offers and newsletters from Alwayson Medical. You can unsubscribe at any time.
+                        promotional offers and newsletters from Always There Medical. You can unsubscribe at any time.
                     </p>
                 </div>
                 <form action="{{route('newsletter.store')}}" method="post">
@@ -368,7 +368,7 @@
             <!-- Copyright Section Centered -->
             <div class="flex justify-center text-gray-700 text-sm">
                 <p class="text-center">
-                    &copy; 2024 Alwayson Medical &nbsp; | &nbsp; All rights reserved.
+                    &copy; 2024 Always There Medical &nbsp; | &nbsp; All rights reserved.
                 </p>
             </div>
 

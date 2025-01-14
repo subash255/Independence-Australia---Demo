@@ -13,7 +13,7 @@
     <!--Login Form -->
     <div class="flex-1 text-black p-8 flex flex-col justify-center items-center bg-gray-200">
         <h2 class="text-3xl font-bold mb-4">Login</h2>
-        <small class="text-black text-2xl">Welcome to Alwayson Medical</small>
+        <small class="text-black text-2xl">Welcome to Always There Medical</small>
 
         <!-- Display Error Messages -->
         @if ($errors->any())

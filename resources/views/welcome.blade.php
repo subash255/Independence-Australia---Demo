@@ -88,10 +88,10 @@
 
                                 <div class="relative z-10 text-center md:text-left w-full md:w-1/2 text-white px-6">
                                     <h1 class="text-teal-700 text-3xl md:text-4xl font-bold mb-4 text-shadow-md">
-                                        Welcome to Alwayson Medical
+                                        Welcome to Always There Medical
                                     </h1>
                                     <p class="text-sm md:text-base leading-relaxed text-gray-900 mb-6">
-                                        Alwayson Medical is a social enterprise that provides choices for people living with a disability or
+                                        Always There Medical is a social enterprise that provides choices for people living with a disability or
                                         other personal need, enabling them to regain and retain their independence within an inclusive community.
                                     </p>
 
@@ -345,7 +345,7 @@
 {{-- <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center py-8 px-6 md:px-16 bg-gray-100">
         <!-- Image Section -->
         <div class="flex justify-center items-center">
-            <img class="w-full h-auto shadow-lg rounded-lg" src="images/wheel.jpg" alt="Alwayson Medical" />
+            <img class="w-full h-auto shadow-lg rounded-lg" src="images/wheel.jpg" alt="Always There Medical" />
         </div>
 
         <!-- Text Section -->
@@ -404,7 +404,7 @@ class="w-full h-64 object-contain transform transition-transform duration-300 ho
 <div class="w-full bg-white">
     <div class="w-full px-4 md:px-[8rem] flex flex-col items-center"> <!-- Adjusted padding for responsiveness -->
         <p id="text" class="text-black text-lg py-7 text-center">
-            Alwayson Medical supplies healthcare and medical supplies to thousands of customers across Australia.
+            Always There Medical supplies healthcare and medical supplies to thousands of customers across Australia.
             We stock all major and specialist brands. Key categories include continence, wound care, daily living &
             mobility aids,
             urology, skin care, medical aids & nutrition. <br>
@@ -413,7 +413,7 @@ class="w-full h-64 object-contain transform transition-transform duration-300 ho
                 optional discreet packaging.
                 We can make the purchase of your personal and medical supplies easy by providing quick delivery of more
                 than 13,000 products directly to your home, anywhere in Australia. <br>
-                Alwayson Medical also has a unique social enterprise approach that leverages the sale of
+                Always There Medical also has a unique social enterprise approach that leverages the sale of
                 healthcare products to support
                 our core charitable purpose to provide choices for people living with a disability or other personal
                 need.
