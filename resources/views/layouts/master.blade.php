@@ -216,7 +216,7 @@
                                         <button
                                             class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
                                             <span class="flex-grow">{{ $category->name }}</span>
-                                            <i onclick="showToggle(event, {{ $category->slug }})"
+                                            <i onclick="showToggle(event, '{{ $category->slug }}')"
                                                 class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
                                         </button>
                                     </a>
@@ -264,7 +264,7 @@
                 <div class="flex justify-center space-x-5 relative w-full">
                     @foreach ($categories as $category)
                         @if ($category->status == 1)
-                            <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                            <a href="{{ route('menu.index', ['slug' => $category->slug]) }}">
                                 <div class="relative group">
                                     <button
                                         class="text-sm text-blue-500 font-bold transition duration-200 ease-in-out hover:text-blue-800">

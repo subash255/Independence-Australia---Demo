@@ -17,27 +17,23 @@
             <aside id="sidebar" class="w-full lg:w-1/4 bg-gray-100 p-4 rounded-md shadow-sm lg:block hidden">
                 <h2 class="font-semibold text-lg text-gray-800 mb-4">Shop By Category</h2>
                 <div class="space-y-4">
-                    @foreach ($categories as $category)
-                        <div>
-                            <a href="{{ route('menu.index', ['slug' => $category->slug]) }}">
-                                <button
-                                    class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
-                                    <span class="flex-grow">{{ $category->name }}</span>
-                                    <i onclick="toggle(event, 'subcategory-{{ $category->id }}')"
-                                        class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
-                                </button>
-                            </a>
-
-                            <div id="subcategory-{{ $category->id }}"
-                                class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
-                                @foreach ($category->subcategories as $subcategory)
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @endforeach
+                @foreach ($categories as $category)
+    
+        <div>
+            <a href="{{ route('menu.index', $category->slug) }}">
+                <button class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                    <span class="flex-grow">{{ $category->name }}</span>
+                    <i onclick="toggle(event, 'subcategory-{{ $category->id }}')" class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                </button>
+            </a>
+            <div id="subcategory-{{ $category->id }}" class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+                @foreach ($category->subcategories as $subcategory)
+                    <!-- Subcategory content goes here -->
+                @endforeach
+            </div>
+        </div>
+   
+@endforeach
                 </div>
 
                 <h2 class="font-semibold text-xl text-gray-900 mb-6 mt-6">Shop By Brands</h2>
@@ -99,7 +95,7 @@
                     </p>
 
                     <!-- Sort Dropdown (Mobile & Desktop) -->
-                    <form method="GET" action="{{ route('menu.index', $category->id) }}"
+                    <form method="GET" action="{{ route('menu.index', ['slug' => $category->slug ?? 'default-slug']) }}"
                         class="flex items-center w-full lg:w-auto">
                         <select name="sort_by" class="border-gray-300 rounded-md shadow-sm w-full lg:w-auto"
                             onchange="this.form.submit()">

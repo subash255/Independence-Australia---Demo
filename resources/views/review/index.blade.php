@@ -132,7 +132,13 @@
         </form>
     </div>
 </div>
-
+<div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-96 text-center">
+        <h2 class="text-lg font-semibold">You Must Log In to Leave a Review</h2>
+        <p class="mt-4">Please log in to continue.</p>
+        <button id="closeAuthModalButton" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Close</button>
+    </div>
+</div>
 
 
 <script>
@@ -160,10 +166,14 @@
                 }
             });
         } else {
-            // User is not authenticated, show an alert
-            alert('You must log in to leave a review. Please log in to continue.');
-        }
+        // User is not authenticated, show the authentication modal
+        const authModal = document.getElementById('authModal');
+        authModal.classList.remove('modal-hidden');
+        authModal.classList.add('modal-visible'); // Show authentication modal
+        document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+    }
     });
+   
 
     // Close the modal
     document.getElementById('closeModalButton').addEventListener('click', function() {
@@ -172,6 +182,11 @@
         reviewModal.classList.add('modal-hidden'); // Hide modal
         document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
     });
+    document.getElementById('closeAuthModalButton').addEventListener('click', function() {
+    const authModal = document.getElementById('authModal');
+    authModal.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+});
 
     // Rating functionality
     const stars = document.querySelectorAll('.star');
