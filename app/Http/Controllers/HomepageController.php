@@ -144,72 +144,81 @@ class HomepageController extends Controller
 
 
 
-    public function showcat(Request $request, $id)
+    public function showcat(Request $request, $slug = null)
     {
-        // Get all categories along with their subcategories
-        $categories = Category::with('subcategories')->get();
-
-        // Get the category with products and subcategories
-        $category = Category::with(['products', 'subcategories'])->findOrFail($id);
-
-        // Fetch subcategories for the category
-        $subcategories = FacadesDB::table('subcategories')
-            ->where('category_id', $id)
-            ->get();
-            
-            $products = Product::where('category_id', $id)->get();
-
+        dd('this is working');
+        if ($slug) {
+            // Retrieve the category using the slug if it is provided
+            $cat = Category::where('slug', $slug)->firstOrFail(); // Find category by slug
+    
+            // Get the category with products and subcategories
+            $category = Category::with(['products', 'subcategories'])->findOrFail($cat->id);
+    
+            // Fetch subcategories for the category
+            $subcategories = FacadesDB::table('subcategories')
+                ->where('category_id', $cat->id)
+                ->get();
+    
+            // Fetch products related to the category
+            $products = Product::where('category_id', $cat->id)->get();
+    
             // Get all unique brand_ids from the products
             $brandIds = $products->pluck('brand_id')->unique();
             
             // Get the full brand objects using the brand IDs
             $brands = Brand::whereIn('id', $brandIds)->get();
-        // Get the selected brand from the request (single brand ID)
-        $selectedBrand = $request->input('brand');
-
-        // Get the sorting option from the request
-        $sortBy = $request->input('sort_by', 'name_asc');
-
-        // Start the products query for the selected category
-        $productsQuery = Product::where('category_id', $id);
-
-        // Apply brand filter if a brand is selected
-        if ($selectedBrand) {
-            // Filter products by the selected brand
-            $productsQuery = $productsQuery->where('brand_id', $selectedBrand);
+    
+            // Get the selected brand from the request (single brand ID)
+            $selectedBrand = $request->input('brand');
+    
+            // Get the sorting option from the request
+            $sortBy = $request->input('sort_by', 'name_asc');
+    
+            // Start the products query for the selected category
+            $productsQuery = Product::where('category_id', $cat->id);
+    
+            // Apply brand filter if a brand is selected
+            if ($selectedBrand) {
+                $productsQuery = $productsQuery->where('brand_id', $selectedBrand);
+            }
+    
+            // Apply sorting based on the selected sort option
+            switch ($sortBy) {
+                case 'name_asc':
+                    $productsQuery = $productsQuery->orderBy('name', 'asc');
+                    break;
+                case 'name_desc':
+                    $productsQuery = $productsQuery->orderBy('name', 'desc');
+                    break;
+                case 'price_asc':
+                    $productsQuery = $productsQuery->orderBy('price', 'asc');
+                    break;
+                case 'price_desc':
+                    $productsQuery = $productsQuery->orderBy('price', 'desc');
+                    break;
+                case 'review_asc':
+                    $productsQuery = $productsQuery->orderBy('review', 'asc');
+                    break;
+                case 'review_desc':
+                    $productsQuery = $productsQuery->orderBy('review', 'desc');
+                    break;
+                default:
+                    $productsQuery = $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
+                    break;
+            }
+    
+            // Paginate the products
+            $products = $productsQuery->paginate(15);
+    
+        } else {
+            dd('this is not working');  // Display all categories
         }
-
-        // Apply sorting based on the selected sort option
-        switch ($sortBy) {
-            case 'name_asc':
-                $productsQuery = $productsQuery->orderBy('name', 'asc');
-                break;
-            case 'name_desc':
-                $productsQuery = $productsQuery->orderBy('name', 'desc');
-                break;
-            case 'price_asc':
-                $productsQuery = $productsQuery->orderBy('price', 'asc');
-                break;
-            case 'price_desc':
-                $productsQuery = $productsQuery->orderBy('price', 'desc');
-                break;
-            case 'review_asc':
-                $productsQuery = $productsQuery->orderBy('review', 'asc');
-                break;
-            case 'review_desc':
-                $productsQuery = $productsQuery->orderBy('review', 'desc');
-                break;
-            default:
-                $productsQuery = $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
-                break;
-        }
-
-        // Paginate the products
-        $products = $productsQuery->paginate(15);
-
+    
         // Return the view with all necessary data
         return view('menu.index', compact('category', 'categories', 'products', 'subcategories', 'brands', 'selectedBrand', 'sortBy'));
     }
+    
+
 
     public function allproduct(Request $request)
     {
@@ -289,14 +298,15 @@ class HomepageController extends Controller
 
 
 
-    public function showproduct($id)
+    public function showproduct($slug)
     {
-        $reviews = Review::where('product_id', $id)->get();
+        $product = Product::where('slug', $slug)->firstOrFail();
         $categories = Category::with('subcategories')->get();
         $sliderTexts = Text::orderBy('priority')->get();
-        $product = Product::findOrFail($id); // Fetch product by ID
+        $reviews = Review::where('product_id', $product->id)->get();
         return view('product.show', compact('product', 'sliderTexts', 'categories', 'reviews'));
     }
+   
 
     public function impersonate($id)
     {

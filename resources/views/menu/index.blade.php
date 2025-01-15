@@ -19,7 +19,7 @@
                 <div class="space-y-4">
                     @foreach ($categories as $category)
                         <div>
-                            <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                            <a href="{{ route('menu.index', ['slug' => $category->slug]) }}">
                                 <button
                                     class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
                                     <span class="flex-grow">{{ $category->name }}</span>

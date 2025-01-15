@@ -11,8 +11,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomepageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PunchOutController;
-use App\Http\Controllers\ScraperController;
 use App\Http\Controllers\SubcategoryController;
 use App\Http\Controllers\ManageuserController;
 use App\Http\Controllers\NayaController;
@@ -29,8 +27,8 @@ Route::get('checkout', [CheckoutController::class, 'showCheckoutPage'])->name('c
 Route::post('checkout', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
 Route::get('user/cart/show', [CheckoutController::class, 'show'])->name('user.cart.show');
 
-Route::get('menu/{id?}', [HomepageController::class, 'showcat'])->name('menu.index');
-Route::get('product/index', [HomepageController::class, 'allproduct'])->name('product.index');
+Route::get('category/{slug?}', [HomepageController::class, 'showcat'])->name('menu.index');
+Route::get('products', [HomepageController::class, 'allproduct'])->name('product.index');
 
 //newsletter submission
 Route::post('newsletter/store', [NewsletterController::class, 'store'])->name('newsletter.store');
@@ -38,7 +36,7 @@ Route::post('newsletter/store', [NewsletterController::class, 'store'])->name('n
 
 
 // Route::get('/product', [HomepageController::class, 'showproducts']);
-Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('product.show');
+Route::get('/product/{slug}', [HomepageController::class, 'showproduct'])->name('product.show');
 
 
 
@@ -159,7 +157,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/user/{user}/edit', [ProfileController::class, 'edit'])->name('user.edit');
 
     //My Order
-    Route::get('user.myorder', [HomepageController::class, 'order'])->name('user.myorder');
+    Route::get('user/myorder', [HomepageController::class, 'order'])->name('user.myorder');
 
     //Manage User
     Route::get('user/manageuser/index', [ManageuserController::class, 'index'])->name('user.manageuser.index');
