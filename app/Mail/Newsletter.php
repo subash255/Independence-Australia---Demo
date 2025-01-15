@@ -12,19 +12,22 @@ class Newsletter extends Mailable
 
     public $subject;
     public $content;
+    public $attachment;
 
-    public function __construct($subject, $content)
+    public function __construct($subject, $content, $attachment)
     {
         $this->subject = $subject;
         $this->content = $content;
+        $this->attachment = $attachment;
     }
 
     public function build()
     {
-        return $this->subject($this->subject)  // Set the subject dynamically
-                    ->view('emails.newsletter') // Assuming your view is in resources/views/emails/newsletter.blade.php
-                    ->with([
-                        'content' => $this->content, // Pass the content to the email view
-                    ]);
+        return $this->subject($this->subject) 
+            ->view('emails.newsletter') 
+            ->with([
+                'content' => $this->content, 
+                'attachment' => $this->attachment,
+            ]);
     }
 }

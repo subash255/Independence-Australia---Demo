@@ -135,6 +135,10 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     Route::get('admin/newsletter/subscribers', [NewsletterController::class, 'subscribers'])->name('admin.newsletter.subscribers');
     Route::delete('admin/newsletter/{id}/destroy', [NewsletterController::class, 'destroy'])->name('admin.newsletter.destroy');
     Route::post('admin/newsletter/send', [NewsletterController::class, 'sendNewsletter'])->name('admin.newsletter.send.post');
+    Route::post('admin/newsletter/store', [NewsletterController::class, 'storenewsletter'])->name('admin.newsletter.store');
+    Route::delete('admin/newsletter/{id}/destroynewsletter', [NewsletterController::class, 'destroynewsletter'])->name('admin.newsletter.destroynewsletter');
+    Route::get('admin/newsletter/{id}/edit', [NewsletterController::class, 'edit'])->name('admin.newsletter.edit');
+    Route::patch('admin/newsletter/{id}', [NewsletterController::class, 'update'])->name('admin.newsletter.update');
     
 
     //Review routes
