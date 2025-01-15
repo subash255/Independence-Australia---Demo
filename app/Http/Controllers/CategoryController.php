@@ -47,8 +47,7 @@ class CategoryController extends Controller
     // Show Edit Form
     public function edit($slug)
     {
-        $categorys = Category::where('slug', $slug)->firstOrFail();
-        $category = Category::findOrFail($categorys->id);
+        $category = Category::where('slug', $slug)->firstOrFail();
         return view('admin.category.edit', compact('category'), [
             'title' => 'Manage Category'
         ]);

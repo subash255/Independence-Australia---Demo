@@ -77,7 +77,7 @@
             </p>
 
             <!-- Sort Dropdown (Mobile & Desktop) -->
-            <form method="GET" action="{{ route('menu.index', $category->id) }}"
+            <form method="GET" action="{{ route('product.index') }}"
                 class="flex items-center w-full lg:w-auto">
                 <select name="sort_by" class="border-gray-300 rounded-md shadow-sm w-full lg:w-auto"
                     onchange="this.form.submit()">
@@ -100,7 +100,7 @@
                 
                 <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($products as $product)
-                        <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">
+                        <a href="{{ route('product.show', ['slug' => $product->slug]) }}" class="block">
                             <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
                                 <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-2 overflow-hidden">
                                     <img src="{{ asset($product->image) }}" alt="{{ $product->name }} Image" class="object-contain w-full h-full">

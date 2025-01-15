@@ -212,17 +212,17 @@
                             @if ($category->status == 1)
                                 <div>
                                     <!-- Category Button to Toggle Subcategories -->
-                                    <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                                    <a href="{{ route('menu.index', ['slug' => $category->slug])}}">
                                         <button
                                             class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
                                             <span class="flex-grow">{{ $category->name }}</span>
-                                            <i onclick="showToggle(event, {{ $category->id }})"
+                                            <i onclick="showToggle(event, {{ $category->slug }})"
                                                 class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
                                         </button>
                                     </a>
 
                                     <!-- Subcategory Dropdown (Hidden by Default) -->
-                                    <div id="{{ $category->id }}"
+                                    <div id="{{ $category->slug }}"
                                         class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                                         @foreach ($category->subcategories as $subcategory)
                                             <div class="flex items-center space-x-2">
