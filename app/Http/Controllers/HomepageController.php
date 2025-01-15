@@ -156,10 +156,14 @@ class HomepageController extends Controller
         $subcategories = FacadesDB::table('subcategories')
             ->where('category_id', $id)
             ->get();
+            
+            $products = Product::where('category_id', $id)->get();
 
-        // Get all brands to display in the filter
-        $brands = Brand::all();
-
+            // Get all unique brand_ids from the products
+            $brandIds = $products->pluck('brand_id')->unique();
+            
+            // Get the full brand objects using the brand IDs
+            $brands = Brand::whereIn('id', $brandIds)->get();
         // Get the selected brand from the request (single brand ID)
         $selectedBrand = $request->input('brand');
 
