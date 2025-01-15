@@ -466,4 +466,6 @@ class="w-full h-64 object-contain transform transition-transform duration-300 ho
         speed: 700,
     });
 </script>
+
+
 @endsection

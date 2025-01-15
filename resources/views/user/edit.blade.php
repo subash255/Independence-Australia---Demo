@@ -69,4 +69,40 @@
             </div>
         </div>
     </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordField = document.getElementById('password');
+        const confirmPasswordField = document.getElementById('password_confirmation');
+        const form = document.querySelector('form');
+        const errorMessage = document.createElement('div');
+        errorMessage.classList.add('text-red-500', 'text-xs', 'mt-1');
+        errorMessage.style.display = 'none';
+        errorMessage.innerText = 'Passwords do not match.';
+        confirmPasswordField.parentElement.appendChild(errorMessage);
+
+        // Function to check if the passwords match
+        function checkPasswordsMatch() {
+            if (passwordField.value !== confirmPasswordField.value) {
+                errorMessage.style.display = 'block'; // Show error message
+                return false;  // Passwords don't match, prevent form submission
+            } else {
+                errorMessage.style.display = 'none'; // Hide error message
+                return true;  // Passwords match, allow form submission
+            }
+        }
+
+        // Add event listener for form submission
+        form.addEventListener('submit', function (event) {
+            if (!checkPasswordsMatch()) {
+                event.preventDefault(); // Prevent form submission if passwords don't match
+            }
+        });
+
+        // Check passwords on input change
+        passwordField.addEventListener('input', checkPasswordsMatch);
+        confirmPasswordField.addEventListener('input', checkPasswordsMatch);
+    });
+</script>
+
 @endsection
