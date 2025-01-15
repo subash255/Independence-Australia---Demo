@@ -10,6 +10,11 @@
         display: flex !important;
     }
 </style>
+@if(session('error'))
+  <div id="flash-message" class="bg-red-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
+        {{ session('error') }}
+    </div>
+@endif
 
 <!-- Full-Width Container -->
 <div class="w-full p-8">
@@ -59,6 +64,7 @@
         </div>
         @endforeach
     </div>
+   
     <div id="reviewModal"
     class="fixed inset-0 bg-black bg-opacity-70 modal-hidden items-center justify-center z-50 backdrop-blur-[1px]">
     <div class="bg-white p-6 rounded-lg shadow-xl w-full max-w-md">
@@ -118,15 +124,24 @@
         </form>
     </div>
 </div>
-</div>
+
 
 
 <script>
+    // Check if the user is authenticated by passing the auth state from Laravel Blade to JavaScript
+    const isAuthenticated = @auth true @else false @endauth;
+
     // Open the modal
     document.getElementById('openModalButton').addEventListener('click', function() {
-        document.getElementById('reviewModal').classList.remove('modal-hidden');
-        document.getElementById('reviewModal').classList.add('modal-visible'); // Show modal
-        document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+        if (isAuthenticated) {
+            // User is authenticated, show the modal
+            document.getElementById('reviewModal').classList.remove('modal-hidden');
+            document.getElementById('reviewModal').classList.add('modal-visible'); // Show modal
+            document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+        } else {
+            // User is not authenticated, show an alert
+            alert('You must log in to leave a review. Please log in to continue.');
+        }
     });
 
     // Close the modal
@@ -136,6 +151,7 @@
         document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
     });
 
+    // Rating functionality
     const stars = document.querySelectorAll('.star');
     const ratingInput = document.getElementById('rating');
 
