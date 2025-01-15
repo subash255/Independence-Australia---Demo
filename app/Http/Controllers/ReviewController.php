@@ -47,6 +47,7 @@ class ReviewController extends Controller
     // Display all reviews for a product
     public function index($id)
     {
+       
         $product = $id;
         $reviews = Review::where('product_id', $product)->latest()->get();
         return view('review.index', compact('reviews', 'product'));

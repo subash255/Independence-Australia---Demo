@@ -46,24 +46,39 @@
     <h1 class="text-4xl font-semibold text-center text-gray-900 mb-8">Customer Reviews</h1>
 
     <!-- Reviews Section -->
-    <div class="space-y-8">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach ($reviews as $review)
-        <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
-            <div class="flex justify-between items-center">
-                <p class="text-lg font-medium text-gray-900">{{ $review->user->name }} {{$review->user->last_name }}</p>
-                <p class="text-sm text-gray-500">{{ $review->created_at->diffForHumans() }}</p>
-            </div>
-            <p class="mt-3 text-gray-700 leading-relaxed">{{ $review->message }}</p>
-            <div class="flex justify-start items-center space-x-1 mt-3">
-                @for ($i = 0; $i < $review->rating; $i++)
-                    <i class="ri-star-fill text-yellow-400 text-xl"></i>
+            <div x-data="{ open: false }" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 min-h-[250px]">
+                <div class="flex justify-between items-center">
+                    <p class="text-lg font-semibold text-gray-900">{{ $review->user->name }} {{ $review->user->last_name }}</p>
+                    <p class="text-sm text-gray-500">{{ $review->created_at->diffForHumans() }}</p>
+                </div>
+                
+                <!-- Review Message (Initially truncated to 2 lines) -->
+                <p :class="open ? 'line-clamp-none' : 'line-clamp-2'" class="mt-3 text-gray-700 leading-relaxed">
+                    {{ $review->message }}
+                </p>
+                
+                <!-- Show More / Show Less Button -->
+                <button @click="open = !open" class="text-sm text-blue-500 mt-2">
+                    <span x-text="open ? 'Show Less' : 'Show More'"></span>
+                </button>
+                
+                <!-- Star Rating -->
+                <div class="flex items-center space-x-1 mt-3">
+                    @for ($i = 0; $i < $review->rating; $i++)
+                        <i class="ri-star-fill text-yellow-400 text-xl"></i>
                     @endfor
-                    @for ($i = $review->rating; $i < 5; $i++) <i class="ri-star-line text-gray-300 text-xl"></i>
-                        @endfor
+                    @for ($i = $review->rating; $i < 5; $i++)
+                        <i class="ri-star-line text-gray-300 text-xl"></i>
+                    @endfor
+                </div>
             </div>
-        </div>
         @endforeach
     </div>
+    
+
    
     <div id="reviewModal"
     class="fixed inset-0 bg-black bg-opacity-70 modal-hidden items-center justify-center z-50 backdrop-blur-[1px]">
@@ -72,7 +87,7 @@
 
       
 
-        <form action="{{ route('review.store'),Auth::user()->id }}" method="POST" class="space-y-6">
+        <form action="{{ route('review.store')}}" method="POST" class="space-y-6">
             @csrf
 
             <!-- Hidden product ID field -->
@@ -128,9 +143,22 @@
     document.getElementById('openModalButton').addEventListener('click', function() {
         if (isAuthenticated) {
             // User is authenticated, show the modal
-            document.getElementById('reviewModal').classList.remove('modal-hidden');
-            document.getElementById('reviewModal').classList.add('modal-visible'); // Show modal
+            const reviewModal = document.getElementById('reviewModal');
+            reviewModal.classList.remove('modal-hidden');
+            reviewModal.classList.add('modal-visible'); // Show modal
             document.body.classList.add('overflow-hidden'); // Disable scrolling when modal is open
+
+            // Set the first star as the default (1 star)
+            const stars = document.querySelectorAll('.star');
+            const ratingInput = document.getElementById('rating');
+            ratingInput.value = 1; // Default rating value is 1
+            stars.forEach((star, index) => {
+                if (index < 1) {
+                    star.classList.add('text-yellow-400'); // Highlight the first star
+                } else {
+                    star.classList.remove('text-yellow-400'); // Reset the rest
+                }
+            });
         } else {
             // User is not authenticated, show an alert
             alert('You must log in to leave a review. Please log in to continue.');
@@ -139,14 +167,20 @@
 
     // Close the modal
     document.getElementById('closeModalButton').addEventListener('click', function() {
-        document.getElementById('reviewModal').classList.remove('modal-visible');
-        document.getElementById('reviewModal').classList.add('modal-hidden'); // Hide modal
+        const reviewModal = document.getElementById('reviewModal');
+        reviewModal.classList.remove('modal-visible');
+        reviewModal.classList.add('modal-hidden'); // Hide modal
         document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
     });
 
     // Rating functionality
     const stars = document.querySelectorAll('.star');
     const ratingInput = document.getElementById('rating');
+
+    // Set default gray stars on page load (no hover or click)
+    stars.forEach(star => {
+        star.classList.add('text-gray-400'); // Ensure stars are gray by default
+    });
 
     stars.forEach(star => {
         star.addEventListener('click', function() {
@@ -157,7 +191,7 @@
                 star.classList.add('text-gray-400');
             });
             for (let i = 0; i < value; i++) {
-                stars[i].classList.add('text-yellow-400');
+                stars[i].classList.add('text-yellow-400'); // Highlight the selected stars in yellow
             }
         });
 
@@ -165,7 +199,7 @@
             const value = this.getAttribute('data-value');
             stars.forEach((star, index) => {
                 if (index < value) {
-                    star.classList.add('text-yellow-300');
+                    star.classList.add('text-yellow-300'); // Light yellow when hovering
                 } else {
                     star.classList.remove('text-yellow-300');
                 }
@@ -174,8 +208,9 @@
 
         star.addEventListener('mouseout', function() {
             stars.forEach(star => {
-                star.classList.remove('text-yellow-300');
+                star.classList.remove('text-yellow-300'); // Remove light yellow when mouse is out
             });
         });
     });
 </script>
+
