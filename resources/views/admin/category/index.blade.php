@@ -196,7 +196,7 @@
                     dot.style.backgroundColor = 'white';
                 }
 
-                // Send AJAX request to update the food item status
+                // Send AJAX request to update the status
                 fetch(`/admin/category/update-toggle/${categoryId}`, {
                         method: 'POST',
                         headers: {

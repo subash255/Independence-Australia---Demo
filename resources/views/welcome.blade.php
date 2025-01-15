@@ -229,8 +229,11 @@
                                     @for ($i = round($averageRating); $i < 5; $i++)
                                         <i class="ri-star-line text-gray-300 text-xl"></i>
                                     @endfor
-                                @else
-                                    <p>No reviews for this product yet.</p>
+                                    @else
+                                    @for ($i = 0; $i < 5; $i++)
+                                        <i class="ri-star-line text-gray-300 text-xl"></i>
+                                    @endfor
+                                    {{-- <p>No reviews for this product yet.</p> --}}
                                 @endif
 
 

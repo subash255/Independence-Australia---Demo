@@ -67,12 +67,13 @@
             <!-- Product Grid -->
             <main class="w-full lg:w-3/4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-4 gap-6">
-                    @if($subcategories->isNotEmpty())
-                        @foreach($subcategories as $subcategory)
+                    @if ($subcategories->isNotEmpty())
+                        @foreach ($subcategories as $subcategory)
                             <div class="bg-white shadow rounded-md p-4 ">
                                 <h3 class="text-lg font-semibold text-gray-800">{{ $subcategory->name }}</h3>
                                 <p class="text-gray-600 mt-2">
-                                    Discover a wide selection of clothing and dressing aids designed to promote independence and comfort.
+                                    Discover a wide selection of clothing and dressing aids designed to promote independence
+                                    and comfort.
                                 </p>
                                 <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
                             </div>
@@ -136,10 +137,29 @@
                                         </h3>
                                         <p class="text-lg font-semibold text-gray-900">
                                             ${{ number_format($product->price, 2) }}</p>
-                                        <div class="flex items-center mb-3 gap-1 text-yellow-500 text-sm justify-center">
-                                            <span class="text-pink-500 text-lg">★★★★★</span>
-                                            <span class="text-gray-600">{{ $product->rating }}
-                                                ({{ $product->reviews_count }} Reviews)</span>
+                                        <div
+                                            class="flex items-center mb-3 gap-1 text-red-500 text-sm font-medium justify-center">
+
+                                            @php
+                                                $productReviews = $reviews[$product->id] ?? collect();
+                                                $averageRating = $productReviews->avg('rating');
+                                            @endphp
+                                            @if ($productReviews->count() > 0)
+                                                <!-- Display stars based on average rating -->
+                                                @for ($i = 0; $i < round($averageRating); $i++)
+                                                    <i class="ri-star-fill text-yellow-400 text-xl"></i>
+                                                @endfor
+                                                @for ($i = round($averageRating); $i < 5; $i++)
+                                                    <i class="ri-star-line text-gray-300 text-xl"></i>
+                                                @endfor
+                                            @else
+                                                @for ($i = 0; $i < 5; $i++)
+                                                    <i class="ri-star-line text-gray-300 text-xl"></i>
+                                                @endfor
+                                                {{-- <p>No reviews for this product yet.</p> --}}
+                                            @endif
+
+
                                         </div>
                                         <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                                             @csrf
@@ -169,10 +189,13 @@
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('hidden');
 
-                    // Scroll to the filter section after the toggle
-        if (!sidebar.classList.contains('hidden')) {
-            sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+            // Scroll to the filter section after the toggle
+            if (!sidebar.classList.contains('hidden')) {
+                sidebar.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
         });
 
         // Combined toggle function for subcategories (unchanged)
