@@ -23,8 +23,9 @@
                     <th class="border border-gray-300 px-4 py-2">S.N</th>
                     <th class="border border-gray-300 px-4 py-2">Image</th>
                     <th class="border border-gray-300 px-4 py-2">Product Name</th>
-                    <th class="border border-gray-300 px-4 py-2">Email</th>
+                    <th class="border border-gray-300 px-4 py-2">Name</th>
                     <th class="border border-gray-300 px-4 py-2">Message</th>
+                    <th class="border border-gray-300 px-4 py-2">Status</th>
                     <th class="border border-gray-300 px-4 py-2">Actions</th>
                 </tr>
             </thead>
@@ -36,8 +37,19 @@
                             <img src="{{ asset($review->product->image) }}" alt="{{ $review->product->name }}" class="w-16 h-16 object-cover rounded-lg">
                         </td>
                         <td class="border border-gray-300 px-4 py-2">{{ $review->product->name }}</td>
-                        <td class="border border-gray-300 px-4 py-2">{{ $review->email }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ $review->user->name }} {{$review->user->last_name}}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $review->message }}</td>
+                        <td class="border border-gray-300 px-4 py-2">
+                            <label for="status{{ $review->id }}" class="inline-flex items-center cursor-pointer">
+                                <input id="status{{ $review->id }}" type="checkbox" class="hidden toggle-switch"
+                                    data-id="{{ $review->id }}" {{ $review->status ? 'checked' : '' }} />
+
+                                <div class="w-10 h-6 bg-gray-200 rounded-full relative">
+                                    <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition">
+                                    </div>
+                                </div>
+                            </label>
+                        </td>
                         <td class="flex justify-center py-4">
                             <!-- Delete Icon -->
                             <form action="{{route('admin.review.destroy',$review->id)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this review?');">
@@ -75,6 +87,73 @@
         url.searchParams.set('entries', entries); 
         window.location.href = url; 
     }
+</script>
+
+<script>
+    function updateEntries() {
+        const entries = document.getElementById('entries').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('entries', entries);
+        window.location.href = url;
+    }
+
+    document.querySelectorAll('.toggle-switch').forEach(toggle => {
+        const dot = toggle.parentNode.querySelector('.dot'); // The visual dot for the toggle switch
+
+        // Apply the correct initial state (visual toggle)
+        if (toggle.checked) {
+            dot.style.transform = 'translateX(100%)';
+            dot.style.backgroundColor = 'green';
+        } else {
+            dot.style.transform = 'translateX(0)';
+            dot.style.backgroundColor = 'white';
+        }
+
+        // Add event listener to handle checkbox state change
+        toggle.addEventListener('change', function() {
+            const reviewId = this.getAttribute(
+            'data-id'); // Get the review ID from the data-id attribute
+            const newState = this.checked ? 1 : 0; // 1 for checked, 0 for unchecked
+
+            // Toggle visual effect of the switch
+            if (this.checked) {
+                dot.style.transform = 'translateX(100%)';
+                dot.style.backgroundColor = 'green';
+            } else {
+                dot.style.transform = 'translateX(0)';
+                dot.style.backgroundColor = 'white';
+            }
+
+            // Send AJAX request to update the status
+            fetch(`/admin/review/update-toggle/${reviewId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // CSRF token for security
+                    },
+                    body: JSON.stringify({
+                        state: newState, // The new state (1 or 0)
+                        type: 'status', // Indicate we're updating the status
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.success) {
+                        // If update fails, reset the toggle state
+                        this.checked = !this.checked;
+                        dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
+                        dot.style.backgroundColor = this.checked ? 'green' : 'white';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Reset the toggle state in case of an error
+                    this.checked = !this.checked;
+                    dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
+                    dot.style.backgroundColor = this.checked ? 'green' : 'white';
+                });
+        });
+    });
 </script>
 
 @endsection

@@ -50,7 +50,7 @@
         @foreach ($reviews as $review)
         <div class="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition duration-300">
             <div class="flex justify-between items-center">
-                <p class="text-lg font-medium text-gray-900">{{ $review->email }}</p>
+                <p class="text-lg font-medium text-gray-900">{{ $review->user->name }} {{$review->user->last_name }}</p>
                 <p class="text-sm text-gray-500">{{ $review->created_at->diffForHumans() }}</p>
             </div>
             <p class="mt-3 text-gray-700 leading-relaxed">{{ $review->message }}</p>
@@ -72,19 +72,12 @@
 
       
 
-        <form action="{{ route('review.store') }}" method="POST" class="space-y-6">
+        <form action="{{ route('review.store'),Auth::user()->id }}" method="POST" class="space-y-6">
             @csrf
 
             <!-- Hidden product ID field -->
             <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-            <!-- Email field -->
-            <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                <input type="email" name="email" id="email"
-                    class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
-                    required>
-            </div>
 
             <!-- Message field -->
             <div class="mb-4">

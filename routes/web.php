@@ -139,6 +139,8 @@ Route::middleware(['auth', 'isadmin'])->group(function () {
     //Review routes
     Route::get('admin/reviews/index', [ReviewController::class, 'adminindex'])->name('admin.reviews.index');
     Route::delete('admin/reviews/{id}/destroy', [ReviewController::class, 'destroy'])->name('admin.review.destroy');
+    Route::post('admin/review/update-toggle/{reviewId}', [ReviewController::class, 'updateToggleStatus']);
+
 });
 
 Route::middleware('auth')->group(function () {

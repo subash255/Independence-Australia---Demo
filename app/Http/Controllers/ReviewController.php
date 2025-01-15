@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
@@ -18,30 +19,29 @@ class ReviewController extends Controller
     // Store the review
     public function store(Request $request)
     {
-        
+
         // Validate the input
         $request->validate([
-            'email' => 'required|email',
             'message' => 'required',
             'rating' => 'required|numeric|min:1|max:5',
             'product_id' => 'required|exists:products,id',
 
-            
-            
+
+
         ]);
-        
-        
+
+
 
         // Create the review
         Review::create([
-            'email' => $request->email,
             'message' => $request->message,
             'rating' => $request->rating,
             'product_id' => $request->product_id,
+            'user_id' => Auth::user()->id,
         ]);
 
         return redirect()->route('product.show', $request->product_id)
-                         ->with('success', 'Review submitted successfully!');
+            ->with('success', 'Review submitted successfully!');
     }
 
     // Display all reviews for a product
@@ -57,7 +57,21 @@ class ReviewController extends Controller
         $review = Review::findOrFail($id);
         $review->delete();
         return redirect()->route('admin.reviews.index')
-                         ->with('success', 'Review deleted successfully!');
+            ->with('success', 'Review deleted successfully!');
+    }
+
+    public function updateToggleStatus(Request $request, $reviewId)
+    {
+        // Retrieve the review by ID from the database
+        $review = Review::findOrFail($reviewId);
+
+        // Update the status field with the new value
+        $review->status = $request->state; // 'state' is 1 (checked) or 0 (unchecked)
+
+        // Save the updated review back to the database
+        $review->save();
+
+        // Return a JSON response indicating success
+        return response()->json(['success' => true]);
     }
 }
-
