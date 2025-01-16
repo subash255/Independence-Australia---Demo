@@ -70,7 +70,7 @@
 
         <!-- Table Container with horizontal scroll if needed -->
         <div class="overflow-x-auto">
-            <table class="min-w-full border-collapse border border-gray-300 table-auto">
+            <table id="productTable" class="min-w-full border-collapse border border-gray-300 table-auto">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-2 py-2 font-medium">S.N</th>
@@ -227,6 +227,37 @@ function updateEntries() {
     });
 });
 </script>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByProductname(searchQuery);
+    });
+
+
+    function filterTableByProductname(query) {
+        const rows = document.querySelectorAll('#productTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const productnameCell = cells[5];
+
+            if (productnameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByProductname(searchQuery);
+    });
+</script>
+
     <script>
     // Open the modal
     document.getElementById('openModalButton').addEventListener('click', function() {
