@@ -120,7 +120,7 @@
                 <div class="mt-8">
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($products as $product)
-                            <a href="{{ route('product.show', ['id' => $product->id]) }}" class="block">
+                            <a href="{{ route('product.show', ['slug' => $product->slug ?: $product->id])  }}" class="block">
                                 <div
                                     class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
                                     <div

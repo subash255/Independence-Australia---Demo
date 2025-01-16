@@ -100,7 +100,7 @@
                                             class="py-[10px] px-[20px] bg-blue-500 text-white font-bold rounded-[24px] border-2 border-blue-500 hover:bg-[#ffffff] hover:text-blue-500 transition">
                                             Sign in
                                         </button></a>
-                                        
+
                                         <p class="text-sm text-gray-300">
                                             Don't have an account yet?
                                             <a href="/register" class="text-teal-700 font-medium hover:underline">Register now</a>
@@ -190,9 +190,9 @@
 </div> --}}
 
 <!--Arko Banner image-->
-<div class="w-full px-4 py-10">
+{{-- <div class="w-full px-4 py-10">
     <img src="images/banner1.jpg" alt="Banner" class="w-full h-auto">
-</div>
+</div> --}}
 
     <h1 class="text-3xl md:text-4xl font-bold text-blue-500 mb-2 mt-6 px-4">
         Shop our featured products
@@ -202,7 +202,7 @@
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         @foreach ($products as $product)
             @if ($product->status == 1)
-                <a href="{{ route('product.show', ['id' => $product->slug ?: $product->id])  }}" class="block">
+                <a href="{{ route('product.show', ['slug' => $product->slug ?: $product->id])  }}" class="block">
                     <div
                         class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
                         <!-- Image container with fixed aspect ratio and no cropping -->
@@ -372,7 +372,7 @@
         Explore our publications
     </h1>
     <div class="h-1.5 w-20 bg-pink-600 ml-4 mb-10"></div>
-    
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         <!-- Book 1 -->
         <div class="relative overflow-hidden">

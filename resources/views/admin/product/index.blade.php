@@ -38,7 +38,7 @@
                             class="w-full md:w-auto font-semibold bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
                             Cancel
                         </button>
-            
+
                             <!-- Submit Button -->
                             <button type="submit"
                                 class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
@@ -55,7 +55,6 @@
                 <label for="entries" class="mr-2">Show entries:</label>
                 <select id="entries" class="border border-gray-300 px-5 py-1 w-full sm:w-auto pr-10"
                     onchange="updateEntries()">
-                    <option value="5" {{ request('entries') == 5 ? 'selected' : '' }}>5</option>
                     <option value="15" {{ request('entries') == 15 ? 'selected' : '' }}>15</option>
                     <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
                 </select>
@@ -95,7 +94,7 @@
                                 <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"
                                     class="w-16 h-16 object-cover rounded-full" />
                             </td>
-                            
+
                             <td class="border border-gray-300 px-4 py-2">{{ $product->category->name }}</td>
                             <td class="border border-gray-300 px-4 py-2">{{ $product->short_description }}</td>
                             <td class="border border-gray-300 px-7 py-2">{{ $product->name }}</td>
@@ -103,7 +102,7 @@
                             <td class="border border-gray-300 px-4 py-2">
                                 <label for="status{{ $product->id }}" class="inline-flex items-center cursor-pointer">
                                 <input id="status{{ $product->id }}" type="checkbox" class="hidden toggle-switch" data-id="{{ $product->id }}" {{ $product->status ? 'checked' : '' }} />
-    
+
                                     <div class="w-10 h-6 bg-gray-200 rounded-full relative">
                                         <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition">
                                         </div>
@@ -167,8 +166,8 @@
 function updateEntries() {
         const entries = document.getElementById('entries').value;
         const url = new URL(window.location.href);
-        url.searchParams.set('entries', entries); 
-        window.location.href = url; 
+        url.searchParams.set('entries', entries);
+        window.location.href = url;
     }
 
       document.querySelectorAll('.toggle-switch').forEach(toggle => {

@@ -3,11 +3,11 @@
 @section('content')
 <style>
         #myChart {
-            width: 100% !important; 
-            max-width: 100%; 
-            height: 400px; 
-            max-height: 500px; 
-            margin: 0 auto; 
+            width: 100% !important;
+            max-width: 100%;
+            height: 400px;
+            max-height: 500px;
+            margin: 0 auto;
         }
             #orderLineChart {
         height: 285px !important;
@@ -73,24 +73,19 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-col md:flex-row justify-between gap-8">
+        <div class="grid sm:grid-cols-3 gap-4 px-4">
+            <!-- Order Line Chart -->
+            <div class="bg-white rounded-lg p-6 w-full col-span-2">
+                <h2 class="text-xl font-semibold text-center mb-4">Daily Orders</h2>
+                <canvas id="orderLineChart"></canvas>
+            </div>
 
-       
-
-<!-- Order Line Chart -->
-<div class="bg-white rounded-lg p-6 w-full sm:w-2/3 lg:w-3/4 xl:w-3/4">
-    <h2 class="text-xl font-semibold text-center mb-4">Daily Orders</h2>
-    <canvas id="orderLineChart"></canvas>
-</div>
-
-<!-- Category Pie Chart -->
-<div class="bg-white rounded-lg p-6 w-full sm:w-2/3 lg:w-2/3 xl:w-2/3">
-    <h2 class="text-xl font-semibold text-center mb-4">Categories and Product Count</h2>
-    <canvas id="categoryChart"></canvas>
-</div>
-
-
-    </div>
+            <!-- Category Pie Chart -->
+            <div class="bg-white rounded-lg p-6 w-full">
+                <h2 class="text-xl font-semibold text-center">Categories and Product Count</h2>
+                <canvas id="categoryChart"></canvas>
+            </div>
+        </div>
     <div class="flex items-center justify-center py-8 px-4">
         <div class="w-full">
             <div class="flex flex-col justify-between h-full">
@@ -138,19 +133,19 @@
             options: {
                 responsive: true,
                 plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            font: {
-                                family: 'Arial, sans-serif',
-                                weight: 'bold',
-                                size: 14
-                            },
-                            boxWidth: 12, // Adjusts the box size of the legend
-                            padding: 15,
-                            color: '#4A4A4A', // Font color for the legend
-                        }
-                    },
+                    // legend: {
+                    //     position: 'top',
+                    //     labels: {
+                    //         font: {
+                    //             family: 'Arial, sans-serif',
+                    //             weight: 'bold',
+                    //             size: 14
+                    //         },
+                    //         boxWidth: 12, // Adjusts the box size of the legend
+                    //         padding: 15,
+                    //         color: '#4A4A4A', // Font color for the legend
+                    //     }
+                    // },
                     tooltip: {
                         backgroundColor: 'rgba(0, 0, 0, 0.7)', // Darker background
                         titleFont: {
@@ -170,7 +165,7 @@
                 }
             }
         });
-    
+
 
         // Order Line Chart
         var ctx2 = document.getElementById('orderLineChart').getContext('2d');
@@ -220,7 +215,7 @@
             }
         });
     </script>
-    
+
      <script>
         const chart = new Chart(document.getElementById("myChart"), {
             type: "line",
@@ -228,8 +223,8 @@
                 labels: {!! json_encode($visitdate) !!},
                 datasets: [{
                     label: "No of Visits",
-                    borderColor: "#4F7CAC", 
-                    backgroundColor: "rgba(79, 124, 172, 0.2)", 
+                    borderColor: "#4F7CAC",
+                    backgroundColor: "rgba(79, 124, 172, 0.2)",
                     data: {!! json_encode($visits) !!},
                     fill: true,
                     pointBackgroundColor: "#4F7CAC",
@@ -238,20 +233,20 @@
                     pointHoverRadius: 6,
                     pointHoverBorderWidth: 8,
                     pointHoverBorderColor: "rgb(74,85,104,0.2)",
-                    lineTension: 0.4, 
+                    lineTension: 0.4,
                 }]
             },
             options: {
-                responsive: true, 
-                maintainAspectRatio: false,  
+                responsive: true,
+                maintainAspectRatio: false,
                 tooltips: {
                     mode: 'nearest',
                     intersect: false,
-                    backgroundColor: 'rgba(0, 0, 0, 0.7)', 
+                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
                     titleFontSize: 14,
                     bodyFontSize: 12,
                     bodyFontColor: '#fff',
-                    cornerRadius: 6, 
+                    cornerRadius: 6,
                     callbacks: {
                         label: function(tooltipItem) {
                             return 'Visits: ' + tooltipItem.yLabel;
@@ -259,10 +254,10 @@
                     }
                 },
                 legend: {
-                    position: 'top',  
+                    position: 'top',
                     labels: {
-                        fontColor: '#333',  
-                        fontSize: 14,  
+                        fontColor: '#333',
+                        fontSize: 14,
                     }
                 },
                 scales: {
@@ -270,14 +265,14 @@
                         ticks: {
                             fontSize: 12,
                             fontColor: '#555',
-                            autoSkip: true,  
-                            maxRotation: 0,  
+                            autoSkip: true,
+                            maxRotation: 0,
                             minRotation: 0,
                             padding: 10,
                         },
                         gridLines: {
                             display: true,
-                            color: 'rgba(0,0,0,0.1)', 
+                            color: 'rgba(0,0,0,0.1)',
                             lineWidth: 1
                         }
                     }],
@@ -300,6 +295,6 @@
         });
     </script>
 
-   
+
 
 @endsection

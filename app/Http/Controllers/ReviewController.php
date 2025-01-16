@@ -39,20 +39,24 @@ class ReviewController extends Controller
             'product_id' => $request->product_id,
             'user_id' => Auth::user()->id,
         ]);
+        $product = Product::findOrFail($request->product_id);
 
-        return redirect()->route('product.show', $request->product_id)
+        return redirect()->route('product.show', $product->slug)
             ->with('success', 'Review submitted successfully!');
     }
 
     // Display all reviews for a product
     public function index($id)
     {
-       
-        $product = $id;
-        $reviews = Review::where('product_id', $product)->latest()->get();
+        $product = Product::where('id', $id)->first();
+        
+        $reviews = Review::where('product_id', $product->id)
+                 ->where('status', 1)  // Only approved reviews (status = 1)
+                 ->latest()
+                 ->get();
         return view('review.index', compact('reviews', 'product'));
     }
-
+   
     public function destroy($id)
     {
         $review = Review::findOrFail($id);
