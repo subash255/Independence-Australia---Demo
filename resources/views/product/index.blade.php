@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto px-4 py-6">
     <!-- Header Section -->
-   
+
 
 <!-- Main Content -->
 <div class="flex flex-col lg:flex-row gap-6">
@@ -13,7 +13,7 @@
         <div class="space-y-4">
             @foreach ($categories as $category)
                 <div>
-                    <a href="{{ route('menu.index', ['id' => $category->id]) }}">
+                    <a href="{{ route('menu.index', $category->slug) }}">
                         <button
                             class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
                             <span class="flex-grow">{{ $category->name }}</span>
@@ -97,10 +97,10 @@
             </form>
         </div>
             <div class="mt-8">
-                
+
                 <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($products as $product)
-                  
+
                     <a href="{{ route('product.show', ['id' => $product->slug ?: $product->id]) }}" class="block">
                             <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
                                 <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-2 overflow-hidden">
@@ -129,8 +129,8 @@
                                             @endfor
                                             {{-- <p>No reviews for this product yet.</p> --}}
                                         @endif
-        
-        
+
+
                                     </div>
                                     <form action="{{ route('user.cart.add', $product->id) }}" method="POST">
                                         @csrf
@@ -141,7 +141,7 @@
                                 </div>
                             </div>
                         </a>
-                   
+
                     @endforeach
                 </div>
 
@@ -189,7 +189,7 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const brandCheckboxes = document.querySelectorAll('.brand-checkbox');
-    
+
     // Event listener for checkbox changes
     brandCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function () {
