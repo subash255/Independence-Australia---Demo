@@ -49,6 +49,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach ($reviews as $review)
+        @if($review->status==1)
             <div x-data="{ open: false }" class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 min-h-[250px]">
                 <div class="flex justify-between items-center">
                     <p class="text-lg font-semibold text-gray-900">{{ $review->user->name }} {{ $review->user->last_name }}</p>
@@ -75,6 +76,7 @@
                     @endfor
                 </div>
             </div>
+            @endif
         @endforeach
     </div>
     
@@ -136,9 +138,23 @@
     <div class="bg-white p-6 rounded-lg w-96 text-center">
         <h2 class="text-lg font-semibold">You Must Log In to Leave a Review</h2>
         <p class="mt-4">Please log in to continue.</p>
-        <button id="closeAuthModalButton" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded">Close</button>
+        
+        <!-- Button Container for 'Cancel' and 'Login' -->
+        <div class="flex justify-between mt-6 space-x-4">
+            <!-- Cancel Button (on the left) -->
+            <button id="closeAuthModalButton" class="w-full md:w-auto bg-red-500 text-white py-2 px-4 font-semibold rounded-lg hover:bg-red-600 transition duration-300 focus:outline-none">
+                Cancel
+            </button>
+
+            <!-- Login Button (on the right) -->
+            <a href="{{ route('login') }}" class="w-full md:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300 transform hover:scale-105">
+                Log In
+            </a>
+        </div>
     </div>
 </div>
+
+
 
 
 <script>
@@ -182,11 +198,14 @@
         reviewModal.classList.add('modal-hidden'); // Hide modal
         document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
     });
-    document.getElementById('closeAuthModalButton').addEventListener('click', function() {
+   // Close the authentication modal
+document.getElementById('closeAuthModalButton').addEventListener('click', function() {
     const authModal = document.getElementById('authModal');
-    authModal.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
+    authModal.classList.add('modal-hidden'); // Hide the modal using modal-hidden class
+    authModal.classList.remove('modal-visible'); // Ensure the modal is no longer visible
+    document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
 });
+
 
     // Rating functionality
     const stars = document.querySelectorAll('.star');
