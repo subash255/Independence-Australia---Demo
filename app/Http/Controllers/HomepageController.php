@@ -284,18 +284,6 @@ class HomepageController extends Controller
         return view('product.index', compact('products', 'categories', 'brands', 'selectedBrand', 'sortBy', 'query'));
     }
     
-
-    
-
-
-
-
-
-
-
-
-
-
     public function showproduct($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
