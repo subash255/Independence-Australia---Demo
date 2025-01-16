@@ -126,7 +126,7 @@
                                 <!-- Edit Icon -->
                                 <a href="{{route('admin.newsletter.edit', $newsletter->id)}}"
                                     class="bg-blue-500 hover:bg-blue-700 mt-2 p-1 w-8 h-8 rounded-full flex items-center justify-center mr-2">
-                                    <i class="ri-edit-line text-white"></i>
+                                    <i class="ri-edit-box-line text-white"></i>
                                 </a>
 
 

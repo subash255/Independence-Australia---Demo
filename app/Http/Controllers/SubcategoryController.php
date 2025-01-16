@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
 {
-    public function index($id)
+    public function index($slug)
     {
-        $subcategories=Subcategory::where('category_id', $id)->paginate(5);;
-        // Fetch the subcategories and categories
+        $category = Category::where('slug', $slug)->firstOrFail();
+        $subcategories=Subcategory::where('category_id', $category->id)->paginate(5);
          
         $categories = Category::all(); // Fetch all categories
     
@@ -53,10 +53,10 @@ class SubcategoryController extends Controller
         return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory created successfully!');
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
-        // Find the subcategory by ID or show an error if not found
-        $subcategory = Subcategory::findOrFail($id);
+        // Find the subcategory by slug or show an error if not found
+        $subcategory = Subcategory::where('slug', $slug)->firstOrFail();
     
         // Fetch categories for the category dropdown list
         $categories = Category::all();
@@ -77,7 +77,7 @@ class SubcategoryController extends Controller
     }
 
     // Update an existing subcategory
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         // Validate the incoming data
         $data = $request->validate([
@@ -86,8 +86,9 @@ class SubcategoryController extends Controller
             'paragraph' => 'nullable|string',
         ]);
 
+        $subcategorys = Subcategory::where('slug', $slug)->firstOrFail();
         // Find the subcategory by ID or fail
-        $subcategory = Subcategory::findOrFail($id);
+        $subcategory = Subcategory::findOrFail($subcategorys->id);
 
         // Update the subcategory with the validated data
         $subcategory->category_id = $data['category_id'];
@@ -102,10 +103,11 @@ class SubcategoryController extends Controller
     }
 
     // Delete a subcategory
-    public function destroy($id)
+    public function destroy($slug)
     {
         // Find the subcategory by ID or fail
-        $subcategory = Subcategory::findOrFail($id);
+        $subcategorys = Subcategory::where('slug', $slug)->firstOrFail();
+        $subcategory = Subcategory::findOrFail($subcategorys->id);
 
         // Delete the subcategory
         $subcategory->delete();
@@ -114,20 +116,18 @@ class SubcategoryController extends Controller
         return redirect()->route('admin.subcategory.index')->with('success', 'Subcategory deleted successfully!');
     }
 
-    public function updateToggle(Request $request, $subcategoryId)
+    public function updateToggleStatus(Request $request, $subcategoryId)
     {
-        // Find the subcategory by ID or return an error if not found
-        $subcategory = Subcategory::find($subcategoryId);
+        // Retrieve the food item by ID from the database
+        $subcategory = SubCategory::findOrFail($subcategoryId);
 
-        if (!$subcategory) {
-            return response()->json(['success' => false, 'message' => 'Subcategory not found.']);
-        }
+        // Update the status field with the new value
+        $subcategory->status = $request->state; // 'state' is 1 (checked) or 0 (unchecked)
 
-        // Update the status field based on the request state (1 for active, 0 for inactive)
-        $subcategory->status = $request->state;
+        // Save the updated food item back to the database
         $subcategory->save();
 
-        // Return success response
-        return response()->json(['success' => true, 'status' => $subcategory->status]);
+        // Return a JSON response indicating success
+        return response()->json(['success' => true]);
     }
 }

@@ -33,7 +33,7 @@
         {{ session('success') }}
     </div>
 @endif
-@if(session('error'))
+@if (session('error'))
   <div id="flash-message" class="bg-red-500 text-white px-6 py-2 rounded-lg fixed top-4 right-4 shadow-lg z-50">
         {{ session('error') }}
     </div>
@@ -103,25 +103,26 @@
                             @csrf
                             <button type="submit" class="text-red-500 font-medium flex items-center gap-x-1">
                                 <i class="ri-logout-circle-r-line text-red-500 text-[20px]"></i>
-                               <span>Logout</span>
+                                <span>Logout</span>
                             </button>
                         </form>
                     </div>
                 @else
-                <div class="flex items-center space-x-1">
-                     <!-- If the user is not authenticated, show login and register buttons -->
-                     <a href="/login" class="text-gray-900 font-bold flex items-center gap-x-1">
-                        <i class="ri-user-3-fill text-blue-500 text-[20px]"></i> <span>Sign In</span>
-                    </a>
-                    <span class="px-1">/</span>
-                    <a href="/register" class="text-gray-900 font-bold">Register</a>
-                </div>
-                   
+                    <div class="flex items-center space-x-1">
+                        <!-- If the user is not authenticated, show login and register buttons -->
+                        <a href="/login" class="text-gray-900 font-bold flex items-center gap-x-1">
+                            <i class="ri-user-3-fill text-blue-500 text-[20px]"></i> <span>Sign In</span>
+                        </a>
+                        <span class="px-1">/</span>
+                        <a href="/register" class="text-gray-900 font-bold">Register</a>
+                    </div>
+
                 @endauth
 
                 <!-- Cart Icon with count -->
                 <div class="relative">
-                    <a href="{{ route('user.cart.index') }}" class="text-gray-900 font-bold flex items-center space-x-1">
+                    <a href="{{ route('user.cart.index') }}"
+                        class="text-gray-900 font-bold flex items-center space-x-1">
                         <i class="ri-shopping-basket-fill text-blue-500 font-light text-[25px]"></i>
                         <span class="lg:block hidden">Basket</span>
                     </a>
@@ -164,81 +165,82 @@
                 </a>
             </div>
 
-           <!-- Mobile Search Box (Initially Hidden) -->
-<div id="mobile-search-popup" class="absolute top-0 left-0 right-0 w-full bg-white p-4 z-50 hidden">
-    <div class="relative max-w-md mx-auto">
-        <input type="text" id="search-input-mobile" placeholder="What are you looking for?"
-            class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none"
-            value="{{ $query ?? '' }}">
-        
-        <!-- Add search button for mobile view -->
-        <button type="button" id="search-button-mobile"
-            class="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500">
-            <i class="ri-search-line"></i> <!-- Icon for search button -->
-        </button>
-    </div>
+            <!-- Mobile Search Box (Initially Hidden) -->
+            <div id="mobile-search-popup" class="absolute top-0 left-0 right-0 w-full bg-white p-4 z-50 hidden">
+                <div class="relative max-w-md mx-auto">
+                    <input type="text" id="search-input-mobile" placeholder="What are you looking for?"
+                        class="w-full py-2 pl-4 pr-12 border border-gray-300 rounded-lg focus:outline-none"
+                        value="{{ $query ?? '' }}">
 
-    <!-- Search Results Dropdown (Only visible when there's a query) -->
-    <div id="search-results-mobile"
-        class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden">
-        <!-- The results will be injected here by the JavaScript -->
-    </div>
+                    <!-- Add search button for mobile view -->
+                    <button type="button" id="search-button-mobile"
+                        class="absolute right-4 top-1/2 transform -translate-y-1/2 text-blue-500">
+                        <i class="ri-search-line"></i> <!-- Icon for search button -->
+                    </button>
+                </div>
 
-    <!-- Close Button to Hide Search Popup -->
-    <button id="close-search-popup" class="absolute top-2 right-2 text-gray-500">
-        <i class="ri-close-line text-[20px]"></i>
-    </button>
-</div>
+                <!-- Search Results Dropdown (Only visible when there's a query) -->
+                <div id="search-results-mobile"
+                    class="absolute left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg mt-2 w-full min-w-[400px] max-h-[500px] overflow-y-auto z-50 hidden">
+                    <!-- The results will be injected here by the JavaScript -->
+                </div>
+
+                <!-- Close Button to Hide Search Popup -->
+                <button id="close-search-popup" class="absolute top-2 right-2 text-gray-500">
+                    <i class="ri-close-line text-[20px]"></i>
+                </button>
+            </div>
 
         </div>
     </header>
 
 
 
-    <!-- Mobile Menu (Initially Hidden) -->
-    <div id="mobileMenu"
-        class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
-        <div class="w-full bg-gray-100 p-4 rounded-md shadow-sm h-full flex flex-col">
-            <!-- Close Button -->
-            <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6 z-50">
-                <i class="fa fa-times"></i>
-            </button>
+<!-- Mobile Menu (Initially Hidden) -->
+<div id="mobileMenu"
+    class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
+    <div class="w-full bg-gray-100 p-4 rounded-md shadow-sm h-full flex flex-col">
+        <!-- Close Button -->
+        <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6 z-50">
+            <i class="fa fa-times"></i>
+        </button>
 
-            <!-- Scrollable Content Area -->
-            <div class="w-full overflow-x-hidden"> <!-- Prevents horizontal overflow -->
-                <div class="flex-grow overflow-y-auto">
-                    <div class="space-y-4">
-                        @foreach ($categories as $category)
-                            @if ($category->status == 1)
-                                <div>
-                                    <!-- Category Button to Toggle Subcategories -->
-                                    <a href="{{ route('menu.index', ['slug' => $category->slug])}}">
-                                        <button
-                                            class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
-                                            <span class="flex-grow">{{ $category->name }}</span>
-                                            <i onclick="showToggle(event, '{{ $category->slug }}')"
-                                                class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
-                                        </button>
-                                    </a>
+        <!-- Scrollable Content Area -->
+        <div class="w-full overflow-x-hidden"> <!-- Prevents horizontal overflow -->
+            <div class="flex-grow overflow-y-auto">
+                <div class="space-y-4">
+                    @foreach ($categories as $category)
+                        @if ($category->status == 1)
+                            <div>
+                                <!-- Category Button to Toggle Subcategories -->
+                                <a href="{{ route('menu.index', ['slug' => $category->slug]) }}">
+                                    <button
+                                        class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                                        <span class="flex-grow">{{ $category->name }}</span>
+                                        <i onclick="showToggle(event, '{{ $category->slug }}')"
+                                            class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                                    </button>
+                                </a>
 
-                                    <!-- Subcategory Dropdown (Hidden by Default) -->
-                                    <div id="{{ $category->slug }}"
-                                        class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
-                                        @foreach ($category->subcategories as $subcategory)
-                                            <div class="flex items-center space-x-2">
-                                                <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
-                                            </div>
-                                        @endforeach
-                                    </div>
+                                <!-- Subcategory Dropdown (Hidden by Default) -->
+                                <div id="{{ $category->slug }}"
+                                    class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+                                    @foreach ($category->subcategories as $subcategory)
+                                    @if ($subcategory->status == 1)
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                                        </div>
+                                        @endif
+                                    @endforeach
                                 </div>
-                            @endif
-                        @endforeach
-                    </div>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
-
         </div>
     </div>
+</div>
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-40 lg:block hidden">
@@ -276,12 +278,14 @@
                                         class="menu-content absolute left-0 w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 transition-all duration-300 ease-in-out z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:block hidden">
                                         <div class="space-y-2 text-black px-4 py-3">
                                             @foreach ($category->subcategories as $submenu)
+                                            @if ($submenu->status == 1)
                                                 <a href="#"
                                                     class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
                                                     data-item="{{ $submenu->name }}"
                                                     data-child-category="{{ json_encode($submenu->child_categories) }}">
                                                     {{ $submenu->name }}
                                                 </a>
+                                                @endif
                                             @endforeach
                                         </div>
                                     </div>
@@ -312,20 +316,20 @@
                         promotional offers and newsletters from Always There Medical. You can unsubscribe at any time.
                     </p>
                 </div>
-                <form action="{{route('newsletter.store')}}" method="post">
+                <form action="{{ route('newsletter.store') }}" method="post">
                     @csrf
-                <div class="flex w-full sm:w-auto">
-                    
-                    <input type="email" name="email" placeholder="Enter your email"
-                        class="px-6 py-3 rounded-l-full border border-gray-300 focus:outline-none w-full sm:w-[400px]">
+                    <div class="flex w-full sm:w-auto">
 
-                    <!-- Subscribe Button -->
-                    <button type="submit"
-                        class="bg-blue-700 font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-blue-900 border-2 border-blue-800 transition">
-                        SUBSCRIBE
-                    </button>
-                    
-                </div>
+                        <input type="email" name="email" placeholder="Enter your email"
+                            class="px-6 py-3 rounded-l-full border border-gray-300 focus:outline-none w-full sm:w-[400px]">
+
+                        <!-- Subscribe Button -->
+                        <button type="submit"
+                            class="bg-blue-700 font-semibold text-white px-6 py-3 rounded-r-full hover:bg-white hover:text-blue-900 border-2 border-blue-800 transition">
+                            SUBSCRIBE
+                        </button>
+
+                    </div>
                 </form>
             </div>
         </div>
@@ -377,45 +381,60 @@
     </footer>
 
     <script>
-        const menuToggle = document.getElementById("menuToggle");
-        const mobileMenu = document.getElementById("mobileMenu");
-        const closeMenu = document.getElementById("closeMenu");
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const closeMenu = document.getElementById("closeMenu");
 
-        menuToggle.addEventListener("click", () => {
-            mobileMenu.classList.toggle("left-[-100%]"); // Slide in/out
-            mobileMenu.classList.toggle("left-0"); // Position at 0 when visible
-        });
+    menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("left-[-100%]"); // Slide in/out
+        mobileMenu.classList.toggle("left-0"); // Position at 0 when visible
 
-        closeMenu.addEventListener("click", () => {
-            mobileMenu.classList.add("left-[-100%]"); // Slide out to the left
-        });
+        // Disable body scrolling when the menu is open
+        if (mobileMenu.classList.contains('left-0')) {
+            document.body.style.overflow = 'hidden'; // Disable scroll
+        } else {
+            document.body.style.overflow = ''; // Restore scroll
+        }
+    });
 
-        // Slider Text
-        document.addEventListener('DOMContentLoaded', function() {
-            const sliderTexts = document.querySelectorAll('.slider-text');
-            let currentIndex = 0;
+    closeMenu.addEventListener("click", () => {
+        mobileMenu.classList.add("left-[-100%]"); // Slide out to the left
+        document.body.style.overflow = ''; // Restore scroll
+    });
 
-            function showSliderText() {
-                sliderTexts.forEach((text, index) => {
-                    text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full',
-                        'opacity-100', 'opacity-0');
+    // Slider Text
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliderTexts = document.querySelectorAll('.slider-text');
+        let currentIndex = 0;
 
-                    if (index === currentIndex) {
-                        text.classList.add('translate-x-0', 'opacity-100');
-                    } else if (index === (currentIndex - 1 + sliderTexts.length) % sliderTexts.length) {
-                        text.classList.add('-translate-x-full', 'opacity-0');
-                    } else {
-                        text.classList.add('translate-x-full', 'opacity-0');
-                    }
-                });
+        function showSliderText() {
+            sliderTexts.forEach((text, index) => {
+                text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full',
+                    'opacity-100', 'opacity-0');
 
-                currentIndex = (currentIndex + 1) % sliderTexts.length;
-            }
+                if (index === currentIndex) {
+                    text.classList.add('translate-x-0', 'opacity-100');
+                } else if (index === (currentIndex - 1 + sliderTexts.length) % sliderTexts.length) {
+                    text.classList.add('-translate-x-full', 'opacity-0');
+                } else {
+                    text.classList.add('translate-x-full', 'opacity-0');
+                }
+            });
 
+            currentIndex = (currentIndex + 1) % sliderTexts.length;
+        }
+
+        // Initial slider text display
+        showSliderText();
+        
+        // Set interval for slider change
+        setInterval(() => {
             showSliderText();
-            setInterval(showSliderText, 4000);
-        });
-    </script>
+        }, 4000);
+    });
+</script>
+
 
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -431,11 +450,11 @@
                     },
                     success: function(response) {
                         console.log("Search results response:", response); // Log the response to see the data
-    
+
                         if (response && response.products && Array.isArray(response.products)) {
                             var products = response.products;
                             var resultsHtml = '';
-    
+
                             if (products.length > 0) {
                                 products.forEach(function(product) {
                                     resultsHtml += `
@@ -446,9 +465,10 @@
                                     `;
                                 });
                             } else {
-                                resultsHtml = '<div class="no-results py-2 px-4 text-center text-sm text-gray-500">No products found</div>';
+                                resultsHtml =
+                                    '<div class="no-results py-2 px-4 text-center text-sm text-gray-500">No products found</div>';
                             }
-    
+
                             $(resultsContainer).html(resultsHtml);
                             $(resultsContainer).removeClass('hidden'); // Show the results container
                         } else {
@@ -472,77 +492,79 @@
                 $(resultsContainer).addClass('hidden'); // Hide the results container
             }
         }
-    
+
         // Handle desktop search input (keyup event)
         document.getElementById('search-input').addEventListener('keyup', function() {
             var query = document.getElementById('search-input').value;
             handleSearch(query, '#search-results', '#search-input');
         });
-    
+
         // Handle click on the search button (desktop)
         document.getElementById('search-button').addEventListener('click', function(e) {
-            e.preventDefault();  // Prevent the default form submit (if any)
+            e.preventDefault(); // Prevent the default form submit (if any)
             var query = document.getElementById('search-input').value;
-            
+
             if (query.length > 0) {
                 // Redirect to the product index page with the search query as a parameter
                 window.location.href = "{{ route('product.index') }}?query=" + encodeURIComponent(query);
             }
         });
-    
+
         // Handle mobile search input (input event)
         document.getElementById('search-input-mobile').addEventListener('input', function() {
             var query = document.getElementById('search-input-mobile').value.trim();
             handleSearch(query, '#search-results-mobile', '#search-input-mobile');
         });
-    
+
         // Handle mobile search button click
         document.getElementById('search-button-mobile').addEventListener('click', function() {
             var query = document.getElementById('search-input-mobile').value.trim();
-            
+
             if (query.length > 0) {
                 // Redirect to the product index page with the search query as a parameter
                 window.location.href = "{{ route('product.index') }}?query=" + encodeURIComponent(query);
             }
         });
-    
+
         // Mobile search toggle button
         const mobileSearchToggle = document.getElementById('mobile-search-toggle');
         const mobileSearchPopup = document.getElementById('mobile-search-popup');
         const closeSearchPopup = document.getElementById('close-search-popup');
-    
+
         // Show search box on mobile when search icon is clicked
         mobileSearchToggle.addEventListener('click', function(e) {
             e.preventDefault();
             mobileSearchPopup.classList.remove('hidden');
             document.getElementById('search-input-mobile').focus(); // Focus on input when the search box is opened
         });
-    
+
         // Close the search popup when the close button is clicked
         closeSearchPopup.addEventListener('click', function() {
             mobileSearchPopup.classList.add('hidden');
-            document.getElementById('search-results-mobile').classList.add('hidden'); // Hide results when closing the popup
+            document.getElementById('search-results-mobile').classList.add(
+            'hidden'); // Hide results when closing the popup
         });
-    
+
         // Handle click on search result item (both for desktop and mobile)
         function handleSearchResultClick(event, inputElement, resultsContainer) {
             var productName = $(event.currentTarget).find('span').text(); // Get the clicked search item text (product name)
-            $(inputElement).val(productName); // Update the input field with the selected product's name (only the name, not the image)
+            $(inputElement).val(
+            productName); // Update the input field with the selected product's name (only the name, not the image)
             $(resultsContainer).empty();
             $(resultsContainer).addClass('hidden');
         }
-    
+
         // For Desktop Results Click
         $('#search-results').on('click', '.search-item', function(event) {
             handleSearchResultClick(event, '#search-input', '#search-results');
         });
-    
+
         // For Mobile Results Click
         $('#search-results-mobile').on('click', '.search-item', function(event) {
             handleSearchResultClick(event, '#search-input-mobile', '#search-results-mobile');
         });
     </script>
-    
+
 
 
 

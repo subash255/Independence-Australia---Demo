@@ -118,7 +118,7 @@
                             </td>
                             <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                                 <!-- Settings Icon -->
-                                <a href="{{ route('admin.subcategory.index', ['id' => $category->id]) }}"
+                                <a href="{{ route('admin.subcategory.index', ['slug' => $category->slug]) }}"
                                     class="bg-green-500 hover:bg-green-700 p-1 w-8 h-8 rounded-full flex items-center justify-center">
                                     <i class="ri-settings-5-line text-white"></i>
                                 </a>

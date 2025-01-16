@@ -120,15 +120,18 @@
                     <td class="border border-gray-300 px-4 py-2">{{ $subcategory->slug }}</td>
                     <td class="border border-gray-300 px-4 py-2">
                         <label for="status{{ $subcategory->id }}" class="inline-flex items-center cursor-pointer">
-                            <input id="status{{ $subcategory->id }}" type="checkbox" class="hidden toggle-switch" data-id="{{ $subcategory->id }}" {{ $subcategory->status ? 'checked' : '' }} />
+                            <input id="status{{ $subcategory->id }}" type="checkbox" class="hidden toggle-switch"
+                                data-id="{{ $subcategory->id }}" {{ $subcategory->status ? 'checked' : '' }} />
+
                             <div class="w-10 h-6 bg-gray-200 rounded-full relative">
-                                <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition"></div>
+                                <div class="dot absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition">
+                                </div>
                             </div>
                         </label>
                     </td>
                     <td class="px-2 py-2 mt-2 flex justify-center space-x-4">
                         <!-- Edit Icon -->
-                        <a href="{{ route('admin.subcategory.edit', ['id' => $subcategory->id]) }}" class="bg-blue-500 hover:bg-blue-700 p-1 w-8 h-8 rounded-full flex items-center justify-center">
+                        <a href="{{ route('admin.subcategory.edit',  ['slug' => $subcategory->slug]) }}" class="bg-blue-500 hover:bg-blue-700 p-1 w-8 h-8 rounded-full flex items-center justify-center">
                             <i class="ri-edit-box-line text-white"></i>
                         </a>
                         <!-- Delete Icon -->
@@ -160,11 +163,17 @@
 </div>
 
 <script>
+    function updateEntries() {
+        const entries = document.getElementById('entries').value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('entries', entries);
+        window.location.href = url;
+    }
+
     document.querySelectorAll('.toggle-switch').forEach(toggle => {
+        const dot = toggle.parentNode.querySelector('.dot'); // The visual dot for the toggle switch
 
-        const dot = toggle.parentNode.querySelector('.dot');
-
-        // Apply the correct initial state
+        // Apply the correct initial state (visual toggle)
         if (toggle.checked) {
             dot.style.transform = 'translateX(100%)';
             dot.style.backgroundColor = 'green';
@@ -172,11 +181,14 @@
             dot.style.transform = 'translateX(0)';
             dot.style.backgroundColor = 'white';
         }
-        toggle.addEventListener('change', function() {
-            const subcategoryId = this.getAttribute('data-id');
-            const newState = this.checked ? 1 : 0;
 
-            // Toggle visual effect
+        // Add event listener to handle checkbox state change
+        toggle.addEventListener('change', function() {
+            const subcategoryId = this.getAttribute(
+            'data-id'); // Get the subcategory ID from the data-id attribute
+            const newState = this.checked ? 1 : 0; // 1 for checked, 0 for unchecked
+
+            // Toggle visual effect of the switch
             if (this.checked) {
                 dot.style.transform = 'translateX(100%)';
                 dot.style.backgroundColor = 'green';
@@ -185,7 +197,7 @@
                 dot.style.backgroundColor = 'white';
             }
 
-            // Send AJAX request to update the subcategory status
+            // Send AJAX request to update the status
             fetch(`/admin/subcategory/update-toggle/${subcategoryId}`, {
                     method: 'POST',
                     headers: {
@@ -193,13 +205,14 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}', // CSRF token for security
                     },
                     body: JSON.stringify({
-                        state: newState
+                        state: newState, // The new state (1 or 0)
+                        type: 'status', // Indicate we're updating the status
                     }),
                 })
                 .then(response => response.json())
                 .then(data => {
                     if (!data.success) {
-                        // If update fails, reset toggle state
+                        // If update fails, reset the toggle state
                         this.checked = !this.checked;
                         dot.style.transform = this.checked ? 'translateX(100%)' : 'translateX(0)';
                         dot.style.backgroundColor = this.checked ? 'green' : 'white';
@@ -218,12 +231,12 @@
 
 <script>
 
-function updateEntries() {
-        const entries = document.getElementById('entries').value;
-        const url = new URL(window.location.href);
-        url.searchParams.set('entries', entries); 
-        window.location.href = url; 
-    }
+// function updateEntries() {
+//         const entries = document.getElementById('entries').value;
+//         const url = new URL(window.location.href);
+//         url.searchParams.set('entries', entries); 
+//         window.location.href = url; 
+//     }
     
     document.getElementById('search').addEventListener('input', function() {
         const searchQuery = this.value.toLowerCase();
