@@ -22,7 +22,7 @@ class ProductController extends Controller
     // })
     // ->paginate(5);
 
-    $entries = $request->get('entries', 5); 
+    $entries = $request->get('entries', 15); 
 
     $products = Product::paginate($entries);
         return view('admin.product.index',compact('products'), [

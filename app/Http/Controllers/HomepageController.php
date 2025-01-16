@@ -296,12 +296,11 @@ class HomepageController extends Controller
 
 
 
-    public function showproduct($id)
+    public function showproduct($slug)
     {
-
-        $product = Product::where('id', $id)->orWhere('slug', $id)->firstOrFail();
-        $reviews = Review::where('product_id', $id)->get();
-        $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '!=', $id)->limit(4)->get();
+        $product = Product::where('slug', $slug)->firstOrFail();
+        $reviews = Review::where('product_id', $product->id)->get();
+        $relatedProducts = Product::where('category_id', $product->category_id)->where('id', '!=', $product->id)->limit(4)->get();
         return view('product.show', compact('product', 'reviews', 'relatedProducts'));
     }
    

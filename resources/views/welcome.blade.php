@@ -202,7 +202,7 @@
     <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         @foreach ($products as $product)
             @if ($product->status == 1)
-                <a href="{{ route('product.show', ['id' => $product->slug ?: $product->id])  }}" class="block">
+                <a href="{{ route('product.show', ['slug' => $product->slug ?: $product->id])  }}" class="block">
                     <div
                         class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
                         <!-- Image container with fixed aspect ratio and no cropping -->

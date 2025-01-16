@@ -36,7 +36,7 @@ Route::post('newsletter/store', [NewsletterController::class, 'store'])->name('n
 
 
 // Route::get('/product', [HomepageController::class, 'showproducts']);
-Route::get('/product/{id}', [HomepageController::class, 'showproduct'])->name('product.show');
+Route::get('/product/{slug}', [HomepageController::class, 'showproduct'])->name('product.show');
 
 
 
