@@ -63,17 +63,18 @@
             <!-- Product Grid -->
             <main class="w-full lg:w-3/4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-4 gap-6">
-                    @if ($subcategories->isNotEmpty())
-                        @foreach ($subcategories as $subcategory)
-                            <div class="bg-white shadow rounded-md p-4 ">
-                                <h3 class="text-lg font-semibold text-gray-800">{{ $subcategory->name }}</h3>
-                                <p class="text-gray-600 mt-2">
-                                    Discover a wide selection of clothing and dressing aids designed to promote independence
-                                    and comfort.
-                                </p>
-                                <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
-                            </div>
-                        @endforeach
+                @if ($subcategories->isNotEmpty())
+    @foreach ($subcategories as $subcategory)
+        <div onclick="loadProductsForSubcategory('{{ $subcategory->slug }}')" class="bg-white shadow rounded-md p-4 cursor-pointer subcategory-btn" data-slug="{{ $subcategory->slug }}">
+            <h3 class="text-lg font-semibold text-gray-800">{{ $subcategory->name }}</h3>
+            <p class="text-gray-600 mt-2">
+                Discover a wide selection of clothing and dressing aids designed to promote independence and comfort.
+            </p>
+            <a href="#" class="text-blue-600 underline mt-2 inline-block">Learn More</a>
+        </div>
+    @endforeach
+
+
                     @else
                         <p>No subcategories found.</p>
                     @endif
@@ -118,7 +119,7 @@
 
                 <!-- Product Listings -->
                 <div class="mt-8">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div  id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($products as $product)
                             <a href="{{ route('product.show', ['slug' => $product->slug ?: $product->id])  }}" class="block">
                                 <div
@@ -276,4 +277,89 @@
             document.getElementById('show-less-btn').style.display = 'none';
         });
     </script>
+
+<script>
+       document.addEventListener('DOMContentLoaded', function() {
+    // Function to load products for the selected subcategory
+    function loadProductsForSubcategory(subcategorySlug) {
+        // Ensure the product grid element exists before updating it
+        const productGrid = document.getElementById('product-grid');
+
+        if (!productGrid) {
+            console.error('Product grid element not found.');
+            return;
+        }
+
+        // Make an AJAX request to load products for the selected subcategory
+        fetch(`/category/{{ $category->slug }}/subcategory/${subcategorySlug}`)
+            .then(response => response.json())
+            .then(data => {
+                // Clear existing products
+                productGrid.innerHTML = '';
+
+                // Add the fetched products to the grid
+                data.products.forEach(product => {
+                    const productDiv = document.createElement('div');
+                   
+                    productDiv.innerHTML = `
+                        <a href="/product/${product.slug || product.id}" class="block">
+                            <div class="bg-white border rounded-lg p-4 relative shadow hover:shadow-lg transition flex flex-col justify-between h-full">
+                                <div class="h-48 flex items-center justify-center bg-gray-100 rounded-lg mb-2 overflow-hidden">
+                                    <img src="${product.image}" alt="${product.name} Image" class="object-contain w-full h-full">
+                                </div>
+                                <div class="flex flex-col justify-between items-center text-center h-full">
+                                    <h3 class="text-lg font-semibold text-gray-800 mb-2">${product.name}</h3>
+                                    <p class="text-lg font-semibold text-gray-900">$${product.price}</p>
+                                    <div class="flex items-center mb-3 gap-1 text-red-500 text-sm font-medium justify-center">
+                                        ${getProductRatingStars(product)}
+                                    </div>
+                                    <form action="/cart/add/${product.id}" method="POST">
+                                        <button type="submit" class="inline-block bg-white border-2 border-blue-500 text-blue-500 font-lg font-bold px-4 py-2 rounded-[24px] hover:bg-blue-700 hover:text-white transition-colors mt-2">
+                                            Add to Basket
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                    productGrid.appendChild(productDiv);
+                });
+
+                // Update the browser URL to reflect the selected subcategory
+                const newUrl = `/category/{{ $category->slug }}/subcategory/${subcategorySlug}`;
+                window.history.pushState({ path: newUrl }, '', newUrl);
+            })
+            .catch(error => {
+                console.error('Error loading products:', error);
+            });
+    }
+
+    // Function to get rating stars
+    function getProductRatingStars(product) {
+        let ratingHtml = '';
+        for (let i = 0; i < 5; i++) {
+            if (i < Math.round(product.average_rating)) {
+                ratingHtml += `<i class="ri-star-fill text-yellow-400 text-xl"></i>`;
+            } else {
+                ratingHtml += `<i class="ri-star-line text-gray-300 text-xl"></i>`;
+            }
+        }
+        return ratingHtml;
+    }
+
+    // Example event listener for subcategory click
+    const subcategoryButtons = document.querySelectorAll('.subcategory-btn');
+    subcategoryButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const subcategorySlug = button.getAttribute('data-slug');
+            loadProductsForSubcategory(subcategorySlug);
+        });
+    });
+});
+
+
+    </script>
+
+
+
 @endsection

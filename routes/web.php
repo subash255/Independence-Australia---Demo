@@ -28,6 +28,8 @@ Route::post('checkout', [CheckoutController::class, 'processCheckout'])->name('c
 Route::get('user/cart/show', [CheckoutController::class, 'show'])->name('user.cart.show');
 
 Route::get('category/{slug}', [HomepageController::class, 'showcat'])->name('menu.index');
+Route::get('category/{categorySlug}/subcategory/{subcategorySlug}', [HomepageController::class, 'getSubcategoryProducts']);
+
 Route::get('products', [HomepageController::class, 'allproduct'])->name('product.index');
 
 //newsletter submission

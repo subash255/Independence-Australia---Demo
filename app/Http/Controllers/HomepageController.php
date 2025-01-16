@@ -9,6 +9,7 @@ use App\Models\Contact;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Subcategory;
 use App\Models\Text;
 use App\Models\User;
 use App\Models\Visit;
@@ -214,6 +215,24 @@ class HomepageController extends Controller
         // Return the view with all necessary data
         return view('menu.index', compact('category', 'categories', 'products', 'subcategories', 'brands', 'selectedBrand', 'sortBy'));
     }
+
+    public function getSubcategoryProducts($categorySlug, $subcategorySlug)
+{
+    // Find the category by its slug
+    $category = Category::where('slug', $categorySlug)->firstOrFail();
+
+    // Find the subcategory by its slug
+    $subcategory = Subcategory::where('slug', $subcategorySlug)->firstOrFail();
+
+    // Fetch products for the selected subcategory
+    $products = Product::where('subcategory_id', $subcategory->id)->get();
+
+    // Return the products as JSON
+    return response()->json([
+        'products' => $products
+    ]);
+}
+
     
     
 
