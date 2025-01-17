@@ -26,7 +26,9 @@
                         class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                         @foreach ($category->subcategories as $subcategory)
                             <div class="flex items-center space-x-2">
+                            <a href="{{ route('menu.subcat', [$category->slug, $subcategory->slug]) }}">
                                 <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                            </a>
                             </div>
                         @endforeach
                     </div>

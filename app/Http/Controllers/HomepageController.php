@@ -150,19 +150,17 @@ class HomepageController extends Controller
         // If no slug is provided, redirect or handle the case accordingly
     
         // Retrieve the category using the slug if it is provided
-        $category = Category::where('slug', $slug)->firstOrFail(); // Find category by slug
+        $cat = Category::where('slug', $slug)->first(); // Find category by slug
     
         // Get the category with products and subcategories
         $categories = Category::with(['products', 'subcategories'])->get();
 
     
         // Fetch subcategories for the category
-        $subcategories = FacadesDB::table('subcategories')
-            ->where('category_id', $category->id)
-            ->get();
+        $subcategories = Subcategory::where('category_id', $cat->id)->get();
     
         // Fetch products related to the category
-        $products = Product::where('category_id', $category->id)->get();
+        $products = Product::where('category_id', $cat->id)->get();
     
         // Get all unique brand_ids from the products
         $brandIds = $products->pluck('brand_id')->unique();
@@ -177,7 +175,7 @@ class HomepageController extends Controller
         $sortBy = $request->input('sort_by', 'name_asc');
     
         // Start the products query for the selected category
-        $productsQuery = Product::where('category_id', $category->id);
+        $productsQuery = Product::where('category_id', $cat->id);
     
         // Apply brand filter if a brand is selected
         if ($selectedBrand) {
@@ -213,25 +211,71 @@ class HomepageController extends Controller
         $products = $productsQuery->paginate(15);
     
         // Return the view with all necessary data
-        return view('menu.index', compact('category', 'categories', 'products', 'subcategories', 'brands', 'selectedBrand', 'sortBy'));
+        return view('menu.index', compact('cat', 'categories', 'products', 'subcategories', 'brands', 'selectedBrand', 'sortBy'));
     }
 
-    public function getSubcategoryProducts($categorySlug, $subcategorySlug)
+    public function subcat(Request $request, $categoryslug, $slug)
 {
-    // Find the category by its slug
-    $category = Category::where('slug', $categorySlug)->firstOrFail();
+    
+    $category = Category::where('slug', $categoryslug)->firstOrFail();
 
-    // Find the subcategory by its slug
-    $subcategory = Subcategory::where('slug', $subcategorySlug)->firstOrFail();
+    $categories = Category::with('subcategories')->get();
+    
+    // Retrieve the subcategory within the specified category using the subcategory slug
+    $subcategory = Subcategory::where('slug', $slug)
+                               ->where('category_id', $category->id)  // Use $category->id, not $categories->id
+                               ->firstOrFail(); // Find subcategory by slug and category_id
+    
+    // Initialize the products query
+    $productsQuery = Product::where('subcategory_id', $subcategory->id);
+    
+    // Handle sorting and filtering
+    $selectedBrand = $request->input('brand');
+    $sortBy = $request->input('sort_by', 'name_asc');
+    
+    // Apply brand filter if selected
+    if ($selectedBrand) {
+        $productsQuery->where('brand_id', $selectedBrand);
+    }
 
-    // Fetch products for the selected subcategory
-    $products = Product::where('subcategory_id', $subcategory->id)->get();
+    // Apply sorting based on the selected sort option
+    switch ($sortBy) {
+        case 'name_asc':
+            $productsQuery->orderBy('name', 'asc');
+            break;
+        case 'name_desc':
+            $productsQuery->orderBy('name', 'desc');
+            break;
+        case 'price_asc':
+            $productsQuery->orderBy('price', 'asc');
+            break;
+        case 'price_desc':
+            $productsQuery->orderBy('price', 'desc');
+            break;
+        case 'rating_asc':
+            $productsQuery->orderBy('rating', 'asc');
+            break;
+        case 'rating_desc':
+            $productsQuery->orderBy('rating', 'desc');
+            break;
+        default:
+            $productsQuery->orderBy('name', 'asc'); // Default sorting by name ascending
+            break;
+    }
+    
+    // Fetch products with pagination
+    $products = $productsQuery->paginate(15);
 
-    // Return the products as JSON
-    return response()->json([
-        'products' => $products
-    ]);
+    // Get all unique brands related to the products in the subcategory
+    $brands = Brand::whereIn('id', $products->pluck('brand_id')->unique())->get();
+    
+    // Return the view with all necessary data
+    return view('menu.subcat', compact('subcategory', 'products', 'brands', 'categories', 'selectedBrand', 'sortBy'));
 }
+
+
+
+    
 
     
     

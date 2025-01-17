@@ -7,6 +7,9 @@
     <title>Always There Medical</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
         rel="stylesheet">
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+    
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -246,11 +249,11 @@
     <nav class="sticky top-0 z-40 lg:block hidden">
         <div class="bg-blue-500 py-2 text-white">
             <section>
-                <div class="container mx-auto text-center overflow-hidden relative">
-                    <div class="slider-container relative h-8">
+                <!-- Swiper Container -->
+                <div class="swiper swiper1-container mx-auto text-center overflow-hidden relative">
+                    <div class="swiper-wrapper flex">
                         @foreach ($sliderTexts as $sliderText)
-                            <div
-                                class="slider-text absolute inset-0 flex items-center justify-center font-normal transition-all duration-1000 transform translate-x-full opacity-0">
+                            <div class="swiper-slide flex items-center justify-center text-lg font-normal px-6">
                                 {{ $sliderText->text }}
                             </div>
                         @endforeach
@@ -405,35 +408,30 @@
 
     // Slider Text
     document.addEventListener('DOMContentLoaded', function() {
-        const sliderTexts = document.querySelectorAll('.slider-text');
-        let currentIndex = 0;
-
-        function showSliderText() {
-            sliderTexts.forEach((text, index) => {
-                text.classList.remove('translate-x-0', 'translate-x-full', '-translate-x-full',
-                    'opacity-100', 'opacity-0');
-
-                if (index === currentIndex) {
-                    text.classList.add('translate-x-0', 'opacity-100');
-                } else if (index === (currentIndex - 1 + sliderTexts.length) % sliderTexts.length) {
-                    text.classList.add('-translate-x-full', 'opacity-0');
-                } else {
-                    text.classList.add('translate-x-full', 'opacity-0');
-                }
-            });
-
-            currentIndex = (currentIndex + 1) % sliderTexts.length;
+    const swiper = new Swiper('.swiper1-container', {
+        loop: true,               // Enables looping of slides
+        autoplay: {
+            delay: 4000,          // Delay between slides
+            disableOnInteraction: false, // Keep autoplay after interaction
+        },
+        effect: 'slide',          // Use sliding effect
+        speed: 600,               // Speed of transition
+        slidesPerView: 1,         // Show one slide at a time
+        spaceBetween: 0,          // No space between slides
+        breakpoints: {
+            640: {
+                slidesPerView: 1,    // Show one slide at a time on small screens
+            },
+            768: {
+                slidesPerView: 1,    // Ensure one slide is visible on medium screens
+            },
         }
-
-        // Initial slider text display
-        showSliderText();
-        
-        // Set interval for slider change
-        setInterval(() => {
-            showSliderText();
-        }, 4000);
     });
+});
+
 </script>
+
+
 
 
 
