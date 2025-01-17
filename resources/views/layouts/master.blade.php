@@ -7,9 +7,9 @@
     <title>Always There Medical</title>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@100;300;400;600;700&display=swap"
         rel="stylesheet">
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
-    
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -199,51 +199,54 @@
 
 
 
-<!-- Mobile Menu (Initially Hidden) -->
-<div id="mobileMenu"
-    class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
-    <div class="w-full bg-gray-100 p-4 rounded-md shadow-sm h-full flex flex-col">
-        <!-- Close Button -->
-        <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6 z-50">
-            <i class="fa fa-times"></i>
-        </button>
+    <!-- Mobile Menu (Initially Hidden) -->
+    <div id="mobileMenu"
+        class="lg:hidden fixed top-24 left-[-100%] w-3/4 h-full bg-black bg-opacity-50 transition-all duration-300 ease-in-out z-40">
+        <div class="w-full bg-gray-100 p-4 rounded-md shadow-sm h-full flex flex-col">
+            <!-- Close Button -->
+            <button id="closeMenu" class="text-black text-3xl absolute top-3 right-6 z-50">
+                <i class="fa fa-times"></i>
+            </button>
 
-        <!-- Scrollable Content Area -->
-        <div class="w-full overflow-x-hidden"> <!-- Prevents horizontal overflow -->
-            <div class="flex-grow overflow-y-auto">
-                <div class="space-y-4">
-                    @foreach ($categories as $category)
-                        @if ($category->status == 1)
-                            <div>
-                                <!-- Category Button to Toggle Subcategories -->
-                                <a href="{{ route('menu.index', ['slug' => $category->slug]) }}">
-                                    <button
-                                        class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
-                                        <span class="flex-grow">{{ $category->name }}</span>
-                                        <i onclick="showToggle(event, '{{ $category->slug }}')"
-                                            class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
-                                    </button>
-                                </a>
+            <!-- Scrollable Content Area -->
+            <div class="w-full overflow-x-hidden"> <!-- Prevents horizontal overflow -->
+                <div class="flex-grow overflow-y-auto">
+                    <div class="space-y-4">
+                        @foreach ($categories as $category)
+                            @if ($category->status == 1)
+                                <div>
+                                    <!-- Category Button to Toggle Subcategories -->
+                                    <a href="{{ route('menu.index', ['slug' => $category->slug]) }}">
+                                        <button
+                                            class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                                            <span class="flex-grow">{{ $category->name }}</span>
+                                            <i onclick="showToggle(event, '{{ $category->slug }}')"
+                                                class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                                        </button>
+                                    </a>
 
-                                <!-- Subcategory Dropdown (Hidden by Default) -->
-                                <div id="{{ $category->slug }}"
-                                    class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
-                                    @foreach ($category->subcategories as $subcategory)
-                                    @if ($subcategory->status == 1)
-                                        <div class="flex items-center space-x-2">
-                                            <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
-                                        </div>
-                                        @endif
-                                    @endforeach
+                                    <!-- Subcategory Dropdown (Hidden by Default) -->
+                                    <div id="{{ $category->slug }}"
+                                        class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
+                                        @foreach ($category->subcategories as $submenu)
+                                            @if ($submenu->status == 1)
+                                                <a href="{{ route('menu.subcat', [$category->slug, $submenu->slug]) }}"
+                                                    class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+                                                    data-item="{{ $submenu->name }}"
+                                                    data-child-category="{{ json_encode($submenu->child_categories) }}">
+                                                    {{ $submenu->name }}
+                                                </a>
+                                            @endif
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
-                    @endforeach
+                            @endif
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Navigation Section -->
     <nav class="sticky top-0 z-40 lg:block hidden">
@@ -281,13 +284,13 @@
                                         class="menu-content absolute left-0 w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 transition-all duration-300 ease-in-out z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:block hidden">
                                         <div class="space-y-2 text-black px-4 py-3">
                                             @foreach ($category->subcategories as $submenu)
-                                            @if ($submenu->status == 1)
-                                            <a href="{{ route('menu.subcat', [$category->slug, $submenu->slug]) }}"
-                                                    class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
-                                                    data-item="{{ $submenu->name }}"
-                                                    data-child-category="{{ json_encode($submenu->child_categories) }}">
-                                                    {{ $submenu->name }}
-                                                </a>
+                                                @if ($submenu->status == 1)
+                                                    <a href="{{ route('menu.subcat', [$category->slug, $submenu->slug]) }}"
+                                                        class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
+                                                        data-item="{{ $submenu->name }}"
+                                                        data-child-category="{{ json_encode($submenu->child_categories) }}">
+                                                        {{ $submenu->name }}
+                                                    </a>
                                                 @endif
                                             @endforeach
                                         </div>
@@ -384,52 +387,51 @@
     </footer>
 
     <script>
-    // Mobile Menu Toggle
-    const menuToggle = document.getElementById("menuToggle");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const closeMenu = document.getElementById("closeMenu");
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById("menuToggle");
+        const mobileMenu = document.getElementById("mobileMenu");
+        const closeMenu = document.getElementById("closeMenu");
 
-    menuToggle.addEventListener("click", () => {
-        mobileMenu.classList.toggle("left-[-100%]"); // Slide in/out
-        mobileMenu.classList.toggle("left-0"); // Position at 0 when visible
+        menuToggle.addEventListener("click", () => {
+            mobileMenu.classList.toggle("left-[-100%]"); // Slide in/out
+            mobileMenu.classList.toggle("left-0"); // Position at 0 when visible
 
-        // Disable body scrolling when the menu is open
-        if (mobileMenu.classList.contains('left-0')) {
-            document.body.style.overflow = 'hidden'; // Disable scroll
-        } else {
+            // Disable body scrolling when the menu is open
+            if (mobileMenu.classList.contains('left-0')) {
+                document.body.style.overflow = 'hidden'; // Disable scroll
+            } else {
+                document.body.style.overflow = ''; // Restore scroll
+            }
+        });
+
+        closeMenu.addEventListener("click", () => {
+            mobileMenu.classList.add("left-[-100%]"); // Slide out to the left
             document.body.style.overflow = ''; // Restore scroll
-        }
-    });
+        });
 
-    closeMenu.addEventListener("click", () => {
-        mobileMenu.classList.add("left-[-100%]"); // Slide out to the left
-        document.body.style.overflow = ''; // Restore scroll
-    });
-
-    // Slider Text
-    document.addEventListener('DOMContentLoaded', function() {
-    const swiper = new Swiper('.swiper1-container', {
-        loop: true,               // Enables looping of slides
-        autoplay: {
-            delay: 4000,          // Delay between slides
-            disableOnInteraction: false, // Keep autoplay after interaction
-        },
-        effect: 'slide',          // Use sliding effect
-        speed: 600,               // Speed of transition
-        slidesPerView: 1,         // Show one slide at a time
-        spaceBetween: 0,          // No space between slides
-        breakpoints: {
-            640: {
-                slidesPerView: 1,    // Show one slide at a time on small screens
-            },
-            768: {
-                slidesPerView: 1,    // Ensure one slide is visible on medium screens
-            },
-        }
-    });
-});
-
-</script>
+        // Slider Text
+        document.addEventListener('DOMContentLoaded', function() {
+            const swiper = new Swiper('.swiper1-container', {
+                loop: true, // Enables looping of slides
+                autoplay: {
+                    delay: 4000, // Delay between slides
+                    disableOnInteraction: false, // Keep autoplay after interaction
+                },
+                effect: 'slide', // Use sliding effect
+                speed: 600, // Speed of transition
+                slidesPerView: 1, // Show one slide at a time
+                spaceBetween: 0, // No space between slides
+                breakpoints: {
+                    640: {
+                        slidesPerView: 1, // Show one slide at a time on small screens
+                    },
+                    768: {
+                        slidesPerView: 1, // Ensure one slide is visible on medium screens
+                    },
+                }
+            });
+        });
+    </script>
 
 
 
@@ -540,14 +542,14 @@
         closeSearchPopup.addEventListener('click', function() {
             mobileSearchPopup.classList.add('hidden');
             document.getElementById('search-results-mobile').classList.add(
-            'hidden'); // Hide results when closing the popup
+                'hidden'); // Hide results when closing the popup
         });
 
         // Handle click on search result item (both for desktop and mobile)
         function handleSearchResultClick(event, inputElement, resultsContainer) {
             var productName = $(event.currentTarget).find('span').text(); // Get the clicked search item text (product name)
             $(inputElement).val(
-            productName); // Update the input field with the selected product's name (only the name, not the image)
+                productName); // Update the input field with the selected product's name (only the name, not the image)
             $(resultsContainer).empty();
             $(resultsContainer).addClass('hidden');
         }

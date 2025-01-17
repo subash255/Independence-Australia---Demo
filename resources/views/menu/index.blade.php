@@ -20,20 +20,24 @@
                         <div>
                             <a href="{{ route('menu.index', $category->slug) }}">
                                 <button
-                                    class="w-full text-left font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
+                                    class="w-full text-left font-semibold text-gray-700 
+                                        {{ request()->segment(2) == $category->slug ? 'bg-blue-500 text-white' : 'bg-gray-100 hover:bg-gray-200' }} 
+                                        rounded-md px-2 py-2 flex items-center justify-between border-b border-gray-300">
                                     <span class="flex-grow">{{ $category->name }}</span>
                                     <i onclick="toggle(event, 'subcategory-{{ $category->id }}')"
-                                        class="ri-arrow-down-s-line text-gray-600 cursor-pointer"></i>
+                                        class="ri-arrow-down-s-line text-gray-900 cursor-pointer"></i>
                                 </button>
                             </a>
-
+                
                             <div id="subcategory-{{ $category->id }}"
                                 class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                                 @foreach ($category->subcategories as $subcategory)
                                     <div class="flex items-center space-x-2">
                                         <a href="{{ route('menu.subcat', [$category->slug, $subcategory->slug]) }}">
-
-                                            <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                                            <span class="text-gray-600 
+                                                {{ request()->segment(2) == $category->slug && request()->segment(3) == $subcategory->slug ? 'bg-blue-600 text-white' : '' }}">
+                                                {{ optional($subcategory)->name }}
+                                            </span>
                                         </a>
                                     </div>
                                 @endforeach
@@ -41,6 +45,7 @@
                         </div>
                     @endforeach
                 </div>
+                
 
 
 
