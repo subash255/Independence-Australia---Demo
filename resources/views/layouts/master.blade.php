@@ -226,7 +226,10 @@
                                         class="hidden space-y-2 ml-4 mt-2 transition-all duration-300 ease-in-out">
                                         @foreach ($category->subcategories as $subcategory)
                                             <div class="flex items-center space-x-2">
+                                <a href="{{ route('menu.subcat', [$category->slug, $subcategory->slug]) }}">
+
                                                 <span class="text-gray-600">{{ optional($subcategory)->name }}</span>
+                                </a>
                                             </div>
                                         @endforeach
                                     </div>
@@ -276,7 +279,8 @@
                                         class="menu-content absolute left-0 w-56 bg-white shadow-lg rounded-md opacity-0 scale-95 transition-all duration-300 ease-in-out z-50 group-hover:opacity-100 group-hover:scale-100 group-hover:block hidden">
                                         <div class="space-y-2 text-black px-4 py-3">
                                             @foreach ($category->subcategories as $submenu)
-                                                <a href="#"
+                                            <a href="{{ route('menu.subcat', [$category->slug, $subcategory->slug]) }}"
+
                                                     class="block py-2 px-3 rounded-md text-sm font-medium text-gray-700 hover:bg-blue-500 hover:text-white transition duration-150 ease-in-out"
                                                     data-item="{{ $submenu->name }}"
                                                     data-child-category="{{ json_encode($submenu->child_categories) }}">
