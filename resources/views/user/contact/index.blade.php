@@ -60,7 +60,7 @@
                         @else
                         <p class="text-gray-600">You have no default shipping address in your address book.</p>
                         @endif
-                        <a href="#" class="text-blue-600 hover:underline text-sm font-medium">Change Shipping Address</a>
+                        {{-- <a href="#" class="text-blue-600 hover:underline text-sm font-medium">Change Shipping Address</a> --}}
                     </div>
                 </div>
             </div>

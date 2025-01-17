@@ -12,12 +12,18 @@
                 <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
             </select>
         </div>
+
+        <div class="flex items-center space-x-2 w-full sm:w-auto">
+            <span class="text-gray-700">Search:</span>
+            <input type="text" id="search" placeholder="Search..."
+                class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
+        </div>
     </div>
     
 
     <!-- Table Section -->
     <div class="overflow-x-auto">
-        <table class="min-w-full border-collapse border border-gray-300">
+        <table id="reviewTable" class="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr class="bg-gray-100">
                     <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -153,6 +159,36 @@
                     dot.style.backgroundColor = this.checked ? 'green' : 'white';
                 });
         });
+    });
+</script>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByReviewname(searchQuery);
+    });
+
+
+    function filterTableByReviewname(query) {
+        const rows = document.querySelectorAll('#reviewTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const reviewnameCell = cells[2];
+
+            if (reviewnameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByReviewname(searchQuery);
     });
 </script>
 

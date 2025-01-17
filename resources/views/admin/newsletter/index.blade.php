@@ -82,12 +82,18 @@
                     <option value="25" {{ request('entries') == 25 ? 'selected' : '' }}>25</option>
                 </select>
             </div>
+
+            <div class="flex items-center space-x-2 w-full sm:w-auto">
+                <span class="text-gray-700">Search:</span>
+                <input type="text" id="search" placeholder="Search..."
+                    class="border border-gray-300 px-4 py-2 w-full sm:w-96" />
+            </div>
         </div>
 
 
         <!-- Table Section -->
         <div class="overflow-x-auto">
-            <table class="min-w-full border-collapse border border-gray-300">
+            <table id="newsletterTable" class="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr class="bg-gray-100">
                         <th class="border border-gray-300 px-4 py-2">S.N</th>
@@ -112,7 +118,7 @@
                             </td>
                             
                             
-                            <td class="flex justify-center py-4">
+                            <td class="flex justify-center mt-3 px-2 py-4">
 
                                 <!-- Send Message Icon -->
                                 <form action="{{ route('admin.newsletter.send.post', $newsletter->id) }}" method="POST" style="display: inline;">
@@ -187,4 +193,34 @@
             document.body.classList.remove('overflow-hidden'); // Re-enable scrolling
         });
     </script>
+
+<script>
+    document.getElementById('search').addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+        history.pushState(null, null, `?search=${searchQuery}`);
+        filterTableByNewslettername(searchQuery);
+    });
+
+
+    function filterTableByNewslettername(query) {
+        const rows = document.querySelectorAll('#newsletterTable tbody tr');
+        rows.forEach(row => {
+            const cells = row.getElementsByTagName('td');
+            const newsletternameCell = cells[1];
+
+            if (newsletternameCell.textContent.toLowerCase().startsWith(query)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    window.addEventListener('popstate', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchQuery = urlParams.get('search') || '';
+        document.getElementById('search').value = searchQuery;
+        filterTableByNewslettername(searchQuery);
+    });
+</script>
 @endsection

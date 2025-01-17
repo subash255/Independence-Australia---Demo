@@ -90,8 +90,8 @@
 
         <div class="container mx-auto p-4">
             <!-- Tabs Section -->
-            <div class="border-b border-gray-300 pb-4">
-                <ul class="flex space-x-6 justify-center md:justify-start border-b-2 mb-6">
+            <div class="border-gray-300 pb-4">
+                <ul class="flex space-x-6 justify-center md:justify-start border-b-2">
                     <!-- Description Tab -->
                     <li class="pb-2 text-xl font-semibold text-gray-600 cursor-pointer" id="description-tab">
                         <a href="javascript:void(0)" class="hover:text-blue-700 transition duration-300">Description</a>

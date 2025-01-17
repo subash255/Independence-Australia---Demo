@@ -249,7 +249,7 @@
         const rows = document.querySelectorAll('#subcategoryTable tbody tr');
         rows.forEach(row => {
             const cells = row.getElementsByTagName('td');
-            const subcategorynameCell = cells[3];
+            const subcategorynameCell = cells[4];
 
             if (subcategorynameCell.textContent.toLowerCase().startsWith(query)) {
                 row.style.display = '';
