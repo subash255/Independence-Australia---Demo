@@ -149,6 +149,11 @@ class CheckoutController extends Controller
             'line_items' => $line,
             'status' => 'pending',
         ]);
+
+        if ($request->has('payment') && $request->payment == 'stripe') {
+            // Redirect to Stripe checkout process (e.g., using Stripe API or your custom route)
+            return redirect()->route('stripe.checkout', ['order_id' => $order->id]);
+        }
         // dd('here');
 
         $apiKey = env('AEROHEALTH_API_KEY');

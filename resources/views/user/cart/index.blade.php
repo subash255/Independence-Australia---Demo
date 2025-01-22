@@ -115,6 +115,9 @@
                         ${{ number_format($cartItems->sum(fn($item) => $item->product->price * $item->quantity) + 10, 2) }}
                     </span>
                 </div>
+                <div>
+                    <input type="checkbox" name="payment" id="credit" />payment with stripe
+                </div>
 
                 <!-- Proceed to Checkout Button -->
                 <form action="{{ route('checkout.process') }}" method="POST">
@@ -140,4 +143,10 @@
 
 </div>
 
+<script>
+    document.getElementById('credit').addEventListener('change', function () {
+        // If Stripe payment is selected, set the payment method to 'stripe'
+        document.getElementById('paymentMethod').value = this.checked ? 'stripe' : '';
+    });
+</script>
 @endsection
