@@ -95,21 +95,6 @@
                 </select>
             </div>
 
-            <!-- Stripe Payment Checkbox -->
-            <input type="checkbox" id="stripe" name="payment" /> <label for="stripe">Pay with Stripe</label>
-
-            <!-- Stripe Payment Form (hidden by default) -->
-            <div id="stripe-payment-form" style="display:none;">
-                <form id="payment-form">
-                    <div id="card-element">
-                        <!-- A Stripe Element will be inserted here. -->
-                    </div>
-                    <div id="card-errors" role="alert"></div>
-                    <button id="submit" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-5 rounded-md">
-                        Pay Now
-                    </button>
-                </form>
-            </div>
 
             <!-- Proceed to Checkout Button -->
             <form action="{{ route('checkout.process') }}" method="POST">
@@ -124,52 +109,6 @@
         </div>
     </div>
 </div>
-<script src="https://js.stripe.com/v3/"></script>
-<script>
-    document.getElementById('stripe').addEventListener('change', function() {
-        var paymentForm = document.getElementById('stripe-payment-form');
-        if (this.checked) {
-            paymentForm.style.display = 'block';
-            initStripe();
-        } else {
-            paymentForm.style.display = 'none';
-        }
-    });
 
-    function initStripe() {
-        var stripe = Stripe('{{ env('STRIPE_KEY') }}');
-        var elements = stripe.elements();
-        var card = elements.create('card');
-        card.mount('#card-element');
-
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault();
-
-            const { clientSecret } = await fetch('/create-payment-intent', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    total: '{{ $cartItems->sum(fn($item) => $item->product->price * $item->quantity) + 10 }}',
-                }),
-            }).then((res) => res.json());
-
-            const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-                payment_method: {
-                    card: card,
-                }
-            });
-
-            if (error) {
-                document.getElementById('card-errors').textContent = error.message;
-            } else if (paymentIntent.status === 'succeeded') {
-                alert('Payment Successful!');
-                window.location.href = '/thank-you'; // Redirect to thank you page
-            }
-        });
-    }
-</script>
 @endif
 @endsection
