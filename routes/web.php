@@ -17,6 +17,7 @@ use App\Http\Controllers\NayaController;
 use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TextController;
 use App\Http\Middleware\AdminMiddleware;
@@ -163,6 +164,9 @@ Route::get('/user/{user}/edit', [ProfileController::class, 'edit'])->name('user.
 
     //My Order
     Route::get('user/myorder', [HomepageController::class, 'order'])->name('user.myorder');
+
+
+    // Route::post('/create-payment-intent', [StripePaymentController::class, 'createPaymentIntent']);
 
     //Manage User
     Route::get('user/manageuser/index', [ManageuserController::class, 'index'])->name('user.manageuser.index');

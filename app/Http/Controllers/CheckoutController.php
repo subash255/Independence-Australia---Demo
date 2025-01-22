@@ -149,6 +149,10 @@ class CheckoutController extends Controller
             'line_items' => $line,
             'status' => 'pending',
         ]);
+
+        if($request->has('payment') && $request->payment == 'stripe'){
+            return redirect()->route('stripe.checkout', $order->id);
+        }
         // dd('here');
 
         $apiKey = env('AEROHEALTH_API_KEY');
@@ -211,4 +215,5 @@ class CheckoutController extends Controller
         // Close the cURL session
         curl_close($ch);
     }
+
 }

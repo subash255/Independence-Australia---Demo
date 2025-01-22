@@ -32,7 +32,6 @@
                 <h2 class="font-semibold text-2xl text-gray-600">{{ count($cartItems) }} Items</h2>
             </div>
 
-
             <!-- Cart Item Loop -->
             <div class="space-y-6">
                 @foreach ($cartItems as $cartItem)
@@ -48,7 +47,7 @@
                         <p class="text-sm text-gray-600">{{ $cartItem->product->sku }}</p>
                         <div class="flex justify-between items-center mt-2">
                             <p class="text-lg font-semibold text-gray-800">{{ $cartItem->product->name }}</p>
-                            <form action="{{route('user.cart.remove', $cartItem->id)}} " method="POST"
+                            <form action="{{ route('user.cart.remove', $cartItem->id) }}" method="POST"
                                 class="text-xs text-red-500 hover:text-red-700 cursor-pointer">
                                 @csrf
                                 @method('DELETE')
@@ -62,8 +61,7 @@
                                 class="flex items-center">
                                 @csrf
                                 @method('PATCH')
-                                <input type="number" name="quantity" min="1"
-                                    value="{{ $cartItem->quantity }}"
+                                <input type="number" name="quantity" min="1" value="{{ $cartItem->quantity }}"
                                     class="w-16 p-2 text-center border border-gray-300 rounded-md" />
                                 <button type="submit"
                                     class="ml-4 bg-blue-500 hover:bg-blue-600 text-white text-sm py-2 px-4 rounded-md">Update</button>
@@ -97,47 +95,81 @@
                 </select>
             </div>
 
-            <!-- Promo Code Input -->
-            <div class="mt-6">
-                <label for="promo" class="font-semibold inline-block mb-3 text-sm text-gray-600">Promo Code</label>
-                <input type="text" id="promo" placeholder="Enter your code"
-                    class="p-3 text-sm w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500" />
-            </div>
+            <!-- Stripe Payment Checkbox -->
+            <input type="checkbox" id="stripe" name="payment" /> <label for="stripe">Pay with Stripe</label>
 
-            <button
-                class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white font-semibold uppercase mt-4 w-full rounded-md">Apply</button>
-
-            <!-- Total Cost -->
-            <div class="border-t mt-8 pt-6">
-                <div class="flex justify-between text-sm font-semibold text-gray-600 uppercase mb-4">
-                    <span>Total cost</span>
-                    <span class="text-lg font-semibold text-gray-800">
-                        ${{ number_format($cartItems->sum(fn($item) => $item->product->price * $item->quantity) + 10, 2) }}
-                    </span>
-                </div>
-
-                <!-- Proceed to Checkout Button -->
-                <form action="{{ route('checkout.process') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="total" value="{{ $cartItems->sum(fn($item) => $item->product->price * $item->quantity) + 10 }}">
-
-                    <button type="submit"
-                        class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 px-5 text-sm text-white uppercase w-full text-center rounded-md mt-8">
-                        Proceed to Checkout
+            <!-- Stripe Payment Form (hidden by default) -->
+            <div id="stripe-payment-form" style="display:none;">
+                <form id="payment-form">
+                    <div id="card-element">
+                        <!-- A Stripe Element will be inserted here. -->
+                    </div>
+                    <div id="card-errors" role="alert"></div>
+                    <button id="submit" class="w-full mt-6 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-5 rounded-md">
+                        Pay Now
                     </button>
                 </form>
             </div>
+
+            <!-- Proceed to Checkout Button -->
+            <form action="{{ route('checkout.process') }}" method="POST">
+                @csrf
+                <input type="hidden" name="total" value="{{ $cartItems->sum(fn($item) => $item->product->price * $item->quantity) + 10 }}">
+
+                <button type="submit"
+                    class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 px-5 text-sm text-white uppercase w-full text-center rounded-md mt-8">
+                    Proceed to Checkout
+                </button>
+            </form>
         </div>
     </div>
-    @endif
-
-    <!-- Continue Shopping Link at Bottom Left Corner -->
-    <div class="absolute  left-0 mb-6 ml-6 lg:block hidden">
-        <a href="{{ route('product.index') }}" class="flex font-semibold text-indigo-600 text-sm hover:underline">
-            <i class="ri-arrow-left-s-line text-indigo-600 mr-2"></i> Continue Shopping
-        </a>
-    </div>
-
 </div>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    document.getElementById('stripe').addEventListener('change', function() {
+        var paymentForm = document.getElementById('stripe-payment-form');
+        if (this.checked) {
+            paymentForm.style.display = 'block';
+            initStripe();
+        } else {
+            paymentForm.style.display = 'none';
+        }
+    });
 
+    function initStripe() {
+        var stripe = Stripe('{{ env('STRIPE_KEY') }}');
+        var elements = stripe.elements();
+        var card = elements.create('card');
+        card.mount('#card-element');
+
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const { clientSecret } = await fetch('/create-payment-intent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    total: '{{ $cartItems->sum(fn($item) => $item->product->price * $item->quantity) + 10 }}',
+                }),
+            }).then((res) => res.json());
+
+            const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: card,
+                }
+            });
+
+            if (error) {
+                document.getElementById('card-errors').textContent = error.message;
+            } else if (paymentIntent.status === 'succeeded') {
+                alert('Payment Successful!');
+                window.location.href = '/thank-you'; // Redirect to thank you page
+            }
+        });
+    }
+</script>
+@endif
 @endsection
