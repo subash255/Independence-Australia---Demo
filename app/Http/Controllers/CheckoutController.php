@@ -12,6 +12,8 @@ use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Stripe\Checkout\Session;
+use Stripe\Stripe;
 
 class CheckoutController extends Controller
 {
@@ -150,10 +152,39 @@ class CheckoutController extends Controller
             'status' => 'pending',
         ]);
 
-        if($request->has('payment') && $request->payment == 'stripe'){
-            return redirect()->route('stripe.checkout', $order->id);
-        }
-        // dd('here');
+        $lineItem = $cartItems->map(function ($item) {
+            // For Stripe, convert price to cents (multiply by 100)
+            $priceInCents = $item->product->price * 100; // Convert to cents
+    
+            return [
+                'price_data' => [
+                    'currency' => 'usd', // The currency of the payment
+                    'product_data' => [
+                        'name' => $item->product->name, // Product name
+                        'description' => $item->product->description, // Product description
+                    ],
+                    'unit_amount' => $priceInCents, // Price in cents for Stripe
+                ],
+                'quantity' => $item->quantity, // Quantity of the item
+            ];
+        });
+
+        // Initialize Stripe client
+    Stripe::setApiKey(env('STRIPE_SECRET'));
+
+    // Create the Stripe checkout session
+    $session = Session::create([
+        'payment_method_types' => ['card'],
+        'line_items' => $lineItem->toArray(),
+        'mode' => 'payment',
+        'success_url' => route('user.success', ['orderId' => $order->id]),
+        'cancel_url' => route('user.cancel'),
+        'client_reference_id' => $order->id, // To associate the order ID with the session
+    ]);
+
+    // Redirect to Stripe Checkout
+    return redirect()->to($session->url);
+         dd('here');
 
         $apiKey = env('AEROHEALTH_API_KEY');
         $apiSecret = env('AEROHEALTH_API_SECRET');
@@ -215,5 +246,32 @@ class CheckoutController extends Controller
         // Close the cURL session
         curl_close($ch);
     }
+
+    public function handleStripeSuccess(Request $request, $orderId)
+{
+    // Find the order
+    $order = Order::find($orderId);
+
+    if ($order && $order->status === 'pending') {
+        // Update the order status to 'success' after payment
+        $order->update([
+            'status' => 'success',
+        ]);
+
+        // Optionally, clear the user's cart
+        CartItem::where('user_id', Auth::id())->delete();
+
+        // Redirect to a success page with the order details
+        return redirect()->route('user.welcome', ['order' => $order->id])->with('success', 'Your payment was successful!');
+    }
+
+    return redirect()->route('user.welcome', ['order' => $order->id])->with('error', 'There was an issue with your payment.');
+}
+
+public function handleStripeCancel()
+{
+    // If the user cancels the payment, redirect them to the cart page with an error message
+    return redirect()->route('user.cart')->with('error', 'Payment was cancelled.');
+}
 
 }

@@ -185,6 +185,10 @@ Route::get('/user/{user}/edit', [ProfileController::class, 'edit'])->name('user.
     Route::get('user/cart/index', [CartController::class, 'viewCart'])->name('user.cart.index');
     Route::patch('/cart/update/{cartId}', [CartController::class, 'updateQuantity'])->name('user.cart.update');
     Route::delete('/cart/remove/{cartId}', [CartController::class, 'removeFromCart'])->name('user.cart.remove');
+
+    Route::post('/checkout/process', [CheckoutController::class, 'processCheckout'])->name('checkout.process');
+Route::get('/success/{orderId}', [CheckoutController::class, 'handleStripeSuccess'])->name('user.success');
+Route::get('/cancel', [CheckoutController::class, 'handleStripeCancel'])->name('user.cancel');
 });
 
 

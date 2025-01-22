@@ -94,13 +94,16 @@
                     <option>Standard Shipping - $10.00</option>
                 </select>
             </div>
-
+            
 
             <!-- Proceed to Checkout Button -->
             <form action="{{ route('checkout.process') }}" method="POST">
                 @csrf
                 <input type="hidden" name="total" value="{{ $cartItems->sum(fn($item) => $item->product->price * $item->quantity) + 10 }}">
-
+                <div class="mt-6">
+        <input type="checkbox" name="payment" value="stripe" id="stripe-payment">
+        <label for="stripe-payment" class="ml-2 text-sm text-gray-600">Pay with Stripe</label>
+    </div>
                 <button type="submit"
                     class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 px-5 text-sm text-white uppercase w-full text-center rounded-md mt-8">
                     Proceed to Checkout
