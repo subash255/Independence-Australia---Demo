@@ -265,7 +265,7 @@ class CheckoutController extends Controller
         return redirect()->route('user.welcome', ['order' => $order->id])->with('success', 'Your payment was successful!');
     }
 
-    return redirect()->route('user.welcome', ['order' => $order->id])->with('error', 'There was an issue with your payment.');
+    return redirect()->route('user.welcome', ['order' => $order->id])->with('error', 'There was an error processing   your payment.');
 }
 
 public function handleStripeCancel()
