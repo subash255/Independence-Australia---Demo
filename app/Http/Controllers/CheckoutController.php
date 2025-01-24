@@ -253,9 +253,10 @@ class CheckoutController extends Controller
     $order = Order::find($orderId);
 
     if ($order && $order->status === 'pending') {
-        // Update the order status to 'success' after payment
+        // Update the order Status to 'success' after payment
         $order->update([
             'status' => 'success',
+            
         ]);
 
         // Optionally, clear the user's cart
